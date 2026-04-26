@@ -1,5 +1,5 @@
 {
-  "numStartups": 22,
+  "numStartups": 24,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -10,8 +10,8 @@
     "prompt-queue": 19,
     "enter-to-steer-in-relatime": 21,
     "todo-list": 21,
-    "install-github-app": 13,
-    "install-slack-app": 13,
+    "install-github-app": 23,
+    "install-slack-app": 24,
     "drag-and-drop-images": 14,
     "double-esc-code-restore": 15,
     "continue": 17,
@@ -25,7 +25,7 @@
     "shift-enter": 18,
     "custom-agents": 21,
     "agent-flag": 22,
-    "feedback-command": 8,
+    "feedback-command": 23,
     "permissions": 21,
     "rename-conversation": 12,
     "custom-commands": 12
@@ -501,61 +501,53 @@
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
       "lastGracefulShutdown": true,
-      "lastCost": 1.2308674499999999,
-      "lastAPIDuration": 387634,
-      "lastAPIDurationWithoutRetries": 387573,
-      "lastToolDuration": 117738,
-      "lastDuration": 25637937,
-      "lastLinesAdded": 87,
-      "lastLinesRemoved": 46,
-      "lastTotalInputTokens": 518,
-      "lastTotalOutputTokens": 17667,
-      "lastTotalCacheCreationInputTokens": 79421,
-      "lastTotalCacheReadInputTokens": 2224379,
+      "lastCost": 0.2204097,
+      "lastAPIDuration": 31323,
+      "lastAPIDurationWithoutRetries": 31314,
+      "lastToolDuration": 101,
+      "lastDuration": 1112790,
+      "lastLinesAdded": 2,
+      "lastLinesRemoved": 1,
+      "lastTotalInputTokens": 83,
+      "lastTotalOutputTokens": 1166,
+      "lastTotalCacheCreationInputTokens": 38444,
+      "lastTotalCacheReadInputTokens": 195019,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 1.24,
-      "lastFpsLow1Pct": 1028.62,
+      "lastFpsAverage": 1.46,
+      "lastFpsLow1Pct": 407.86,
       "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 352,
-          "outputTokens": 13,
-          "cacheReadInputTokens": 0,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.000417
-        },
         "claude-sonnet-4-6": {
-          "inputTokens": 166,
-          "outputTokens": 17654,
-          "cacheReadInputTokens": 2224379,
-          "cacheCreationInputTokens": 79421,
+          "inputTokens": 83,
+          "outputTokens": 1166,
+          "cacheReadInputTokens": 195019,
+          "cacheCreationInputTokens": 38444,
           "webSearchRequests": 0,
-          "costUSD": 1.2304504499999998
+          "costUSD": 0.2204097
         }
       },
-      "lastSessionId": "e4ea6783-962c-4a41-91b2-589c284fcef0",
+      "lastSessionId": "4ef471a7-0c86-4e28-a73c-202832665806",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 29663,
-        "frame_duration_ms_min": 0.06947499979287386,
-        "frame_duration_ms_max": 36.22265000012703,
-        "frame_duration_ms_avg": 0.6296322772551911,
-        "frame_duration_ms_p50": 0.4895710004493594,
-        "frame_duration_ms_p95": 1.0943164498195983,
-        "frame_duration_ms_p99": 2.9131872700218744,
-        "pre_tool_hook_duration_ms_count": 32,
+        "frame_duration_ms_count": 1628,
+        "frame_duration_ms_min": 0.0912710000120569,
+        "frame_duration_ms_max": 12.151854000025196,
+        "frame_duration_ms_avg": 0.6334508722355959,
+        "frame_duration_ms_p50": 0.5426049999659881,
+        "frame_duration_ms_p95": 0.9154405000037502,
+        "frame_duration_ms_p99": 2.422943089989128,
+        "pre_tool_hook_duration_ms_count": 3,
         "pre_tool_hook_duration_ms_min": 0,
-        "pre_tool_hook_duration_ms_max": 9,
-        "pre_tool_hook_duration_ms_avg": 0.8125,
+        "pre_tool_hook_duration_ms_max": 0,
+        "pre_tool_hook_duration_ms_avg": 0,
         "pre_tool_hook_duration_ms_p50": 0,
-        "pre_tool_hook_duration_ms_p95": 4.149999999999995,
-        "pre_tool_hook_duration_ms_p99": 8.690000000000001,
-        "hook_duration_ms_count": 26,
+        "pre_tool_hook_duration_ms_p95": 0,
+        "pre_tool_hook_duration_ms_p99": 0,
+        "hook_duration_ms_count": 2,
         "hook_duration_ms_min": 0,
         "hook_duration_ms_max": 1,
-        "hook_duration_ms_avg": 0.46153846153846156,
-        "hook_duration_ms_p50": 0,
-        "hook_duration_ms_p95": 1,
-        "hook_duration_ms_p99": 1
+        "hook_duration_ms_avg": 0.5,
+        "hook_duration_ms_p50": 0.5,
+        "hook_duration_ms_p95": 0.95,
+        "hook_duration_ms_p99": 0.99
       },
       "hasCompletedProjectOnboarding": true
     }
@@ -582,7 +574,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777169010330
+      "timestamp": 1777198336775
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
@@ -598,11 +590,11 @@
   "remoteControlUpsellSeenCount": 3,
   "skillUsage": {
     "update-config": {
-      "usageCount": 3,
-      "lastUsedAt": 1777169451110
+      "usageCount": 4,
+      "lastUsedAt": 1777198488716
     }
   },
-  "opus47LaunchSeenCount": 4,
+  "opus47LaunchSeenCount": 5,
   "githubRepoPaths": {
     "kmkn0523-cell/kenta-learning": [
       "/home/kenta_kamijyo"
