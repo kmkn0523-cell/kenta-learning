@@ -66,7 +66,8 @@
 - skin_x_launch_playbook.md: note販売X投稿プレイブック完全版（予告〜ローンチ〜販売終了までの全投稿テンプレ）
 - skin_x_auto_post.py: X自動投稿スクリプト（API有料のため現在使用不可）
 - skin_x_posts.json: 投稿データ（日常投稿7件＋販売用投稿7件）※Threads用スクリプトでも使用
-- skin_threads_auto_post.py: 肌荒れ改善プロジェクト用Threads自動投稿スクリプト（日常投稿7種ローテーション＋note販売用投稿）
+- skin_threads_auto_post.py: 肌荒れ改善プロジェクト用Threads自動投稿スクリプト（日常投稿21種ローテーション＋note販売用投稿）
+- skin_monetize_plan.md: 肌荒れThreadsアカウントのマネタイズ計画（フェーズ別・フォロワー増加施策含む）
 
 ## 学習履歴
 - 2026/4/23: 環境構築開始、おみくじプログラム作成

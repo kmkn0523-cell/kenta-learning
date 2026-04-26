@@ -10,6 +10,9 @@ from datetime import datetime  # 今の日時を取得する道具
 POSTS_FILE    = "/home/kenta_kamijyo/skin_x_posts.json"
 PROGRESS_FILE = "/home/kenta_kamijyo/skin_threads_progress.json"
 
+# 全投稿に自動でつけるハッシュタグ
+HASHTAGS = "\n\n#肌荒れ #大人ニキビ #肌荒れ改善 #ニキビ改善 #内側から綺麗に"
+
 
 def load_posts():
     """投稿データをJSONから読み込む"""
@@ -51,7 +54,7 @@ def show_post_and_confirm(post_type, content, progress, mode, index, posts):
     print(f"📋 投稿文（{post_type}）")
     print(f"{'='*50}")
     print()
-    print(content)  # 投稿文を表示する
+    print(content + HASHTAGS)  # 投稿文＋ハッシュタグを表示する
     print()
     print(f"{'='*50}")
     print("👆 上の文をコピーしてThreadsに貼り付けてください")
