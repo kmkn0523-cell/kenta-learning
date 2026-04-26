@@ -1,0 +1,10 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/kenta_kamijyo/.claude/statusline-command.sh",
+    "refreshInterval": 10
+  },
+  "language": "japanese",
+  "skipDangerousModePermissionPrompt": true,
+  "model": "claude-sonnet-4-6"
+}

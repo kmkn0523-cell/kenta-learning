@@ -11,6 +11,12 @@
 !.github/workflows/
 !.github/workflows/*.yml
 
+# .claude/ 設定ファイルを同期する（認証情報は除く）
+!.claude/
+.claude/*
+!.claude/settings.json
+!.claude/statusline-command.sh
+
 # APIキーなど秘密情報は絶対に除外
 .env
 
