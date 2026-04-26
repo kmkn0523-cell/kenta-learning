@@ -28,7 +28,7 @@ get_mtime() {
 
 # 日本時間で今日の日付を取得（例: 2026/4/7(Tue) 09:30:00）
 # %-m・%-d はLinux専用のため、sedで先頭ゼロを除去する方法で両対応
-today_raw=$(TZ=Asia/Tokyo date '+%Y/%m/%d(%a) %H:%M:%S')
+today_raw=$(TZ=Asia/Tokyo date '+%Y/%m/%d(%a) %H:%M')
 today=$(echo "$today_raw" | sed 's|/0\([0-9]\)|/\1|g')  # /04/ → /4/ のように変換
 
 # --- 天気情報（1時間ごとに更新）---

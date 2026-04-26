@@ -1,6 +1,6 @@
 # TODO リスト
 
-最終更新: 2026/04/27
+最終更新: 2026/04/27（夜）
 
 ---
 
@@ -92,6 +92,8 @@
 
 - [x] auto_sync.sh（自動バックアップ）
 - [x] GitHub Actionsの仕組み構築（@RoninWords用） ※Facebook認証で停止中
+- [x] Claude Code ステータスバー整備（気温幅追加・使用率バグ修正・カニ停止）
+- [x] Claude Code 設定をGitHub同期 → MacBookでもすぐ同じ環境が使える
 - [ ] Facebook認証問題を解決してAPIキー取得
 - [ ] 肌荒れ改善もGitHub Actions化（認証解決後）
 - [ ] 投稿ログを1箇所にまとめて見られるようにする
@@ -114,6 +116,8 @@
 - [x] 2026/04/26 @RoninWords Threads自動投稿スクリプト＋GitHub Actions構築（認証で詰まり中）
 - [x] 2026/04/26 肌荒れ改善noteコンテンツ・Threads投稿スクリプト作成
 - [x] 2026/04/26 肌荒れ改善Threadsを手動でローテーション投稿（型①〜⑦の1周完了）
+- [x] 2026/04/27 ステータスバー整備（カニ停止・気温幅追加・使用率バグ修正・Linux/Mac両対応）
+- [x] 2026/04/27 Claude Code設定をGitHub同期（MacBookでもすぐ使える環境に）
 
 ---
 
