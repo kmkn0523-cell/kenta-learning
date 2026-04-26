@@ -1,5 +1,5 @@
 {
-  "numStartups": 21,
+  "numStartups": 22,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -24,7 +24,7 @@
     "voice-mode": 18,
     "shift-enter": 18,
     "custom-agents": 21,
-    "agent-flag": 7,
+    "agent-flag": 22,
     "feedback-command": 8,
     "permissions": 21,
     "rename-conversation": 12,
@@ -581,7 +581,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777164901122
+      "timestamp": 1777169010330
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
@@ -597,9 +597,14 @@
   "remoteControlUpsellSeenCount": 3,
   "skillUsage": {
     "update-config": {
-      "usageCount": 2,
-      "lastUsedAt": 1777041786026
+      "usageCount": 3,
+      "lastUsedAt": 1777169451110
     }
   },
-  "opus47LaunchSeenCount": 3
+  "opus47LaunchSeenCount": 4,
+  "githubRepoPaths": {
+    "kmkn0523-cell/kenta-learning": [
+      "/home/kenta_kamijyo"
+    ]
+  }
 }
