@@ -1,5 +1,5 @@
 {
-  "numStartups": 27,
+  "numStartups": 28,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -583,7 +583,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777202411959
+      "timestamp": 1777219703613
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
