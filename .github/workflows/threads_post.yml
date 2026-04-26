@@ -1,0 +1,57 @@
+# threads_post.yml
+# GitHub Actionsのワークフローファイル
+# 毎日決まった時間に threads_auto_post.py を自動実行する
+
+name: Threads 自動投稿  # このワークフローの名前
+
+on:
+  schedule:
+    # 朝投稿: 毎日 13:00 UTC = 日本時間 22:00 = EST 8:00 AM
+    - cron: '0 13 * * *'
+    # 夜投稿: 毎日 01:00 UTC = 日本時間 10:00 = EST 8:00 PM
+    - cron: '0 1 * * *'
+  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
+
+jobs:
+  post:
+    runs-on: ubuntu-latest  # GitHubのサーバー（Ubuntu）で動かす
+
+    steps:
+      # Step 1: リポジトリのファイルをダウンロードする
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      # Step 2: Pythonをセットアップする
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step 3: 必要なライブラリをインストールする
+      - name: ライブラリをインストール
+        run: pip install requests python-dotenv
+
+      # Step 4: 投稿ログファイルをキャッシュする
+      # ログがないと毎回Day1から投稿してしまうので、キャッシュで保持する
+      - name: 投稿ログをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: threads_post_log.json  # キャッシュするファイル
+          key: threads-log-${{ github.run_id }}  # 毎回新しいキー
+          restore-keys: |
+            threads-log-  # 以前のキャッシュを復元するためのキー
+
+      # Step 5: Threads APIに投稿する
+      - name: Threadsに投稿
+        env:
+          # GitHubのSecretsからAPIキーを読み込む（.envの代わり）
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: python threads_auto_post.py
+
+      # Step 6: 更新したログファイルをキャッシュに保存する
+      - name: 投稿ログをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: threads_post_log.json
+          key: threads-log-${{ github.run_id }}

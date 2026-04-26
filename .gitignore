@@ -7,6 +7,9 @@
 !*.md
 !*.json
 !*.jsx
+!.github/
+!.github/workflows/
+!.github/workflows/*.yml
 
 # APIキーなど秘密情報は絶対に除外
 .env
