@@ -61,6 +61,7 @@
 - threads_auto_post.py: Threads自動投稿スクリプト（Threads API使用・.envからキー読み込み）
 - threads_posts.json: 投稿データ（Day01〜30 朝夜 全60投稿）
 - CLAUDE.md: プロジェクト設定ファイル（このファイル）
+- skin_improvement_note.md: 肌荒れ改善noteコンテンツ（200万費やした経験・30日ロードマップ・FAQ20選・サプリプラン等）
 
 ## 学習履歴
 - 2026/4/23: 環境構築開始、おみくじプログラム作成
