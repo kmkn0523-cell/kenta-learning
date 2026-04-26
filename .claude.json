@@ -1,5 +1,5 @@
 {
-  "numStartups": 25,
+  "numStartups": 27,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -14,7 +14,7 @@
     "install-slack-app": 24,
     "drag-and-drop-images": 24,
     "double-esc-code-restore": 25,
-    "continue": 17,
+    "continue": 27,
     "shift-tab": 18,
     "image-paste": 21,
     "desktop-app": 18,
@@ -27,9 +27,10 @@
     "agent-flag": 22,
     "feedback-command": 23,
     "permissions": 21,
-    "rename-conversation": 12,
-    "custom-commands": 12
+    "rename-conversation": 27,
+    "custom-commands": 27
   },
+  "promptQueueUseCount": 1,
   "cachedGrowthBookFeatures": {
     "tengu_grey_wool": true,
     "tengu_max_version_config": {
@@ -495,7 +496,7 @@
       "mcpServers": {},
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
+      "hasTrustDialogAccepted": true,
       "projectOnboardingSeenCount": 2,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
@@ -598,8 +599,8 @@
   "remoteControlUpsellSeenCount": 3,
   "skillUsage": {
     "update-config": {
-      "usageCount": 4,
-      "lastUsedAt": 1777198488716
+      "usageCount": 6,
+      "lastUsedAt": 1777205763803
     }
   },
   "opus47LaunchSeenCount": 5,
