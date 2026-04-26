@@ -10,7 +10,7 @@ CACHE_FILE="$HOME/.claude/statusline-cache.json"
 
 # ANSIカラーコード（ターミナルの色付け用）
 GREEN=$'\033[32m'   # 緑色の開始
-CYAN=$'\033[96m'    # 明るいシアン（水色）
+CYAN=$'\033[93m'    # 明るい黄色
 RESET=$'\033[0m'    # 色をリセット
 
 # OS判定（LinuxとmacOSでコマンドが違う部分に使う）
