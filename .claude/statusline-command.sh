@@ -1,27 +1,43 @@
 #!/bin/bash
 # ステータスライン表示スクリプト
 # 複数ターミナル間で使用量情報を共有するため、共有キャッシュファイルを利用する
+# Linux(WSL2) と macOS の両方で動くように書かれている
 
 input=$(cat)  # Claude Codeから送られてくるJSON情報を受け取る
 
-# --- 共有キャッシュファイルの場所（全ターミナルで同じファイルを読み書きする）---
-CACHE_FILE="/home/kenta_kamijyo/.claude/statusline-cache.json"
+# --- 共有キャッシュファイルの場所（$HOMEを使うことでLinux/Mac両対応）---
+CACHE_FILE="$HOME/.claude/statusline-cache.json"
 
 # ANSIカラーコード（ターミナルの色付け用）
 GREEN=$'\033[32m'   # 緑色の開始
 CYAN=$'\033[96m'    # 明るいシアン（水色）
 RESET=$'\033[0m'    # 色をリセット
 
-# 日本時間で今日の日付を取得（例: 2026年4月25日土曜日）
-today=$(TZ=Asia/Tokyo date '+%Y/%-m/%-d(%a) %H:%M:%S')
+# OS判定（LinuxとmacOSでコマンドが違う部分に使う）
+OS=$(uname -s)  # Linux → "Linux"、Mac → "Darwin"
+
+# ファイルの更新日時（Unixタイムスタンプ）を取得する関数
+# Linux: stat -c %Y、macOS: stat -f %m と書き方が違うため関数で吸収する
+get_mtime() {
+  if [ "$OS" = "Darwin" ]; then
+    stat -f %m "$1" 2>/dev/null || echo 0  # macOSの書き方
+  else
+    stat -c %Y "$1" 2>/dev/null || echo 0  # Linuxの書き方
+  fi
+}
+
+# 日本時間で今日の日付を取得（例: 2026/4/7(Tue) 09:30:00）
+# %-m・%-d はLinux専用のため、sedで先頭ゼロを除去する方法で両対応
+today_raw=$(TZ=Asia/Tokyo date '+%Y/%m/%d(%a) %H:%M:%S')
+today=$(echo "$today_raw" | sed 's|/0\([0-9]\)|/\1|g')  # /04/ → /4/ のように変換
 
 # --- 天気情報（1時間ごとに更新）---
 # 都市を変えたい場合は CITY を変更（例: Osaka, Sapporo, Fukuoka）
-WEATHER_CACHE="/home/kenta_kamijyo/.claude/weather-cache.json"
+WEATHER_CACHE="$HOME/.claude/weather-cache.json"
 CITY="Tokyo"
 
 # キャッシュが存在しない、または1時間（3600秒）以上古ければ wttr.in から再取得する
-if [ ! -f "$WEATHER_CACHE" ] || [ $(($(date +%s) - $(stat -c %Y "$WEATHER_CACHE" 2>/dev/null || echo 0))) -ge 3600 ]; then
+if [ ! -f "$WEATHER_CACHE" ] || [ $(($(date +%s) - $(get_mtime "$WEATHER_CACHE"))) -ge 3600 ]; then
   # JSON形式で取得（現在気温・最高・最低・天気コードをまとめて取れる）
   weather_json=$(curl -s --max-time 5 "wttr.in/${CITY}?format=j1" 2>/dev/null)
   # 正しいJSONが取得できた場合のみキャッシュを更新する
@@ -72,7 +88,6 @@ new_ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
 if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; then
   # 新しい使用量データがある場合だけキャッシュを更新する
-  # （古いデータを消さないよう、現在のキャッシュとマージする）
   if [ -f "$CACHE_FILE" ]; then
     old=$(cat "$CACHE_FILE")
   else
@@ -103,12 +118,9 @@ if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; 
 fi
 
 # --- キャッシュから使用量データを読み込む（他のターミナルの最新データも反映される）---
-# キャッシュファイルが存在し、かつ中身が有効なJSONであるか確認する
 cached=""
 if [ -f "$CACHE_FILE" ] && [ -s "$CACHE_FILE" ]; then
-  # -s はファイルサイズが0より大きい場合にtrue
   raw=$(cat "$CACHE_FILE")
-  # jq で正しくパースできるか確認（エラーが出なければ有効なJSON）
   if echo "$raw" | jq -e . >/dev/null 2>&1; then
     cached="$raw"
   fi
@@ -132,7 +144,6 @@ fi
 # リセットまでの残り時間を「X時間Y分後」形式に変換する関数
 format_reset() {
   local reset_epoch=$1  # Unixタイムスタンプ（秒単位の数字）
-  # リセット時刻がなければ何も表示しない
   [ -z "$reset_epoch" ] && echo "" && return
   local now_epoch=$(date +%s)
   local diff=$((reset_epoch - now_epoch))  # 現在時刻との差（秒）
@@ -151,13 +162,11 @@ format_reset() {
 make_meter() {
   local pct=$1        # 使用率（0〜100の数字）
   local width=10      # メーターの幅（文字数）
-  # 塗りつぶす文字数を計算（小数点以下は四捨五入）
   local filled=$(echo "$pct $width" | awk '{printf "%d", ($1/100*$2) + 0.5}')
-  local empty=$((width - filled))  # 残りの空白部分
+  local empty=$((width - filled))
   local bar=""
   for i in $(seq 1 $filled); do bar="${bar}█"; done
   for i in $(seq 1 $empty); do bar="${bar}░"; done
-  # 緑色でバーを表示し、色をリセットしてからパーセントを表示
   printf "${GREEN}%s %s%%${RESET}" "$bar" "$pct"
 }
 
@@ -166,10 +175,8 @@ rate_info=""
 if [ -n "$five_used" ]; then
   five_pct=$(echo "$five_used" | awk '{printf "%.0f", $1}')
   five_time=$(format_reset "$five_reset")
-  # make_meter の出力は printf で色付きテキストを含むため、文字列変数に格納してから結合する
   five_meter=$(make_meter "$five_pct")
   five_str="5h:${five_meter}"
-  # リセット時間があれば括弧付きで追加（RESETの後なので色は通常色）
   [ -n "$five_time" ] && five_str="${five_str}(${five_time})"
   rate_info="$five_str"
 fi
@@ -192,25 +199,19 @@ fi
 # 出力を3行に分けて組み立てる
 line1=""  # 1行目: 日時 + ユーザー名
 line2=""  # 2行目: モデル・コンテキスト
-line3=""  # 3行目: プラン使用量メーター（全ターミナル共通）
+line3=""  # 3行目: プラン使用量メーター
 
 # --- 最終同期時刻をログから取得 ---
-# sync_log.txt の中から「同期完了」が書かれた行を探し、最後の行の時刻を取り出す
-# 例: [2026/04/26 21:00] 同期完了 → "21:00" を取り出す
-SYNC_LOG="/home/kenta_kamijyo/sync_log.txt"
+SYNC_LOG="$HOME/sync_log.txt"
 last_sync=""
 if [ -f "$SYNC_LOG" ]; then
-  # "同期完了" が含まれる行の中で最後の1行だけ取得する
-  # 行の形式: [2026/04/27 00:40] 同期完了
-  # "日付 時刻]" の時刻部分（HH:MM）を正確に取り出す
-  last_sync=$(grep "同期完了" "$SYNC_LOG" | tail -1 | grep -oP '\d{4}/\d{2}/\d{2} \K\d{2}:\d{2}')
+  # grep -oP はmacOS非対応のため、-oE（拡張正規表現）で代替する
+  last_sync=$(grep "同期完了" "$SYNC_LOG" | tail -1 | grep -oE '[0-9]{2}:[0-9]{2}' | tail -1)
 fi
 
 [ -n "$today" ] && line1="${CYAN}${today}${RESET}"
 [ -n "$weather_info" ] && line1="$line1 | ${CITY}: ${weather_info}"
-# 最終同期時刻が取得できた場合のみ追加する
 [ -n "$last_sync" ] && line1="$line1 | Sync: ${last_sync}"
-
 line1="$line1 | 🦀 kmkn"
 
 [ -n "$model" ] && line2="$model"
