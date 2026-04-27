@@ -68,11 +68,14 @@
 - skin_x_posts.json: 投稿データ（日常投稿7件＋販売用投稿7件）※Threads用スクリプトでも使用
 - skin_threads_auto_post.py: 肌荒れ改善プロジェクト用Threads自動投稿スクリプト（日常投稿21種ローテーション＋note販売用投稿）
 - skin_monetize_plan.md: 肌荒れThreadsアカウントのマネタイズ計画（フェーズ別・フォロワー増加施策含む）
+- ronin_threads_action.py: @RoninWords用Threads自動投稿スクリプト（GitHub Actions専用・1日4回・共通タグ自動付与）
+- .github/workflows/ronin_threads_post.yml: @RoninWords用GitHub Actionsワークフロー（毎日7/12/18/22時に自動投稿）
 
 ## 学習履歴
 - 2026/4/23: 環境構築開始、おみくじプログラム作成
 - 2026/4/24: じゃんけん、天気予報プログラム
 - 2026/4/25: タイマー・数当てゲーム作成、指示術レッスン、learning_notes.md・CLAUDE.md作成、today_weekday.pyでCLAUDE.mdの効果体感、エラー自己解決（command not found）
+- 2026/4/27: @RoninWordsのThreads完全自動化達成（Meta for Developers認証、長期トークン取得、GitHub Actions構築、1日4回投稿）
 - (今後追記)
 
 ## 困ったときの対応

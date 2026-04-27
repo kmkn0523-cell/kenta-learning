@@ -30,6 +30,7 @@
 | 4/25 | timer.py | 作業時間タイマー | 時間処理、ファイル追記、記録機能 |
 | 4/25 | number_game.py | 数当てゲーム（難易度選択） | 範囲指定、エラー処理、通算成績 |
 | 4/25 | today_weekday.py | 今日の曜日表示 | CLAUDE.mdの効果体感、日時処理 |
+| 4/27 | ronin_threads_action.py | @RoninWords用Threads自動投稿（GitHub Actions版） | API認証、環境変数、JSONローテーション、共通タグ自動付与 |
 
 ---
 

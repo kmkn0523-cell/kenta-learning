@@ -1,0 +1,60 @@
+# ronin_threads_post.yml
+# @RoninWords用 GitHub Actionsワークフロー
+# 1日4回、決まった時間に自動でThreadsに投稿する
+
+name: Ronin Threads 自動投稿
+
+on:
+  schedule:
+    # 朝投稿: 毎日 22:00 UTC = 日本時間 07:00
+    - cron: '0 22 * * *'
+    # 昼投稿: 毎日 03:00 UTC = 日本時間 12:00
+    - cron: '0 3 * * *'
+    # 夕投稿: 毎日 09:00 UTC = 日本時間 18:00
+    - cron: '0 9 * * *'
+    # 夜投稿: 毎日 13:00 UTC = 日本時間 22:00
+    - cron: '0 13 * * *'
+  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
+
+jobs:
+  post:
+    runs-on: ubuntu-latest  # GitHubのサーバーで動かす
+
+    steps:
+      # Step 1: リポジトリのファイルをダウンロードする
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      # Step 2: Pythonをセットアップする
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step 3: 必要なライブラリをインストールする
+      - name: ライブラリをインストール
+        run: pip install requests
+
+      # Step 4: 進捗ファイルをキャッシュから復元する
+      # これがないと毎回同じ投稿になってしまう
+      - name: 進捗ファイルをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: ronin_threads_progress.json
+          key: ronin-threads-progress-${{ github.run_id }}
+          restore-keys: |
+            ronin-threads-progress-
+
+      # Step 5: Threadsに自動投稿する（@RoninWords用のSecretsを渡す）
+      - name: Threadsに投稿
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.RONIN_THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.RONIN_THREADS_USER_ID }}
+        run: python ronin_threads_action.py
+
+      # Step 6: 更新した進捗ファイルをキャッシュに保存する
+      - name: 進捗ファイルをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: ronin_threads_progress.json
+          key: ronin-threads-progress-${{ github.run_id }}
