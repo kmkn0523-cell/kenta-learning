@@ -86,6 +86,16 @@ new_week_used=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage //
 new_week_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 new_ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
+# --- デバッグログ（バグ調査用・後で消す）---
+DEBUG_LOG="$HOME/.claude/statusline-debug.log"
+FULL_LOG="$HOME/.claude/statusline-input-full.log"
+debug_ts=$(date '+%H:%M:%S')
+echo "[$debug_ts] IN  five=$new_five_used/$new_five_reset week=$new_week_used/$new_week_reset ctx=$new_ctx_pct" >> "$DEBUG_LOG"
+# 全入力JSONを1回だけ記録（既にあれば追記しない）
+if [ ! -s "$FULL_LOG" ]; then
+  echo "$input" | jq . > "$FULL_LOG" 2>/dev/null
+fi
+
 if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; then
   # 新しい使用量データがある場合だけキャッシュを更新する
   if [ -f "$CACHE_FILE" ]; then
@@ -100,6 +110,7 @@ if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; 
   fi
 
   # 新しい値があるものだけ上書きし、ないものは古い値をそのまま使う
+  # キャッシュは複数ターミナル間共有用。入力値はそのまま信頼して書き込む（このターミナルの最新値だから）
   new_cache=$(echo "$old" | jq \
     --arg five_used "$new_five_used" \
     --arg five_reset "$new_five_reset" \
@@ -115,9 +126,14 @@ if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; 
     ')
   # キャッシュファイルに書き出す（一時ファイル経由で安全に上書き）
   echo "$new_cache" > "${CACHE_FILE}.tmp" && mv "${CACHE_FILE}.tmp" "$CACHE_FILE"
+  # デバッグ: 書き込み後のキャッシュ値
+  log_after=$(echo "$new_cache" | jq -c '{five:.five_used,five_r:.five_reset,week:.week_used,week_r:.week_reset,ctx:.ctx_pct}')
+  echo "[$debug_ts] OUT $log_after" >> "$DEBUG_LOG"
 fi
 
-# --- キャッシュから使用量データを読み込む（他のターミナルの最新データも反映される）---
+# --- 表示用の値を決定 ---
+# 優先順位: このターミナルの入力値 > キャッシュ（他ターミナルの値）
+# 入力値があればそれを使う。入力にない値だけキャッシュからフォールバック。
 cached=""
 if [ -f "$CACHE_FILE" ] && [ -s "$CACHE_FILE" ]; then
   raw=$(cat "$CACHE_FILE")
@@ -126,20 +142,22 @@ if [ -f "$CACHE_FILE" ] && [ -s "$CACHE_FILE" ]; then
   fi
 fi
 
-if [ -n "$cached" ]; then
-  five_used=$(echo "$cached" | jq -r '.five_used // empty')
-  five_reset=$(echo "$cached" | jq -r '.five_reset // empty')
-  week_used=$(echo "$cached" | jq -r '.week_used // empty')
-  week_reset=$(echo "$cached" | jq -r '.week_reset // empty')
-  used_pct=$(echo "$cached" | jq -r '.ctx_pct // empty')
-else
-  # キャッシュがない・空・壊れている場合は現在のセッション値を直接使う
-  five_used=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
-  five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
-  week_used=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
-  week_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
-  used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
-fi
+# 入力値を優先、なければキャッシュから取得する関数
+pick() {
+  local input_val="$1"
+  local cache_key="$2"
+  if [ -n "$input_val" ]; then
+    echo "$input_val"
+  elif [ -n "$cached" ]; then
+    echo "$cached" | jq -r ".${cache_key} // empty"
+  fi
+}
+
+five_used=$(pick "$new_five_used"   "five_used")
+five_reset=$(pick "$new_five_reset" "five_reset")
+week_used=$(pick "$new_week_used"   "week_used")
+week_reset=$(pick "$new_week_reset" "week_reset")
+used_pct=$(pick "$new_ctx_pct"      "ctx_pct")
 
 # リセットまでの残り時間を「X時間Y分後」形式に変換する関数
 format_reset() {
