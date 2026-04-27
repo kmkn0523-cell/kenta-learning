@@ -7,6 +7,9 @@
 !*.md
 !*.json
 !*.jsx
+!*.png
+!ronin_images/
+!ronin_images/*.png
 !.github/
 !.github/workflows/
 !.github/workflows/*.yml
