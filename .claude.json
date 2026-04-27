@@ -1,9 +1,9 @@
 {
-  "numStartups": 39,
+  "numStartups": 40,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
-    "plan-mode-for-complex-tasks": 35,
+    "plan-mode-for-complex-tasks": 40,
     "memory-command": 31,
     "theme-command": 21,
     "status-line": 1,
@@ -501,7 +501,7 @@
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
       "lastToolDuration": 0,
-      "lastDuration": 56443,
+      "lastDuration": 30248,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
       "lastTotalInputTokens": 0,
@@ -509,18 +509,18 @@
       "lastTotalCacheCreationInputTokens": 0,
       "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 1.11,
-      "lastFpsLow1Pct": 108.36,
+      "lastFpsAverage": 1.08,
+      "lastFpsLow1Pct": 109.78,
       "lastModelUsage": {},
-      "lastSessionId": "e4f4d93a-dd02-4368-a4c3-f3d9a6f0a58d",
+      "lastSessionId": "4c9566de-4985-48e2-8edd-12818bae1a7f",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 62,
-        "frame_duration_ms_min": 0.11415600000327686,
-        "frame_duration_ms_max": 9.228508999999804,
-        "frame_duration_ms_avg": 1.0114270806448975,
-        "frame_duration_ms_p50": 0.5373694999992722,
-        "frame_duration_ms_p95": 2.8190501000026393,
-        "frame_duration_ms_p99": 8.373279850000426
+        "frame_duration_ms_count": 32,
+        "frame_duration_ms_min": 0.12120099999810918,
+        "frame_duration_ms_max": 9.109248999999863,
+        "frame_duration_ms_avg": 0.9141588124998776,
+        "frame_duration_ms_p50": 0.25348049999865907,
+        "frame_duration_ms_p95": 2.6019482000002427,
+        "frame_duration_ms_p99": 7.110324050000132
       },
       "hasCompletedProjectOnboarding": true
     }
