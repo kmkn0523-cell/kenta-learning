@@ -34,6 +34,21 @@
 - エラーが起きそうな処理にはエラーハンドリングを入れる
 - 改造時は「既存機能を壊さない」を徹底する
 
+## 稼働中の自動化システム
+- **@RoninWords Threads自動投稿**: 1日4回（7:17/12:17/18:17/22:17 JST）GitHub Actions経由
+- **skin（肌荒れ）Threads自動投稿**: 1日4回（7:07/12:07/18:07/22:07 JST）GitHub Actions経由
+- **Threadsトークン期限**: 2026/06/26頃（60日後にリマインド予約済み）
+- 投稿データ: `threads_posts.json`（Day01〜60の朝夜120投稿をローテーション）
+- 進捗管理: `ronin_threads_progress.json`（次に投稿する番号を記録）
+
+## 安全のための確認ルール（実行前に必ず聞く）
+- ファイル・フォルダの削除（特に複数まとめての削除）
+- `git push --force` など破壊的なgitコマンド
+- APIキー・.env ファイルを触るとき
+- 既存ファイル（特に `threads_posts.json`・GitHub Actionsワークフロー）の大きな書き換え
+- 自動投稿スクリプトの停止・再起動
+- 新しいライブラリのインストール（`pip install`・`npm install`）
+
 ## ファイル管理ルール
 - Pythonファイルは /home/kenta_kamijyo/ 直下に作成
 - ファイル名は英語小文字 + アンダースコア (例: number_game.py)
@@ -80,7 +95,40 @@
 - 2026/4/27: @RoninWordsのThreads完全自動化達成（Meta for Developers認証、長期トークン取得、GitHub Actions構築、1日4回投稿）
 - (今後追記)
 
+## よく使うコマンド
+```bash
+# Threads手動投稿テスト
+python3 ronin_threads_action.py
+python3 skin_threads_auto_post.py
+
+# GitHub Actions確認
+# → https://github.com/ からリポジトリのActionsタブを見る
+
+# 環境変数確認（APIキー等）
+cat .env
+
+# Gitの状態確認・同期
+git status
+git add . && git commit -m "更新" && git push
+```
+
+## Threadsトークン更新手順（60日ごと）
+1. Meta for Developers（developers.facebook.com）にログイン
+2. アプリ → Threadsアクセストークン → 長期トークン取得
+3. `.env` の `THREADS_ACCESS_TOKEN` を新しいトークンに書き換え
+4. GitHub の Secrets（Settings → Secrets）も同様に更新
+5. 期限目安: **2026/06/26頃**（リマインド予約済み）
+
 ## 困ったときの対応
 - エラーが出たらエラーメッセージを全文受け取って原因を特定
 - 解決策は必ず初心者向けに説明
 - 「これは何のため?」を伝えて納得感を持たせる
+
+## エラー対応のお作法（ユーザー側ルール）
+- エラーメッセージは省略せず全文をそのままClaude Codeに貼る
+- 以下3点セットで返す:
+  1. **これは何のエラーか**（原因をわかりやすく）
+  2. **どう直すか**（具体的な手順）
+  3. **なぜ起きたか**（再発防止のための理解）
+- 勝手に直そうとせず、まず原因を理解してから動く
+- 「とりあえず動いた」で終わらせず、「なぜ動いたか」を確認する

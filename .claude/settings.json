@@ -6,6 +6,5 @@
   },
   "language": "japanese",
   "effortLevel": "medium",
-  "skipDangerousModePermissionPrompt": true,
-  "model": "opus"
+  "skipDangerousModePermissionPrompt": true
 }
