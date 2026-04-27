@@ -1,5 +1,5 @@
 {
-  "daily_index": 0,
+  "daily_index": 1,
   "launch_index": 0,
   "history": [
     {
@@ -36,6 +36,12 @@
       "date": "2026/04/26 18:59",
       "type": "ストーリー型",
       "mode": "daily"
+    },
+    {
+      "date": "2026/04/27 11:45",
+      "type": "共感前後比較型",
+      "mode": "daily",
+      "post_id": "18091121989970699"
     }
   ]
 }
