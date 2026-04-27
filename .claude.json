@@ -31,7 +31,6 @@
     "custom-commands": 27
   },
   "promptQueueUseCount": 1,
-  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_hayate": false,
     "tengu_ccr_bridge": true,
@@ -596,6 +595,10 @@
     "update-config": {
       "usageCount": 7,
       "lastUsedAt": 1777264041021
+    },
+    "schedule": {
+      "usageCount": 1,
+      "lastUsedAt": 1777274456340
     }
   },
   "opus47LaunchSeenCount": 5,
