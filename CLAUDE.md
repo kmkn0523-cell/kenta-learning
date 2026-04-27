@@ -55,46 +55,6 @@
 - 新しくプログラムを作ったら learning_notes.md の「作成したプログラム」表に追記する
 - APIキー・パスワードなどの秘密情報は必ず `.env` ファイルに保存し、コードに直接書かない
 
-## これまでに作成したプログラム
-- omikuji.py: おみくじ
-- janken.py: じゃんけんゲーム
-- weather.py: 天気予報(11都市・7日間・服装提案)
-- timer.py: 作業時間タイマー
-- number_game.py: 数当てゲーム
-- learning_notes.md: 学習記録
-- today_weekday.py: 今日の曜日表示
-- ronin_words.jsx: 書道カードアプリ（日本の格言100枚・React製・@RoninWords用）
-- ronin_words_strategy.md: @RoninWordsのThreads／X投稿戦略メモ
-- ronin_words_schedule.md: @RoninWords 1ヶ月×2投稿/日のX投稿スケジュール（Day01〜30）
-- ronin_words_schedule_day31_100.md: @RoninWords X投稿スケジュール（Day31〜100、70日分）
-- ronin_words_business.md: @RoninWords マネタイズ・ビジネスアイデアメモ（DMサービス・グッズ・電子書籍など）
-- ronin_words_proverbs_100.md: 海外に刺さる日本の諺・格言100選（英語解説つき、カテゴリ別）
-- ronin_words_scripts.md: @RoninWords ショート動画台本30本（TikTok／Reels／Shorts用、Day01〜30）
-- ronin_words_script_template.md: @RoninWords バズる台本の型（フック6種・ナレーション原則・改善例つき）
-- ronin_words_threads_template.md: @RoninWords Threads投稿テンプレート（フック6種・フォーマット4種・週次運用スケジュール）
-- ronin_words_threads_day01_10.md: @RoninWords Threads実投稿文 Day01〜10（朝+夜 × 10日分）
-- ronin_words_threads_day11_20.md: @RoninWords Threads実投稿文 Day11〜20（朝+夜 × 10日分）
-- ronin_words_threads_day21_30.md: @RoninWords Threads実投稿文 Day21〜30（朝+夜 × 10日分）
-- threads_auto_post.py: Threads自動投稿スクリプト（Threads API使用・.envからキー読み込み）
-- threads_posts.json: 投稿データ（Day01〜30 朝夜 全60投稿）
-- CLAUDE.md: プロジェクト設定ファイル（このファイル）
-- skin_improvement_note.md: 肌荒れ改善noteコンテンツ（200万費やした経験・30日ロードマップ・FAQ20選・サプリプラン等）
-- skin_playbook_3month.md: 肌荒れジャンル3ヶ月集客プレイブック（ゼロ→500〜1,000フォロワー・顔出しなし・note販売準備）
-- skin_x_launch_playbook.md: note販売X投稿プレイブック完全版（予告〜ローンチ〜販売終了までの全投稿テンプレ）
-- skin_x_auto_post.py: X自動投稿スクリプト（API有料のため現在使用不可）
-- skin_x_posts.json: 投稿データ（日常投稿7件＋販売用投稿7件）※Threads用スクリプトでも使用
-- skin_threads_auto_post.py: 肌荒れ改善プロジェクト用Threads自動投稿スクリプト（日常投稿21種ローテーション＋note販売用投稿）
-- skin_monetize_plan.md: 肌荒れThreadsアカウントのマネタイズ計画（フェーズ別・フォロワー増加施策含む）
-- ronin_threads_action.py: @RoninWords用Threads自動投稿スクリプト（GitHub Actions専用・1日4回・共通タグ自動付与）
-- .github/workflows/ronin_threads_post.yml: @RoninWords用GitHub Actionsワークフロー（毎日7/12/18/22時に自動投稿）
-
-## 学習履歴
-- 2026/4/23: 環境構築開始、おみくじプログラム作成
-- 2026/4/24: じゃんけん、天気予報プログラム
-- 2026/4/25: タイマー・数当てゲーム作成、指示術レッスン、learning_notes.md・CLAUDE.md作成、today_weekday.pyでCLAUDE.mdの効果体感、エラー自己解決（command not found）
-- 2026/4/27: @RoninWordsのThreads完全自動化達成（Meta for Developers認証、長期トークン取得、GitHub Actions構築、1日4回投稿）
-- (今後追記)
-
 ## よく使うコマンド
 ```bash
 # Threads手動投稿テスト
@@ -112,12 +72,8 @@ git status
 git add . && git commit -m "更新" && git push
 ```
 
-## Threadsトークン更新手順（60日ごと）
-1. Meta for Developers（developers.facebook.com）にログイン
-2. アプリ → Threadsアクセストークン → 長期トークン取得
-3. `.env` の `THREADS_ACCESS_TOKEN` を新しいトークンに書き換え
-4. GitHub の Secrets（Settings → Secrets）も同様に更新
-5. 期限目安: **2026/06/26頃**（リマインド予約済み）
+## Threadsトークン更新
+- 期限: **2026/06/26頃**（詳細手順は `threads_token_renewal.md` を参照）
 
 ## 困ったときの対応
 - エラーが出たらエラーメッセージを全文受け取って原因を特定
