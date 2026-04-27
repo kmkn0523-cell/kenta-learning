@@ -1,10 +1,19 @@
 # skin_threads_auto_post.py
-# 肌荒れ改善プロジェクト用 Threads投稿管理スクリプト
+# 肌荒れ改善プロジェクト用 Threads自動投稿スクリプト
 # 使い方: python3 skin_threads_auto_post.py
 
 import json                    # JSONファイルを扱う道具
 import os                      # ファイル操作に使う道具
+import requests                # インターネットにリクエストを送る道具
 from datetime import datetime  # 今の日時を取得する道具
+from dotenv import load_dotenv # .envファイルからAPIキーを読み込む道具
+
+# .envファイルを読み込む（APIキーを安全に管理するため）
+load_dotenv()
+
+# Threads APIに必要なキーを.envから読み込む
+THREADS_ACCESS_TOKEN = os.getenv("THREADS_ACCESS_TOKEN")
+THREADS_USER_ID      = os.getenv("THREADS_USER_ID")
 
 # 投稿データと進捗ファイルのパス
 POSTS_FILE    = "/home/kenta_kamijyo/skin_x_posts.json"
@@ -12,6 +21,41 @@ PROGRESS_FILE = "/home/kenta_kamijyo/skin_threads_progress.json"
 
 # 全投稿に自動でつけるハッシュタグ
 HASHTAGS = "\n\n#肌荒れ #大人ニキビ #肌荒れ改善 #ニキビ改善 #内側から綺麗に"
+
+
+def post_to_threads(text):
+    """Threads APIを使って実際に投稿する"""
+
+    # ステップ1: 投稿コンテナ（投稿の下書き）を作成する
+    container_url = f"https://graph.threads.net/{THREADS_USER_ID}/threads"
+    container_params = {
+        "media_type": "TEXT",        # テスト形式の投稿
+        "text": text,                # 投稿する文章
+        "access_token": THREADS_ACCESS_TOKEN
+    }
+    container_response = requests.post(container_url, params=container_params)
+    container_data = container_response.json()
+
+    # コンテナ作成に失敗した場合はエラーを返す
+    if "id" not in container_data:
+        return False, f"コンテナ作成失敗: {container_data}"
+
+    creation_id = container_data["id"]  # 下書きのID
+
+    # ステップ2: 下書きを実際に公開する
+    publish_url = f"https://graph.threads.net/{THREADS_USER_ID}/threads_publish"
+    publish_params = {
+        "creation_id": creation_id,
+        "access_token": THREADS_ACCESS_TOKEN
+    }
+    publish_response = requests.post(publish_url, params=publish_params)
+    publish_data = publish_response.json()
+
+    # 公開に失敗した場合はエラーを返す
+    if "id" not in publish_data:
+        return False, f"公開失敗: {publish_data}"
+
+    return True, publish_data["id"]  # 成功したら投稿IDを返す
 
 
 def load_posts():
@@ -37,7 +81,7 @@ def save_progress(progress):
 def show_menu():
     """メニューを表示する"""
     print("\n" + "="*50)
-    print("  肌荒れ改善プロジェクト Threads投稿管理")
+    print("  肌荒れ改善プロジェクト Threads自動投稿")
     print("="*50)
     print("1: 日常投稿（型①〜⑦をローテーション）")
     print("2: note販売用投稿（予告→ローンチ→終了）")
@@ -48,39 +92,51 @@ def show_menu():
     return input("番号を入力してください: ").strip()
 
 
-def show_post_and_confirm(post_type, content, progress, mode, index, posts):
-    """投稿文を表示して、コピペ後に完了確認する"""
+def post_and_record(post_type, content, progress, mode, index, posts):
+    """投稿文を表示してAPIで投稿し、進捗を記録する"""
+
+    full_text = content + HASHTAGS  # 投稿文＋ハッシュタグを合体させる
+
+    # 投稿内容をプレビュー表示する
     print(f"\n{'='*50}")
-    print(f"📋 投稿文（{post_type}）")
+    print(f"📋 投稿内容（{post_type}）")
     print(f"{'='*50}")
     print()
-    print(content + HASHTAGS)  # 投稿文＋ハッシュタグを表示する
+    print(full_text)
     print()
     print(f"{'='*50}")
-    print("👆 上の文をコピーしてThreadsに貼り付けてください")
-    print(f"{'='*50}")
 
-    # 投稿できたか確認する
-    confirm = input("\nThreadsに投稿できましたか？(y/n): ").strip().lower()
+    # 投稿前に確認する
+    confirm = input("\nこの内容でThreadsに投稿しますか？(y/n): ").strip().lower()
 
-    if confirm == "y":
-        # 進捗を更新する
+    if confirm != "y":
+        print("\n⏭ キャンセルしました")
+        return
+
+    # Threads APIで実際に投稿する
+    print("\n投稿中...")
+    success, result = post_to_threads(full_text)
+
+    if success:
+        print(f"✅ 投稿成功！（投稿ID: {result}）")
+
+        # 投稿日時を記録する
         now = datetime.now().strftime("%Y/%m/%d %H:%M")
 
         if mode == "daily":
             daily_posts = posts["daily_posts"]
-            progress["daily_index"] = (index + 1) % len(daily_posts)
+            progress["daily_index"] = (index + 1) % len(daily_posts)  # 次の番号に進める
             next_post = daily_posts[progress["daily_index"]]
-            print(f"\n✅ 記録しました！次回は「{next_post['type']}」の投稿です")
+            print(f"次回は「{next_post['type']}」の投稿です")
 
         elif mode == "launch":
             launch_posts = posts["launch_posts"]
-            progress["launch_index"] = index + 1
+            progress["launch_index"] = index + 1  # 次の番号に進める
             if index + 1 < len(launch_posts):
                 next_post = launch_posts[index + 1]
-                print(f"\n✅ 記録しました！次回は「{next_post['type']}」の投稿です")
+                print(f"次回は「{next_post['type']}」の投稿です")
             else:
-                print("\n✅ 販売用投稿がすべて完了しました！お疲れ様でした！")
+                print("販売用投稿がすべて完了しました！お疲れ様でした！")
 
         # 履歴に記録する
         if "history" not in progress:
@@ -88,21 +144,23 @@ def show_post_and_confirm(post_type, content, progress, mode, index, posts):
         progress["history"].append({
             "date": now,
             "type": post_type,
-            "mode": mode
+            "mode": mode,
+            "post_id": result
         })
 
-        save_progress(progress)
+        save_progress(progress)  # 進捗をファイルに保存する
+
     else:
-        print("\n⏭ スキップしました。次回また表示されます")
+        print(f"❌ 投稿失敗: {result}")
 
 
 def daily_post(posts, progress):
-    """日常投稿（型①〜⑦）を表示する"""
+    """日常投稿（型①〜⑦）を投稿する"""
     daily_posts = posts["daily_posts"]
     index = progress.get("daily_index", 0) % len(daily_posts)
     post  = daily_posts[index]
 
-    show_post_and_confirm(
+    post_and_record(
         post_type=post["type"],
         content=post["content"],
         progress=progress,
@@ -113,7 +171,7 @@ def daily_post(posts, progress):
 
 
 def launch_post(posts, progress):
-    """note販売用投稿を表示する"""
+    """note販売用投稿を投稿する"""
     launch_posts = posts["launch_posts"]
     index = progress.get("launch_index", 0)
 
@@ -123,7 +181,7 @@ def launch_post(posts, progress):
 
     post = launch_posts[index]
 
-    show_post_and_confirm(
+    post_and_record(
         post_type=post["type"],
         content=post["content"],
         progress=progress,
@@ -179,6 +237,11 @@ def main():
     print("=" * 50)
     print(f"  実行日時: {datetime.now().strftime('%Y/%m/%d %H:%M')}")
     print("=" * 50)
+
+    # APIキーが設定されているか確認する
+    if not THREADS_ACCESS_TOKEN or not THREADS_USER_ID:
+        print("❌ .envファイルにTHREADS_ACCESS_TOKENとTHREADS_USER_IDを設定してください")
+        return
 
     posts    = load_posts()
     progress = load_progress()
