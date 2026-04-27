@@ -1,5 +1,5 @@
 {
-  "numStartups": 33,
+  "numStartups": 34,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -11,7 +11,7 @@
     "enter-to-steer-in-relatime": 21,
     "todo-list": 21,
     "install-github-app": 33,
-    "install-slack-app": 24,
+    "install-slack-app": 34,
     "drag-and-drop-images": 24,
     "double-esc-code-restore": 25,
     "continue": 27,
@@ -496,7 +496,7 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
@@ -547,7 +547,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777275704221
+      "timestamp": 1777302422334
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
