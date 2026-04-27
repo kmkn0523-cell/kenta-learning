@@ -1,5 +1,5 @@
 {
-  "numStartups": 32,
+  "numStartups": 33,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -10,17 +10,17 @@
     "prompt-queue": 30,
     "enter-to-steer-in-relatime": 21,
     "todo-list": 21,
-    "install-github-app": 23,
+    "install-github-app": 33,
     "install-slack-app": 24,
     "drag-and-drop-images": 24,
     "double-esc-code-restore": 25,
     "continue": 27,
     "shift-tab": 29,
     "image-paste": 21,
-    "desktop-app": 18,
+    "desktop-app": 33,
     "color-when-multi-clauding": 31,
-    "web-app": 18,
-    "remote-control": 18,
+    "web-app": 33,
+    "remote-control": 33,
     "voice-mode": 29,
     "shift-enter": 28,
     "custom-agents": 21,
@@ -452,6 +452,7 @@
     "tengu_gouda_loop": true,
     "tengu_vscode_onboarding": false
   },
+  "unpinOpus47LaunchEffort": true,
   "firstStartTime": "2026-04-23T07:06:41.478Z",
   "opusProMigrationComplete": true,
   "sonnet1m45MigrationComplete": true,
@@ -577,7 +578,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777261846443
+      "timestamp": 1777275704221
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
