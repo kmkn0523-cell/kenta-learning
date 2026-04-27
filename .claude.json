@@ -1,5 +1,5 @@
 {
-  "numStartups": 36,
+  "numStartups": 39,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -14,18 +14,18 @@
     "install-slack-app": 34,
     "drag-and-drop-images": 34,
     "double-esc-code-restore": 35,
-    "continue": 27,
-    "shift-tab": 29,
+    "continue": 37,
+    "shift-tab": 39,
     "image-paste": 21,
     "desktop-app": 33,
     "color-when-multi-clauding": 31,
     "web-app": 33,
     "remote-control": 33,
-    "voice-mode": 29,
-    "shift-enter": 28,
+    "voice-mode": 39,
+    "shift-enter": 38,
     "custom-agents": 36,
-    "agent-flag": 22,
-    "feedback-command": 23,
+    "agent-flag": 37,
+    "feedback-command": 38,
     "permissions": 31,
     "rename-conversation": 27,
     "custom-commands": 27
@@ -496,12 +496,12 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
-      "lastGracefulShutdown": false,
+      "lastGracefulShutdown": true,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
       "lastToolDuration": 0,
-      "lastDuration": 366754,
+      "lastDuration": 56443,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
       "lastTotalInputTokens": 0,
@@ -509,18 +509,18 @@
       "lastTotalCacheCreationInputTokens": 0,
       "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 0.12,
-      "lastFpsLow1Pct": 72.37,
+      "lastFpsAverage": 1.11,
+      "lastFpsLow1Pct": 108.36,
       "lastModelUsage": {},
-      "lastSessionId": "e6faba25-f854-4a97-9f23-933252fd9e5c",
+      "lastSessionId": "e4f4d93a-dd02-4368-a4c3-f3d9a6f0a58d",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 39,
-        "frame_duration_ms_min": 0.1250479999998788,
-        "frame_duration_ms_max": 13.817043999999896,
-        "frame_duration_ms_avg": 1.5848886923054941,
-        "frame_duration_ms_p50": 0.3423060000059195,
-        "frame_duration_ms_p95": 8.854077600006713,
-        "frame_duration_ms_p99": 12.068955079993664
+        "frame_duration_ms_count": 62,
+        "frame_duration_ms_min": 0.11415600000327686,
+        "frame_duration_ms_max": 9.228508999999804,
+        "frame_duration_ms_avg": 1.0114270806448975,
+        "frame_duration_ms_p50": 0.5373694999992722,
+        "frame_duration_ms_p95": 2.8190501000026393,
+        "frame_duration_ms_p99": 8.373279850000426
       },
       "hasCompletedProjectOnboarding": true
     }
@@ -547,7 +547,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777302422334
+      "timestamp": 1777307485413
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
