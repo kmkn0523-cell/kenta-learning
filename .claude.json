@@ -1,5 +1,5 @@
 {
-  "numStartups": 31,
+  "numStartups": 32,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -31,6 +31,7 @@
     "custom-commands": 27
   },
   "promptQueueUseCount": 1,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_hayate": false,
     "tengu_ccr_bridge": true,
@@ -605,5 +606,6 @@
   },
   "feedbackSurveyState": {
     "lastShownTime": 1777223829986
-  }
+  },
+  "showSpinnerTree": false
 }
