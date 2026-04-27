@@ -1,5 +1,5 @@
 {
-  "numStartups": 35,
+  "numStartups": 36,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -496,7 +496,7 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,

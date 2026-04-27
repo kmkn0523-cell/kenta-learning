@@ -122,9 +122,46 @@ if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; 
   echo "$new_cache" > "${CACHE_FILE}.tmp" && mv "${CACHE_FILE}.tmp" "$CACHE_FILE"
 fi
 
+# --- OAuth APIから正確な使用量データを取得（claude.aiと同じ値）---
+# Claude Codeのstdin経由のrate_limitsはズレがあるため、本家APIから直接取得する
+oauth_data=""
+oauth_age=99999
+
+if [ -f "$OAUTH_CACHE" ] && [ -s "$OAUTH_CACHE" ]; then
+  oauth_age=$(($(date +%s) - $(get_mtime "$OAUTH_CACHE")))
+fi
+
+# キャッシュが新鮮ならそのまま使う、古ければ再取得
+if [ $oauth_age -lt $OAUTH_CACHE_TTL ]; then
+  oauth_data=$(cat "$OAUTH_CACHE")
+elif [ -f "$CREDENTIALS" ]; then
+  # OAuth トークンを取り出してAPIを叩く
+  oauth_token=$(jq -r '.claudeAiOauth.accessToken // empty' "$CREDENTIALS" 2>/dev/null)
+  if [ -n "$oauth_token" ]; then
+    fresh=$(curl -s --max-time 4 \
+      -H "Authorization: Bearer $oauth_token" \
+      -H "anthropic-version: 2023-06-01" \
+      -H "anthropic-beta: oauth-2025-04-20" \
+      -H "User-Agent: claude-cli/2.1.119 (external, cli)" \
+      "https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
+    # 正しいJSONが取れた場合のみキャッシュに保存
+    if [ -n "$fresh" ] && echo "$fresh" | jq -e '.five_hour' >/dev/null 2>&1; then
+      echo "$fresh" > "${OAUTH_CACHE}.tmp" && mv "${OAUTH_CACHE}.tmp" "$OAUTH_CACHE"
+      oauth_data="$fresh"
+    elif [ -f "$OAUTH_CACHE" ]; then
+      # 取得失敗 → 古いキャッシュをそのまま使う
+      oauth_data=$(cat "$OAUTH_CACHE")
+    fi
+  fi
+fi
+
+# ISO 8601 形式の日時を Unix epoch に変換する関数（Linux/macOS 両対応）
+iso_to_epoch() {
+  python3 -c "import datetime,sys; s=sys.argv[1].replace('Z','+00:00'); print(int(datetime.datetime.fromisoformat(s).timestamp()))" "$1" 2>/dev/null
+}
+
 # --- 表示用の値を決定 ---
-# 優先順位: このターミナルの入力値 > キャッシュ（他ターミナルの値）
-# 入力値があればそれを使う。入力にない値だけキャッシュからフォールバック。
+# 優先順位: OAuth API（claude.ai同等の正確な値） > stdin入力 > キャッシュ
 cached=""
 if [ -f "$CACHE_FILE" ] && [ -s "$CACHE_FILE" ]; then
   raw=$(cat "$CACHE_FILE")
@@ -133,7 +170,21 @@ if [ -f "$CACHE_FILE" ] && [ -s "$CACHE_FILE" ]; then
   fi
 fi
 
-# 入力値を優先、なければキャッシュから取得する関数
+# OAuth APIの値があればそれを使う（最優先）
+five_used=""
+five_reset=""
+week_used=""
+week_reset=""
+if [ -n "$oauth_data" ] && echo "$oauth_data" | jq -e '.five_hour' >/dev/null 2>&1; then
+  five_used=$(echo "$oauth_data" | jq -r '.five_hour.utilization // empty')
+  five_reset_iso=$(echo "$oauth_data" | jq -r '.five_hour.resets_at // empty')
+  [ -n "$five_reset_iso" ] && five_reset=$(iso_to_epoch "$five_reset_iso")
+  week_used=$(echo "$oauth_data" | jq -r '.seven_day.utilization // empty')
+  week_reset_iso=$(echo "$oauth_data" | jq -r '.seven_day.resets_at // empty')
+  [ -n "$week_reset_iso" ] && week_reset=$(iso_to_epoch "$week_reset_iso")
+fi
+
+# OAuth取得できなかった項目は stdin入力 → キャッシュの順でフォールバック
 pick() {
   local input_val="$1"
   local cache_key="$2"
@@ -144,11 +195,11 @@ pick() {
   fi
 }
 
-five_used=$(pick "$new_five_used"   "five_used")
-five_reset=$(pick "$new_five_reset" "five_reset")
-week_used=$(pick "$new_week_used"   "week_used")
-week_reset=$(pick "$new_week_reset" "week_reset")
-used_pct=$(pick "$new_ctx_pct"      "ctx_pct")
+[ -z "$five_used" ]  && five_used=$(pick "$new_five_used"   "five_used")
+[ -z "$five_reset" ] && five_reset=$(pick "$new_five_reset" "five_reset")
+[ -z "$week_used" ]  && week_used=$(pick "$new_week_used"   "week_used")
+[ -z "$week_reset" ] && week_reset=$(pick "$new_week_reset" "week_reset")
+used_pct=$(pick "$new_ctx_pct" "ctx_pct")
 
 # リセットまでの残り時間を「X時間Y分後」形式に変換する関数
 format_reset() {
