@@ -593,8 +593,8 @@
   "remoteControlUpsellSeenCount": 3,
   "skillUsage": {
     "update-config": {
-      "usageCount": 6,
-      "lastUsedAt": 1777205763803
+      "usageCount": 7,
+      "lastUsedAt": 1777264041021
     }
   },
   "opus47LaunchSeenCount": 5,
