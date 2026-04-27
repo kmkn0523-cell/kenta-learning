@@ -7,6 +7,10 @@ input=$(cat)  # Claude Codeから送られてくるJSON情報を受け取る
 
 # --- 共有キャッシュファイルの場所（$HOMEを使うことでLinux/Mac両対応）---
 CACHE_FILE="$HOME/.claude/statusline-cache.json"
+# OAuth API（claude.aiと同じ正確な使用量データ）のキャッシュ
+OAUTH_CACHE="$HOME/.claude/oauth-usage-cache.json"
+OAUTH_CACHE_TTL=60  # 60秒キャッシュ（無駄なAPI呼び出しを防ぐ）
+CREDENTIALS="$HOME/.claude/.credentials.json"
 
 # ANSIカラーコード（ターミナルの色付け用）
 GREEN=$'\033[32m'   # 緑色の開始
@@ -86,16 +90,6 @@ new_week_used=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage //
 new_week_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 new_ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
-# --- デバッグログ（バグ調査用・後で消す）---
-DEBUG_LOG="$HOME/.claude/statusline-debug.log"
-FULL_LOG="$HOME/.claude/statusline-input-full.log"
-debug_ts=$(date '+%H:%M:%S')
-echo "[$debug_ts] IN  five=$new_five_used/$new_five_reset week=$new_week_used/$new_week_reset ctx=$new_ctx_pct" >> "$DEBUG_LOG"
-# 全入力JSONを1回だけ記録（既にあれば追記しない）
-if [ ! -s "$FULL_LOG" ]; then
-  echo "$input" | jq . > "$FULL_LOG" 2>/dev/null
-fi
-
 if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; then
   # 新しい使用量データがある場合だけキャッシュを更新する
   if [ -f "$CACHE_FILE" ]; then
@@ -126,9 +120,6 @@ if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; 
     ')
   # キャッシュファイルに書き出す（一時ファイル経由で安全に上書き）
   echo "$new_cache" > "${CACHE_FILE}.tmp" && mv "${CACHE_FILE}.tmp" "$CACHE_FILE"
-  # デバッグ: 書き込み後のキャッシュ値
-  log_after=$(echo "$new_cache" | jq -c '{five:.five_used,five_r:.five_reset,week:.week_used,week_r:.week_reset,ctx:.ctx_pct}')
-  echo "[$debug_ts] OUT $log_after" >> "$DEBUG_LOG"
 fi
 
 # --- 表示用の値を決定 ---
