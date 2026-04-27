@@ -20,7 +20,7 @@ POSTS_FILE    = "/home/kenta_kamijyo/skin_x_posts.json"
 PROGRESS_FILE = "/home/kenta_kamijyo/skin_threads_progress.json"
 
 # 全投稿に自動でつけるハッシュタグ
-HASHTAGS = "\n\n#肌荒れ #大人ニキビ #肌荒れ改善 #ニキビ改善 #内側から綺麗に"
+HASHTAGS = "\n\n#肌荒れ #大人ニキビ #ニキビ改善 #腸活 #美肌習慣"
 
 
 def post_to_threads(text):
