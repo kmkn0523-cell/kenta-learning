@@ -1,6 +1,6 @@
 # TODO リスト
 
-最終更新: 2026/04/27（朝）
+最終更新: 2026/04/27（夜）
 
 ---
 
@@ -8,7 +8,7 @@
 
 - [ ] note: 肌荒れ改善noteの販売準備（価格設定・公開日決め）
 - [ ] 肌荒れ改善Threads: 画像投稿対応（Pillowで画像生成→GitHub→Threads）
-- [ ] @RoninWords のThreads自動投稿も同じ仕組みで動かす
+- [ ] @RoninWords: Day31以降のThreads投稿文を作る
 
 ---
 
@@ -16,16 +16,17 @@
 
 ### 1. @RoninWords（書道カード・Threads/X）
 
-**現状**: Threads投稿文Day01〜30作成済み、自動投稿スクリプト＋GitHub Actions構築済み（**Facebook認証で停止中・実投稿はまだ0件**）
+**現状**: Threads自動投稿稼働中（1日4回・7:17/12:17/18:17/22:17 JST）。投稿文Day01〜30をローテーション中。
 
 #### 運用
-- [ ] Facebook認証問題が解決したらAPIキーを取得して.envに設定
-- [ ] それまでは手動でThreads投稿を継続するか検討
-- [ ] Day31以降のThreads投稿文を作る（今はDay30まで）
+- [x] Facebook認証問題解決・APIキー取得・.envに設定（2026/04/27完了）
+- [x] GitHub Actions自動投稿稼働（cron混雑回避で17分発火に修正済み）
+- [ ] Day31以降のThreads投稿文を作る（今はDay30までをローテーション中）
 - [ ] X（Twitter）の運用開始（Day01スケジュールから）
 - [ ] TikTok/Reels用の動画台本（30本作成済み）から1本作って投稿
 
 #### 改善
+- [ ] 画像投稿対応（書道カード画像をThreadsに自動投稿）
 - [ ] フォロワー数・反応をスプレッドシートで記録する仕組み
 - [ ] 反応の良かった投稿パターンを分析する
 
@@ -36,11 +37,12 @@
 
 ### 2. 肌荒れ改善note（Threads・note販売）
 
-**現状**: noteコンテンツ作成済み、Threads自動投稿スクリプト作成済み、**手動でローテーション7投稿実施（型①〜⑦が1周完了、次は型①の2周目）**
+**現状**: noteコンテンツ作成済み、Threads自動投稿1日4回稼働中（7:07/12:07/18:07/22:07 JST）
 
 #### 自動化（完了）
 - [x] Meta for Developers認証・APIキー取得
-- [x] Threads自動投稿をGitHub Actionsに乗せる（1日4回: 7:00/12:00/18:00/22:00）
+- [x] Threads自動投稿をGitHub Actionsに乗せる（1日4回稼働中）
+- [x] cron混雑回避（7分発火に修正済み）
 
 #### 改善
 - [ ] 画像投稿対応（Pillowで画像生成→GitHubにホスト→Threads画像投稿）
@@ -66,11 +68,11 @@
 
 ### 3. Python学習
 
-**現状**: 6つのプログラム作成済み（おみくじ〜曜日表示）
+**現状**: 7つのプログラム作成済み（おみくじ〜ronin自動投稿）
 
 - [ ] `learning_notes.md` の「今後の学習予定」を進める
   - [ ] エラー対応の型を身につける
-  - [ ] 定期実行の仕組み（cron / クラウド）← GitHub Actionsで部分達成
+  - [x] 定期実行の仕組み（cron / クラウド）← GitHub Actionsで達成
 - [ ] 何か1つ新しい小さなプログラムを作る（楽しむ用）
 
 ---
@@ -78,11 +80,12 @@
 ### 4. インフラ・自動化
 
 - [x] auto_sync.sh（自動バックアップ）
-- [x] GitHub Actionsの仕組み構築（@RoninWords用） ※Facebook認証で停止中
-- [x] Claude Code ステータスバー整備（気温幅追加・使用率バグ修正・カニ停止）
+- [x] GitHub Actionsの仕組み構築（skin + @RoninWords両方稼働中）
+- [x] Claude Code ステータスバー整備（蛍光水色・気温幅・使用率・カニ停止）
 - [x] Claude Code 設定をGitHub同期 → MacBookでもすぐ同じ環境が使える
-- [x] Facebook認証問題を解決してAPIキー取得
-- [x] 肌荒れ改善もGitHub Actions化（1日4回自動投稿稼働中）
+- [x] Facebook認証問題を解決してAPIキー取得（skin + ronin両方）
+- [x] cron混雑回避修正（skin=7分・ronin=17分発火）
+- [x] 60日後トークン期限リマインドをスケジュール予約（2026/06/20 9:00）
 - [ ] 投稿ログを1箇所にまとめて見られるようにする
 
 ---
@@ -100,12 +103,15 @@
 - [x] 2026/04/23 環境構築・おみくじ作成
 - [x] 2026/04/24 じゃんけん・天気予報作成
 - [x] 2026/04/25 タイマー・数当て・曜日表示・CLAUDE.md作成
-- [x] 2026/04/26 @RoninWords Threads自動投稿スクリプト＋GitHub Actions構築（認証で詰まり中）
+- [x] 2026/04/26 @RoninWords Threads自動投稿スクリプト＋GitHub Actions構築
 - [x] 2026/04/26 肌荒れ改善noteコンテンツ・Threads投稿スクリプト作成
 - [x] 2026/04/26 肌荒れ改善Threadsを手動でローテーション投稿（型①〜⑦の1周完了）
-- [x] 2026/04/27 ステータスバー整備（カニ停止・気温幅追加・使用率バグ修正・Linux/Mac両対応）
+- [x] 2026/04/27 ステータスバー整備（蛍光水色・気温幅追加・使用率バグ修正・Linux/Mac両対応）
 - [x] 2026/04/27 Claude Code設定をGitHub同期（MacBookでもすぐ使える環境に）
-- [x] 2026/04/27 Meta認証突破・Threads APIキー取得・GitHub Actions自動投稿稼働（1日4回）
+- [x] 2026/04/27 Meta認証突破・skin + ronin両アカウントのThreads APIキー取得
+- [x] 2026/04/27 @RoninWordsのThreads完全自動化（1日4回・GitHub Actions稼働）
+- [x] 2026/04/27 skin/roninのcron混雑問題修正（0分→7分/17分発火）
+- [x] 2026/04/27 60日後トークン更新・翌日cron確認のリマインドをスケジュール予約
 
 ---
 
