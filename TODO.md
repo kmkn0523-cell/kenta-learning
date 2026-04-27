@@ -21,7 +21,7 @@
 #### 運用
 - [x] Facebook認証問題解決・APIキー取得・.envに設定（2026/04/27完了）
 - [x] GitHub Actions自動投稿稼働（cron混雑回避で17分発火に修正済み）
-- [ ] Day31以降のThreads投稿文を作る（今はDay30までをローテーション中）
+- [x] Day31以降のThreads投稿文を作る（Day31〜60完成・threads_posts.jsonに追加済み）
 - [ ] X（Twitter）の運用開始（Day01スケジュールから）
 - [ ] TikTok/Reels用の動画台本（30本作成済み）から1本作って投稿
 
