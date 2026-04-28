@@ -35,8 +35,8 @@
 - 改造時は「既存機能を壊さない」を徹底する
 
 ## 稼働中の自動化システム
-- **@RoninWords Threads自動投稿**: 1日4回（7:17/12:17/18:17/22:17 JST）GitHub Actions経由
-- **skin（肌荒れ）Threads自動投稿**: 1日4回（7:07/12:07/18:07/22:07 JST）GitHub Actions経由
+- **@RoninWords Threads自動投稿**: 1日16回（7:30〜22:30 毎時30分 JST）GitHub Actions経由
+- **skin（肌荒れ）Threads自動投稿**: 1日16回（7:30〜22:30 毎時30分 JST）GitHub Actions経由
 - **Threadsトークン期限**: 2026/06/26頃（60日後にリマインド予約済み）
 - 投稿データ: `threads_posts.json`（Day01〜60の朝夜120投稿をローテーション）
 - 進捗管理: `ronin_threads_progress.json`（次に投稿する番号を記録）
