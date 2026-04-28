@@ -1,5 +1,5 @@
 {
-  "numStartups": 43,
+  "numStartups": 44,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -494,7 +494,7 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 1.8113119999999998,
       "lastAPIDuration": 785467,
       "lastAPIDurationWithoutRetries": 785234,
@@ -579,7 +579,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777378264628
+      "timestamp": 1777386963670
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
