@@ -16,8 +16,8 @@ THREADS_ACCESS_TOKEN = os.getenv("THREADS_ACCESS_TOKEN")
 THREADS_USER_ID      = os.getenv("THREADS_USER_ID")
 
 # 投稿データと進捗ファイルのパス
-POSTS_FILE    = "/home/kenta_kamijyo/skin_x_posts.json"
-PROGRESS_FILE = "/home/kenta_kamijyo/skin_threads_progress.json"
+POSTS_FILE    = "/home/kenta_kamijyo/skin/skin_x_posts.json"
+PROGRESS_FILE = "/home/kenta_kamijyo/skin/skin_threads_progress.json"
 
 # 全投稿に自動でつけるハッシュタグ
 HASHTAGS = "\n\n#肌荒れ #大人ニキビ #ニキビ改善 #腸活 #美肌習慣"
