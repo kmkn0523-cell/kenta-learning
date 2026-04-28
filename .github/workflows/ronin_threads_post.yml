@@ -48,7 +48,7 @@ jobs:
       - name: 進捗ファイルをキャッシュから復元
         uses: actions/cache@v4
         with:
-          path: ronin_threads_progress.json
+          path: ronin/ronin_threads_progress.json
           key: ronin-threads-progress-${{ github.run_id }}
           restore-keys: |
             ronin-threads-progress-
@@ -58,11 +58,11 @@ jobs:
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.RONIN_THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.RONIN_THREADS_USER_ID }}
-        run: python ronin_threads_action.py
+        run: cd ronin && python ronin_threads_action.py
 
       # Step 6: 更新した進捗ファイルをキャッシュに保存する
       - name: 進捗ファイルをキャッシュに保存
         uses: actions/cache@v4
         with:
-          path: ronin_threads_progress.json
+          path: ronin/ronin_threads_progress.json
           key: ronin-threads-progress-${{ github.run_id }}

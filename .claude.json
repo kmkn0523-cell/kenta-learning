@@ -27,7 +27,7 @@
     "agent-flag": 37,
     "feedback-command": 38,
     "permissions": 41,
-    "rename-conversation": 27,
+    "rename-conversation": 42,
     "custom-commands": 27
   },
   "promptQueueUseCount": 1,

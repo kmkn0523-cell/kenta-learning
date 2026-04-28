@@ -48,7 +48,7 @@ jobs:
       - name: 進捗ファイルをキャッシュから復元
         uses: actions/cache@v4
         with:
-          path: skin_threads_progress.json
+          path: skin/skin_threads_progress.json
           key: skin-threads-progress-${{ github.run_id }}
           restore-keys: |
             skin-threads-progress-
@@ -58,11 +58,11 @@ jobs:
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
-        run: python skin_threads_action.py
+        run: cd skin && python skin_threads_action.py
 
       # Step 6: 更新した進捗ファイルをキャッシュに保存する
       - name: 進捗ファイルをキャッシュに保存
         uses: actions/cache@v4
         with:
-          path: skin_threads_progress.json
+          path: skin/skin_threads_progress.json
           key: skin-threads-progress-${{ github.run_id }}
