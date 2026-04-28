@@ -28,7 +28,7 @@
     "feedback-command": 38,
     "permissions": 41,
     "rename-conversation": 42,
-    "custom-commands": 27
+    "custom-commands": 42
   },
   "promptQueueUseCount": 1,
   "cachedGrowthBookFeatures": {
