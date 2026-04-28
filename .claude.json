@@ -1,5 +1,5 @@
 {
-  "numStartups": 41,
+  "numStartups": 42,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -494,7 +494,7 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 2.44054765,
       "lastAPIDuration": 843275,
       "lastAPIDurationWithoutRetries": 842511,
@@ -566,7 +566,7 @@
       "timestamp": 1777346146828
     }
   },
-  "closedIssuesLastChecked": 1777255825704,
+  "closedIssuesLastChecked": 1777346767601,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {
@@ -576,7 +576,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777312007507
+      "timestamp": 1777346767943
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
