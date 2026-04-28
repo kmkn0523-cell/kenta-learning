@@ -5,7 +5,14 @@
 name: Threads 自動投稿
 
 on:
-  workflow_dispatch:  # cron-job.orgから外部トリガーで起動する
+  # GitHub自前のスケジュール実行（UTC時間で指定・JST = UTC+9）
+  # JST 7:07 = UTC 22:07(前日) / 12:07 = UTC 3:07 / 18:07 = UTC 9:07 / 22:07 = UTC 13:07
+  schedule:
+    - cron: '7 22 * * *'   # JST 7:07
+    - cron: '7 3 * * *'    # JST 12:07
+    - cron: '7 9 * * *'    # JST 18:07
+    - cron: '7 13 * * *'   # JST 22:07
+  workflow_dispatch:  # 手動実行・テスト用
 
 jobs:
   post:

@@ -5,7 +5,14 @@
 name: Ronin Threads 自動投稿
 
 on:
-  workflow_dispatch:  # cron-job.orgから外部トリガーで起動する
+  # GitHub自前のスケジュール実行（UTC時間で指定・JST = UTC+9）
+  # JST 7:17 = UTC 22:17(前日) / 12:17 = UTC 3:17 / 18:17 = UTC 9:17 / 22:17 = UTC 13:17
+  schedule:
+    - cron: '17 22 * * *'   # JST 7:17
+    - cron: '17 3 * * *'    # JST 12:17
+    - cron: '17 9 * * *'    # JST 18:17
+    - cron: '17 13 * * *'   # JST 22:17
+  workflow_dispatch:  # 手動実行・テスト用
 
 jobs:
   post:
