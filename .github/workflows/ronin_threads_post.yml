@@ -1,18 +1,44 @@
 # ronin_threads_post.yml
 # @RoninWords用 GitHub Actionsワークフロー
-# 1日4回、決まった時間に自動でThreadsに投稿する
+# 毎日16回、決まった時間に自動でThreadsに投稿する
 
 name: Ronin Threads 自動投稿
 
 on:
-  # GitHub自前のスケジュール実行（UTC時間で指定・JST = UTC+9）
-  # JST 7:17 = UTC 22:17(前日) / 12:17 = UTC 3:17 / 18:17 = UTC 9:17 / 22:17 = UTC 13:17
   schedule:
-    - cron: '17 22 * * *'   # JST 7:17
-    - cron: '17 3 * * *'    # JST 12:17
-    - cron: '17 9 * * *'    # JST 18:17
-    - cron: '17 13 * * *'   # JST 22:17
-  workflow_dispatch:  # 手動実行・テスト用
+    # 07:30 JST = 22:30 UTC
+    - cron: '30 22 * * *'
+    # 08:30 JST = 23:30 UTC
+    - cron: '30 23 * * *'
+    # 09:30 JST = 00:30 UTC
+    - cron: '30 0 * * *'
+    # 10:30 JST = 01:30 UTC
+    - cron: '30 1 * * *'
+    # 11:30 JST = 02:30 UTC
+    - cron: '30 2 * * *'
+    # 12:30 JST = 03:30 UTC
+    - cron: '30 3 * * *'
+    # 13:30 JST = 04:30 UTC
+    - cron: '30 4 * * *'
+    # 14:30 JST = 05:30 UTC
+    - cron: '30 5 * * *'
+    # 15:30 JST = 06:30 UTC
+    - cron: '30 6 * * *'
+    # 16:30 JST = 07:30 UTC
+    - cron: '30 7 * * *'
+    # 17:30 JST = 08:30 UTC
+    - cron: '30 8 * * *'
+    # 18:30 JST = 09:30 UTC
+    - cron: '30 9 * * *'
+    # 19:30 JST = 10:30 UTC
+    - cron: '30 10 * * *'
+    # 20:30 JST = 11:30 UTC
+    - cron: '30 11 * * *'
+    # 21:30 JST = 12:30 UTC
+    - cron: '30 12 * * *'
+    # 22:30 JST = 13:30 UTC
+    - cron: '30 13 * * *'
+  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
 
 jobs:
   post:
