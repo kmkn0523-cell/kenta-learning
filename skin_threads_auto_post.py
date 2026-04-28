@@ -95,7 +95,11 @@ def show_menu():
 def post_and_record(post_type, content, progress, mode, index, posts):
     """投稿文を表示してAPIで投稿し、進捗を記録する"""
 
-    full_text = content + HASHTAGS  # 投稿文＋ハッシュタグを合体させる
+    # ローンチ投稿はURLが入っているのでハッシュタグを付けない
+    if mode == "launch":
+        full_text = content
+    else:
+        full_text = content + HASHTAGS  # 日常投稿は投稿文＋ハッシュタグを合体させる
 
     # 投稿内容をプレビュー表示する
     print(f"\n{'='*50}")
