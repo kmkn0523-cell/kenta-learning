@@ -106,7 +106,11 @@ def main():
     post  = posts[index]
 
     # 本文に共通ハッシュタグを追加
-    full_text = post["content"] + HASHTAGS
+    # Threads APIの上限は500文字なので、超える場合は末尾を「…」でカットする
+    content = post["content"]
+    if len(content + HASHTAGS) > 500:
+        content = content[:500 - len(HASHTAGS) - 1] + "…"
+    full_text = content + HASHTAGS
 
     print(f"投稿番号: {index + 1}/{len(posts)}")
     print(f"投稿タイプ: Day{post['day']:02d} {post['type']}")
