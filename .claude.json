@@ -28,9 +28,10 @@
     "feedback-command": 38,
     "permissions": 41,
     "rename-conversation": 42,
-    "custom-commands": 42
+    "custom-commands": 42,
+    "frontend-design-plugin": 47
   },
-  "promptQueueUseCount": 1,
+  "promptQueueUseCount": 3,
   "cachedGrowthBookFeatures": {
     "tengu_flint_harbor": false,
     "tengu_satin_quoll": {},
