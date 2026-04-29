@@ -1,9 +1,4 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash /home/kenta_kamijyo/.claude/statusline-command.sh",
-    "refreshInterval": 10
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -16,8 +11,16 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/kenta_kamijyo/.claude/statusline-command.sh",
+    "refreshInterval": 10
+  },
   "language": "japanese",
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "enabledPlugins": {
+    "vercel@claude-plugins-official": true
+  }
 }
