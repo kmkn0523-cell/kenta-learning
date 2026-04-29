@@ -29,7 +29,8 @@
     "permissions": 41,
     "rename-conversation": 42,
     "custom-commands": 42,
-    "frontend-design-plugin": 47
+    "frontend-design-plugin": 47,
+    "default-permission-mode-config": 47
   },
   "promptQueueUseCount": 4,
   "cachedGrowthBookFeatures": {
