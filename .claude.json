@@ -11,9 +11,9 @@
     "enter-to-steer-in-relatime": 41,
     "todo-list": 41,
     "install-github-app": 43,
-    "install-slack-app": 34,
-    "drag-and-drop-images": 34,
-    "double-esc-code-restore": 35,
+    "install-slack-app": 45,
+    "drag-and-drop-images": 45,
+    "double-esc-code-restore": 45,
     "continue": 37,
     "shift-tab": 39,
     "image-paste": 41,
@@ -524,9 +524,9 @@
         "frame_duration_ms_p99": 14.22624129000007
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "d56c6181-e9ca-4fc3-85dd-376d3c9320ff",
-      "lastSessionFirstPrompt": "肌荒れスレッズの自動投稿内容、よりブラッシュアップしたい。",
-      "lastSessionModified": 1777378551243
+      "lastHintSessionId": "4d025a8a-c364-4dae-bc7f-7d88898dc634",
+      "lastSessionFirstPrompt": "自動投稿が無事走ったか検証して",
+      "lastSessionModified": 1777424825696
     }
   },
   "penguinModeOrgEnabled": false,
