@@ -2,7 +2,7 @@
 # GitHub Actionsのワークフローファイル
 # 毎日16回、決まった時間に自動でThreadsに投稿する
 
-name: Threads 自動投稿
+name: skin Threads 自動投稿
 
 on:
   schedule:
