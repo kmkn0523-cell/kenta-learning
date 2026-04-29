@@ -5,6 +5,7 @@
 
 import json                    # JSONファイルを扱う道具
 import os                      # 環境変数を読み込む道具
+import time                    # 待機処理に使う道具
 import requests                # インターネットにリクエストを送る道具
 from datetime import datetime  # 今の日時を取得する道具
 
@@ -37,6 +38,10 @@ def post_to_threads(text):
         raise Exception(f"コンテナ作成失敗: {data}")
 
     creation_id = data["id"]
+
+    # Threads APIはコンテナ作成後すぐに公開するとエラーになるため30秒待つ
+    print("コンテナ作成完了。30秒待機中...")
+    time.sleep(30)
 
     # ステップ2: 下書きを実際に公開する
     publish_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads_publish"
