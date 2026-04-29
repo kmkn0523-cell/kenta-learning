@@ -4,6 +4,18 @@
     "command": "bash /home/kenta_kamijyo/.claude/statusline-command.sh",
     "refreshInterval": 10
   },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rm -f ~/.claude/oauth-usage-cache.json"
+          }
+        ]
+      }
+    ]
+  },
   "language": "japanese",
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
