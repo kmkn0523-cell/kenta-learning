@@ -601,5 +601,7 @@
     "plugin": [
       "vercel@claude-plugins-official"
     ]
-  }
+  },
+  "hasUsedRemoteControl": true,
+  "remoteDialogSeen": true
 }
