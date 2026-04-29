@@ -16,11 +16,11 @@
     "command": "bash /home/kenta_kamijyo/.claude/statusline-command.sh",
     "refreshInterval": 10
   },
+  "enabledPlugins": {
+    "vercel@claude-plugins-official": true
+  },
   "language": "japanese",
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
-  "agentPushNotifEnabled": true,
-  "enabledPlugins": {
-    "vercel@claude-plugins-official": true
-  }
+  "agentPushNotifEnabled": true
 }
