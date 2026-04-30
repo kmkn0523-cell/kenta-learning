@@ -1,5 +1,5 @@
 {
-  "numStartups": 53,
+  "numStartups": 54,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -500,8 +500,14 @@
       "projectOnboardingSeenCount": 2,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "lastGracefulShutdown": true,
+      "exampleFiles": [
+        "skin_threads_auto_post.py",
+        "ronin_threads_action.py",
+        "skin_threads_action.py",
+        "finance_app.jsx",
+        "threads_auto_post.py"
+      ],
+      "lastGracefulShutdown": false,
       "lastCost": 4.863251,
       "lastAPIDuration": 922503,
       "lastAPIDurationWithoutRetries": 922353,
@@ -561,7 +567,8 @@
       "hasCompletedProjectOnboarding": true,
       "lastHintSessionId": "892d87a2-6a40-448f-ad59-3bd843a0d370",
       "lastSessionFirstPrompt": "Xでこの１週間にバズった投稿を教えて。インプ1000万以上",
-      "lastSessionModified": 1777535832741
+      "lastSessionModified": 1777535832741,
+      "exampleFilesGeneratedAt": 1777555353566
     }
   },
   "penguinModeOrgEnabled": false,
@@ -586,7 +593,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777534572277
+      "timestamp": 1777555353651
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
