@@ -22,6 +22,9 @@ PROGRESS_FILE = "/home/kenta_kamijyo/skin/skin_threads_progress.json"
 # 全投稿に自動でつけるハッシュタグ
 HASHTAGS = "\n\n#肌荒れ #大人ニキビ #ニキビ改善 #腸活 #美肌習慣"
 
+# 全投稿の末尾に追加するひとこと（フォロー誘導・押しつけがましくならない程度に）
+CTA = "\n\n参考になったら保存しておくと◎\n毎日更新中なのでフォローもぜひ。"
+
 
 def post_to_threads(text):
     """Threads APIを使って実際に投稿する"""
@@ -99,7 +102,7 @@ def post_and_record(post_type, content, progress, mode, index, posts):
     if mode == "launch":
         full_text = content
     else:
-        full_text = content + HASHTAGS  # 日常投稿は投稿文＋ハッシュタグを合体させる
+        full_text = content + CTA + HASHTAGS  # 日常投稿は投稿文＋CTA＋ハッシュタグを合体させる
 
     # 投稿内容をプレビュー表示する
     print(f"\n{'='*50}")

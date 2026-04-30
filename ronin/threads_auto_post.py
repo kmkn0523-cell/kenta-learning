@@ -22,6 +22,9 @@ USER_ID      = os.getenv("THREADS_USER_ID")        # ThreadsのユーザーID
 POSTS_FILE = os.path.join(os.path.dirname(__file__), "threads_posts.json")  # 投稿データ
 LOG_FILE   = os.path.join(os.path.dirname(__file__), "threads_post_log.json")  # 進捗ログ
 
+# 全投稿の末尾に追加するひとこと（フォロー誘導・押しつけがましくならない程度に）
+CTA = "\n\nFollow for one Japanese wisdom, every day."
+
 
 # =============================
 # Threads APIへの投稿処理
@@ -201,8 +204,8 @@ def main():
     print(text[:100] + "..." if len(text) > 100 else text)  # 先頭100文字だけ表示
     print("-" * 40)
 
-    # Threadsに投稿する
-    success = post_to_threads(text)
+    # Threadsに投稿する（末尾にCTAを追加）
+    success = post_to_threads(text + CTA)
 
     if success:
         advance_log(day, time_of_day)
