@@ -15,14 +15,14 @@
     "drag-and-drop-images": 45,
     "double-esc-code-restore": 45,
     "continue": 47,
-    "shift-tab": 39,
+    "shift-tab": 49,
     "image-paste": 41,
-    "desktop-app": 33,
+    "desktop-app": 49,
     "color-when-multi-clauding": 41,
-    "web-app": 33,
+    "web-app": 49,
     "remote-control": 33,
-    "voice-mode": 39,
-    "shift-enter": 38,
+    "voice-mode": 49,
+    "shift-enter": 49,
     "custom-agents": 36,
     "agent-flag": 37,
     "feedback-command": 38,
@@ -526,9 +526,9 @@
         "hook_duration_ms_p99": 652
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "2ce1ba71-a071-4112-81a9-0adc560452b4",
-      "lastSessionFirstPrompt": "家計管理アプリどこだっけ",
-      "lastSessionModified": 1777437896387
+      "lastHintSessionId": "2958f136-8701-4f7d-9495-9bfd9e0a9f70",
+      "lastSessionFirstPrompt": "Higgsfield MCP連携できる？",
+      "lastSessionModified": 1777516360267
     }
   },
   "penguinModeOrgEnabled": false,
