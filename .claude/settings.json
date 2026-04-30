@@ -22,5 +22,6 @@
   "language": "japanese",
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
   "agentPushNotifEnabled": true
 }
