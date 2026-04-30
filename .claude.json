@@ -484,7 +484,16 @@
     "/home/kenta_kamijyo": {
       "allowedTools": [],
       "mcpContextUris": [],
-      "mcpServers": {},
+      "mcpServers": {
+        "browser-mcp": {
+          "type": "stdio",
+          "command": "npx",
+          "args": [
+            "@browsermcp/mcp@latest"
+          ],
+          "env": {}
+        }
+      },
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
       "hasTrustDialogAccepted": true,
