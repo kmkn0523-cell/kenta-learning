@@ -19,11 +19,6 @@
   "enabledPlugins": {
     "vercel@claude-plugins-official": true
   },
-  "language": "japanese",
-  "effortLevel": "medium",
-  "skipDangerousModePermissionPrompt": true,
-  "theme": "dark",
-  "agentPushNotifEnabled": true,
   "extraKnownMarketplaces": {
     "last30days-skill": {
       "source": {
@@ -31,5 +26,10 @@
         "repo": "mvanhorn/last30days-skill"
       }
     }
-  }
+  },
+  "language": "japanese",
+  "effortLevel": "medium",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "agentPushNotifEnabled": true
 }
