@@ -1,5 +1,5 @@
 {
-  "numStartups": 48,
+  "numStartups": 49,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -492,7 +492,7 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
@@ -553,7 +553,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777460663917
+      "timestamp": 1777515660637
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
@@ -562,7 +562,8 @@
     "claude.ai Google Calendar",
     "claude.ai Gmail",
     "claude.ai Google Drive",
-    "claude.ai Spotify"
+    "claude.ai Spotify",
+    "claude.ai Higgsfield"
   ],
   "cachedExtraUsageDisabledReason": "org_level_disabled",
   "hasIdeOnboardingBeenShown": {
