@@ -55,11 +55,48 @@
 - 新しくプログラムを作ったら learning_notes.md の「作成したプログラム」表に追記する
 - APIキー・パスワードなどの秘密情報は必ず `.env` ファイルに保存し、コードに直接書かない
 
+## 主要ファイル一覧
+
+### フォルダ構成
+```
+/home/kenta_kamijyo/
+├── ronin/          ← @RoninWords 関連ファイル
+├── skin/           ← skin（肌荒れ）アカウント関連ファイル
+├── learning/       ← 学習用Pythonスクリプト
+├── finance_web/    ← 家計簿Webアプリ（React）
+└── CLAUDE.md / TODO.md / .env など
+```
+
+### roninフォルダの主要ファイル
+| ファイル名 | 役割 |
+|---|---|
+| `ronin/ronin_threads_action.py` | @RoninWords の手動投稿スクリプト |
+| `ronin/threads_auto_post.py` | @RoninWords の自動投稿スクリプト |
+| `ronin/threads_posts.json` | 投稿データ（Day01〜60、120投稿） |
+| `ronin/ronin_threads_progress.json` | 次に投稿する番号の記録 |
+
+### skinフォルダの主要ファイル
+| ファイル名 | 役割 |
+|---|---|
+| `skin/skin_threads_auto_post.py` | skinアカウントのThreads自動投稿スクリプト |
+| `skin/skin_threads_action.py` | skinアカウントの手動投稿スクリプト |
+| `skin/skin_threads_progress.json` | skin投稿の進捗記録 |
+| `skin/skin_x_auto_post.py` | skin の X（旧Twitter）自動投稿スクリプト |
+| `skin/skin_x_posts.json` | skin の X 投稿データ |
+
+### その他の重要ファイル
+| ファイル名 | 役割 |
+|---|---|
+| `.env` | APIキーなどの秘密情報（Gitに入れない） |
+| `TODO.md` | 現在のタスク一覧（セッション開始時に必ず読む） |
+| `threads_token_renewal.md` | Threadsトークン更新の手順書 |
+| `learning/learning_notes.md` | 学習メモ・作成したプログラム一覧 |
+
 ## よく使うコマンド
 ```bash
 # Threads手動投稿テスト
-python3 ronin_threads_action.py
-python3 skin_threads_auto_post.py
+python3 ronin/ronin_threads_action.py
+python3 skin/skin_threads_auto_post.py
 
 # GitHub Actions確認
 # → https://github.com/ からリポジトリのActionsタブを見る
