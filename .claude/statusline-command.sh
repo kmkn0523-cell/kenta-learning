@@ -272,7 +272,6 @@ fi
 [ -n "$today" ] && line1="${CYAN}${today}${RESET}"
 [ -n "$weather_info" ] && line1="$line1 | ${CITY}: ${weather_info}"
 [ -n "$last_sync" ] && line1="$line1 | Sync: ${last_sync}"
-line1="$line1 | 🦀 kmkn"
 
 [ -n "$model" ] && line2="$model"
 [ -n "$ctx_info" ] && line2="$line2 | $ctx_info"
