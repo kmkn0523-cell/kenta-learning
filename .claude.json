@@ -1,5 +1,5 @@
 {
-  "numStartups": 57,
+  "numStartups": 58,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -566,9 +566,9 @@
         "pre_tool_hook_duration_ms_p99": 1
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "32530ad2-f6a9-41d6-89df-4758622e6ea6",
-      "lastSessionFirstPrompt": "# 文体ルール  ## 禁止表現 - ❌「多くの人が〜」 - ❌「〜は重要です」 - ❌「まず／次に／さらに」の連打 - ❌「羅針盤」「旅路」みたいな翻訳調  ## 必須ルール - 数字で書けるものは数字で - 一人称は「私」で統一 - 改行を多めに - 失敗談で共感を生む 今後の",
-      "lastSessionModified": 1777612603943,
+      "lastHintSessionId": "a41786a0-439e-4a1c-9869-7f326a5a4de1",
+      "lastSessionFirstPrompt": "新たにmacbookを購入したとして、このPCでの内容はすべて移行、同期できる？ここのステータスバーも",
+      "lastSessionModified": 1777636333324,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
@@ -581,7 +581,7 @@
   "groveConfigCache": {
     "bf7efc70-b78a-4fb9-bdc2-c371585a6b66": {
       "grove_enabled": true,
-      "timestamp": 1777534571375
+      "timestamp": 1777636274043
     }
   },
   "closedIssuesLastChecked": 1777613389894,
@@ -594,7 +594,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777607935345
+      "timestamp": 1777636274788
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
