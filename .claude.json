@@ -1,5 +1,5 @@
 {
-  "numStartups": 58,
+  "numStartups": 59,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -508,7 +508,7 @@
         "finance_app.jsx",
         "threads_auto_post.py"
       ],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 1.1316975000000002,
       "lastAPIDuration": 363602,
       "lastAPIDurationWithoutRetries": 363540,
@@ -566,9 +566,9 @@
         "pre_tool_hook_duration_ms_p99": 6.899999999999963
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "a41786a0-439e-4a1c-9869-7f326a5a4de1",
-      "lastSessionFirstPrompt": "新たにmacbookを購入したとして、このPCでの内容はすべて移行、同期できる？ここのステータスバーも",
-      "lastSessionModified": 1777636333324,
+      "lastHintSessionId": "a8537e6c-5fb7-4fff-9301-5c08aed6ccf1",
+      "lastSessionFirstPrompt": "gmailの就職関連のメールを今後、recruitラベルに届くように振り分けておいて",
+      "lastSessionModified": 1777639578285,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
