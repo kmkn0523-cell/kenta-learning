@@ -14,7 +14,7 @@
     "install-slack-app": 55,
     "drag-and-drop-images": 56,
     "double-esc-code-restore": 56,
-    "continue": 47,
+    "continue": 57,
     "shift-tab": 49,
     "image-paste": 41,
     "desktop-app": 49,
@@ -27,10 +27,10 @@
     "agent-flag": 37,
     "feedback-command": 53,
     "permissions": 51,
-    "rename-conversation": 42,
+    "rename-conversation": 57,
     "custom-commands": 42,
     "frontend-design-plugin": 47,
-    "default-permission-mode-config": 47,
+    "default-permission-mode-config": 57,
     "git-worktrees": 51
   },
   "promptQueueUseCount": 17,
@@ -566,9 +566,9 @@
         "pre_tool_hook_duration_ms_p99": 1
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "9d502c54-88cb-4c53-b4b6-2337742de8e1",
-      "lastSessionFirstPrompt": "カルティエサントスネックレス",
-      "lastSessionModified": 1777605434336,
+      "lastHintSessionId": "32530ad2-f6a9-41d6-89df-4758622e6ea6",
+      "lastSessionFirstPrompt": "# 文体ルール  ## 禁止表現 - ❌「多くの人が〜」 - ❌「〜は重要です」 - ❌「まず／次に／さらに」の連打 - ❌「羅針盤」「旅路」みたいな翻訳調  ## 必須ルール - 数字で書けるものは数字で - 一人称は「私」で統一 - 改行を多めに - 失敗談で共感を生む 今後の",
+      "lastSessionModified": 1777612603943,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
