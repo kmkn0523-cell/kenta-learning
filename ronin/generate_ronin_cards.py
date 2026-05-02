@@ -25,7 +25,7 @@ FONT_SERIF = "/home/kenta_kamijyo/fonts/NotoSerifJP.otf"          # バックア
 
 # レイアウト定数（全て1080×1080基準）
 MARGIN      = 54   # 外側余白
-SEAL_SIZE   = 108  # 右上のRWシールのサイズ
+SEAL_SIZE   = 120  # 右上のRWシールのサイズ
 SEAL_PAD    = 54   # シールの端からの距離
 TOP_RULE_Y  = 160  # 上の区切り線のY座標
 BOT_RULE_Y  = 860  # 下の区切り線のY座標
@@ -282,7 +282,7 @@ def draw_vertical_romaji(img, roma, kanji_left_x):
     CSS の writing-mode:vertical-rl に相当する見た目を再現する
     kanji_left_x: 漢字列の左端X座標
     """
-    font_size = 40
+    font_size = 50
     try:
         font = ImageFont.truetype(FONT_ROMAN, font_size)
     except Exception:
@@ -297,7 +297,7 @@ def draw_vertical_romaji(img, roma, kanji_left_x):
     pad = 6
     tmp = Image.new('RGBA', (text_w + pad * 2, text_h + pad * 2), (0, 0, 0, 0))
     tmp_d = ImageDraw.Draw(tmp)
-    tmp_d.text((pad, pad), roma, font=font, fill=(*SEPIA, 155))
+    tmp_d.text((pad, pad), roma, font=font, fill=(60, 35, 12, 200))
 
     # 90°反時計回りに回転（縦書きにする）
     rotated = tmp.rotate(90, expand=True)
@@ -350,7 +350,7 @@ def draw_english_quote(draw, text, font):
         bb = draw.textbbox((0, 0), line, font=font)
         lw = bb[2] - bb[0]
         draw.text(((W - lw) // 2, start_y + i * line_h),
-                  line, font=font, fill=(*SEPIA, 180))
+                  line, font=font, fill=(*SEPIA, 210))
 
 
 # ==================================================
@@ -366,9 +366,8 @@ def generate_card(proverb, output_dir):
     img  = Image.new('RGB', (W, H), paper_color)
     draw = ImageDraw.Draw(img)
 
-    # ---- 2. 和紙テクスチャ（ごく微かな横線のみ・主張しない）----
-    for y in range(0, H, 8):
-        draw.line([(0, y), (W, y)], fill=(*SEPIA, 2), width=1)
+    # ---- 2. 和紙の端に微かな影（テクスチャは入れない）----
+    # 和紙の自然な色だけで十分なので、線は入れない
 
     # ---- 3. 上下の細い境界線（グラデーション風）----
     for yi in range(3):
@@ -380,7 +379,7 @@ def generate_card(proverb, output_dir):
     try:
         seal_font_r = ImageFont.truetype(FONT_ROMAN, int(SEAL_SIZE * 0.46))
         seal_font_w = ImageFont.truetype(FONT_ROMAN, int(SEAL_SIZE * 0.36))
-        font_en     = ImageFont.truetype(FONT_ROMAN, 34)
+        font_en     = ImageFont.truetype(FONT_ROMAN, 42)
     except Exception as e:
         print(f"  フォントエラー: {e}")
         return
