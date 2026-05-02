@@ -47,88 +47,78 @@ def create_header():
     img  = Image.new("RGB", (WIDTH, HEIGHT), BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-    # ===== 背景の装飾：右側に大きな薄い円（奥行き感）=====
-    circle_color_1 = (28, 18, 42)
-    circle_color_2 = (38, 25, 55)
-    draw.ellipse([950, -80, 2200, 1170], fill=circle_color_1)
-    draw.ellipse([1150, 80, 2050, 980], fill=circle_color_2)
+    # noteのヘッダーは「縦中央の約200px帯」だけが表示される
+    # 全要素をその範囲に収めるため、高さを事前に計算して中央揃えする
 
-    # ===== 左端のアクセントバー（縦のゴールドライン）=====
+    CENTER_Y = HEIGHT // 2  # 縦中央 = 503px
+
+    # ===== 背景装飾：右側の薄い円 =====
+    draw.ellipse([900, 100, 2000, 1200], fill=(28, 18, 42))
+    draw.ellipse([1100, 250, 1900, 1050], fill=(38, 25, 55))
+
+    # ===== 左端のアクセントバー =====
     draw.rectangle([0, 0, 10, HEIGHT], fill=ACCENT_COLOR)
 
-    # ===== 下部のアクセントライン =====
-    draw.rectangle([0, HEIGHT - 10, WIDTH, HEIGHT], fill=ACCENT_COLOR)
+    # ===== フォントを準備 =====
+    font_tag  = ImageFont.truetype(FONT_BOLD,   24)   # タグ
+    font_main = ImageFont.truetype(FONT_BOLD,   96)   # メインコピー（1行にまとめる）
+    font_sub  = ImageFont.truetype(FONT_NORMAL, 34)   # サブコピー
 
-    # ===== 上部タグ：「肌荒れ 内側改善」=====
-    font_tag = ImageFont.truetype(FONT_BOLD, 34)
-    tag_text = "肌荒れ ✕ 内側改善"
-    tag_bbox = draw.textbbox((0, 0), tag_text, font=font_tag)
-    tag_w    = tag_bbox[2] - tag_bbox[0]
-    tag_h    = tag_bbox[3] - tag_bbox[1]
-    tag_pad  = 18
-    tag_x    = 75
-    tag_y    = 80
+    tag_text  = "肌荒れ × 内側改善"
+    main_text = "スキンケアでは、治らない。"
+    sub_text  = "200万円の失敗で辿り着いた「食事・腸・睡眠の整え方」"
 
-    # タグの背景（ゴールドの角丸バッジ）
+    # ===== 各行の高さを計算 =====
+    tag_bbox  = draw.textbbox((0, 0), tag_text,  font=font_tag)
+    main_bbox = draw.textbbox((0, 0), main_text, font=font_main)
+    sub_bbox  = draw.textbbox((0, 0), sub_text,  font=font_sub)
+
+    tag_h  = tag_bbox[3]  - tag_bbox[1]
+    main_h = main_bbox[3] - main_bbox[1]
+    sub_h  = sub_bbox[3]  - sub_bbox[1]
+
+    tag_pad   = 10
+    gap1      = 14   # タグ〜メインの間
+    gap2      = 18   # メイン〜サブの間
+    tag_total = tag_h + tag_pad  # タグバッジ全体の高さ
+
+    # 全体の高さ → 縦中央になる開始Y座標を求める
+    total_h = tag_total + gap1 + main_h + gap2 + sub_h
+    start_y = CENTER_Y - total_h // 2
+
+    # ===== タグバッジを描く =====
+    tag_w   = tag_bbox[2] - tag_bbox[0]
+    tag_x   = 80
+    tag_y   = start_y
     draw_rounded_rect(
         draw,
-        (tag_x, tag_y, tag_x + tag_w + tag_pad * 2, tag_y + tag_h + tag_pad),
-        radius=10,
+        (tag_x, tag_y, tag_x + tag_w + tag_pad * 2, tag_y + tag_total),
+        radius=6,
         fill=ACCENT_COLOR,
     )
-    # タグのテキスト（黒文字）
-    draw.text(
-        (tag_x + tag_pad, tag_y + tag_pad // 2),
-        tag_text,
-        font=font_tag,
-        fill=(20, 15, 10),
-    )
+    draw.text((tag_x + tag_pad, tag_y + tag_pad // 2), tag_text, font=font_tag, fill=(20, 15, 10))
 
-    # ===== メインキャッチコピー（2行）=====
-    font_main = ImageFont.truetype(FONT_BOLD, 140)
+    # ===== メインコピー（白 + 末尾「治らない。」だけゴールド）=====
+    main_y = start_y + tag_total + gap1
 
-    line1 = "スキンケアでは、"
-    line2 = "治らない。"
+    # 「スキンケアでは、」を白で描く
+    part1      = "スキンケアでは、"
+    part1_bbox = draw.textbbox((0, 0), part1, font=font_main)
+    part1_w    = part1_bbox[2] - part1_bbox[0]
+    draw.text((80, main_y), part1, font=font_main, fill=WHITE)
 
-    title_y = 210  # タイトルの開始Y座標（縦中央寄りに配置）
+    # 「治らない。」をゴールドで続けて描く
+    draw.text((80 + part1_w, main_y), "治らない。", font=font_main, fill=ACCENT_COLOR)
 
-    # 1行目
-    draw.text((75, title_y), line1, font=font_main, fill=WHITE)
-    bbox1 = draw.textbbox((0, 0), line1, font=font_main)
-    h1 = bbox1[3] - bbox1[1]
+    # ===== サブコピー =====
+    sub_y = main_y + main_h + gap2
+    draw.text((82, sub_y), sub_text, font=font_sub, fill=LIGHT_GOLD)
 
-    # 2行目（ゴールド色で強調）
-    draw.text((75, title_y + h1 + 14), line2, font=font_main, fill=ACCENT_COLOR)
-    bbox2 = draw.textbbox((0, 0), line2, font=font_main)
-    h2 = bbox2[3] - bbox2[1]
-
-    # ===== サブコピー（小さめ・明るいゴールド）=====
-    font_sub = ImageFont.truetype(FONT_NORMAL, 48)
-    sub_y = title_y + h1 + 14 + h2 + 48
-
-    draw.text(
-        (78, sub_y),
-        "200万円の失敗で辿り着いた「食事・腸・睡眠の整え方」",
-        font=font_sub,
-        fill=LIGHT_GOLD,
-    )
-
-    # ===== 下部の小さい説明文 =====
-    font_small = ImageFont.truetype(FONT_NORMAL, 36)
-    draw.text(
-        (78, HEIGHT - 80),
-        "外側ケアをやめた日から、肌は変わり始めた。",
-        font=font_small,
-        fill=(160, 140, 110),
-    )
-
-    # ===== 右側の数字インパクト装飾 =====
-    font_num_big   = ImageFont.truetype(FONT_BOLD, 190)
-    font_num_small = ImageFont.truetype(FONT_BOLD, 54)
-
-    # 「200万円」を薄く大きく右側に配置
-    draw.text((1180, 240), "200万円", font=font_num_big, fill=(45, 32, 62))
-    draw.text((1260, 450), "の失敗と答え", font=font_num_small, fill=(65, 48, 85))
+    # ===== 右端に薄い「200万円」装飾 =====
+    font_num = ImageFont.truetype(FONT_BOLD, 110)
+    draw.text((1480, CENTER_Y - 70), "200万円", font=font_num, fill=(45, 32, 62))
+    font_num_s = ImageFont.truetype(FONT_BOLD, 36)
+    draw.text((1560, CENTER_Y + 52), "の失敗と答え", font=font_num_s, fill=(60, 45, 80))
 
     # ===== 保存 =====
     save_path = "/home/kenta_kamijyo/skin/note_header.png"
