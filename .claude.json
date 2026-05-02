@@ -5,11 +5,11 @@
     "new-user-warmup": 4,
     "plan-mode-for-complex-tasks": 45,
     "memory-command": 47,
-    "theme-command": 41,
+    "theme-command": 61,
     "status-line": 1,
     "prompt-queue": 47,
-    "enter-to-steer-in-relatime": 41,
-    "todo-list": 41,
+    "enter-to-steer-in-relatime": 61,
+    "todo-list": 61,
     "install-github-app": 53,
     "install-slack-app": 55,
     "drag-and-drop-images": 56,
@@ -569,9 +569,9 @@
         "pre_tool_hook_duration_ms_p99": 10.299999999999997
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "5348903b-18be-4650-bc2f-f07f955c4d8f",
-      "lastSessionFirstPrompt": "import { useState, useEffect } from \"react\";  const RED    = \"#9e1e0e\"; const PAPERS = [\"#f0e6d0\",\"#ede0c8\",\"#f3e9d5\",\"#e8ddc8\",\"#f1e7d2\"]; const SEALS  = [\"武\",\"道\",\"心\",\"刀\",\"侍\",\"禅\",\"義\",\"仁\",\"勇\",\"礼\"];  c",
-      "lastSessionModified": 1777680898772,
+      "lastHintSessionId": "90fcc1de-0809-4989-a0f8-2c07071426c3",
+      "lastSessionFirstPrompt": "noteの自己紹介文を考えて。１４０文字以内で、興味がひかれる内容、他の売れてるNoteクリエイターのものも参考にして。",
+      "lastSessionModified": 1777720949588,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
