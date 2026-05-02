@@ -26,12 +26,12 @@
     "custom-agents": 51,
     "agent-flag": 37,
     "feedback-command": 53,
-    "permissions": 51,
+    "permissions": 61,
     "rename-conversation": 57,
     "custom-commands": 42,
     "frontend-design-plugin": 47,
     "default-permission-mode-config": 57,
-    "git-worktrees": 51
+    "git-worktrees": 61
   },
   "promptQueueUseCount": 17,
   "cachedGrowthBookFeatures": {
