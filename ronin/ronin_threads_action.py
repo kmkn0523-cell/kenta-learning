@@ -14,23 +14,48 @@ THREADS_ACCESS_TOKEN = os.environ["THREADS_ACCESS_TOKEN"]
 THREADS_USER_ID      = os.environ["THREADS_USER_ID"]
 
 # 投稿データと進捗ファイルのパス
-POSTS_FILE    = "threads_posts.json"            # 60投稿（30日×朝夜）が入っているファイル
+POSTS_FILE    = "threads_posts.json"            # 投稿データが入っているファイル
 PROGRESS_FILE = "ronin_threads_progress.json"   # 「次は何番目を投稿するか」を覚えておくファイル
+
+# GitHubリポジトリのRAW画像URL（画像はここから取得される）
+# GitHubにpushされた画像ファイルを直接URLで参照する
+GITHUB_RAW_BASE = "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/ronin/ronin_images"
 
 # 全投稿に自動でつける共通ハッシュタグ（英語アカウント向け）
 HASHTAGS = "\n\n#JapaneseWisdom #Bushido #Zen #Samurai #Wisdom"
 
 
-def post_to_threads(text):
-    """Threads APIを使って実際に投稿する（2段階APIコール）"""
+def get_image_url(day):
+    """指定したDayの書道カード画像URLを返す（GitHub Raw URL）"""
+    return f"{GITHUB_RAW_BASE}/day{day:02d}.png"
+
+
+def post_to_threads(text, image_url=None):
+    """
+    Threads APIを使って実際に投稿する（2段階APIコール）
+    image_urlを渡すと画像付き投稿、なければテキスト投稿になる
+    """
 
     # ステップ1: 投稿コンテナ（投稿の下書き）を作成する
     container_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads"
-    container_params = {
-        "media_type": "TEXT",                 # テキスト投稿（画像なし）
-        "text": text,                         # 投稿する文章
-        "access_token": THREADS_ACCESS_TOKEN  # 認証キー
-    }
+
+    if image_url:
+        # 画像付き投稿（media_type=IMAGE、テキストはキャプションとして添付）
+        container_params = {
+            "media_type": "IMAGE",                # 画像投稿
+            "image_url": image_url,               # 書道カード画像のURL
+            "text": text,                         # キャプション（投稿文）
+            "access_token": THREADS_ACCESS_TOKEN  # 認証キー
+        }
+        print(f"  画像URL: {image_url}")
+    else:
+        # テキストのみ投稿（画像なし・フォールバック）
+        container_params = {
+            "media_type": "TEXT",                 # テキスト投稿
+            "text": text,                         # 投稿する文章
+            "access_token": THREADS_ACCESS_TOKEN  # 認証キー
+        }
+
     response = requests.post(container_url, params=container_params)
     data = response.json()
 
@@ -121,8 +146,12 @@ def main():
     print(f"投稿タイプ: Day{post['day']:02d} {post['type']}")
     print(f"投稿内容（先頭100文字）:\n{full_text[:100]}...\n")
 
-    # Threads APIで投稿する
-    post_id = post_to_threads(full_text)
+    # 対応する書道カード画像のURLを取得する
+    image_url = get_image_url(post["day"])
+    print(f"画像: Day{post['day']:02d} の書道カードを添付")
+
+    # Threads APIで投稿する（画像付き）
+    post_id = post_to_threads(full_text, image_url=image_url)
     print(f"✅ 投稿成功！（投稿ID: {post_id}）")
 
     # 次の投稿番号に進める（60を超えたら0に戻る）

@@ -17,7 +17,7 @@ RED = (158, 30, 14)
 # フォントのパス
 FONT_JP = "/home/kenta_kamijyo/fonts/NotoSerifJP.otf"
 
-# 格言データ（Day01〜Day30）
+# 格言データ（Day01〜Day100）
 proverbs = [
     {"day":  1, "jp": "一期一会",                   "roma": "Ichi go ichi e",                        "en": "This moment will never come again."},
     {"day":  2, "jp": "能ある鷹は爪を隠す",          "roma": "No aru taka wa tsume o kakusu",         "en": "A skilled hawk hides its talons."},
@@ -49,6 +49,76 @@ proverbs = [
     {"day": 28, "jp": "道を極めるには終わりがない",  "roma": "Michi o kiwameru ni wa owari ga nai",   "en": "The mastery of a path has no end."},
     {"day": 29, "jp": "武士は食わねど高楊枝",        "roma": "Bushi wa kuwanedo takayoji",            "en": "Dignity over comfort."},
     {"day": 30, "jp": "生き死に一如",               "roma": "Ikishi ni ichinyo",                     "en": "Life and death are one."},
+    {"day": 31, "jp": "聞くは一時の恥",             "roma": "Kiku wa ichiji no haji",                "en": "The shame of asking lasts a moment."},
+    {"day": 32, "jp": "知らぬが仏",                 "roma": "Shiranu ga hotoke",                     "en": "What you don't know can't hurt you."},
+    {"day": 33, "jp": "三人寄れば文殊の知恵",        "roma": "Sannin yoreba monju no chie",           "en": "Three heads hold the wisdom of a god."},
+    {"day": 34, "jp": "転ばぬ先の杖",               "roma": "Korobanu saki no tsue",                 "en": "Better a walking stick before you fall."},
+    {"day": 35, "jp": "備えあれば憂いなし",          "roma": "Sonae areba urei nashi",                "en": "Prepare, and you'll have nothing to fear."},
+    {"day": 36, "jp": "後悔先に立たず",             "roma": "Kokai saki ni tatazu",                  "en": "Regret never arrives early."},
+    {"day": 37, "jp": "類は友を呼ぶ",               "roma": "Rui wa tomo o yobu",                    "en": "Like attracts like."},
+    {"day": 38, "jp": "遠くの親戚より近くの他人",    "roma": "Toku no shinseki yori chikaku no tanin","en": "A neighbor nearby beats a relative far away."},
+    {"day": 39, "jp": "人の振り見て我が振り直せ",    "roma": "Hito no furi mite waga furi naose",     "en": "Watch others, fix your own ways."},
+    {"day": 40, "jp": "魚心あれば水心",             "roma": "Uogokoro areba mizugokoro",             "en": "Goodwill invites goodwill."},
+    {"day": 41, "jp": "目は口ほどに物を言う",        "roma": "Me wa kuchi hodo ni mono o iu",         "en": "Eyes speak as loudly as words."},
+    {"day": 42, "jp": "花鳥風月",                   "roma": "Kacho fugetsu",                         "en": "Flowers, birds, wind, moon."},
+    {"day": 43, "jp": "物の哀れ",                   "roma": "Mono no aware",                         "en": "The gentle sadness of things passing."},
+    {"day": 44, "jp": "水は低きに流れる",            "roma": "Mizu wa hikuki ni nagareru",            "en": "Water flows to the lowest place."},
+    {"day": 45, "jp": "一葉落ちて天下の秋を知る",    "roma": "Ichiyo ochite tenka no aki o shiru",    "en": "One falling leaf tells you autumn has come."},
+    {"day": 46, "jp": "天網恢恢、疎にして漏らさず",  "roma": "Tenmo kaikaku, so ni shite morasa zu",  "en": "Heaven's net — nothing escapes it."},
+    {"day": 47, "jp": "月に叢雲、花に風",           "roma": "Tsuki ni murakumo, hana ni kaze",       "en": "Beauty is always fleeting."},
+    {"day": 48, "jp": "損して得取れ",               "roma": "Son shite toku tore",                   "en": "Take the loss now, claim the gain later."},
+    {"day": 49, "jp": "回り道が一番の近道",          "roma": "Mawari michi ga ichiban no chikamichi", "en": "The long way round is often the shortest."},
+    {"day": 50, "jp": "嘘から出た誠",               "roma": "Uso kara deta makoto",                  "en": "A lie that accidentally became the truth."},
+    {"day": 51, "jp": "捨てる神あれば拾う神あり",    "roma": "Suteru kami areba hirou kami ari",      "en": "When one door closes, another opens."},
+    {"day": 52, "jp": "怪我の功名",                 "roma": "Kega no komyo",                         "en": "A lucky break born from a blunder."},
+    {"day": 53, "jp": "侘び寂び",                   "roma": "Wabi sabi",                             "en": "Beauty in the imperfect and impermanent."},
+    {"day": 54, "jp": "一芸は身を助ける",            "roma": "Ichigei wa mi o tasukeru",              "en": "One skill can save your life."},
+    {"day": 55, "jp": "大志を抱け",                 "roma": "Taishi o idake",                        "en": "Dare to have great ambitions."},
+    {"day": 56, "jp": "魂を込めて作れ",             "roma": "Tamashii o komete tsukure",             "en": "Pour your soul into what you make."},
+    {"day": 57, "jp": "匠の心",                     "roma": "Takumi no kokoro",                      "en": "The craftsman who never stops refining."},
+    {"day": 58, "jp": "もったいない",               "roma": "Mottainai",                             "en": "Too precious to waste."},
+    {"day": 59, "jp": "お互い様",                   "roma": "Otagai sama",                           "en": "We're all in the same boat."},
+    {"day": 60, "jp": "粋",                         "roma": "Iki",                                   "en": "Effortless cool. Knowing when not to try."},
+    {"day": 61, "jp": "間",                         "roma": "Ma",                                    "en": "The power of the space between."},
+    {"day": 62, "jp": "道",                         "roma": "Do",                                    "en": "The Way. A lifelong path of becoming."},
+    {"day": 63, "jp": "七難八苦を乗り越えてこそ",    "roma": "Shichinin hakku o norikoete koso",      "en": "Only through great trials does greatness emerge."},
+    {"day": 64, "jp": "辛抱する木に金がなる",        "roma": "Shinbo suru ki ni kane ga naru",        "en": "The tree that endures bears golden fruit."},
+    {"day": 65, "jp": "苦は楽の種",                 "roma": "Ku wa raku no tane",                    "en": "Suffering is the seed of joy."},
+    {"day": 66, "jp": "百折不撓",                   "roma": "Hyakusetsu futo",                       "en": "Bend a hundred times, but never break."},
+    {"day": 67, "jp": "高慢は損気",                 "roma": "Koman wa sonki",                        "en": "Arrogance invites loss."},
+    {"day": 68, "jp": "自慢は知恵の行き止まり",      "roma": "Jiman wa chie no yukidomari",           "en": "Boasting is where wisdom ends."},
+    {"day": 69, "jp": "不足を言うな、有余を言え",    "roma": "Fusoku o iu na, yuyo o ie",             "en": "Don't complain about what's missing."},
+    {"day": 70, "jp": "小欲知足",                   "roma": "Shoyoku chisoku",                       "en": "Small desires, deep contentment."},
+    {"day": 71, "jp": "無欲は大欲に勝る",            "roma": "Muyoku wa taiyoku ni masaru",           "en": "Wanting nothing is greater than wanting everything."},
+    {"day": 72, "jp": "熱い心、冷静な頭",           "roma": "Atsui kokoro, reisei na atama",         "en": "A burning heart, a cool head."},
+    {"day": 73, "jp": "志高く",                     "roma": "Kokorozashi takaku",                    "en": "Aim high."},
+    {"day": 74, "jp": "夢は大きく、行動は今",        "roma": "Yume wa okiku, kodo wa ima",            "en": "Dream big, act now."},
+    {"day": 75, "jp": "弱さも強さになる",            "roma": "Yowasa mo tsuyosa ni naru",             "en": "Even weakness can become strength."},
+    {"day": 76, "jp": "窮すれば通ず",               "roma": "Kyu sureba tsuzu",                      "en": "When cornered, a way opens."},
+    {"day": 77, "jp": "金継ぎ",                     "roma": "Kintsugi",                              "en": "Repair with gold. The break becomes beauty."},
+    {"day": 78, "jp": "背水の陣",                   "roma": "Haisui no jin",                         "en": "No retreat — or you drown."},
+    {"day": 79, "jp": "一所懸命",                   "roma": "Isshoukenmei",                          "en": "Be fully here. Or not at all."},
+    {"day": 80, "jp": "桜散る、されど根は残る",      "roma": "Sakura chiru, saredo ne wa nokoru",     "en": "The cherry blossom falls, but the roots remain."},
+    {"day": 81, "jp": "鬼に金棒",                   "roma": "Oni ni kanabo",                         "en": "The strong, made even stronger."},
+    {"day": 82, "jp": "春夏秋冬、それぞれに美しい",  "roma": "Shunkashuto, sorezore ni utsukushii",   "en": "Every season has its own beauty."},
+    {"day": 83, "jp": "形あるものはいつか壊れる",    "roma": "Katachi aru mono wa itsuka kowareru",   "en": "Everything that has form will one day break."},
+    {"day": 84, "jp": "人生意気に感ず",             "roma": "Jinsei iki ni kanzu",                   "en": "Live by passion, not by calculation."},
+    {"day": 85, "jp": "花は桜木、人は武士",          "roma": "Hana wa sakuragi, hito wa bushi",       "en": "Among flowers the cherry blossom. Among men the warrior."},
+    {"day": 86, "jp": "禍福は糾える縄の如し",        "roma": "Kafuku wa azanaeru nawa no gotoshi",    "en": "Fortune and misfortune are twisted like rope."},
+    {"day": 87, "jp": "雨降って地固まる",            "roma": "Ame futte ji katamaru",                 "en": "After the rain, the ground grows harder."},
+    {"day": 88, "jp": "男子の一言、金鉄の如し",      "roma": "Danshi no ichigon, kintetsu no gotoshi","en": "A person's word is iron."},
+    {"day": 89, "jp": "死して不朽の名を残せ",        "roma": "Shishite fukyu no na o nokose",         "en": "Die and leave a name that never fades."},
+    {"day": 90, "jp": "事に臨んでは死を思え",        "roma": "Koto ni nozonde wa shi o omoe",         "en": "Think of death — and act without hesitation."},
+    {"day": 91, "jp": "覚悟",                       "roma": "Kakugo",                                "en": "Accept all consequences before you begin."},
+    {"day": 92, "jp": "武士道",                     "roma": "Bushido",                               "en": "The Way of the Warrior."},
+    {"day": 93, "jp": "義",                         "roma": "Gi — Rectitude",                        "en": "Do what is right, even when it is hard."},
+    {"day": 94, "jp": "仁",                         "roma": "Jin — Benevolence",                     "en": "Compassion, even for your enemies."},
+    {"day": 95, "jp": "勇",                         "roma": "Yu — Courage",                          "en": "Fear acknowledged. Action taken anyway."},
+    {"day": 96, "jp": "礼",                         "roma": "Rei — Respect",                         "en": "Every person is worthy of dignity."},
+    {"day": 97, "jp": "誠",                         "roma": "Makoto — Honesty",                      "en": "No deception. Not even to yourself."},
+    {"day": 98, "jp": "名誉",                       "roma": "Meiyo — Honor",                         "en": "You are your own judge."},
+    {"day": 99, "jp": "忠義",                       "roma": "Chugi — Loyalty",                       "en": "Chosen commitment, fully kept."},
+    {"day":100, "jp": "武士道百訓",                  "roma": "Bushido hyakukun",                      "en": "100 days. One truth. The Way continues."},
 ]
 
 
@@ -209,7 +279,7 @@ def generate_card(proverb, output_dir):
 
 
 def main():
-    output_dir = "/home/kenta_kamijyo/ronin_images"
+    output_dir = "/home/kenta_kamijyo/ronin/ronin_images"
     print(f"書道カード画像を生成します（{len(proverbs)}枚）...\n")
     for proverb in proverbs:
         generate_card(proverb, output_dir)
