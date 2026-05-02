@@ -146,12 +146,9 @@ def main():
     print(f"投稿タイプ: Day{post['day']:02d} {post['type']}")
     print(f"投稿内容（先頭100文字）:\n{full_text[:100]}...\n")
 
-    # 対応する書道カード画像のURLを取得する
-    image_url = get_image_url(post["day"])
-    print(f"画像: Day{post['day']:02d} の書道カードを添付")
-
-    # Threads APIで投稿する（画像付き）
-    post_id = post_to_threads(full_text, image_url=image_url)
+    # Threads APIで投稿する（テキストのみ）
+    # ※ GitHub Raw URLはThreads APIでブロックされるためテキスト投稿に戻す
+    post_id = post_to_threads(full_text)
     print(f"✅ 投稿成功！（投稿ID: {post_id}）")
 
     # 次の投稿番号に進める（60を超えたら0に戻る）
