@@ -1,21 +1,35 @@
 # generate_ronin_cards.py
 # @RoninWords用の書道カード画像を自動生成するスクリプト
+# Reactコンポーネント（ronin_words.jsx）のデザインに合わせた版
 # 使い方: python3 generate_ronin_cards.py
 
 from PIL import Image, ImageDraw, ImageFont
 import os
+import math
 
-# カードのサイズ（Twitter推奨の正方形）
+# カードのサイズ（正方形 1080×1080）
 W, H = 1080, 1080
 
-# 和紙風の背景色（日ごとに変わる）
+# 和紙風の背景色（Reactと同じ配列）
 PAPERS = ["#f0e6d0", "#ede0c8", "#f3e9d5", "#e8ddc8", "#f1e7d2"]
 
 # ブランドカラー（赤）
-RED = (158, 30, 14)
+RED    = (158, 30, 14)
+INK    = (18, 10, 4)      # 墨色（ほぼ黒）
+SEPIA  = (80, 50, 20)     # セピア（ローマ字・英語テキスト用）
 
 # フォントのパス
-FONT_JP = "/home/kenta_kamijyo/fonts/NotoSerifJP.otf"
+FONT_JP    = "/home/kenta_kamijyo/fonts/YujiSyuku.ttf"           # 筆書き風かな漢字
+FONT_ROMAN = "/home/kenta_kamijyo/fonts/CormorantGaramond-Italic.ttf"  # エレガントな欧文
+FONT_SERIF = "/home/kenta_kamijyo/fonts/NotoSerifJP.otf"          # バックアップ
+
+# レイアウト定数（全て1080×1080基準）
+MARGIN      = 54   # 外側余白
+SEAL_SIZE   = 108  # 右上のRWシールのサイズ
+SEAL_PAD    = 54   # シールの端からの距離
+TOP_RULE_Y  = 160  # 上の区切り線のY座標
+BOT_RULE_Y  = 860  # 下の区切り線のY座標
+RULE_PAD    = 94   # 区切り線の左右余白
 
 # 格言データ（Day01〜Day100）
 proverbs = [
@@ -122,159 +136,288 @@ proverbs = [
 ]
 
 
+# ==================================================
+# ユーティリティ関数
+# ==================================================
+
 def hex_to_rgb(hex_color):
     """16進数カラーコードをRGBに変換する"""
-    hex_color = hex_color.lstrip('#')
-    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    h = hex_color.lstrip('#')
+    return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
 
-def draw_vertical_text(draw, text, x, y, font, fill, char_spacing=8):
-    """文字を1つずつ縦に並べて描画する"""
-    current_y = y
-    for char in text:
-        draw.text((x, current_y), char, font=font, fill=fill)
-        bbox = font.getbbox(char)
-        char_h = bbox[3] - bbox[1]
-        current_y += char_h + char_spacing
-    # 最終的なY座標を返す（描画した高さがわかる）
-    return current_y
+def blend_color(base, overlay_rgb, alpha):
+    """2色をalphaで合成する（0.0〜1.0）"""
+    return tuple(int(b * (1 - alpha) + o * alpha) for b, o in zip(base, overlay_rgb))
 
 
-def wrap_text(text, max_width, font, draw):
-    """テキストを指定幅で折り返す"""
-    words = text.split(' ')
-    lines = []
-    current_line = ''
-    for word in words:
-        test_line = current_line + (' ' if current_line else '') + word
-        bbox = draw.textbbox((0, 0), test_line, font=font)
-        if bbox[2] - bbox[0] <= max_width:
-            current_line = test_line
-        else:
-            if current_line:
-                lines.append(current_line)
-            current_line = word
-    if current_line:
-        lines.append(current_line)
-    return lines
+def add_vignette(img):
+    """
+    画像の端を少し暗くするビネット効果を加える
+    Reactのradial-gradientによるビネットを再現する
+    """
+    vignette = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(vignette)
+
+    # 端から内側へのグラデーション矩形を重ねて端を暗くする
+    overlay = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    ov_draw = ImageDraw.Draw(overlay)
+    layers = 40
+    for i in range(layers):
+        depth = i / layers        # 0（端）→1（内側）
+        alpha = int(28 * (1 - depth) ** 1.8)  # 端ほど暗く
+        ov_draw.rectangle([i * 2, i * 2, W - i * 2 - 1, H - i * 2 - 1],
+                          outline=(90, 55, 15, alpha), width=3)
+
+    return Image.alpha_composite(img.convert('RGBA'), overlay).convert('RGB')
 
 
-def generate_card(proverb, output_dir):
-    """1枚の書道カード画像を生成する"""
-    day = proverb["day"]
-    paper_color = hex_to_rgb(PAPERS[(day - 1) % len(PAPERS)])
+def draw_rw_seal(draw, x_center, y_center, size, font_r, font_w):
+    """
+    RWシール（右上の印章）を描画する
+    Reactの SVG シールを PIL で再現する
+    """
+    half = size // 2
+    x0 = x_center - half
+    y0 = y_center - half
+    x1 = x_center + half
+    y1 = y_center + half
 
-    # 画像を作成する
-    img = Image.new('RGB', (W, H), paper_color)
-    draw = ImageDraw.Draw(img)
+    lw = max(2, size // 54)  # 線の太さ（サイズに比例）
 
-    # ---- フォントを読み込む ----
+    # 外枠（赤い正方形）
+    draw.rectangle([x0, y0, x1, y1], outline=RED, width=lw)
+
+    # 対角線（左下→右上、Reactのlineと同じ方向）
+    draw.line([(x0 + size // 6, y1 - size // 6),
+               (x1 - size // 6, y0 + size // 6)],
+              fill=RED, width=lw)
+
+    # "R" — 左下エリアに大きく
     try:
-        font_jp_large  = ImageFont.truetype(FONT_JP, 90)   # 漢字（大）
-        font_jp_medium = ImageFont.truetype(FONT_JP, 60)   # 漢字（中）
-        font_jp_small  = ImageFont.truetype(FONT_JP, 36)   # 漢字（小）
-        font_en_large  = ImageFont.truetype(FONT_JP, 32)   # 英語
-        font_en_medium = ImageFont.truetype(FONT_JP, 26)   # ローマ字
-        font_en_small  = ImageFont.truetype(FONT_JP, 22)   # 小さい文字
-    except Exception as e:
-        print(f"フォントエラー: {e}")
-        return
-
-    # ---- 装飾的な外枠を描く ----
-    margin = 40
-    draw.rectangle([margin, margin, W - margin, H - margin],
-                   outline=(*RED, 180), width=2)
-
-    # 内側の細い線
-    inner = margin + 12
-    draw.rectangle([inner, inner, W - inner, H - inner],
-                   outline=(*RED, 80), width=1)
-
-    # ---- 上部：@RoninWords ブランド ----
-    brand_text = "@RoninWords"
-    brand_bbox = draw.textbbox((0, 0), brand_text, font=font_en_small)
-    brand_w = brand_bbox[2] - brand_bbox[0]
-    draw.text(((W - brand_w) // 2, 68), brand_text, font=font_en_small,
-              fill=(*RED, 200))
-
-    # 区切り線
-    draw.line([(inner + 20, 105), (W - inner - 20, 105)],
-              fill=(*RED, 60), width=1)
-
-    # ---- DAY番号 ----
-    day_text = f"DAY {day:02d}"
-    day_bbox = draw.textbbox((0, 0), day_text, font=font_en_small)
-    day_w = day_bbox[2] - day_bbox[0]
-    draw.text(((W - day_w) // 2, 118), day_text, font=font_en_small,
-              fill=(80, 50, 20, 150))
-
-    # ---- 日本語テキスト（縦書き） ----
-    jp_text = proverb["jp"]
-
-    # 文字数に応じてフォントサイズを選ぶ
-    if len(jp_text) <= 5:
-        jp_font = font_jp_large
-        char_size = 95
-    elif len(jp_text) <= 8:
-        jp_font = font_jp_medium
-        char_size = 68
-    else:
-        jp_font = font_jp_small
-        char_size = 44
-
-    # 縦書きの開始位置を計算する（中央に配置）
-    total_height = len(jp_text) * (char_size + 6)
-    start_y = (H - total_height) // 2 - 30
-    # X位置（中央より少し右）
-    start_x = W // 2 - char_size // 2 + 20
-
-    # 日本語を縦に描画する
-    draw_vertical_text(draw, jp_text, start_x, start_y, jp_font,
-                       fill=(15, 8, 2), char_spacing=6)
-
-    # ---- ローマ字（縦書き、左側） ----
-    roma_x = start_x - (char_size // 2) - 50
-    roma_y = start_y + 20
-    draw_vertical_text(draw, proverb["roma"], roma_x, roma_y,
-                       font=font_en_medium,
-                       fill=(80, 50, 20, 160),
-                       char_spacing=2)
-
-    # ---- 区切り線（下） ----
-    draw.line([(inner + 20, H - 180), (W - inner - 20, H - 180)],
-              fill=(*RED, 60), width=1)
-
-    # ---- 英語訳 ----
-    en_text = f'"{proverb["en"]}"'
-    lines = wrap_text(en_text, W - 160, font_en_large, draw)
-    line_h = 44
-    total_en_h = len(lines) * line_h
-    en_start_y = H - 160 - total_en_h // 2
-
-    for i, line in enumerate(lines):
-        bbox = draw.textbbox((0, 0), line, font=font_en_large)
-        line_w = bbox[2] - bbox[0]
-        draw.text(((W - line_w) // 2, en_start_y + i * line_h),
-                  line, font=font_en_large,
-                  fill=(30, 15, 5, 200))
-
-    # ---- 下部装飾 ----
-    draw.line([(inner + 20, H - 90), (W - inner - 20, H - 90)],
-              fill=(*RED, 40), width=1)
-
-    sword = "⚔"
-    try:
-        sw_bbox = draw.textbbox((0, 0), sword, font=font_en_small)
-        sw_w = sw_bbox[2] - sw_bbox[0]
-        draw.text(((W - sw_w) // 2, H - 76), sword, font=font_en_small,
-                  fill=(*RED, 120))
+        r_bbox = draw.textbbox((0, 0), "R", font=font_r)
+        r_w = r_bbox[2] - r_bbox[0]
+        r_h = r_bbox[3] - r_bbox[1]
+        draw.text((x0 + size // 8, y0 + size // 2 - r_h // 2 + size // 10),
+                  "R", font=font_r, fill=INK)
     except Exception:
         pass
 
-    # ---- ファイルとして保存する ----
+    # "W" — 右下エリアに少し薄く
+    try:
+        w_bbox = draw.textbbox((0, 0), "W", font=font_w)
+        w_h = w_bbox[3] - w_bbox[1]
+        draw.text((x0 + size // 2, y0 + size // 2 - w_h // 2 + size // 10),
+                  "W", font=font_w, fill=(*INK, 100))
+    except Exception:
+        pass
+
+
+def draw_h_rule(draw, y, x0=RULE_PAD, x1=W - RULE_PAD, alpha=0.10):
+    """
+    水平の区切り線を描く（端が透明になるグラデーション風）
+    """
+    steps = 80
+    for i in range(steps):
+        # 中央が最も濃く、端が透明（三角波形）
+        ratio = 1 - abs(i / steps * 2 - 1)  # 0→1→0 の三角関数
+        a = int(255 * alpha * ratio)
+        xi = int(x0 + (x1 - x0) * i / steps)
+        draw.line([(xi, y), (xi + (x1 - x0) // steps + 1, y)],
+                  fill=(*SEPIA, a), width=1)
+
+
+def calc_jp_font_size(text):
+    """漢字のフォントサイズを文字数に応じて決める"""
+    n = len(text)
+    # 使える縦スペース（上下ルール間）
+    area = BOT_RULE_Y - TOP_RULE_Y - 60
+    # 1文字あたりの高さ = area / 文字数（間隔込み）
+    per_char = area / max(n, 1)
+    size = int(per_char * 0.82)
+    return max(60, min(180, size))
+
+
+def draw_vertical_kanji(img, draw, text, font_jp, x_center):
+    """
+    漢字を縦書きで描画する
+    文字数に応じてフォントサイズを調整し、テキストエリアの中央に配置する
+    戻り値: 漢字列の左端X座標（ローマ字の配置に使う）
+    """
+    n = len(text)
+    font_size = calc_jp_font_size(text)
+    font = ImageFont.truetype(FONT_JP, font_size)
+
+    char_heights = []
+    char_widths  = []
+    for ch in text:
+        bb = draw.textbbox((0, 0), ch, font=font)
+        char_heights.append(bb[3] - bb[1])
+        char_widths.append(bb[2] - bb[0])
+
+    spacing = max(6, font_size // 8)
+    total_h = sum(char_heights) + spacing * (n - 1)
+
+    text_area_center = (TOP_RULE_Y + BOT_RULE_Y) // 2
+    start_y = text_area_center - total_h // 2
+
+    # 最大文字幅を使って左端X座標を求める（ローマ字配置に渡す）
+    max_w = max(char_widths) if char_widths else 0
+    kanji_left_x = x_center - max_w // 2
+
+    current_y = start_y
+    for i, ch in enumerate(text):
+        ch_w = char_widths[i]
+        ch_h = char_heights[i]
+        x = x_center - ch_w // 2
+        draw.text((x, current_y), ch, font=font, fill=INK)
+        current_y += ch_h + spacing
+
+    return kanji_left_x
+
+
+def draw_vertical_romaji(img, roma, kanji_left_x):
+    """
+    ローマ字を縦書き（90°回転）で描画する
+    CSS の writing-mode:vertical-rl に相当する見た目を再現する
+    kanji_left_x: 漢字列の左端X座標
+    """
+    font_size = 40
+    try:
+        font = ImageFont.truetype(FONT_ROMAN, font_size)
+    except Exception:
+        return
+
+    # 一時画像にローマ字を横書きで描いてから90°回転させる
+    tmp_draw = ImageDraw.Draw(Image.new('RGBA', (1, 1)))
+    bb = tmp_draw.textbbox((0, 0), roma, font=font)
+    text_w = bb[2] - bb[0]
+    text_h = bb[3] - bb[1]
+
+    pad = 6
+    tmp = Image.new('RGBA', (text_w + pad * 2, text_h + pad * 2), (0, 0, 0, 0))
+    tmp_d = ImageDraw.Draw(tmp)
+    tmp_d.text((pad, pad), roma, font=font, fill=(*SEPIA, 155))
+
+    # 90°反時計回りに回転（縦書きにする）
+    rotated = tmp.rotate(90, expand=True)
+
+    # 漢字の左端から40px空けて配置
+    gap = 40
+    paste_x = kanji_left_x - rotated.width - gap
+
+    # はみ出し防止
+    paste_x = max(MARGIN, paste_x)
+
+    # Y位置：テキストエリアの中央に
+    text_area_center = (TOP_RULE_Y + BOT_RULE_Y) // 2
+    paste_y = text_area_center - rotated.height // 2
+
+    img.paste(rotated, (paste_x, paste_y), rotated)
+
+
+def draw_english_quote(draw, text, font):
+    """
+    英語の引用文を画像下部の中央に描画する
+    長い場合は複数行に折り返す
+    """
+    quote = f'"{text}"'
+    max_w = W - RULE_PAD * 2 - 40
+
+    # 文字列を複数行に分割する
+    words = quote.split(' ')
+    lines = []
+    current = ''
+    for word in words:
+        test = (current + ' ' + word).strip()
+        bb = draw.textbbox((0, 0), test, font=font)
+        if bb[2] - bb[0] <= max_w:
+            current = test
+        else:
+            if current:
+                lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+
+    # 行の高さを計算して縦中央に収める
+    line_h = 48
+    total_h = line_h * len(lines)
+    quote_area_center = (BOT_RULE_Y + H - MARGIN) // 2
+    start_y = quote_area_center - total_h // 2
+
+    for i, line in enumerate(lines):
+        bb = draw.textbbox((0, 0), line, font=font)
+        lw = bb[2] - bb[0]
+        draw.text(((W - lw) // 2, start_y + i * line_h),
+                  line, font=font, fill=(*SEPIA, 180))
+
+
+# ==================================================
+# カード生成メイン関数
+# ==================================================
+
+def generate_card(proverb, output_dir):
+    """1枚の書道カード画像を生成する（Reactデザインに合わせた版）"""
+    day  = proverb["day"]
+    paper_color = hex_to_rgb(PAPERS[(day - 1) % len(PAPERS)])
+
+    # ---- 1. ベース画像（和紙色の背景）----
+    img  = Image.new('RGB', (W, H), paper_color)
+    draw = ImageDraw.Draw(img)
+
+    # ---- 2. 和紙テクスチャ（ごく微かな横線のみ・主張しない）----
+    for y in range(0, H, 8):
+        draw.line([(0, y), (W, y)], fill=(*SEPIA, 2), width=1)
+
+    # ---- 3. 上下の細い境界線（グラデーション風）----
+    for yi in range(3):
+        a = [40, 20, 8][yi]
+        draw.line([(0, yi), (W, yi)], fill=(*SEPIA, a), width=1)
+        draw.line([(0, H - 1 - yi), (W, H - 1 - yi)], fill=(*SEPIA, a), width=1)
+
+    # ---- 4. フォントを読み込む ----
+    try:
+        seal_font_r = ImageFont.truetype(FONT_ROMAN, int(SEAL_SIZE * 0.46))
+        seal_font_w = ImageFont.truetype(FONT_ROMAN, int(SEAL_SIZE * 0.36))
+        font_en     = ImageFont.truetype(FONT_ROMAN, 34)
+    except Exception as e:
+        print(f"  フォントエラー: {e}")
+        return
+
+    # ---- 5. RW シール（右上）----
+    seal_cx = W - SEAL_PAD - SEAL_SIZE // 2
+    seal_cy = SEAL_PAD + SEAL_SIZE // 2
+    draw_rw_seal(draw, seal_cx, seal_cy, SEAL_SIZE, seal_font_r, seal_font_w)
+
+    # ---- 6. 上の区切り線 ----
+    draw_h_rule(draw, y=TOP_RULE_Y)
+
+    # ---- 7. 漢字（縦書き）----
+    # 中央より少し右に配置（ローマ字のスペースを左に確保）
+    kanji_x_center = W // 2 + 60
+    kanji_left_x = draw_vertical_kanji(img, draw, proverb["jp"],
+                                       font_jp=FONT_JP, x_center=kanji_x_center)
+
+    # ---- 8. ローマ字（縦書き・漢字の左隣）----
+    draw_vertical_romaji(img, proverb["roma"], kanji_left_x=kanji_left_x)
+
+    # draw オブジェクトを再取得（img にペーストした後なので）
+    draw = ImageDraw.Draw(img)
+
+    # ---- 9. 下の区切り線 ----
+    draw_h_rule(draw, y=BOT_RULE_Y)
+
+    # ---- 10. 英語の引用文 ----
+    draw_english_quote(draw, proverb["en"], font_en)
+
+    # ---- 11. ビネット効果 ----
+    img = add_vignette(img)
+
+    # ---- 12. 保存 ----
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, f"day{day:02d}.png")
-    img.save(output_path, "PNG", quality=95)
+    img.save(output_path, "PNG")
     print(f"✅ Day{day:02d} 生成完了: {output_path}")
 
 
