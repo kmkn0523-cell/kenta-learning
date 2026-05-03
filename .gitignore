@@ -8,6 +8,7 @@
 !*.json
 !*.jsx
 !*.png
+!*.js
 !ronin_images/
 !ronin_images/*.png
 !.github/

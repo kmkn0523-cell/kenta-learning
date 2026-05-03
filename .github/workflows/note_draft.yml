@@ -1,0 +1,35 @@
+name: note.com 下書き自動保存
+
+# skin/note_article_*.md が push されたときに自動実行
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skin/note_article_*.md'
+
+jobs:
+  create-draft:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # git diff HEAD~1 のために2コミット分必要
+
+      - name: Node.js をセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Playwright をインストール
+        run: |
+          npm init -y
+          npm install @playwright/test
+          npx playwright install chromium --with-deps
+
+      - name: note.com に下書きを保存する
+        env:
+          NOTE_EMAIL: ${{ secrets.NOTE_EMAIL }}
+          NOTE_PASSWORD: ${{ secrets.NOTE_PASSWORD }}
+        run: node skin/create_note_draft.js
