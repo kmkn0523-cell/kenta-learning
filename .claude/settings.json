@@ -44,7 +44,8 @@
     "refreshInterval": 10
   },
   "enabledPlugins": {
-    "vercel@claude-plugins-official": true
+    "vercel@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "last30days-skill": {
@@ -55,9 +56,9 @@
     }
   },
   "language": "japanese",
+  "feedbackSurveyRate": 0,
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "agentPushNotifEnabled": true,
-  "feedbackSurveyRate": 0
+  "agentPushNotifEnabled": true
 }
