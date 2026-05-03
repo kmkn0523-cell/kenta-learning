@@ -4,10 +4,16 @@ noteプロフィール用ヘッダー画像を生成するスクリプト
 高画質化: 3倍サイズで描いてLANCZOS縮小 + アンシャープマスクで輪郭強調
 """
 
+import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
-FONT_BOLD   = "/mnt/c/Windows/Fonts/BIZ-UDGothicB.ttc"
-FONT_NORMAL = "/mnt/c/Windows/Fonts/BIZ-UDGothicR.ttc"
+_WIN_BOLD   = "/mnt/c/Windows/Fonts/BIZ-UDGothicB.ttc"
+_WIN_NORMAL = "/mnt/c/Windows/Fonts/BIZ-UDGothicR.ttc"
+_NOTO_BOLD  = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
+_NOTO_REG   = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+
+FONT_BOLD   = _WIN_BOLD   if os.path.exists(_WIN_BOLD)   else _NOTO_BOLD
+FONT_NORMAL = _WIN_NORMAL if os.path.exists(_WIN_NORMAL) else _NOTO_REG
 
 OUT_W = 1920
 OUT_H = 1006

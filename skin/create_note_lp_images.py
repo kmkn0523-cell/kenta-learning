@@ -4,12 +4,18 @@ Note用LP画像を3枚生成するスクリプト
 スタイル: 濃い背景＋白文字のインパクト重視デザイン
 """
 
+import os  # ファイルの存在確認に使う
 from PIL import Image, ImageDraw, ImageFont  # 画像を作るためのライブラリ
 
 # ===== フォントの設定 =====
-# WSL2からWindowsのフォントを使う（日本語対応）
-FONT_BOLD   = "/mnt/c/Windows/Fonts/BIZ-UDGothicB.ttc"  # 太字フォント（タイトル用）
-FONT_NORMAL = "/mnt/c/Windows/Fonts/BIZ-UDGothicR.ttc"  # 通常フォント（サブテキスト用）
+# Windows（WSL2）にフォントがあればそれを使い、なければLinux用フォントを使う
+_WIN_BOLD   = "/mnt/c/Windows/Fonts/BIZ-UDGothicB.ttc"
+_WIN_NORMAL = "/mnt/c/Windows/Fonts/BIZ-UDGothicR.ttc"
+_NOTO_BOLD  = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"    # Linux用日本語フォント
+_NOTO_REG   = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" # Linux用日本語フォント
+
+FONT_BOLD   = _WIN_BOLD   if os.path.exists(_WIN_BOLD)   else _NOTO_BOLD
+FONT_NORMAL = _WIN_NORMAL if os.path.exists(_WIN_NORMAL) else _NOTO_REG
 
 # ===== 画像サイズ =====
 WIDTH  = 1280  # 横幅（ピクセル）
