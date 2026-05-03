@@ -80,12 +80,17 @@ async function run() {
     await page.goto('https://note.com/login');
     await page.waitForLoadState('networkidle');
 
-    // メールアドレス入力（placeholder="mail@example.com or note ID"）
-    await page.locator('input[placeholder*="mail"], input[placeholder*="note ID"]').first().fill(process.env.NOTE_EMAIL);
+    // メールアドレス入力（note.comのフォームは type="text" + placeholder）
+    await page.locator('input[placeholder*="mail"]').first().fill(process.env.NOTE_EMAIL);
     // パスワード入力
     await page.locator('input[type="password"]').first().fill(process.env.NOTE_PASSWORD);
-    // ログインボタンをクリック
-    await page.locator('button[type="submit"]').click();
+
+    // ログインボタンは data-type="primary"（type="submit" ではない）
+    // 入力完了後に disabled が外れるので、有効になるまで待ってからクリック
+    const loginBtn = page.locator('button[data-type="primary"]').first();
+    await loginBtn.waitFor({ state: 'visible' });
+    await loginBtn.waitFor({ state: 'enabled', timeout: 10000 }).catch(() => {});
+    await loginBtn.click();
 
     // ログイン完了（/login 以外のページに遷移するまで待つ）
     await page.waitForURL(/^https:\/\/note\.com(?!\/login)/, { timeout: 20000 });
