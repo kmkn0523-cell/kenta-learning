@@ -63,7 +63,7 @@
 #### コンテンツ
 - [ ] 日常投稿7種ローテーション以外の投稿パターンを増やす
 - [ ] 売上・反応の記録方法を決める
-- [ ] 睡眠テーマの無料note（note_article_sleep.md）をnoteに投稿する
+- [x] 睡眠テーマの無料note（note_article_sleep.md）をnoteに投稿する
 
 ---
 
