@@ -69,43 +69,37 @@ async function run() {
     headless: true,
     args: ['--no-sandbox', '--disable-dev-shm-usage'],
   });
+
+  // 保存済みクッキーを使ってログイン済み状態を再現する
+  const cookiesBase64 = process.env.NOTE_COOKIES;
+  if (!cookiesBase64) {
+    console.error('❌ 環境変数 NOTE_COOKIES が設定されていません');
+    console.error('   skin/save_note_session.js を手動実行してクッキーを取得してください');
+    process.exit(1);
+  }
+  const cookies = JSON.parse(Buffer.from(cookiesBase64, 'base64').toString('utf-8'));
+
   const context = await browser.newContext({
     permissions: ['clipboard-read', 'clipboard-write'],
   });
+
+  // クッキーをセットしてログイン済み状態にする
+  await context.addCookies(cookies);
+  console.log(`クッキーをセット完了（${cookies.length}件）`);
+
   const page = await context.newPage();
 
   try {
-    // ===== note.com にログイン =====
-    console.log('note.com にログイン中...');
-    await page.goto('https://note.com/login');
+    // ログイン状態を確認
+    await page.goto('https://note.com/');
     await page.waitForLoadState('networkidle');
-
-    // メールアドレス入力
-    await page.locator('input[placeholder*="mail"]').first().fill(process.env.NOTE_EMAIL);
-    await page.waitForTimeout(500);
-
-    // パスワード入力
-    await page.locator('input[type="password"]').first().fill(process.env.NOTE_PASSWORD);
-    await page.waitForTimeout(1000); // ボタンが有効になるまで待つ
-
-    // デバッグ用スクリーンショット（ボタンクリック前）
-    await page.screenshot({ path: 'screenshot_before_login.png' });
-
-    // ログインボタン（data-type="primary"、初期状態はdisabled）
-    const loginBtn = page.locator('button[data-type="primary"]').first();
-    await loginBtn.waitFor({ state: 'visible', timeout: 10000 });
-    const isDisabled = await loginBtn.isDisabled();
-    console.log(`ログインボタン disabled状態: ${isDisabled}`);
-
-    await loginBtn.click({ force: true }); // disabled でも強制クリック
-    await page.waitForTimeout(2000);
-
-    // デバッグ用スクリーンショット（ボタンクリック後）
-    await page.screenshot({ path: 'screenshot_after_login.png' });
-    console.log(`クリック後のURL: ${page.url()}`);
-
-    // ログイン完了待ち（最大30秒）
-    await page.waitForURL(/^https:\/\/note\.com(?!\/login)/, { timeout: 30000 });
+    const currentUrl = page.url();
+    if (currentUrl.includes('/login')) {
+      console.error('❌ クッキーが無効です。save_note_session.js を再実行してください');
+      await page.screenshot({ path: 'screenshot_cookie_error.png' });
+      process.exit(1);
+    }
+    console.log('ログイン状態を確認 ✅');
     console.log('ログイン完了');
 
     // ===== 新規記事エディタを開く =====
