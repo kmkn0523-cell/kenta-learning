@@ -80,9 +80,11 @@ async function run() {
     await page.goto('https://note.com/login');
     await page.waitForLoadState('networkidle');
 
-    // メールアドレスとパスワードを入力
-    await page.locator('input[type="email"], input[name="email"]').first().fill(process.env.NOTE_EMAIL);
+    // メールアドレス入力（placeholder="mail@example.com or note ID"）
+    await page.locator('input[placeholder*="mail"], input[placeholder*="note ID"]').first().fill(process.env.NOTE_EMAIL);
+    // パスワード入力
     await page.locator('input[type="password"]').first().fill(process.env.NOTE_PASSWORD);
+    // ログインボタンをクリック
     await page.locator('button[type="submit"]').click();
 
     // ログイン完了（/login 以外のページに遷移するまで待つ）
