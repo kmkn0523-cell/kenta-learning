@@ -80,20 +80,32 @@ async function run() {
     await page.goto('https://note.com/login');
     await page.waitForLoadState('networkidle');
 
-    // メールアドレス入力（note.comのフォームは type="text" + placeholder）
+    // メールアドレス入力
     await page.locator('input[placeholder*="mail"]').first().fill(process.env.NOTE_EMAIL);
+    await page.waitForTimeout(500);
+
     // パスワード入力
     await page.locator('input[type="password"]').first().fill(process.env.NOTE_PASSWORD);
+    await page.waitForTimeout(1000); // ボタンが有効になるまで待つ
 
-    // ログインボタンは data-type="primary"（type="submit" ではない）
-    // 入力完了後に disabled が外れるので、有効になるまで待ってからクリック
+    // デバッグ用スクリーンショット（ボタンクリック前）
+    await page.screenshot({ path: 'screenshot_before_login.png' });
+
+    // ログインボタン（data-type="primary"、初期状態はdisabled）
     const loginBtn = page.locator('button[data-type="primary"]').first();
-    await loginBtn.waitFor({ state: 'visible' });
-    await loginBtn.waitFor({ state: 'enabled', timeout: 10000 }).catch(() => {});
-    await loginBtn.click();
+    await loginBtn.waitFor({ state: 'visible', timeout: 10000 });
+    const isDisabled = await loginBtn.isDisabled();
+    console.log(`ログインボタン disabled状態: ${isDisabled}`);
 
-    // ログイン完了（/login 以外のページに遷移するまで待つ）
-    await page.waitForURL(/^https:\/\/note\.com(?!\/login)/, { timeout: 20000 });
+    await loginBtn.click({ force: true }); // disabled でも強制クリック
+    await page.waitForTimeout(2000);
+
+    // デバッグ用スクリーンショット（ボタンクリック後）
+    await page.screenshot({ path: 'screenshot_after_login.png' });
+    console.log(`クリック後のURL: ${page.url()}`);
+
+    // ログイン完了待ち（最大30秒）
+    await page.waitForURL(/^https:\/\/note\.com(?!\/login)/, { timeout: 30000 });
     console.log('ログイン完了');
 
     // ===== 新規記事エディタを開く =====
