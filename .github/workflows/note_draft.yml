@@ -1,11 +1,13 @@
 name: note.com 下書き自動保存
 
 # skin/note_article_*.md が push されたときに自動実行
+# workflow_dispatch: GitHub画面から手動実行もできる
 on:
   push:
     branches: [main]
     paths:
       - 'skin/note_article_*.md'
+  workflow_dispatch:
 
 jobs:
   create-draft:
