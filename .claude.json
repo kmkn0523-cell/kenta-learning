@@ -636,6 +636,10 @@
     "superpowers:executing-plans": {
       "usageCount": 1,
       "lastUsedAt": 1777905435878
+    },
+    "vercel:deploy": {
+      "usageCount": 1,
+      "lastUsedAt": 1777934572127
     }
   },
   "opus47LaunchSeenCount": 5,
