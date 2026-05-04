@@ -1,5 +1,5 @@
 {
-  "numStartups": 63,
+  "numStartups": 64,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -509,7 +509,7 @@
         "finance_app.jsx",
         "threads_auto_post.py"
       ],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
@@ -571,7 +571,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777823795418
+      "timestamp": 1777854986245
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
