@@ -10,16 +10,16 @@
     "prompt-queue": 47,
     "enter-to-steer-in-relatime": 61,
     "todo-list": 61,
-    "install-github-app": 53,
-    "install-slack-app": 55,
+    "install-github-app": 65,
+    "install-slack-app": 65,
     "drag-and-drop-images": 56,
     "double-esc-code-restore": 56,
     "continue": 57,
     "shift-tab": 59,
     "image-paste": 61,
     "desktop-app": 64,
-    "color-when-multi-clauding": 51,
-    "web-app": 49,
+    "color-when-multi-clauding": 65,
+    "web-app": 65,
     "remote-control": 33,
     "voice-mode": 59,
     "shift-enter": 59,
@@ -34,6 +34,7 @@
     "git-worktrees": 61
   },
   "promptQueueUseCount": 17,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_umber_petrel": false,
     "tengu_slate_harrier": "off",
@@ -544,9 +545,9 @@
         "hook_duration_ms_p99": 174
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "2c51b576-eb76-4fa4-ade6-bc7bfba98ce6",
-      "lastSessionFirstPrompt": "❯ Try \"how does skin_threads_auto_post.py work?\"",
-      "lastSessionModified": 1777872126083,
+      "lastHintSessionId": "5b5f37d3-9030-43bc-9b1f-2a7134e6204b",
+      "lastSessionFirstPrompt": "❯ Try \"refactor ronin_threads_action.py\"",
+      "lastSessionModified": 1777904444541,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
@@ -601,6 +602,10 @@
     "last30days": {
       "usageCount": 3,
       "lastUsedAt": 1777605409730
+    },
+    "superpowers:brainstorming": {
+      "usageCount": 2,
+      "lastUsedAt": 1777904625862
     }
   },
   "opus47LaunchSeenCount": 5,
