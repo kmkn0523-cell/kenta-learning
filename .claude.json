@@ -1,5 +1,5 @@
 {
-  "numStartups": 64,
+  "numStartups": 65,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -515,7 +515,7 @@
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
       "lastToolDuration": 0,
-      "lastDuration": 71647,
+      "lastDuration": 33167271,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
       "lastTotalInputTokens": 0,
@@ -523,25 +523,25 @@
       "lastTotalCacheCreationInputTokens": 0,
       "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 0.8,
-      "lastFpsLow1Pct": 142.37,
+      "lastFpsAverage": 0.02,
+      "lastFpsLow1Pct": 209.72,
       "lastModelUsage": {},
-      "lastSessionId": "34aaa2ab-a875-4abe-86e4-e8733c3aa621",
+      "lastSessionId": "2c51b576-eb76-4fa4-ade6-bc7bfba98ce6",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 47,
-        "frame_duration_ms_min": 0.10998500000005151,
-        "frame_duration_ms_max": 7.023909000000003,
-        "frame_duration_ms_avg": 0.9457716808510571,
-        "frame_duration_ms_p50": 0.7157530000004044,
-        "frame_duration_ms_p95": 2.1631399000018057,
-        "frame_duration_ms_p99": 4.912067860000157,
+        "frame_duration_ms_count": 617,
+        "frame_duration_ms_min": 0.11418599999979051,
+        "frame_duration_ms_max": 7.900197997689247,
+        "frame_duration_ms_avg": 1.473341991964025,
+        "frame_duration_ms_p50": 1.1625380013138056,
+        "frame_duration_ms_p95": 3.0275474006310072,
+        "frame_duration_ms_p99": 4.766282439082861,
         "hook_duration_ms_count": 1,
-        "hook_duration_ms_min": 221,
-        "hook_duration_ms_max": 221,
-        "hook_duration_ms_avg": 221,
-        "hook_duration_ms_p50": 221,
-        "hook_duration_ms_p95": 221,
-        "hook_duration_ms_p99": 221
+        "hook_duration_ms_min": 174,
+        "hook_duration_ms_max": 174,
+        "hook_duration_ms_avg": 174,
+        "hook_duration_ms_p50": 174,
+        "hook_duration_ms_p95": 174,
+        "hook_duration_ms_p99": 174
       },
       "hasCompletedProjectOnboarding": true,
       "lastHintSessionId": "2c51b576-eb76-4fa4-ade6-bc7bfba98ce6",
@@ -559,7 +559,7 @@
   "groveConfigCache": {
     "bf7efc70-b78a-4fb9-bdc2-c371585a6b66": {
       "grove_enabled": true,
-      "timestamp": 1777769513684
+      "timestamp": 1777890623740
     }
   },
   "closedIssuesLastChecked": 1777815698288,
@@ -572,7 +572,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777854986245
+      "timestamp": 1777890635367
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
