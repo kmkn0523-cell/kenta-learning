@@ -1,5 +1,5 @@
 {
-  "numStartups": 67,
+  "numStartups": 68,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -25,7 +25,7 @@
     "shift-enter": 59,
     "custom-agents": 66,
     "agent-flag": 37,
-    "feedback-command": 53,
+    "feedback-command": 68,
     "permissions": 61,
     "rename-conversation": 57,
     "custom-commands": 42,
@@ -567,9 +567,9 @@
         "pre_tool_hook_duration_ms_p99": 1.5999999999999943
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "47c9c21b-de01-4819-9f01-2760c9815531",
-      "lastSessionFirstPrompt": "ファイナンスアプリ、日本国内の消費者金融やカードローンを網羅して選択肢に入れて。",
-      "lastSessionModified": 1777932965312,
+      "lastHintSessionId": "c463c1e9-9214-4732-9701-597e699676bd",
+      "lastSessionFirstPrompt": "how do I log an error?",
+      "lastSessionModified": 1777933953898,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
