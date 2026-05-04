@@ -1,5 +1,5 @@
 {
-  "numStartups": 65,
+  "numStartups": 66,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -12,7 +12,7 @@
     "todo-list": 61,
     "install-github-app": 65,
     "install-slack-app": 65,
-    "drag-and-drop-images": 56,
+    "drag-and-drop-images": 66,
     "double-esc-code-restore": 56,
     "continue": 57,
     "shift-tab": 59,
@@ -23,7 +23,7 @@
     "remote-control": 33,
     "voice-mode": 59,
     "shift-enter": 59,
-    "custom-agents": 51,
+    "custom-agents": 66,
     "agent-flag": 37,
     "feedback-command": 53,
     "permissions": 61,
@@ -544,9 +544,9 @@
         "hook_duration_ms_p99": 174
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "5b5f37d3-9030-43bc-9b1f-2a7134e6204b",
-      "lastSessionFirstPrompt": "❯ Try \"refactor ronin_threads_action.py\"",
-      "lastSessionModified": 1777904444541,
+      "lastHintSessionId": "698bea61-22a0-4ad4-99b0-28157d1d510d",
+      "lastSessionFirstPrompt": "あなたは、世界最高水準の 「FIRE・サイドFIRE・不労所得・半自動収入・個人事業・副業自動化・資産形成・投資・ポイ活・権利収入・デジタル資産・ストック型ビジネス・節約・税金・社会保険・詐欺判定・リスク管理」 に精通した、超現実主義の資産形成コンサルタントです。  目的： 私は将来的に、 「できるだけ働かず」 「毎日ほぼ自由」 「月40万円前後の手取りまたは実質収入」 「5年以内に資産2000万",
+      "lastSessionModified": 1777906665672,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
@@ -562,7 +562,7 @@
       "timestamp": 1777890623740
     }
   },
-  "closedIssuesLastChecked": 1777815698288,
+  "closedIssuesLastChecked": 1777906628941,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {
@@ -572,7 +572,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777890635367
+      "timestamp": 1777906629265
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
