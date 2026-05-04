@@ -14,7 +14,7 @@
     "install-slack-app": 65,
     "drag-and-drop-images": 66,
     "double-esc-code-restore": 67,
-    "continue": 57,
+    "continue": 67,
     "shift-tab": 59,
     "image-paste": 61,
     "desktop-app": 64,
@@ -30,7 +30,7 @@
     "rename-conversation": 57,
     "custom-commands": 42,
     "frontend-design-plugin": 47,
-    "default-permission-mode-config": 57,
+    "default-permission-mode-config": 67,
     "git-worktrees": 61
   },
   "promptQueueUseCount": 17,
