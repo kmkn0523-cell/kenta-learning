@@ -17,7 +17,7 @@
     "continue": 57,
     "shift-tab": 59,
     "image-paste": 61,
-    "desktop-app": 49,
+    "desktop-app": 64,
     "color-when-multi-clauding": 51,
     "web-app": 49,
     "remote-control": 33,
@@ -543,9 +543,9 @@
         "hook_duration_ms_p99": 221
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "7375d92c-d2a1-49cf-b40d-1c053ae7df90",
-      "lastSessionFirstPrompt": "スキンの無料NOte、1６時間ファスティングがテーマのもので書いて。ヘッダー画像もほかの無料NOTEとフォーマット同じで",
-      "lastSessionModified": 1777794813459,
+      "lastHintSessionId": "2c51b576-eb76-4fa4-ade6-bc7bfba98ce6",
+      "lastSessionFirstPrompt": "❯ Try \"how does skin_threads_auto_post.py work?\"",
+      "lastSessionModified": 1777872126083,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
