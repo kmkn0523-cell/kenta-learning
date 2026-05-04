@@ -606,6 +606,14 @@
     "superpowers:brainstorming": {
       "usageCount": 2,
       "lastUsedAt": 1777904625862
+    },
+    "superpowers:writing-plans": {
+      "usageCount": 1,
+      "lastUsedAt": 1777905053630
+    },
+    "superpowers:executing-plans": {
+      "usageCount": 1,
+      "lastUsedAt": 1777905435878
     }
   },
   "opus47LaunchSeenCount": 5,
