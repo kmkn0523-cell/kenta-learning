@@ -1,5 +1,5 @@
 {
-  "numStartups": 68,
+  "numStartups": 69,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -459,7 +459,7 @@
   "sonnet1m45MigrationComplete": true,
   "migrationVersion": 13,
   "userID": "e1e0b328f95cdab91c6b1ec207de9a11f08e9c77b3d1d6fac6eadfd7503f91bb",
-  "changelogLastFetched": 1777603639632,
+  "changelogLastFetched": 1777985822245,
   "oauthAccount": {
     "accountUuid": "bf7efc70-b78a-4fb9-bdc2-c371585a6b66",
     "emailAddress": "kmkn0523@gmail.com",
@@ -484,7 +484,7 @@
   "shiftEnterKeyBindingInstalled": true,
   "hasCompletedOnboarding": true,
   "lastOnboardingVersion": "2.1.118",
-  "lastReleaseNotesSeen": "2.1.126",
+  "lastReleaseNotesSeen": "2.1.128",
   "projects": {
     "/home/kenta_kamijyo": {
       "allowedTools": [],
@@ -570,9 +570,9 @@
         "pre_tool_hook_duration_ms_p99": 1.5999999999999943
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "c463c1e9-9214-4732-9701-597e699676bd",
-      "lastSessionFirstPrompt": "how do I log an error?",
-      "lastSessionModified": 1777933953898,
+      "lastHintSessionId": "dbfc645b-75d9-4e5b-9b14-1ed4901e6372",
+      "lastSessionFirstPrompt": "「ど真ん中だけど、語る人が少ないテーマ」 具体的には、こういう条件を全部満たすテーマです。 ひとつ、悩んでる人の絶対数が多いこと。最低でも100万人規模の市場であること。 ふたつ、悩んでるけど、誰にも相談しづらい性質があること。恥ずかしいとか、家族に言いにくいとか、職場では話せないとか。 みっつ、解決策の情報が世の中に散らばりすぎていて、「結局どれが正解か分からない」状態になっていること。 よっつ",
+      "lastSessionModified": 1777985858713,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
@@ -585,7 +585,7 @@
   "groveConfigCache": {
     "bf7efc70-b78a-4fb9-bdc2-c371585a6b66": {
       "grove_enabled": true,
-      "timestamp": 1777890623740
+      "timestamp": 1777985822513
     }
   },
   "closedIssuesLastChecked": 1777906628941,
@@ -598,7 +598,7 @@
         "amount_minor_units": null,
         "currency": null
       },
-      "timestamp": 1777931688024
+      "timestamp": 1777985823220
     }
   },
   "officialMarketplaceAutoInstallAttempted": true,
@@ -625,8 +625,8 @@
       "lastUsedAt": 1777812369879
     },
     "last30days": {
-      "usageCount": 3,
-      "lastUsedAt": 1777605409730
+      "usageCount": 4,
+      "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
       "usageCount": 3,
