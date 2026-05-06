@@ -21,6 +21,16 @@
         ]
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /home/kenta_kamijyo/.claude/model_suggest.py"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
@@ -55,6 +65,7 @@
       }
     }
   },
+  "model": "haiku",
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "effortLevel": "medium",
