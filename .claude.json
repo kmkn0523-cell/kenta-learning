@@ -556,9 +556,9 @@
         "pre_tool_hook_duration_ms_p99": 0.7100000000000009
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "dbfc645b-75d9-4e5b-9b14-1ed4901e6372",
-      "lastSessionFirstPrompt": "「ど真ん中だけど、語る人が少ないテーマ」 具体的には、こういう条件を全部満たすテーマです。 ひとつ、悩んでる人の絶対数が多いこと。最低でも100万人規模の市場であること。 ふたつ、悩んでるけど、誰にも相談しづらい性質があること。恥ずかしいとか、家族に言いにくいとか、職場では話せないとか。 みっつ、解決策の情報が世の中に散らばりすぎていて、「結局どれが正解か分からない」状態になっていること。 よっつ",
-      "lastSessionModified": 1777985858713,
+      "lastHintSessionId": "8c2362b2-f9de-4fea-9227-87944fd0dea5",
+      "lastSessionFirstPrompt": "ろーにんの画像付き自動投稿ってできるんだっけ？",
+      "lastSessionModified": 1778041050646,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
@@ -615,8 +615,8 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 3,
-      "lastUsedAt": 1777983983868
+      "usageCount": 4,
+      "lastUsedAt": 1778041112569
     },
     "superpowers:writing-plans": {
       "usageCount": 1,
