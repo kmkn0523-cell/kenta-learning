@@ -7,7 +7,7 @@
 ## 🔥 今週やること（最優先・3つだけに絞る）
 
 - [x] note: 肌荒れ改善noteの販売準備（価格設定・公開日決め）
-- [ ] 肌荒れ改善Threads: 画像投稿対応（Pillowで画像生成→GitHub→Threads）
+- [x] 肌荒れ改善Threads: 画像投稿対応（Pillowで画像生成→GitHub→Threads）
 - [x] @RoninWords: Day31以降のThreads投稿文を作る（Day31〜60完成・threads_posts.jsonに追加済み）
 
 ---
