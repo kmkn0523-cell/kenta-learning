@@ -22,6 +22,8 @@
 !ronin/ronin_images/
 !ronin/ronin_images/*.png
 !skin/
+!skin/skin_images/
+!skin/skin_images/*.png
 !learning/
 
 # .claude/ 設定ファイルを同期する（認証情報は除く）
