@@ -9,9 +9,18 @@ import time                    # 待機処理に使う道具
 import requests                # インターネットにリクエストを送る道具
 from datetime import datetime  # 今の日時を取得する道具
 
-# 環境変数からAPIキーを読み込む（GitHub Actionsのsecretsから渡される）
-THREADS_ACCESS_TOKEN = os.environ["THREADS_ACCESS_TOKEN"]
-THREADS_USER_ID      = os.environ["THREADS_USER_ID"]
+# ローカル実行時は .env ファイルからAPIキーを読み込む（GitHub Actionsでは不要）
+try:
+    from dotenv import load_dotenv
+    load_dotenv("/home/kenta_kamijyo/.env")
+except ImportError:
+    pass  # dotenvがなくても動くようにする
+
+# 環境変数からAPIキーを読み込む
+# GitHub Actions時: THREADS_ACCESS_TOKEN（secretsから渡される）
+# ローカル実行時: RONIN_THREADS_ACCESS_TOKEN（.envから読み込む）
+THREADS_ACCESS_TOKEN = os.environ.get("THREADS_ACCESS_TOKEN") or os.environ.get("RONIN_THREADS_ACCESS_TOKEN")
+THREADS_USER_ID      = os.environ.get("THREADS_USER_ID")      or os.environ.get("RONIN_THREADS_USER_ID")
 
 # 投稿データと進捗ファイルのパス
 POSTS_FILE    = "threads_posts.json"            # 投稿データが入っているファイル
