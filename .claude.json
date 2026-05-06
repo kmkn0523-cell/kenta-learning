@@ -34,7 +34,6 @@
     "git-worktrees": 61
   },
   "promptQueueUseCount": 17,
-  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_scratch": false,
     "tengu_kairos_push_notifications": true,
@@ -620,12 +619,12 @@
       "lastUsedAt": 1778042707780
     },
     "superpowers:writing-plans": {
-      "usageCount": 2,
-      "lastUsedAt": 1778041235803
+      "usageCount": 3,
+      "lastUsedAt": 1778044593550
     },
     "superpowers:executing-plans": {
-      "usageCount": 1,
-      "lastUsedAt": 1777905435878
+      "usageCount": 2,
+      "lastUsedAt": 1778044671503
     },
     "vercel:deploy": {
       "usageCount": 1,
