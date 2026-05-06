@@ -19,7 +19,7 @@ PROGRESS_FILE = "ronin_threads_progress.json"   # 「次は何番目を投稿す
 
 # GitHubリポジトリのRAW画像URL（画像はここから取得される）
 # GitHubにpushされた画像ファイルを直接URLで参照する
-GITHUB_RAW_BASE = "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/ronin/ronin_images"
+GITHUB_RAW_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_images"
 
 # 全投稿に自動でつける共通ハッシュタグ（英語アカウント向け）
 HASHTAGS = "\n\n#JapaneseWisdom #Bushido #Zen #Samurai #Wisdom"
@@ -146,9 +146,9 @@ def main():
     print(f"投稿タイプ: Day{post['day']:02d} {post['type']}")
     print(f"投稿内容（先頭100文字）:\n{full_text[:100]}...\n")
 
-    # Threads APIで投稿する（テキストのみ）
-    # ※ GitHub Raw URLはThreads APIでブロックされるためテキスト投稿に戻す
-    post_id = post_to_threads(full_text)
+    # Threads APIで投稿する（書道カード画像付き）
+    image_url = get_image_url(post["day"])
+    post_id = post_to_threads(full_text, image_url=image_url)
     print(f"✅ 投稿成功！（投稿ID: {post_id}）")
 
     # 次の投稿番号に進める（60を超えたら0に戻る）
