@@ -67,6 +67,12 @@
 - [x] Threads自動投稿をGitHub Actionsに乗せる（1日4回稼働中）
 - [x] cron混雑回避（7分発火に修正済み）
 
+#### X（Twitter）自動投稿
+- [ ] X API Pay-Per-Useにクレジットをチャージする（developer.twitter.com → Usage & Billing → Add Credits、$5〜$10）
+  - 月480投稿 ≈ 月$5（約750円）で稼働できる
+  - スクリプト（skin_x_action.py）・ワークフロー（skin_x_post.yml）は作成済み
+  - チャージ後、GitHubにX_API_KEY等のSecretsを追加してpushするだけ
+
 #### 改善
 - [ ] 画像投稿対応（Pillowで画像生成→GitHubにホスト→Threads画像投稿）
 - [ ] 投稿の反応をメモする（どのパターンが伸びたか）

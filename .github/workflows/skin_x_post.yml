@@ -1,0 +1,86 @@
+# skin_x_post.yml
+# GitHub Actionsのワークフローファイル
+# 毎日16回、決まった時間にXに自動投稿する（7:45〜22:45 JST）
+
+name: skin X 自動投稿
+
+on:
+  schedule:
+    # 07:45 JST = 22:45 UTC（前日）
+    - cron: '45 22 * * *'
+    # 08:45 JST = 23:45 UTC（前日）
+    - cron: '45 23 * * *'
+    # 09:45 JST = 00:45 UTC
+    - cron: '45 0 * * *'
+    # 10:45 JST = 01:45 UTC
+    - cron: '45 1 * * *'
+    # 11:45 JST = 02:45 UTC
+    - cron: '45 2 * * *'
+    # 12:45 JST = 03:45 UTC
+    - cron: '45 3 * * *'
+    # 13:45 JST = 04:45 UTC
+    - cron: '45 4 * * *'
+    # 14:45 JST = 05:45 UTC
+    - cron: '45 5 * * *'
+    # 15:45 JST = 06:45 UTC
+    - cron: '45 6 * * *'
+    # 16:45 JST = 07:45 UTC
+    - cron: '45 7 * * *'
+    # 17:45 JST = 08:45 UTC
+    - cron: '45 8 * * *'
+    # 18:45 JST = 09:45 UTC
+    - cron: '45 9 * * *'
+    # 19:45 JST = 10:45 UTC
+    - cron: '45 10 * * *'
+    # 20:45 JST = 11:45 UTC
+    - cron: '45 11 * * *'
+    # 21:45 JST = 12:45 UTC
+    - cron: '45 12 * * *'
+    # 22:45 JST = 13:45 UTC
+    - cron: '45 13 * * *'
+  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
+
+jobs:
+  post:
+    runs-on: ubuntu-latest  # GitHubのサーバーで動かす
+
+    steps:
+      # Step 1: リポジトリのファイルをダウンロードする
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      # Step 2: Pythonをセットアップする
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step 3: 必要なライブラリをインストールする
+      - name: ライブラリをインストール
+        run: pip install tweepy
+
+      # Step 4: 進捗ファイルをキャッシュから復元する
+      # これがないと毎回同じ投稿になってしまう
+      - name: 進捗ファイルをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_x_progress.json
+          key: skin-x-progress-${{ github.run_id }}
+          restore-keys: |
+            skin-x-progress-
+
+      # Step 5: Xに自動投稿する
+      - name: Xに投稿
+        env:
+          X_API_KEY:             ${{ secrets.X_API_KEY }}
+          X_API_SECRET:          ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN:        ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+        run: cd skin && python skin_x_action.py
+
+      # Step 6: 更新した進捗ファイルをキャッシュに保存する
+      - name: 進捗ファイルをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_x_progress.json
+          key: skin-x-progress-${{ github.run_id }}
