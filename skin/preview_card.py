@@ -1,140 +1,194 @@
 # preview_card.py
 # skinカードのデザインプレビュー用スクリプト（1枚だけ生成して確認する）
-# 使い方: python3 preview_card.py
+# 使い方: python3 skin/preview_card.py
 
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-# カードサイズ（正方形 1080×1080）
 W, H = 1080, 1080
 
-# カラー定義
-BG_COLOR    = (252, 250, 245)   # 背景：ほんのり温かみのあるホワイト
-GREEN       = (72, 153, 96)     # アクセント：落ち着いた緑
-DARK_GREEN  = (45, 100, 62)     # タイトル文字：濃い緑
-TEXT_DARK   = (40, 40, 40)      # 本文：ほぼ黒
-TEXT_LIGHT  = (120, 120, 120)   # サブテキスト：グレー
-WHITE       = (255, 255, 255)   # 白
+# カラーパレット
+DARK       = (22, 48, 32)      # 深緑ほぼ黒（上半分の背景）
+GREEN      = (72, 160, 100)    # 明るい緑（アクセント）
+PALE_GREEN = (235, 248, 238)   # 薄い緑（アクションボックス背景）
+WHITE      = (255, 255, 255)
+OFF_WHITE  = (250, 249, 246)   # 下半分の背景
+TEXT_DARK  = (22, 30, 24)      # 本文ほぼ黒
+TEXT_GRAY  = (130, 140, 132)   # 薄いテキスト
+NUM_BG     = (235, 248, 238)   # 番号バッジ背景
 
-# フォントパス
-FONT_JP = "/home/kenta_kamijyo/fonts/NotoSerifJP.otf"  # 日本語フォント
+FONT_JP = "/home/kenta_kamijyo/fonts/NotoSerifJP.otf"
 
-# サンプルデータ（砂糖とニキビ）
 SAMPLE = {
-    "title": "砂糖がニキビを作る仕組み",
-    "points": [
+    "tag":     "砂糖とニキビ",
+    "hook":    "ニキビが治らないのは\nスキンケアのせいじゃない",
+    "title":   "砂糖がニキビを\n作る仕組み",
+    "flow": [
         "糖質を摂りすぎる",
         "血糖値が急上昇する",
         "皮脂の分泌が増える",
         "毛穴が詰まりニキビになる",
+    ],
+    "actions": [
+        "ジュースをお茶に替える",
+        "おやつをナッツに替える",
+        "2週間だけ試してみる",
     ]
 }
 
 
+def load_fonts():
+    return {
+        "tag":    ImageFont.truetype(FONT_JP, 26),
+        "hook":   ImageFont.truetype(FONT_JP, 36),
+        "title":  ImageFont.truetype(FONT_JP, 62),
+        "flow":   ImageFont.truetype(FONT_JP, 38),
+        "num":    ImageFont.truetype(FONT_JP, 32),
+        "action": ImageFont.truetype(FONT_JP, 34),
+        "label":  ImageFont.truetype(FONT_JP, 24),
+        "brand":  ImageFont.truetype(FONT_JP, 24),
+    }
+
+
+def text_center_x(draw, text, font, width):
+    """テキストを横中央に配置するX座標を返す"""
+    bb = draw.textbbox((0, 0), text, font=font)
+    return (width - (bb[2] - bb[0])) // 2
+
+
+def draw_multiline_center(draw, text, font, fill, y, width, line_gap=8):
+    """改行含むテキストを中央揃えで描画。描画後のY座標を返す"""
+    lines = text.split("\n")
+    lh = draw.textbbox((0, 0), "あ", font=font)[3] + line_gap
+    for i, line in enumerate(lines):
+        x = text_center_x(draw, line, font, width)
+        draw.text((x, y + i * lh), line, font=font, fill=fill)
+    return y + len(lines) * lh
+
+
 def draw_card(data, output_path):
-    """カード画像を1枚生成する"""
-
-    # ---- ベース画像 ----
-    img  = Image.new("RGB", (W, H), BG_COLOR)
+    img  = Image.new("RGB", (W, H), OFF_WHITE)
     draw = ImageDraw.Draw(img)
+    f    = load_fonts()
+    PAD  = 68
 
-    # ---- 上部アクセントバー ----
-    bar_h = 14
-    draw.rectangle([0, 0, W, bar_h], fill=GREEN)
+    # =====================================================
+    # 上半分：ダーク背景エリア
+    # =====================================================
+    SPLIT_Y = 430
+    draw.rectangle([0, 0, W, SPLIT_Y], fill=DARK)
 
-    # ---- フォント読み込み ----
-    try:
-        font_title  = ImageFont.truetype(FONT_JP, 64)   # タイトル
-        font_point  = ImageFont.truetype(FONT_JP, 42)   # ポイント本文
-        font_arrow  = ImageFont.truetype(FONT_JP, 38)   # 矢印
-        font_brand  = ImageFont.truetype(FONT_JP, 34)   # ブランド名
-        font_label  = ImageFont.truetype(FONT_JP, 28)   # ラベル
-    except Exception as e:
-        print(f"フォントエラー: {e}")
-        return
+    # タグ（小さな緑ラベル）
+    tag_y = 52
+    tag_text = f"# {data['tag']}"
+    bb = draw.textbbox((0, 0), tag_text, font=f["tag"])
+    tag_w = bb[2] - bb[0]
+    tag_pad = 16
+    tag_x = PAD
+    draw.rounded_rectangle(
+        [tag_x - tag_pad, tag_y - 8,
+         tag_x + tag_w + tag_pad, tag_y + bb[3] + 8],
+        radius=20, fill=GREEN
+    )
+    draw.text((tag_x, tag_y), tag_text, font=f["tag"], fill=WHITE)
 
-    # ---- テーマラベル（小さめ・緑） ----
-    label_y = 60
-    draw.text((72, label_y), "肌荒れ改善のヒント", font=font_label, fill=GREEN)
-
-    # ---- タイトル ----
+    # タイトル（大きく・中央）
     title_y = 130
-    draw.text((72, title_y), data["title"], font=font_title, fill=DARK_GREEN)
+    title_bottom = draw_multiline_center(draw, data["title"], f["title"], WHITE, title_y, W, line_gap=10)
 
-    # ---- 区切り線（上） ----
-    line_y1 = 240
-    draw.rectangle([72, line_y1, W - 72, line_y1 + 2], fill=GREEN)
+    # 緑の区切り線（細くシャープ）
+    line_y = title_bottom + 28
+    line_w = 80
+    draw.rectangle([(W - line_w) // 2, line_y, (W + line_w) // 2, line_y + 3], fill=GREEN)
 
-    # ---- ポイントリスト（フロー図風・矢印つなぎ） ----
-    points = data["points"]
-    n = len(points)
+    # フック文（小さめ・グレーがかった白）
+    hook_y = line_y + 24
+    draw_multiline_center(draw, data["hook"], f["hook"], (190, 210, 195), hook_y, W, line_gap=6)
 
-    # ポイント全体を縦方向に中央揃えするためにY開始位置を計算する
-    point_h   = 80    # 1ポイントの高さ
-    arrow_h   = 40    # 矢印の高さ
-    block_h   = point_h * n + arrow_h * (n - 1)  # 全体の高さ
-    area_top  = line_y1 + 30
-    area_bot  = H - 160
-    area_h    = area_bot - area_top
-    start_y   = area_top + (area_h - block_h) // 2
+    # =====================================================
+    # 下半分：ホワイトエリア
+    # =====================================================
 
-    current_y = start_y
-    for i, point in enumerate(points):
-        # 番号バッジ（緑丸に白数字）
-        badge_r  = 26   # バッジの半径
-        badge_cx = 72 + badge_r
-        badge_cy = current_y + point_h // 2
+    # --- フロー図 ---
+    flow   = data["flow"]
+    n      = len(flow)
+    item_h = 72
+    gap_h  = 28
+    flow_total = item_h * n + gap_h * (n - 1)
+    flow_top   = SPLIT_Y + 36
+    flow_avail = H - 200 - flow_top    # アクションボックス分を引く
 
-        draw.ellipse(
-            [badge_cx - badge_r, badge_cy - badge_r,
-             badge_cx + badge_r, badge_cy + badge_r],
-            fill=GREEN
+    # フロー全体を縦中央に
+    flow_start = flow_top + (flow_avail - flow_total) // 2
+
+    for i, step in enumerate(flow):
+        cy = flow_start + i * (item_h + gap_h) + item_h // 2
+
+        # 番号バッジ（角丸正方形・薄緑）
+        badge_s  = 44
+        badge_x  = PAD
+        badge_y  = cy - badge_s // 2
+        draw.rounded_rectangle(
+            [badge_x, badge_y, badge_x + badge_s, badge_y + badge_s],
+            radius=10, fill=NUM_BG
         )
-        num_font = ImageFont.truetype(FONT_JP, 28)
         num_text = str(i + 1)
-        nb = draw.textbbox((0, 0), num_text, font=num_font)
-        nx = badge_cx - (nb[2] - nb[0]) // 2
-        ny = badge_cy - (nb[3] - nb[1]) // 2
-        draw.text((nx, ny), num_text, font=num_font, fill=WHITE)
+        nb = draw.textbbox((0, 0), num_text, font=f["num"])
+        draw.text(
+            (badge_x + badge_s // 2 - (nb[0] + nb[2]) / 2,
+             cy - (nb[1] + nb[3]) / 2),
+            num_text, font=f["num"], fill=GREEN
+        )
 
-        # ポイントテキスト
-        text_x = badge_cx + badge_r + 24
-        text_y = badge_cy - (draw.textbbox((0, 0), point, font=font_point)[3]) // 2
-        draw.text((text_x, text_y), point, font=font_point, fill=TEXT_DARK)
+        # ステップテキスト
+        tb = draw.textbbox((0, 0), step, font=f["flow"])
+        draw.text(
+            (badge_x + badge_s + 24, cy - (tb[1] + tb[3]) / 2),
+            step, font=f["flow"], fill=TEXT_DARK
+        )
 
-        # 矢印（最後のポイントには入れない）
+        # 細いドット区切り線（最後以外）
         if i < n - 1:
-            arrow_x = badge_cx
-            arrow_top = current_y + point_h + 4
-            arrow_bot = arrow_top + arrow_h - 8
-            # 縦線
-            draw.rectangle([arrow_x - 2, arrow_top, arrow_x + 2, arrow_bot], fill=GREEN)
-            # 三角矢印
-            draw.polygon(
-                [(arrow_x - 10, arrow_bot),
-                 (arrow_x + 10, arrow_bot),
-                 (arrow_x, arrow_bot + 12)],
-                fill=GREEN
-            )
-            current_y += point_h + arrow_h
-        else:
-            current_y += point_h
+            dot_y = flow_start + i * (item_h + gap_h) + item_h + gap_h // 2
+            for dx in range(badge_x + badge_s // 2 - 1, badge_x + badge_s // 2 + 2):
+                draw.rectangle([dx, flow_start + i*(item_h+gap_h) + item_h + 4,
+                                 dx + 1, dot_y], fill=(180, 200, 182))
 
-    # ---- 区切り線（下） ----
-    line_y2 = H - 130
-    draw.rectangle([72, line_y2, W - 72, line_y2 + 2], fill=GREEN)
+    # =====================================================
+    # アクションボックス（下部固定）
+    # =====================================================
+    box_top = H - 210
+    box_bot = H - 58
+    draw.rounded_rectangle(
+        [PAD, box_top, W - PAD, box_bot],
+        radius=16, fill=PALE_GREEN
+    )
+    # 左の緑ライン
+    draw.rounded_rectangle(
+        [PAD, box_top, PAD + 6, box_bot],
+        radius=16, fill=GREEN
+    )
 
-    # ---- ブランド名 ----
-    brand_y = H - 100
-    brand_text = "毎日1つ、肌荒れ改善のヒントを投稿中"
-    bb = draw.textbbox((0, 0), brand_text, font=font_brand)
-    brand_x = (W - (bb[2] - bb[0])) // 2   # 中央揃え
-    draw.text((brand_x, brand_y), brand_text, font=font_brand, fill=TEXT_LIGHT)
+    # ラベル
+    draw.text((PAD + 26, box_top + 18), "今すぐできること", font=f["label"], fill=GREEN)
 
-    # ---- 下部アクセントバー ----
-    draw.rectangle([0, H - bar_h, W, H], fill=GREEN)
+    # アクション
+    action_y = box_top + 52
+    for action in data["actions"]:
+        draw.text((PAD + 26, action_y), f"→  {action}", font=f["action"], fill=TEXT_DARK)
+        action_y += draw.textbbox((0, 0), "あ", font=f["action"])[3] + 10
 
-    # ---- 保存 ----
+    # =====================================================
+    # 最下部：ブランドバー
+    # =====================================================
+    draw.rectangle([0, H - 46, W, H], fill=DARK)
+    brand = "毎日1つ、肌荒れ改善のヒントを投稿中"
+    bb = draw.textbbox((0, 0), brand, font=f["brand"])
+    draw.text(
+        ((W - (bb[2] - bb[0])) // 2, H - 38),
+        brand, font=f["brand"], fill=(160, 190, 165)
+    )
+
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     img.save(output_path, "PNG")
     print(f"✅ 保存しました: {output_path}")
@@ -143,4 +197,4 @@ def draw_card(data, output_path):
 if __name__ == "__main__":
     output = "/home/kenta_kamijyo/skin/skin_images/preview.png"
     draw_card(SAMPLE, output)
-    print(f"\nVS Codeで確認してください: {output}")
+    print(f"確認: code {output}")
