@@ -3,7 +3,7 @@
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
-    "plan-mode-for-complex-tasks": 45,
+    "plan-mode-for-complex-tasks": 71,
     "memory-command": 62,
     "theme-command": 61,
     "status-line": 1,
@@ -31,7 +31,7 @@
     "custom-commands": 42,
     "frontend-design-plugin": 47,
     "default-permission-mode-config": 67,
-    "git-worktrees": 61
+    "git-worktrees": 71
   },
   "promptQueueUseCount": 17,
   "cachedGrowthBookFeatures": {
