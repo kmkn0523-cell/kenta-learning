@@ -19,8 +19,8 @@ except ImportError:
 # 環境変数からAPIキーを読み込む
 # GitHub Actions時: THREADS_ACCESS_TOKEN（secretsから渡される）
 # ローカル実行時: RONIN_THREADS_ACCESS_TOKEN（.envから読み込む）
-THREADS_ACCESS_TOKEN = os.environ.get("THREADS_ACCESS_TOKEN") or os.environ.get("RONIN_THREADS_ACCESS_TOKEN")
-THREADS_USER_ID      = os.environ.get("THREADS_USER_ID")      or os.environ.get("RONIN_THREADS_USER_ID")
+THREADS_ACCESS_TOKEN = os.environ.get("RONIN_THREADS_ACCESS_TOKEN") or os.environ.get("THREADS_ACCESS_TOKEN")
+THREADS_USER_ID      = os.environ.get("RONIN_THREADS_USER_ID")      or os.environ.get("THREADS_USER_ID")
 
 # 投稿データと進捗ファイルのパス
 POSTS_FILE    = "threads_posts.json"            # 投稿データが入っているファイル
