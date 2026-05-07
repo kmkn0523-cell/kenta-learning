@@ -131,10 +131,29 @@ def save_progress(progress):
         json.dump(progress, f, ensure_ascii=False, indent=2)
 
 
-def main():
-    """メイン処理（全自動・対話なし）"""
+def should_use_optimization():
+    """
+    Day21以降かチェック（ロニン用）
+    ronin_optimization_index.jsonの analysis_phase が "optimizing" なら True
+    """
+    try:
+        with open("ronin_optimization_index.json", "r", encoding="utf-8") as f:
+            opt_index = json.load(f)
+
+        # analysis_phase が "optimizing" なら最適化モードを使う
+        return opt_index.get("analysis_phase") == "optimizing"
+    except:
+        # ファイルがなければ False（Day1-20モード）
+        return False
+
+
+def post_sequential():
+    """
+    Day1-20用：投稿データを順番にローテーション投稿する
+    （元のmain()関数の内容をそのまま移動）
+    """
     now = datetime.now().strftime("%Y/%m/%d %H:%M")
-    print(f"=== Ronin自動投稿開始: {now} ===")
+    print(f"=== Ronin自動投稿開始（シーケンシャルモード）: {now} ===")
 
     # 投稿データと進捗を読み込む
     posts    = flatten_posts()
@@ -177,6 +196,91 @@ def main():
 
     save_progress(progress)  # 進捗を保存する
     print("=== 完了 ===")
+
+
+def post_optimized():
+    """
+    Day21以降用：最適化インデックスを参照して投稿する
+    （ハッシュタグと投稿順序を最適化）
+    """
+    now = datetime.now().strftime("%Y/%m/%d %H:%M")
+    print(f"=== Ronin自動投稿開始（最適化モード）: {now} ===")
+
+    try:
+        # 最適化インデックスを読む
+        with open("ronin_optimization_index.json", "r", encoding="utf-8") as f:
+            opt_index = json.load(f)
+
+        # posts データを読む
+        posts_data = flatten_posts()
+
+        # next_post_queue から次の投稿を取得
+        queue = opt_index.get("next_post_queue", [])
+        if not queue:
+            print("❌ キューが空です。シーケンシャルモードにフォールバックします。")
+            post_sequential()
+            return
+
+        # キューの最初の投稿を取得
+        next_post_info = queue[0]
+        day = next_post_info["day"]
+        post_type = next_post_info["type"]
+
+        # posts_dataから該当する投稿を検索
+        target_post = None
+        for p in posts_data:
+            if p["day"] == day and p["type"] == post_type:
+                target_post = p
+                break
+
+        if not target_post:
+            print(f"❌ Day {day} の {post_type} 投稿データが見つかりません")
+            return
+
+        # 最適ハッシュタグセットを取得（デフォルトは基本タグセット）
+        hashtag_set = opt_index.get("hashtag_optimization", {}).get(f"day_{day}", "hashtags_set_A")
+
+        # 投稿本文
+        content = target_post["content"]
+        if len(content + HASHTAGS) > 500:
+            content = content[:500 - len(HASHTAGS) - 1] + "…"
+        full_text = content + HASHTAGS
+
+        print(f"投稿タイプ: Day{day:02d} {post_type}")
+        print(f"ハッシュタグセット: {hashtag_set}")
+        print(f"投稿内容（先頭100文字）:\n{full_text[:100]}...\n")
+
+        # Threads APIで投稿する（書道カード画像付き）
+        image_url = get_image_url(day)
+        post_id = post_to_threads(full_text, image_url=image_url)
+        print(f"✅ 投稿成功！（投稿ID: {post_id}）")
+
+        # キューから削除
+        opt_index["next_post_queue"].pop(0)
+        with open("ronin_optimization_index.json", "w", encoding="utf-8") as f:
+            json.dump(opt_index, f, indent=2, ensure_ascii=False)
+
+        print("✅ キューを更新しました")
+        print("=== 完了 ===")
+
+    except Exception as e:
+        print(f"❌ エラー発生: {e}")
+        print("シーケンシャルモードにフォールバックします。")
+        post_sequential()
+
+
+def main():
+    """
+    メイン処理
+    Day21前後で投稿モードを自動切り替え
+    """
+    # Day21以降かチェック
+    if should_use_optimization():
+        print("📊 最適化モードを使用します (Day 21以降)")
+        post_optimized()
+    else:
+        print("📍 シーケンシャルモードを使用します (Day 1-20)")
+        post_sequential()
 
 
 if __name__ == "__main__":
