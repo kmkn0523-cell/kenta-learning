@@ -25,6 +25,7 @@
 !skin/skin_images/
 !skin/skin_images/*.png
 !skin/skin_images/*.jpg
+!linkedin/
 !learning/
 !docs/
 !docs/superpowers/

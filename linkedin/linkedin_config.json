@@ -1,0 +1,17 @@
+{
+  "oauth": {
+    "client_id": "YOUR_CLIENT_ID_HERE",
+    "client_secret": "YOUR_CLIENT_SECRET_HERE",
+    "redirect_uri": "http://localhost:8000/callback",
+    "access_token": "YOUR_ACCESS_TOKEN_HERE",
+    "access_token_expires_at": "YYYY/MM/DD",
+    "refresh_token": "YOUR_REFRESH_TOKEN_HERE"
+  },
+  "profile": {
+    "person_urn": "urn:li:person:XXXXXXXX"
+  },
+  "settings": {
+    "auto_translate": false,
+    "language": "en"
+  }
+}
