@@ -10,12 +10,12 @@ from datetime import datetime  # 日時を扱う道具
 from collections import defaultdict  # グループ分けを簡単にする道具
 
 # ファイルパスの設定
-ANALYTICS_FILE = "/home/kenta_kamijyo/skin/skin_analytics.json"
+ANALYTICS_FILE = "/home/kenta_kamijyo/skin/ronin_analytics.json"
 
 
 def load_analytics():
     """
-    skin_analytics.jsonを読み込む関数
+    ronin_analytics.jsonを読み込む関数
     ファイルが見つからない場合は空の辞書を返す
     """
 
@@ -175,7 +175,7 @@ def calculate_pattern_performance(posts_history):
 
 def update_analytics(performance):
     """
-    計算したパターン成績をskin_analytics.jsonに反映して保存する関数
+    計算したパターン成績をronin_analytics.jsonに反映して保存する関数
     既存のデータを保持しつつ、pattern_performanceセクションを更新
     """
 
@@ -216,7 +216,7 @@ def main():
         # 20日以上のデータが無い場合は処理を終了する
         return
 
-    # skin_analytics.jsonを読み込む
+    # ronin_analytics.jsonを読み込む
     analytics = load_analytics()
 
     # posts_historyを取得する
