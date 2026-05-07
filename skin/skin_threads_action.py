@@ -84,11 +84,21 @@ def post_to_threads(text, reply_to_id=None, image_url=None):
         "creation_id": creation_id,
         "access_token": THREADS_ACCESS_TOKEN
     }
-    publish_response = requests.post(publish_url, params=publish_params)
-    publish_data = publish_response.json()
+    # 一時的なAPIエラーに備えてリトライする（最大3回、30秒ずつ待つ）
+    for attempt in range(1, 4):
+        publish_response = requests.post(publish_url, params=publish_params)
+        publish_data = publish_response.json()
 
-    if "id" not in publish_data:
-        raise Exception(f"公開失敗: {publish_data}")
+        if "id" in publish_data:
+            break  # 成功したらループを抜ける
+
+        # is_transient=True（Meta側の一時障害）なら待ってリトライ
+        error_info = publish_data.get("error", {})
+        if error_info.get("is_transient") and attempt < 3:
+            print(f"  ⚠️ 一時的なAPIエラー（試行{attempt}/3）。30秒後にリトライします...")
+            time.sleep(30)
+        else:
+            raise Exception(f"公開失敗（試行{attempt}/3）: {publish_data}")
 
     return publish_data["id"]  # 投稿IDを返す（次のリプライ先として使う）
 
