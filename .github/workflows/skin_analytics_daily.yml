@@ -22,7 +22,7 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests python-dotenv
 
       # Step 4: Collect data from Threads API
       - name: Collect data from Threads API
