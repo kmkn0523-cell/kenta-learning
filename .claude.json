@@ -34,6 +34,7 @@
     "git-worktrees": 71
   },
   "promptQueueUseCount": 19,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_desktop_upsell_v2": {
       "enabled": false
@@ -633,8 +634,8 @@
       "lastUsedAt": 1777934572127
     },
     "superpowers:subagent-driven-development": {
-      "usageCount": 2,
-      "lastUsedAt": 1778125398571
+      "usageCount": 3,
+      "lastUsedAt": 1778154850709
     }
   },
   "opus47LaunchSeenCount": 5,
