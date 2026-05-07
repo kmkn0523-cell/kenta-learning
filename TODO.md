@@ -164,7 +164,7 @@
 
 ## 💡 アイデア・後回し
 
-- [ ] Instagram連携（Threadsと自動連動できる）
+- [x] Instagram連携（@RoninWords Instagram自動投稿 毎日21:17 JST・GitHub Actions稼働）
 - [ ] 別ジャンルのアカウント開設（テンプレが完成してから）
 - [ ] ホーム直下のファイル数が多すぎる問題 → フォルダ分け（落ち着いたら）
 
