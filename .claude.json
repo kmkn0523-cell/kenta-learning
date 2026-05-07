@@ -34,6 +34,7 @@
     "git-worktrees": 71
   },
   "promptQueueUseCount": 17,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_ember_latch": true,
     "tengu_turtle_carbon": true,
@@ -623,8 +624,8 @@
       "lastUsedAt": 1778121189740
     },
     "superpowers:writing-plans": {
-      "usageCount": 4,
-      "lastUsedAt": 1778121593501
+      "usageCount": 5,
+      "lastUsedAt": 1778124273631
     },
     "superpowers:executing-plans": {
       "usageCount": 2,
