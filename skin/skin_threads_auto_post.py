@@ -239,8 +239,23 @@ def reset_progress():
         print("リセットをキャンセルしました")
 
 
-def main():
-    """メイン処理"""
+def should_use_optimization():
+    """Day21 以降かチェック（最適化投稿を使うか判定）"""
+    # skin_optimization_index.json から analysis_phase を確認
+    try:
+        optimization_file = "/home/kenta_kamijyo/skin/skin_optimization_index.json"
+        with open(optimization_file, 'r', encoding='utf-8') as f:
+            opt_index = json.load(f)
+
+        # analysis_phase が "optimizing" なら True（最適化投稿を使う）
+        return opt_index.get('analysis_phase') == 'optimizing'
+    except:
+        # ファイルがない場合は False（従来の均等投稿）
+        return False
+
+
+def post_sequential():
+    """Day21までの均等投稿（従来のロジック）"""
     print("=" * 50)
     print(f"  実行日時: {datetime.now().strftime('%Y/%m/%d %H:%M')}")
     print("=" * 50)
@@ -270,6 +285,27 @@ def main():
             break
         else:
             print("0〜4の番号を入力してください")
+
+
+def post_optimized():
+    """Day21以降の最適化投稿（Task 9で実装予定）"""
+    print("=" * 50)
+    print(f"  実行日時: {datetime.now().strftime('%Y/%m/%d %H:%M')}")
+    print("  [最適化投稿モード有効]")
+    print("=" * 50)
+    print("最適化投稿機能はまだ実装中です...")
+    # Task 9でここに最適化ロジックが追加される
+
+
+def main():
+    """メイン処理"""
+    # Day21 後に最適化を使用するか判定
+    if should_use_optimization():
+        # Task 9 で実装（Day21以降の最適化投稿）
+        post_optimized()
+    else:
+        # Day21 までは従来の均等投稿
+        post_sequential()
 
 
 if __name__ == "__main__":
