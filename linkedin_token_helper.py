@@ -14,7 +14,8 @@ import sys
 import json
 import requests
 import argparse
-from datetime import datetime, timedelta
+import urllib.parse
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 
 
@@ -39,9 +40,9 @@ def get_auth_url():
         print("エラー: LINKEDIN_CLIENT_ID が .env に設定されていません")
         sys.exit(1)
 
-    # URLエンコード処理
+    # URLエンコード処理（標準ライブラリを使用）
     scope = "w_member_social"
-    redirect_uri_encoded = redirect_uri.replace(":", "%3A").replace("/", "%2F")
+    redirect_uri_encoded = urllib.parse.quote(redirect_uri, safe="")
 
     auth_url = (
         f"{LINKEDIN_OAUTH_BASE}/authorization?"
@@ -109,8 +110,14 @@ def exchange_code_for_token(code):
     refresh_token = result.get("refresh_token")
     expires_in = result.get("expires_in", 5184000)  # デフォルト: 60日
 
-    # 期限日時を計算
-    expires_at = datetime.now() + timedelta(seconds=expires_in)
+    # エラーハンドリング：access_tokenが存在しない場合
+    if not access_token:
+        print("エラー: access_token が取得できませんでした")
+        print(f"レスポンス: {json.dumps(result, indent=2, ensure_ascii=False)}")
+        sys.exit(1)
+
+    # 期限日時を計算（UTC タイムゾーン使用）
+    expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
     expires_at_str = expires_at.strftime("%Y/%m/%d")
 
     print("✓ トークン取得成功！\n")
