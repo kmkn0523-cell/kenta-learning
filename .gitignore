@@ -26,6 +26,10 @@
 !skin/skin_images/*.png
 !skin/skin_images/*.jpg
 !learning/
+!docs/
+!docs/superpowers/
+!docs/superpowers/specs/
+!docs/superpowers/specs/*.md
 
 # .claude/ 設定ファイルを同期する（認証情報は除く）
 !.claude/
