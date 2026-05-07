@@ -29,11 +29,11 @@
     "permissions": 71,
     "rename-conversation": 72,
     "custom-commands": 42,
-    "frontend-design-plugin": 47,
+    "frontend-design-plugin": 74,
     "default-permission-mode-config": 67,
     "git-worktrees": 71
   },
-  "promptQueueUseCount": 17,
+  "promptQueueUseCount": 19,
   "cachedGrowthBookFeatures": {
     "tengu_desktop_upsell_v2": {
       "enabled": false
@@ -617,12 +617,12 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 6,
-      "lastUsedAt": 1778121189740
+      "usageCount": 7,
+      "lastUsedAt": 1778154140704
     },
     "superpowers:writing-plans": {
-      "usageCount": 6,
-      "lastUsedAt": 1778125287411
+      "usageCount": 7,
+      "lastUsedAt": 1778154590117
     },
     "superpowers:executing-plans": {
       "usageCount": 2,
