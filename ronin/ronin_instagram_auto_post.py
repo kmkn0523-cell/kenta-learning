@@ -3,6 +3,7 @@
 # 使い方: python3 ronin/ronin_instagram_auto_post.py
 
 import os                    # 環境変数（秘密のキー）を読み込む道具
+import sys                   # exit code を返す道具（失敗時に GitHub Actions を赤くする）
 import json                  # JSONファイルを扱う道具
 import time                  # 少し待つための道具
 import requests              # インターネットにリクエストを送る道具
@@ -172,7 +173,7 @@ def main():
 
     if "id" not in container_result:
         print(f"❌ メディアコンテナ作成失敗: {container_result}")
-        return
+        sys.exit(1)  # 失敗を GitHub Actions に伝える
 
     creation_id = container_result["id"]
     print(f"✅ コンテナID取得: {creation_id}")
@@ -186,7 +187,7 @@ def main():
 
     if "id" not in publish_result:
         print(f"❌ 投稿公開失敗: {publish_result}")
-        return
+        sys.exit(1)  # 失敗を GitHub Actions に伝える
 
     print(f"✅ 投稿成功！投稿ID: {publish_result['id']}")
 
