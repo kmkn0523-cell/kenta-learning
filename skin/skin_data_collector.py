@@ -97,8 +97,9 @@ def calculate_engagement_score(likes, comments, shares):
 
 def identify_day_and_type(post_text):
     """
-    投稿テキストをskin_threads_posts.jsonの7つのテーマと照合して
-    Day番号とタイプ（theme）を特定する関数
+    投稿テキストをskin_threads_posts.jsonの投稿パターンと照合して
+    Day番号とテーマを特定する関数
+    正確なテキストマッチングで朝夜を判定する
     """
 
     try:
@@ -106,7 +107,7 @@ def identify_day_and_type(post_text):
         with open(POSTS_FILE, "r", encoding="utf-8") as f:
             posts_data = json.load(f)
 
-        # threadsリストの各要素（7つのパターン）をチェックする
+        # threadsリストの各要素をチェックする
         for thread_info in posts_data.get("threads", []):
             day_num = thread_info.get("id")
             theme_name = thread_info.get("theme", "")
@@ -114,17 +115,19 @@ def identify_day_and_type(post_text):
             # このパターンの投稿文リストを取得する
             post_texts = thread_info.get("posts", [])
 
-            # 投稿テキストの最初の30文字で照合する（完全一致は難しいため）
-            post_text_start = post_text[:50] if len(post_text) > 50 else post_text
+            # 投稿テキストの最初の50文字を取得する（正確な比較用）
+            post_text_normalized = post_text[:50].strip()
 
-            for stored_text in post_texts:
-                stored_start = stored_text[:50] if len(stored_text) > 50 else stored_text
+            for index, stored_text in enumerate(post_texts):
+                # 保存されたテキストの最初の50文字を取得する
+                stored_text_normalized = stored_text[:50].strip()
 
-                # テキストの一部が一致したらマッチと判定する
-                if stored_start in post_text or post_text_start in stored_text:
-                    # 朝（morning）と夜（evening）を区別するため、投稿テキストから時間情報を推測する
-                    # 簡略版：最初の投稿を朝、2番目を朝、3番目を朝と判定（実際の時間は別途取得）
-                    post_type = "morning"  # デフォルトは朝
+                # 最初の50文字が完全に一致するかチェック
+                if post_text_normalized == stored_text_normalized:
+                    # テキスト位置から朝夜を判定する
+                    # 最初の投稿（index 0）= 朝、2番目の投稿（index 1）= 朝、3番目（index 2）= 朝
+                    # ※ 実際のデータで朝夜の判定ロジックが必要な場合は調整が必要
+                    post_type = "morning" if index <= 1 else "evening"
 
                     return (day_num, theme_name, post_type)
 
@@ -213,6 +216,12 @@ def save_analytics(posts_data):
                     "engagement_score": engagement_score
                 }
 
+                # 重複チェック（同じ post_id が既に存在するか確認）
+                existing_ids = [p['post_id'] for p in analytics['posts_history']]
+                if post_record['post_id'] in existing_ids:
+                    print(f"⏭️  スキップ: post_id {post_record['post_id']} は既に記録済みです")
+                    continue
+
                 # posts_historyに追加する
                 analytics["posts_history"].append(post_record)
 
@@ -240,17 +249,29 @@ def dry_run():
     --dry-runオプション指定時に実行される
     """
 
-    # テスト用のダミーポストデータを作成する
+    # テスト用のダミーポストデータを作成する（実際のデータベースから取得したテキストを使用）
     test_posts = [
         {
             "id": "test_post_001",
-            "text": "肌荒れが治らない人、これ全員やってます。\n\n□ 甘い飲み物を毎日飲んでる\n□ 就寝が深夜0時以降",
+            "text": "肌荒れが治らない人、これ全員やってます。\n\n□ 甘い飲み物を毎日飲んでる\n□ 就寝が深夜0時以降\n□ パン・麺が毎日の主食\n□ ストレスで食いしばり癖がある\n□ 便秘または下痢がち\n\n何個当てはまりましたか？\n\n3個以上なら、スキンケアより先に変えるべきことがあります。",
             "timestamp": "2026-05-07T07:30:00+09:00",
             "insights": {
                 "data": [
                     {"metric": "likes", "values": [{"value": 45}]},
                     {"metric": "comments", "values": [{"value": 12}]},
                     {"metric": "shares", "values": [{"value": 3}]}
+                ]
+            }
+        },
+        {
+            "id": "test_post_002",
+            "text": "3個以上当てはまった人へ。\n\nそれらは全部「腸の炎症」を引き起こす習慣です。\n\n腸が荒れる\n→ 有害物質が血液に漏れ出す\n→ 全身で炎症が起きる\n→ 肌に出る",
+            "timestamp": "2026-05-07T22:30:00+09:00",
+            "insights": {
+                "data": [
+                    {"metric": "likes", "values": [{"value": 52}]},
+                    {"metric": "comments", "values": [{"value": 15}]},
+                    {"metric": "shares", "values": [{"value": 2}]}
                 ]
             }
         }
