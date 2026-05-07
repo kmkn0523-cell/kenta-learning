@@ -560,9 +560,9 @@
         "pre_tool_hook_duration_ms_p99": 1
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "14bf2c7f-c879-41bf-a746-011949cbced1",
-      "lastSessionFirstPrompt": "スキンでマネタイズする上でこれからできる事、やるべきことは？",
-      "lastSessionModified": 1778107776224,
+      "lastHintSessionId": "7ffe7ece-c60d-4ccf-a9b6-95e26e5284d8",
+      "lastSessionFirstPrompt": "find skillsってなに",
+      "lastSessionModified": 1778118035950,
       "exampleFilesGeneratedAt": 1777555353566
     }
   },
