@@ -101,21 +101,38 @@ def publish_media(creation_id):
     """
     Step 2: 下書きを「公開」する
     Step 1で作ったIDを使って、実際にInstagramに投稿する
+    一時的なAPIエラーの場合は30秒待ってリトライする（最大3回）
     """
     url = f"https://graph.facebook.com/v19.0/{USER_ID}/media_publish"
     params = {
         "creation_id": creation_id,  # Step 1で作った下書きのID
         "access_token": ACCESS_TOKEN  # 認証キー
     }
-    try:
-        response = requests.post(url, params=params, timeout=30)
-        return response.json()
-    except requests.exceptions.Timeout:
-        print("❌ タイムアウト: 投稿公開に失敗しました")
-        return {}
-    except Exception as e:
-        print(f"❌ 投稿公開エラー: {e}")
-        return {}
+    for attempt in range(1, 4):
+        try:
+            response = requests.post(url, params=params, timeout=30)
+            data = response.json()
+
+            if "id" in data:
+                return data  # 成功
+
+            # is_transient=True（Meta側の一時障害）なら待ってリトライ
+            error_info = data.get("error", {})
+            if error_info.get("is_transient") and attempt < 3:
+                print(f"  ⚠️ 一時的なAPIエラー（試行{attempt}/3）。30秒後にリトライします...")
+                time.sleep(30)
+            else:
+                print(f"❌ 投稿公開失敗（試行{attempt}/3）: {data}")
+                return {}
+
+        except requests.exceptions.Timeout:
+            print(f"❌ タイムアウト（試行{attempt}/3）: 投稿公開に失敗しました")
+            if attempt < 3:
+                time.sleep(30)
+        except Exception as e:
+            print(f"❌ 投稿公開エラー（試行{attempt}/3）: {e}")
+            return {}
+    return {}
 
 
 # =============================
@@ -160,8 +177,8 @@ def main():
     creation_id = container_result["id"]
     print(f"✅ コンテナID取得: {creation_id}")
 
-    # APIの処理待ち（画像のアップロードに少し時間がかかる）
-    time.sleep(5)
+    # APIの処理待ち（画像のアップロードには最大30秒かかることがある）
+    time.sleep(30)
 
     # Step 2: 投稿を公開
     print("📤 Step 2: 投稿を公開中...")
