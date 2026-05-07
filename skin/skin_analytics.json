@@ -1,139 +1,35 @@
 {
-  "last_updated": "2026-05-07T06:00:00+09:00",
-  "posts_history": [],
-  "pattern_performance": [
+  "last_updated": "2026-05-07T11:58:38.878498",
+  "posts_history": [
     {
       "day": 1,
-      "morning": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      },
-      "evening": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      }
+      "type": "問いかけ型",
+      "post_id": "test_post_001",
+      "posted_at": "2026-05-07T07:30:00+09:00",
+      "likes": 45,
+      "comments": 12,
+      "shares": 3,
+      "engagement_score": 90.0
     },
     {
-      "day": 2,
-      "morning": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      },
-      "evening": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      }
+      "day": 1,
+      "type": "問いかけ型",
+      "post_id": "test_post_001",
+      "posted_at": "2026-05-07T07:30:00+09:00",
+      "likes": 45,
+      "comments": 12,
+      "shares": 3,
+      "engagement_score": 90.0
     },
     {
-      "day": 3,
-      "morning": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      },
-      "evening": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      }
-    },
-    {
-      "day": 4,
-      "morning": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      },
-      "evening": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      }
-    },
-    {
-      "day": 5,
-      "morning": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      },
-      "evening": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      }
-    },
-    {
-      "day": 6,
-      "morning": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      },
-      "evening": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      }
-    },
-    {
-      "day": 7,
-      "morning": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      },
-      "evening": {
-        "total_posts": 0,
-        "avg_likes": 0,
-        "avg_comments": 0,
-        "avg_engagement_score": 0,
-        "best_hour": null,
-        "best_hashtag_set": null
-      }
+      "day": 1,
+      "type": "問いかけ型",
+      "post_id": "test_post_002",
+      "posted_at": "2026-05-07T22:30:00+09:00",
+      "likes": 52,
+      "comments": 15,
+      "shares": 2,
+      "engagement_score": 99.5
     }
   ]
 }
