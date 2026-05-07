@@ -26,6 +26,7 @@
 !skin/skin_images/*.png
 !skin/skin_images/*.jpg
 !linkedin/
+linkedin/linkedin_config.json  # Exclude - contains credentials (OAuth tokens, secrets)
 !learning/
 !docs/
 !docs/superpowers/
