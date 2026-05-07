@@ -26,7 +26,6 @@
 !skin/skin_images/*.png
 !skin/skin_images/*.jpg
 !linkedin/
-linkedin/linkedin_config.json  # Exclude - contains credentials (OAuth tokens, secrets)
 !learning/
 !docs/
 !docs/superpowers/
@@ -34,6 +33,9 @@ linkedin/linkedin_config.json  # Exclude - contains credentials (OAuth tokens, s
 !docs/superpowers/specs/*.md
 !docs/superpowers/plans/
 !docs/superpowers/plans/*.md
+
+# LinkedIn: Exclude credentials file（認証情報ファイルを除外）
+linkedin/linkedin_config.json
 
 # .claude/ 設定ファイルを同期する（認証情報は除く）
 !.claude/
