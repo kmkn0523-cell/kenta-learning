@@ -287,14 +287,118 @@ def post_sequential():
             print("0〜4の番号を入力してください")
 
 
+def check_is_morning():
+    """現在時刻が朝か夜かを判定（簡易版）"""
+    # 朝は 6:00〜18:00、夜はそれ以外と判定する
+    hour = datetime.now().hour
+    # 6時以上18時未満なら朝、それ以外は夜と判定する
+    return 6 <= hour < 18
+
+
 def post_optimized():
-    """Day21以降の最適化投稿（Task 9で実装予定）"""
+    """Day21以降の最適化投稿"""
     print("=" * 50)
     print(f"  実行日時: {datetime.now().strftime('%Y/%m/%d %H:%M')}")
     print("  [最適化投稿モード有効]")
     print("=" * 50)
-    print("最適化投稿機能はまだ実装中です...")
-    # Task 9でここに最適化ロジックが追加される
+
+    # APIキーが設定されているか確認する
+    if not THREADS_ACCESS_TOKEN or not THREADS_USER_ID:
+        print("❌ .envファイルにTHREADS_ACCESS_TOKENとTHREADS_USER_IDを設定してください")
+        return
+
+    # 最適化インデックスを読む
+    try:
+        optimization_file = "/home/kenta_kamijyo/skin/skin_optimization_index.json"
+        with open(optimization_file, 'r', encoding='utf-8') as f:
+            opt_index = json.load(f)
+    except Exception as e:
+        print(f"❌ 最適化インデックスの読み込みに失敗しました: {e}")
+        print("フォールバック: 従来の投稿に切り替えます")
+        post_sequential()
+        return
+
+    # posts データを読む
+    try:
+        posts = load_posts()
+    except Exception as e:
+        print(f"❌ 投稿データの読み込みに失敗しました: {e}")
+        return
+
+    # next_post_queue から次の投稿を取得
+    queue = opt_index.get('next_post_queue', [])
+    if not queue:
+        print("ℹ キューに投稿がありません。フォールバック: 従来の投稿に切り替えます")
+        post_sequential()
+        return
+
+    # キューの最初の投稿を取得
+    next_post_info = queue[0]
+    day = next_post_info.get('day')
+
+    # posts データから該当の Day を取得
+    try:
+        post = next(p for p in posts['daily_posts'] if p['id'] == day)
+    except StopIteration:
+        print(f"❌ Day {day} の投稿データが見つかりません")
+        return
+    except Exception as e:
+        print(f"❌ 投稿データ検索エラー: {e}")
+        return
+
+    # 朝夜の判定
+    # 朝は 6:00〜18:00、夜はそれ以外
+    is_morning = check_is_morning()
+    post_type = 'morning' if is_morning else 'evening'
+
+    # 投稿内容を取得（朝夜別があれば使う、なければ type で統一）
+    post_text = post['content']
+
+    # 最適ハッシュタグセットを取得
+    # デフォルトは hashtags_set_A
+    hashtag_optimization = opt_index.get('hashtag_optimization', {})
+    hashtag_set_key = hashtag_optimization.get(f"day_{day}", "hashtags_set_A")
+
+    # hashtags_set_A 等がない場合は、デフォルトハッシュタグを使う
+    hashtags = HASHTAGS
+
+    # 投稿テキスト + CTA + ハッシュタグを結合
+    full_text = post_text + CTA + hashtags
+
+    # Threads API で投稿
+    try:
+        print("\n投稿中...")
+        success, result = post_to_threads(full_text)
+
+        if success:
+            print(f"✅ 投稿成功！（Day {day} / {post_type} / {hashtag_set_key}）")
+
+            # キューから削除
+            opt_index['next_post_queue'].pop(0)
+
+            # 最適化インデックスを更新
+            with open(optimization_file, 'w', encoding='utf-8') as f:
+                json.dump(opt_index, f, indent=2, ensure_ascii=False)
+
+            # 投稿履歴を記録
+            progress = load_progress()
+            now = datetime.now().strftime("%Y/%m/%d %H:%M")
+            if "history" not in progress:
+                progress["history"] = []
+            progress["history"].append({
+                "date": now,
+                "type": post['type'],
+                "mode": "optimized",
+                "day": day,
+                "post_id": result
+            })
+            save_progress(progress)
+
+        else:
+            print(f"❌ 投稿失敗: {result}")
+
+    except Exception as e:
+        print(f"❌ 投稿処理エラー: {e}")
 
 
 def main():
