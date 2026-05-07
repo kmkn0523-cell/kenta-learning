@@ -37,14 +37,15 @@
 
 ---
 
-### 1. @RoninWords（書道カード・Threads/X）
+### 1. @RoninWords（書道カード・Threads/X/LinkedIn）
 
-**現状**: Threads自動投稿稼働中（1日4回・7:17/12:17/18:17/22:17 JST）。投稿文Day01〜30をローテーション中。
+**現状**: Threads自動投稿稼働中（1日4回・7:17/12:17/18:17/22:17 JST）。投稿文Day01〜30をローテーション中。LinkedIn自動投稿準備中。
 
 #### 運用
 - [x] Facebook認証問題解決・APIキー取得・.envに設定（2026/04/27完了）
 - [x] GitHub Actions自動投稿稼働（cron混雑回避で17分発火に修正済み）
 - [x] Day31以降のThreads投稿文を作る（Day31〜60完成・threads_posts.jsonに追加済み）
+- [ ] LinkedIn 自動投稿（Task 1: API設定・OAuth準備中 → Task 2: スクリプト作成予定）
 - [ ] X（Twitter）の運用開始（Day01スケジュールから）
 - [ ] TikTok/Reels用の動画台本（30本作成済み）から1本作って投稿
 
