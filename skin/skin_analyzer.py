@@ -128,8 +128,11 @@ def calculate_pattern_performance(posts_history):
             # グループ内のコメント数をすべて抽出する
             comments_list = [p.get("comments", 0) for p in posts]
 
-            # グループ内のエンゲージメントスコアをすべて抽出する
-            engagement_scores = [p.get("engagement_score", 0) for p in posts]
+            # グループ内の閲覧数をすべて抽出する
+            views_list = [p.get("views", 0) for p in posts]
+
+            # グループ内のエンゲージメント率をすべて抽出する
+            engagement_rates = [p.get("engagement_rate", 0) for p in posts]
 
             # 投稿時刻（時間）を抽出して、最も多く投稿された時間を見つける
             hours = []
@@ -146,7 +149,8 @@ def calculate_pattern_performance(posts_history):
             # 平均値を計算する
             avg_likes = sum(likes_list) / len(likes_list) if likes_list else 0
             avg_comments = sum(comments_list) / len(comments_list) if comments_list else 0
-            avg_engagement_score = sum(engagement_scores) / len(engagement_scores) if engagement_scores else 0
+            avg_views = sum(views_list) / len(views_list) if views_list else 0
+            avg_engagement_rate = sum(engagement_rates) / len(engagement_rates) if engagement_rates else 0
 
             # 最も多く投稿された時間（ベストアワー）を見つける
             best_hour = max(set(hours), key=hours.count) if hours else None
