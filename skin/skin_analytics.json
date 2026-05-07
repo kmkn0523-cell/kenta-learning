@@ -1,0 +1,132 @@
+{
+  "last_updated": "2026-05-07T06:00:00+09:00",
+  "posts_history": [],
+  "pattern_performance": {
+    "day_1": {
+      "morning": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      },
+      "evening": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      }
+    },
+    "day_2": {
+      "morning": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      },
+      "evening": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      }
+    },
+    "day_3": {
+      "morning": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      },
+      "evening": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      }
+    },
+    "day_4": {
+      "morning": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      },
+      "evening": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      }
+    },
+    "day_5": {
+      "morning": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      },
+      "evening": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      }
+    },
+    "day_6": {
+      "morning": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      },
+      "evening": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      }
+    },
+    "day_7": {
+      "morning": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      },
+      "evening": {
+        "total_posts": 0,
+        "avg_likes": 0,
+        "avg_comments": 0,
+        "avg_engagement_score": 0,
+        "best_hour": null,
+        "best_hashtag_set": null
+      }
+    }
+  }
+}
