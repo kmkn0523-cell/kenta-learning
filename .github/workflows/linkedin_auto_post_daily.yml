@@ -7,6 +7,9 @@ on:
   # GitHubのUI上から手動で実行するオプション
   workflow_dispatch:
 
+permissions:
+  contents: write  # 進捗ファイルをコミット・プッシュするために必要
+
 jobs:
   post_and_analyze:
     # Ubuntu最新版の環境で実行
