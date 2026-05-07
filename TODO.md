@@ -45,7 +45,7 @@
 - [x] Facebook認証問題解決・APIキー取得・.envに設定（2026/04/27完了）
 - [x] GitHub Actions自動投稿稼働（cron混雑回避で17分発火に修正済み）
 - [x] Day31以降のThreads投稿文を作る（Day31〜60完成・threads_posts.jsonに追加済み）
-- [x] LinkedIn 自動投稿（Task 1: API設定・OAuth完了 → Task 2-3: スクリプト作成完了 → Task 4: テスト予定）
+- [x] LinkedIn 自動投稿（Task 1: API設定・OAuth完了 → Task 2-3: スクリプト作成完了 → Task 2-3b: コード品質向上完了 → Task 4: analytics実装完了）
 - [ ] X（Twitter）の運用開始（Day01スケジュールから）
 - [ ] TikTok/Reels用の動画台本（30本作成済み）から1本作って投稿
 
