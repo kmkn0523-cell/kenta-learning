@@ -50,10 +50,17 @@ def get_post_analytics(post_id):
             # JSON形式のレスポンスを解析
             data = response.json()
 
+            # DEBUG: APIレスポンスの構造をログに出力する（最初の500文字まで）
+            print(f"DEBUG: LinkedIn API レスポンス構造: {json.dumps(data, indent=2)[:500]}")
+
             # APIレスポンスから各メトリクスを抽出（存在しない場合は0）
             likes = data.get('likeCount', 0)
             comments = data.get('commentCount', 0)
             shares = data.get('shareCount', 0)
+
+            # 検証: すべてのメトリクスが0の場合、APIが正しいデータを返しているか確認
+            if likes == 0 and comments == 0 and shares == 0:
+                print(f"警告: post_id {post_id} のメトリクスがすべて 0 です。API が正しい形式を返しているか確認してください。")
 
             # エンゲージメントスコアを計算する（いいね×1.0 + コメント×2.5 + シェア×5.0）
             engagement_score = (likes * 1.0) + (comments * 2.5) + (shares * 5.0)
@@ -126,8 +133,21 @@ def save_analytics(metrics):
             "summary": {}
         }
 
-    # メトリクスをhistoryに追加する
-    analytics['posts_history'].append(metrics)
+    # 既に分析済みの post_id をチェックする（重複検出）
+    existing_index = None
+    for i, entry in enumerate(analytics['posts_history']):
+        if entry['post_id'] == metrics['post_id']:
+            existing_index = i
+            break
+
+    # 既に分析済みの場合は更新、そうでなければ新規追加
+    if existing_index is not None:
+        # 既存エントリを新しいメトリクスに更新
+        print(f"警告: post_id {metrics['post_id']} は既に分析されています。メトリクスを更新します。")
+        analytics['posts_history'][existing_index] = metrics
+    else:
+        # メトリクスをhistoryに追加する
+        analytics['posts_history'].append(metrics)
 
     # 最終更新時刻を今の時刻に更新
     analytics['last_updated'] = datetime.now().isoformat()
@@ -138,9 +158,11 @@ def save_analytics(metrics):
             # indent=2は見やすくするためのインデント、ensure_ascii=Falseは日本語対応
             json.dump(analytics, f, indent=2, ensure_ascii=False)
         print(f"✓ Analytics 保存完了: {metrics['post_id']}")
+        return True  # 成功を示す
     except Exception as e:
         # ファイル保存時のエラーハンドリング
         print(f"エラー: Analytics を保存できませんでした - {e}")
+        return False  # 失敗を示す
 
 
 def get_latest_post_id():
@@ -186,23 +208,32 @@ def main():
 
     if not post_id:
         print("失敗: 投稿 ID を取得できませんでした")
-        return
+        return False
 
     # 投稿のメトリクスを取得
     print(f"投稿 {post_id} のメトリクスを取得中...")
     metrics = get_post_analytics(post_id)
 
     if metrics:
-        # メトリクスを analytics.json に保存
-        save_analytics(metrics)
-        print(f"成功: {post_id} のメトリクスを保存しました")
-        print(f"  - いいね: {metrics['likes']}")
-        print(f"  - コメント: {metrics['comments']}")
-        print(f"  - シェア: {metrics['shares']}")
-        print(f"  - スコア: {metrics['engagement_score']}")
+        # メトリクスを analytics.json に保存（戻り値をチェック）
+        success = save_analytics(metrics)
+
+        if success:
+            # 保存成功
+            print(f"成功: {post_id} のメトリクスを保存しました")
+            print(f"  - いいね: {metrics['likes']}")
+            print(f"  - コメント: {metrics['comments']}")
+            print(f"  - シェア: {metrics['shares']}")
+            print(f"  - スコア: {metrics['engagement_score']}")
+            return True
+        else:
+            # 保存失敗
+            print(f"失敗: {post_id} のメトリクスを保存できませんでした")
+            return False
     else:
         # メトリクス取得失敗
         print("失敗: メトリクスを取得できませんでした")
+        return False
 
 
 # このファイルが直接実行されたときだけ main() を実行する

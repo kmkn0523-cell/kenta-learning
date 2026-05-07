@@ -84,8 +84,8 @@ def post_to_linkedin(text):
     }
 
     try:
-        # LinkedInに投稿リクエストを送る
-        response = requests.post(url, json=payload, headers=headers)
+        # LinkedInに投稿リクエストを送る（timeout=10で10秒でタイムアウト）
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
 
         # ステータスコード201は「投稿が成功した」という意味
         if response.status_code == 201:
