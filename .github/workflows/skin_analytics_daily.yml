@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '0 6 * * *'  # 毎日 06:00 JST - Data Collection
     - cron: '0 7 * * *'  # 毎日 07:00 JST - Analysis & Optimization
+  workflow_dispatch:
 
 jobs:
   analytics_pipeline:
