@@ -2,43 +2,10 @@
 # GitHub Actionsのワークフローファイル
 # 毎日16回、決まった時間にXに自動投稿する（7:45〜22:45 JST）
 
-name: skin X 自動投稿
+name: skin X 自動投稿（停止中・クレジットチャージ後に再開）
 
 on:
-  schedule:
-    # 07:45 JST = 22:45 UTC（前日）
-    - cron: '45 22 * * *'
-    # 08:45 JST = 23:45 UTC（前日）
-    - cron: '45 23 * * *'
-    # 09:45 JST = 00:45 UTC
-    - cron: '45 0 * * *'
-    # 10:45 JST = 01:45 UTC
-    - cron: '45 1 * * *'
-    # 11:45 JST = 02:45 UTC
-    - cron: '45 2 * * *'
-    # 12:45 JST = 03:45 UTC
-    - cron: '45 3 * * *'
-    # 13:45 JST = 04:45 UTC
-    - cron: '45 4 * * *'
-    # 14:45 JST = 05:45 UTC
-    - cron: '45 5 * * *'
-    # 15:45 JST = 06:45 UTC
-    - cron: '45 6 * * *'
-    # 16:45 JST = 07:45 UTC
-    - cron: '45 7 * * *'
-    # 17:45 JST = 08:45 UTC
-    - cron: '45 8 * * *'
-    # 18:45 JST = 09:45 UTC
-    - cron: '45 9 * * *'
-    # 19:45 JST = 10:45 UTC
-    - cron: '45 10 * * *'
-    # 20:45 JST = 11:45 UTC
-    - cron: '45 11 * * *'
-    # 21:45 JST = 12:45 UTC
-    - cron: '45 12 * * *'
-    # 22:45 JST = 13:45 UTC
-    - cron: '45 13 * * *'
-  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
+  workflow_dispatch:  # 手動実行のみ（クレジットチャージ後にスケジュールを復元）
 
 jobs:
   post:
