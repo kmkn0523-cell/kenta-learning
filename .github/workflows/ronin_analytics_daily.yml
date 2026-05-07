@@ -1,0 +1,40 @@
+name: Ronin Threads Analytics Daily
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Collect data from Threads API
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_BUSINESS_ACCOUNT_ID_RONIN: ${{ secrets.THREADS_BUSINESS_ACCOUNT_ID_RONIN }}
+        run: python3 ronin/ronin_data_collector.py
+
+      - name: Analyze patterns
+        run: |
+          python3 ronin/ronin_analyzer.py
+          python3 ronin/ronin_optimizer.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.email "github-action@example.com"
+          git config user.name "GitHub Action"
+          git add ronin/ronin_analytics.json ronin/ronin_optimization_index.json
+          git commit -m "自動更新: ronin analytics $(date '+%Y/%m/%d %H:%M' -u)" || true
+          git push
