@@ -1,0 +1,51 @@
+name: LinkedIn Auto Post Weekly
+
+on:
+  schedule:
+    # 毎週金曜 8:00 UTC (17:00 JST)
+    - cron: '0 8 * * 5'
+  # GitHubのUI上から手動で実行するオプション
+  workflow_dispatch:
+
+jobs:
+  post_and_analyze:
+    # Ubuntu最新版の環境で実行
+    runs-on: ubuntu-latest
+    steps:
+      # リポジトリのコードをチェックアウト
+      - uses: actions/checkout@v3
+
+      # Python 3.9をセットアップ
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # 必要なPythonライブラリをインストール
+      - name: Install dependencies
+        run: pip install requests
+
+      # GitHubのSecretsからLinkedIn設定を取得して、ローカルファイルとして保存
+      - name: Prepare LinkedIn config from Secrets
+        env:
+          LINKEDIN_CONFIG: ${{ secrets.LINKEDIN_CONFIG }}
+        run: |
+          mkdir -p linkedin
+          echo "$LINKEDIN_CONFIG" > linkedin/linkedin_config.json
+
+      # LinkedIn自動投稿スクリプトを実行
+      - name: Post to LinkedIn
+        run: python3 linkedin/linkedin_auto_post.py
+
+      # LinkedInエンゲージメント分析スクリプトを実行
+      - name: Collect analytics
+        run: python3 linkedin/linkedin_analytics.py
+
+      # 投稿進捗ファイルをGitにコミット
+      - name: Commit progress
+        run: |
+          git config user.email "github-action@example.com"
+          git config user.name "GitHub Action"
+          git add linkedin/linkedin_posting_progress.json linkedin/linkedin_analytics.json
+          git commit -m "auto: update LinkedIn progress $(date '+%Y/%m/%d %H:%M' -u)" || true
+          git push
