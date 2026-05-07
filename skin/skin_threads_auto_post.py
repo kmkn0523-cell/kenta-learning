@@ -314,8 +314,6 @@ def post_optimized():
             opt_index = json.load(f)
     except Exception as e:
         print(f"❌ 最適化インデックスの読み込みに失敗しました: {e}")
-        print("フォールバック: 従来の投稿に切り替えます")
-        post_sequential()
         return
 
     # posts データを読む
@@ -328,22 +326,21 @@ def post_optimized():
     # next_post_queue から次の投稿を取得
     queue = opt_index.get('next_post_queue', [])
     if not queue:
-        print("ℹ キューに投稿がありません。フォールバック: 従来の投稿に切り替えます")
-        post_sequential()
+        print("Queue is empty. No posts to publish.")
         return
 
     # キューの最初の投稿を取得
     next_post_info = queue[0]
     day = next_post_info.get('day')
 
-    # posts データから該当の Day を取得
-    try:
-        post = next(p for p in posts['daily_posts'] if p['id'] == day)
-    except StopIteration:
+    # posts を辞書化して O(1) で検索できるようにする（Day検索の効率化）
+    # 通常は posts_dict を一度だけロード時に作るが、ここでは関数内で必要時に作成
+    posts_dict = {p['id']: p for p in posts['daily_posts']}
+
+    # posts_dict.get() で効率的に Day を取得
+    post = posts_dict.get(day)
+    if not post:
         print(f"❌ Day {day} の投稿データが見つかりません")
-        return
-    except Exception as e:
-        print(f"❌ 投稿データ検索エラー: {e}")
         return
 
     # 朝夜の判定
@@ -380,7 +377,7 @@ def post_optimized():
             with open(optimization_file, 'w', encoding='utf-8') as f:
                 json.dump(opt_index, f, indent=2, ensure_ascii=False)
 
-            # 投稿履歴を記録
+            # 投稿履歴を記録（sequential と同じフォーマットで統一）
             progress = load_progress()
             now = datetime.now().strftime("%Y/%m/%d %H:%M")
             if "history" not in progress:
@@ -389,7 +386,6 @@ def post_optimized():
                 "date": now,
                 "type": post['type'],
                 "mode": "optimized",
-                "day": day,
                 "post_id": result
             })
             save_progress(progress)
