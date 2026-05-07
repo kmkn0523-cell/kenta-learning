@@ -2,8 +2,14 @@ name: RoninWords Instagram自動投稿
 
 on:
   schedule:
-    # 毎日12:17 UTC（21:17 JST）に自動実行
-    - cron: '17 12 * * *'
+    # 7:17 JST (22:17 UTC 前日)
+    - cron: '17 22 * * *'
+    # 12:17 JST (3:17 UTC)
+    - cron: '17 3 * * *'
+    # 18:17 JST (9:17 UTC)
+    - cron: '17 9 * * *'
+    # 22:17 JST (13:17 UTC)
+    - cron: '17 13 * * *'
   workflow_dispatch:  # 手動実行も可能
 
 jobs:
