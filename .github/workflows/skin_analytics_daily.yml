@@ -26,7 +26,6 @@ jobs:
 
       # Step 4: Collect data from Threads API
       - name: Collect data from Threads API
-        if: github.event.schedule == '0 6 * * *'
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_BUSINESS_ACCOUNT_ID_SKIN: ${{ secrets.THREADS_BUSINESS_ACCOUNT_ID_SKIN }}
@@ -34,7 +33,6 @@ jobs:
 
       # Step 5: Analyze patterns
       - name: Analyze patterns
-        if: github.event.schedule == '0 7 * * *'
         run: python3 skin/skin_analyzer.py && python3 skin/skin_optimizer.py
 
       # Step 6: Commit and push changes
