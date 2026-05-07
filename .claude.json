@@ -34,7 +34,6 @@
     "git-worktrees": 71
   },
   "promptQueueUseCount": 19,
-  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_desktop_upsell_v2": {
       "enabled": false
@@ -630,8 +629,8 @@
       "lastUsedAt": 1778044671503
     },
     "vercel:deploy": {
-      "usageCount": 1,
-      "lastUsedAt": 1777934572127
+      "usageCount": 2,
+      "lastUsedAt": 1778155665086
     },
     "superpowers:subagent-driven-development": {
       "usageCount": 3,
