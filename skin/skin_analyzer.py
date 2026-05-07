@@ -165,7 +165,8 @@ def calculate_pattern_performance(posts_history):
                 "total_posts": len(posts),  # グループ内の投稿数
                 "avg_likes": round(avg_likes, 1),  # 平均いいね数（小数第1位まで）
                 "avg_comments": round(avg_comments, 1),  # 平均コメント数（小数第1位まで）
-                "avg_engagement_score": round(avg_engagement_score, 1),  # 平均エンゲージメント
+                "avg_views": round(avg_views, 0),  # 平均閲覧数（整数）
+                "avg_engagement_rate": round(avg_engagement_rate, 2),  # 平均エンゲージメント率(%)
                 "best_hour": best_hour,  # 最も多く投稿された時間
                 "best_hashtag_set": "A"  # デフォルト値（後でoptimizer.pyで更新される）
             }

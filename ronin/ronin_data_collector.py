@@ -46,7 +46,7 @@ def fetch_threads_data():
 
         # APIに送るパラメータ（取得したいデータフィールドを指定）
         params = {
-            "fields": "id,text,timestamp,insights.metric(likes,comments,shares)",
+            "fields": "id,text,timestamp,insights.metric(likes,comments,shares,views)",
             "access_token": THREADS_ACCESS_TOKEN
         }
 
@@ -82,17 +82,22 @@ def fetch_threads_data():
         return []
 
 
-def calculate_engagement_score(likes, comments, shares):
+def calculate_engagement_rate(likes, comments, shares, views):
     """
-    いいね・コメント・シェアから総合エンゲージメントスコアを計算する関数
-    シェアが最も価値が高いため、重み付けが異なる
+    いいね・コメント・シェア・閲覧数からエンゲージメント率(%)を計算する関数
+    エンゲージメント率 = (いいね + コメント + シェア) ÷ 閲覧数 × 100
+    閲覧数が0の場合は0を返す（ゼロ除算を防ぐため）
     """
 
-    # エンゲージメントスコア = いいね×1.0 + コメント×2.5 + シェア×5.0
-    score = (likes * 1.0) + (comments * 2.5) + (shares * 5.0)
+    # 閲覧数が0または未取得の場合はエンゲージメント率を計算できない
+    if not views or views <= 0:
+        return 0.0
 
-    # 小数第1位まで四捨五入して返す
-    return round(score, 1)
+    # エンゲージメント率(%) = 反応の合計 ÷ 閲覧数 × 100
+    rate = (likes + comments + shares) / views * 100
+
+    # 小数第2位まで四捨五入して返す
+    return round(rate, 2)
 
 
 def identify_day_and_type(post_text):
@@ -177,6 +182,7 @@ def save_analytics(posts_data):
                 likes = 0
                 comments = 0
                 shares = 0
+                views = 0
 
                 # insightsの各メトリクスを解析する
                 for insight in insights_data:
@@ -192,9 +198,11 @@ def save_analytics(posts_data):
                             comments = value
                         elif metric_name == "shares":
                             shares = value
+                        elif metric_name == "views":
+                            views = value
 
-                # エンゲージメントスコアを計算する
-                engagement_score = calculate_engagement_score(likes, comments, shares)
+                # エンゲージメント率を計算する（閲覧数ベース）
+                engagement_rate = calculate_engagement_rate(likes, comments, shares, views)
 
                 # 投稿テキストから日付とタイプを特定する
                 day, theme, post_type = identify_day_and_type(post_text)
@@ -213,7 +221,8 @@ def save_analytics(posts_data):
                     "likes": likes,
                     "comments": comments,
                     "shares": shares,
-                    "engagement_score": engagement_score
+                    "views": views,
+                    "engagement_rate": engagement_rate
                 }
 
                 # 重複チェック（同じ post_id が既に存在するか確認）

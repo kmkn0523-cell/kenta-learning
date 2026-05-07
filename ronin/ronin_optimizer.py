@@ -55,14 +55,14 @@ def generate_pattern_ranking(pattern_performance):
 
             # morning（朝）のエンゲージメントスコアを取得する
             morning_data = day_data.get("問いかけ型", {})  # 問いかけ型をデフォルトにする
-            morning_score = morning_data.get("avg_engagement_score", 0)
+            morning_score = morning_data.get("avg_engagement_rate", 0)
 
             # evening（夜）のエンゲージメントスコアを取得する
             # もし複数のタイプがある場合は全て平均して使う
             evening_score = 0
             type_count = 0
             for post_type, data in day_data.items():
-                evening_score += data.get("avg_engagement_score", 0)
+                evening_score += data.get("avg_engagement_rate", 0)
                 type_count += 1
 
             # 複数タイプがある場合は平均を取る
