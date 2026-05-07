@@ -48,9 +48,21 @@
 - [ ] X（Twitter）の運用開始（Day01スケジュールから）
 - [ ] TikTok/Reels用の動画台本（30本作成済み）から1本作って投稿
 
+#### フォロワー成長機構（2026/05/07 新規実装・完全完了）
+- [x] ハッシュタグ戦略（3セット: 基本・アクション・感情） → threads_posts.json に追加
+- [x] エンゲージメント促進（いいね×1.0 + コメント×2.5 + シェア×5.0） → engagement_score 算出
+- [x] 投稿時間最適化（データ収集→分析で最適時間を検出） → ronin_analyzer.py で best_hour 計算
+- [x] 高反応パターン自動選別（Day21以降の優先度ランキング） → ronin_optimizer.py で pattern_ranking 生成
+- [x] GitHub Actions 毎日自動実行（06:00: データ収集、07:00: 分析・最適化） → ronin_analytics_daily.yml デプロイ済み
+- [x] ronin_data_collector.py（Threads API データ取得）完成
+- [x] ronin_analyzer.py（パターン分析）完成
+- [x] ronin_optimizer.py（最適化インデックス生成）完成
+- [x] ronin_threads_auto_post.py 改造（Day21チェック・最適化投稿分岐）完成
+- [x] ローカル統合テスト（全スクリプト合格）実施完了
+- [x] GitHub Actions デプロイ（ronin_analytics_daily.yml 登録・動作確認）完了
+
 #### 改善
 - [x] 画像投稿対応（書道カード画像をThreadsに自動投稿）
-- [x] Day21チェック・最適化投稿分岐の実装（ronin_threads_action.py 改造完了 2026/05/07）
 - [ ] フォロワー数・反応をスプレッドシートで記録する仕組み
 - [ ] 反応の良かった投稿パターンを分析する
 
