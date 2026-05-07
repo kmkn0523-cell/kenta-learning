@@ -17,9 +17,10 @@ load_dotenv()
 THREADS_ACCESS_TOKEN = os.getenv("THREADS_ACCESS_TOKEN")
 THREADS_BUSINESS_ACCOUNT_ID_SKIN = os.getenv("THREADS_BUSINESS_ACCOUNT_ID_SKIN")
 
-# ファイルパスの設定
-POSTS_FILE = "/home/kenta_kamijyo/skin/skin_threads_posts.json"
-ANALYTICS_FILE = "/home/kenta_kamijyo/skin/skin_analytics.json"
+# ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
+_DIR = os.path.dirname(os.path.abspath(__file__))
+POSTS_FILE     = os.path.join(_DIR, "skin_threads_posts.json")   # 投稿テキストデータ
+ANALYTICS_FILE = os.path.join(_DIR, "skin_analytics.json")       # 分析データ保存先
 
 # APIリクエストのタイムアウト時間（秒）
 API_TIMEOUT = 10

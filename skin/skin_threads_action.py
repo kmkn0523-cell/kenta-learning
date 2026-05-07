@@ -43,7 +43,7 @@ def post_to_threads(text, reply_to_id=None, image_url=None):
     """
 
     # ステップ1: 投稿コンテナ（投稿の下書き）を作成する
-    container_url = f"https://graph.threads.net/{THREADS_USER_ID}/threads"
+    container_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads"
 
     if image_url:
         # 画像付き投稿（media_type=IMAGE）
@@ -66,7 +66,7 @@ def post_to_threads(text, reply_to_id=None, image_url=None):
     if reply_to_id:
         container_params["reply_to_id"] = reply_to_id
 
-    response = requests.post(container_url, params=container_params)
+    response = requests.post(container_url, params=container_params, timeout=30)
     data = response.json()
 
     if "id" not in data:
@@ -79,7 +79,7 @@ def post_to_threads(text, reply_to_id=None, image_url=None):
     time.sleep(30)
 
     # ステップ2: 下書きを実際に公開する
-    publish_url = f"https://graph.threads.net/{THREADS_USER_ID}/threads_publish"
+    publish_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads_publish"
     publish_params = {
         "creation_id": creation_id,
         "access_token": THREADS_ACCESS_TOKEN

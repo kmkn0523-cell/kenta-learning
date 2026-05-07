@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# skin_data_collector.py
-# skinアカウント用 Threads API データ収集スクリプト
-# 使い方: python3 skin/skin_data_collector.py または python3 skin/skin_data_collector.py --dry-run
+# ronin_data_collector.py
+# @RoninWords アカウント用 Threads API データ収集スクリプト
+# 使い方: python3 ronin/ronin_data_collector.py または python3 ronin/ronin_data_collector.py --dry-run
 
 import json                    # JSONファイルを扱う道具
 import os                      # ファイル操作に使う道具
@@ -17,9 +17,10 @@ load_dotenv()
 THREADS_ACCESS_TOKEN = os.getenv("THREADS_ACCESS_TOKEN")
 THREADS_BUSINESS_ACCOUNT_ID_RONIN = os.getenv("THREADS_BUSINESS_ACCOUNT_ID_RONIN")
 
-# ファイルパスの設定
-POSTS_FILE = "/home/kenta_kamijyo/ronin/ronin_threads_posts.json"
-ANALYTICS_FILE = "/home/kenta_kamijyo/skin/ronin_analytics.json"
+# ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
+_DIR = os.path.dirname(os.path.abspath(__file__))
+POSTS_FILE     = os.path.join(_DIR, "threads_posts.json")       # 投稿テキストデータ
+ANALYTICS_FILE = os.path.join(_DIR, "ronin_analytics.json")     # 分析データ保存先
 
 # APIリクエストのタイムアウト時間（秒）
 API_TIMEOUT = 10

@@ -9,8 +9,9 @@ import os                      # ファイル操作に使う道具
 from datetime import datetime  # 日時を扱う道具
 from collections import defaultdict  # グループ分けを簡単にする道具
 
-# ファイルパスの設定
-ANALYTICS_FILE = "/home/kenta_kamijyo/skin/skin_analytics.json"
+# ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
+_DIR = os.path.dirname(os.path.abspath(__file__))
+ANALYTICS_FILE = os.path.join(_DIR, "skin_analytics.json")
 
 
 def load_analytics():

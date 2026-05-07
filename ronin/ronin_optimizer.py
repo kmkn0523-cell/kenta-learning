@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-# skin_optimizer.py
-# skinアカウント用 最適化インデックス生成スクリプト
-# 使い方: python3 skin/skin_optimizer.py
+# ronin_optimizer.py
+# @RoninWords アカウント用 最適化インデックス生成スクリプト
+# 使い方: python3 ronin/ronin_optimizer.py
 # 分析済みのデータをもとに、投稿パターンのランキングと次の投稿予定を生成する
 
 import json                    # JSONファイルを扱う道具
 import os                      # ファイル操作に使う道具
 from datetime import datetime  # 日時を扱う道具
 
-# ファイルパスの設定
-ANALYTICS_FILE = "/home/kenta_kamijyo/skin/ronin_analytics.json"
-OPTIMIZATION_FILE = "/home/kenta_kamijyo/skin/ronin_optimization_index.json"
+# ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
+_DIR = os.path.dirname(os.path.abspath(__file__))
+ANALYTICS_FILE    = os.path.join(_DIR, "ronin_analytics.json")
+OPTIMIZATION_FILE = os.path.join(_DIR, "ronin_optimization_index.json")
 
 
 def load_analytics():

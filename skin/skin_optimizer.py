@@ -8,9 +8,10 @@ import json                    # JSONファイルを扱う道具
 import os                      # ファイル操作に使う道具
 from datetime import datetime  # 日時を扱う道具
 
-# ファイルパスの設定
-ANALYTICS_FILE = "/home/kenta_kamijyo/skin/skin_analytics.json"
-OPTIMIZATION_FILE = "/home/kenta_kamijyo/skin/skin_optimization_index.json"
+# ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
+_DIR = os.path.dirname(os.path.abspath(__file__))
+ANALYTICS_FILE    = os.path.join(_DIR, "skin_analytics.json")
+OPTIMIZATION_FILE = os.path.join(_DIR, "skin_optimization_index.json")
 
 
 def load_analytics():
