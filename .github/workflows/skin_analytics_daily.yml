@@ -1,0 +1,47 @@
+name: skin Analytics Daily
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 毎日 06:00 JST - Data Collection
+    - cron: '0 7 * * *'  # 毎日 07:00 JST - Analysis & Optimization
+
+jobs:
+  analytics_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: pip install requests
+
+      # Step 4: Collect data from Threads API
+      - name: Collect data from Threads API
+        if: github.event.schedule == '0 6 * * *'
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_BUSINESS_ACCOUNT_ID_SKIN: ${{ secrets.THREADS_BUSINESS_ACCOUNT_ID_SKIN }}
+        run: python3 skin/skin_data_collector.py
+
+      # Step 5: Analyze patterns
+      - name: Analyze patterns
+        if: github.event.schedule == '0 7 * * *'
+        run: python3 skin/skin_analyzer.py && python3 skin/skin_optimizer.py
+
+      # Step 6: Commit and push changes
+      - name: Commit and push changes
+        run: |
+          git config user.email "github-action@example.com"
+          git config user.name "GitHub Action"
+          git add skin/skin_analytics.json skin/skin_optimization_index.json
+          git commit -m "自動更新: skin analytics $(date '+%Y/%m/%d %H:%M' -u)" || true
+          git push
