@@ -60,12 +60,25 @@
 
 ### 2. 肌荒れ改善note（Threads・note販売）
 
-**現状**: noteコンテンツ作成済み、Threads自動投稿1日4回稼働中（7:07/12:07/18:07/22:07 JST）
+**現状**: noteコンテンツ作成済み、Threads自動投稿1日16回稼働中（毎時30分 JST）。フォロワー成長機構（Day1-20学習、Day21以降最適化）完全実装済み
 
 #### 自動化（完了）
 - [x] Meta for Developers認証・APIキー取得
-- [x] Threads自動投稿をGitHub Actionsに乗せる（1日4回稼働中）
-- [x] cron混雑回避（7分発火に修正済み）
+- [x] Threads自動投稿をGitHub Actionsに乗せる（1日16回稼働中）
+- [x] cron混雑回避（毎時30分発火に修正済み）
+
+#### フォロワー成長機構（2026/05/07 新規実装・完全完了）
+- [x] ハッシュタグ戦略（3セット: 基本・ケア・症状別） → skin_threads_posts.json に追加
+- [x] エンゲージメント促進（いいね×1.0 + コメント×2.5 + シェア×5.0） → engagement_score 算出
+- [x] 投稿時間最適化（データ収集→分析で最適時間を検出） → skin_analyzer.py で best_hour 計算
+- [x] 高反応パターン自動選別（Day21以降の優先度ランキング） → skin_optimizer.py で pattern_ranking 生成
+- [x] GitHub Actions 毎日自動実行（06:00: データ収集、07:00: 分析・最適化） → skin_analytics_daily.yml デプロイ済み
+- [x] skin_data_collector.py（Threads API データ取得）完成
+- [x] skin_analyzer.py（パターン分析）完成
+- [x] skin_optimizer.py（最適化インデックス生成）完成
+- [x] skin_threads_auto_post.py 改造（Day21チェック・最適化投稿分岐）完成
+- [x] ローカル統合テスト（全スクリプト合格）実施完了
+- [x] GitHub Actions デプロイ（skin_analytics_daily.yml 登録・動作確認）完了
 
 #### X（Twitter）自動投稿
 - [ ] X API Pay-Per-Useにクレジットをチャージする（developer.twitter.com → Usage & Billing → Add Credits、$5〜$10）
