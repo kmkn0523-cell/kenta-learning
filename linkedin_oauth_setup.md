@@ -100,12 +100,26 @@ LINKEDIN_REDIRECT_URI=http://localhost:8000/callback
 
 ---
 
-## Step 4: OAuth 2.0 認可コードを取得（初回認証）
+## Step 4: OAuth 2.0 認可URLを生成・ブラウザで開く
 
 このステップで、LinkedInに「このアプリは私のアカウントで投稿する権限をください」と許可します。
 
-### 4-1 ブラウザで以下のURLを開く
-Step 3で追加した `LINKEDIN_CLIENT_ID` を以下のURLに入れて、ブラウザで開きます:
+### 4-1 Pythonスクリプトで認可URLを自動生成（推奨）
+ターミナルで以下のコマンドを実行します:
+
+```bash
+python3 linkedin_token_helper.py --get-auth-url
+```
+
+このコマンドで、以下のような認可URLが表示されます:
+```
+https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=xxxxx&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&scope=w_member_social
+```
+
+このURLをコピーしてブラウザで開いてください。
+
+### 4-2 手動でURLを作成する場合（参考）
+Step 3で追加した `LINKEDIN_CLIENT_ID` を以下のURLに入れてブラウザで開きます:
 
 ```
 https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=LINKEDIN_CLIENT_IDをここに貼り付け&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&scope=w_member_social
@@ -116,12 +130,12 @@ https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=LIN
 https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=1234567890abc&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&scope=w_member_social
 ```
 
-### 4-2 LinkedInで許可する
+### 4-3 LinkedInで許可する
 - LinkedInログインページが出ます（すでにログイン済みの場合はスキップ）
 - 「Authorize」ボタンをクリック
 - 権限の説明が出ます。内容を確認して「Authorize」をクリック
 
-### 4-3 コールバックから認可コードを取得
+### 4-4 コールバックから認可コードを取得
 ブラウザのアドレスバーが以下のように変わります:
 ```
 http://localhost:8000/callback?code=XXXXXXXXXXXXXXXX&state=XXXXXXX
@@ -131,13 +145,32 @@ http://localhost:8000/callback?code=XXXXXXXXXXXXXXXX&state=XXXXXXX
 
 ---
 
-## Step 5: アクセストークンを取得（コマンド実行）
+## Step 5: アクセストークンを取得
 
 ここからは、ターミナルで以下のコマンドを実行します。Windowsの場合はWSL2（Ubuntu）のターミナルを使用してください。
 
-### 5-1 ターミナルを開く
+### 5-1 Pythonスクリプトで認可コードをトークンに交換（推奨）
+ターミナルで以下のコマンドを実行します（Step 4で取得した認可コードを置き換えてください）:
 
-### 5-2 以下のコマンドを実行
+```bash
+python3 linkedin_token_helper.py --exchange-code YOUR_AUTH_CODE_HERE
+```
+
+**例** (実際のコードは異なります):
+```bash
+python3 linkedin_token_helper.py --exchange-code AQaB1C2DeFgHi3jKlMnOpQrStuVwXyZ
+```
+
+スクリプトが以下のような情報を表示します:
+```
+access_token: AQa1BC2DEfGhIjKlMNopQRstuvWxYZaBcDeFGhIjKlMNopQRstuvWxYZ
+refresh_token: AQa1BC2DEfGhIjKlMNopQRstuvWxYZaBcDeFGhIjKlMNopQRstuvWxYZ
+access_token_expires_at: 2026/07/06
+```
+
+**次のStep 6で person_urn を取得するために、access_token をコピーしておいてください。**
+
+### 5-2 手動でcurlコマンドを実行する場合（参考）
 Step 3で追加した `LINKEDIN_CLIENT_ID`、`LINKEDIN_CLIENT_SECRET` と、Step 4で取得した `認可コード` を使います:
 
 ```bash
@@ -172,11 +205,29 @@ curl -X POST https://www.linkedin.com/oauth/v2/accessToken \
 
 ---
 
-## Step 6: LinkedIn ユーザーURNを取得（API呼び出し）
+## Step 6: LinkedIn ユーザーURNを取得
 
 投稿するときに、「どのアカウントで投稿するか」をLinkedInに伝える必要があります。それが「ユーザーURN」です。
 
-### 6-1 以下のコマンドを実行
+### 6-1 Pythonスクリプトで自動取得（推奨）
+ターミナルで以下のコマンドを実行します（Step 5で取得した access_token を置き換えてください）:
+
+```bash
+python3 linkedin_token_helper.py --get-person-urn YOUR_ACCESS_TOKEN_HERE
+```
+
+**例** (実際のトークンは異なります):
+```bash
+python3 linkedin_token_helper.py --get-person-urn AQa1BC2DEfGhIjKlMNopQRstuvWxYZaBcDeFGhIjKlMNopQRstuvWxYZ
+```
+
+スクリプトが以下のような情報を表示します:
+```
+名前: Kenta Kamijyo
+person_urn: urn:li:person:1234567890
+```
+
+### 6-2 手動でcurlコマンドを実行する場合（参考）
 Step 5で取得した `access_token` を使います:
 
 ```bash
@@ -190,7 +241,7 @@ curl -X GET https://api.linkedin.com/v2/me \
   -H "Authorization: Bearer AQa1BC2DEfGhIjKlMNopQRstuvWxYZaBcDeFGhIjKlMNopQRstuvWxYZ"
 ```
 
-### 6-2 結果からユーザーURNを抽出
+### 6-3 結果からユーザーURNを抽出
 コマンドを実行すると、以下のような JSON が返ります:
 
 ```json
