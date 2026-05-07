@@ -169,6 +169,36 @@ def select_post_for_linkedin():
     return text, hashtags
 
 
+def save_post_to_history(post_id):
+    """投稿IDを進捗ファイルの history に保存する関数"""
+    # 進捗ファイルを読み込む
+    progress_file = '/home/kenta_kamijyo/linkedin/linkedin_posting_progress.json'
+    try:
+        with open(progress_file, 'r', encoding='utf-8') as f:
+            progress = json.load(f)
+    except json.JSONDecodeError:
+        # JSONが破損している場合は初期化する
+        print("警告: 進捗ファイルが破損しています。初期化します。")
+        progress = {'index': 0, 'history': []}
+    except FileNotFoundError:
+        # ファイルがない場合は初期値で始める
+        progress = {'index': 0, 'history': []}
+
+    # 投稿情報を history に追加
+    post_entry = {
+        "post_id": post_id,
+        "posted_at": datetime.now().isoformat()
+    }
+    progress['history'].append(post_entry)
+
+    # 進捗ファイルに保存
+    try:
+        with open(progress_file, 'w', encoding='utf-8') as f:
+            json.dump(progress, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        print(f"警告: 進捗ファイルを保存できませんでした - {e}")
+
+
 def main():
     """メイン処理：投稿を選んでLinkedInに送信する"""
     print("LinkedIn自動投稿を開始します")
@@ -193,6 +223,8 @@ def main():
         # 結果を表示
         if post_id:
             print(f"✓ LinkedIn投稿成功: {post_id}")
+            # 投稿IDを history に保存する（Task 4の analytics で使用）
+            save_post_to_history(post_id)
         else:
             print("✗ LinkedIn投稿に失敗しました")
 
