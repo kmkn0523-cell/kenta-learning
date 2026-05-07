@@ -115,10 +115,8 @@ def generate_next_post_queue(pattern_ranking):
 
             # この優先度で何回投稿するかを計算する
             # 優先度が低いほど（数字が小さいほど）回数が多い
-            # 優先度1 → max(1, 8 - 1 // 2) = max(1, 7) = 7
-            # 優先度2 → max(1, 8 - 2 // 2) = max(1, 7) = 7
-            # 優先度3 → max(1, 8 - 3 // 2) = max(1, 6) = 6
-            times_to_add = max(1, 8 - priority // 2)
+            # 優先度1 → 2回、優先度2 → 2回、優先度3以降 → 1回
+            times_to_add = 2 if priority <= 2 else 1
 
             # 計算した回数分、キューにDayを追加する
             for _ in range(times_to_add):
