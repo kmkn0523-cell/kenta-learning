@@ -1,5 +1,5 @@
 {
-  "numStartups": 76,
+  "numStartups": 77,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -454,7 +454,7 @@
   "sonnet1m45MigrationComplete": true,
   "migrationVersion": 13,
   "userID": "e1e0b328f95cdab91c6b1ec207de9a11f08e9c77b3d1d6fac6eadfd7503f91bb",
-  "changelogLastFetched": 1778107671325,
+  "changelogLastFetched": 1778226796336,
   "oauthAccount": {
     "accountUuid": "bf7efc70-b78a-4fb9-bdc2-c371585a6b66",
     "emailAddress": "kmkn0523@gmail.com",
@@ -479,7 +479,7 @@
   "shiftEnterKeyBindingInstalled": true,
   "hasCompletedOnboarding": true,
   "lastOnboardingVersion": "2.1.118",
-  "lastReleaseNotesSeen": "2.1.132",
+  "lastReleaseNotesSeen": "2.1.133",
   "projects": {
     "/home/kenta_kamijyo": {
       "allowedTools": [],
@@ -508,61 +508,61 @@
         "get_instagram_id.py"
       ],
       "lastGracefulShutdown": false,
-      "lastCost": 2.8991493000000013,
-      "lastAPIDuration": 579686,
-      "lastAPIDurationWithoutRetries": 579445,
-      "lastToolDuration": 101714,
-      "lastDuration": 3555588,
-      "lastLinesAdded": 98,
-      "lastLinesRemoved": 49,
-      "lastTotalInputTokens": 4867,
-      "lastTotalOutputTokens": 36750,
-      "lastTotalCacheCreationInputTokens": 207078,
-      "lastTotalCacheReadInputTokens": 6545154,
+      "lastCost": 2.465450250000001,
+      "lastAPIDuration": 713236,
+      "lastAPIDurationWithoutRetries": 713072,
+      "lastToolDuration": 169517,
+      "lastDuration": 22647583,
+      "lastLinesAdded": 46,
+      "lastLinesRemoved": 3,
+      "lastTotalInputTokens": 3856,
+      "lastTotalOutputTokens": 34471,
+      "lastTotalCacheCreationInputTokens": 87153,
+      "lastTotalCacheReadInputTokens": 5370065,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 3.63,
-      "lastFpsLow1Pct": 114.03,
+      "lastFpsAverage": 0.63,
+      "lastFpsLow1Pct": 128.74,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 443,
-          "outputTokens": 7199,
-          "cacheReadInputTokens": 361622,
-          "cacheCreationInputTokens": 104636,
+          "inputTokens": 378,
+          "outputTokens": 27,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.2033952
+          "costUSD": 0.000513
         },
         "claude-sonnet-4-6": {
-          "inputTokens": 4424,
-          "outputTokens": 29551,
-          "cacheReadInputTokens": 6183532,
-          "cacheCreationInputTokens": 102442,
+          "inputTokens": 3478,
+          "outputTokens": 34444,
+          "cacheReadInputTokens": 5370065,
+          "cacheCreationInputTokens": 87153,
           "webSearchRequests": 0,
-          "costUSD": 2.695754100000001
+          "costUSD": 2.464937250000001
         }
       },
-      "lastSessionId": "01cc4935-cbfa-47a2-b1bb-8be98165198d",
+      "lastSessionId": "abc9ad38-a254-4e91-9b14-b196d52e184a",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 10424,
-        "frame_duration_ms_min": 0.11914299999989453,
-        "frame_duration_ms_max": 68.61349199991673,
-        "frame_duration_ms_avg": 1.152126533864475,
-        "frame_duration_ms_p50": 0.9866704999585636,
-        "frame_duration_ms_p95": 1.8700632002321071,
-        "frame_duration_ms_p99": 9.056759049949461,
-        "hook_duration_ms_count": 112,
+        "frame_duration_ms_count": 13673,
+        "frame_duration_ms_min": 0.09896200000366662,
+        "frame_duration_ms_max": 36.06252899952233,
+        "frame_duration_ms_avg": 1.02387106282397,
+        "frame_duration_ms_p50": 0.8620599999849219,
+        "frame_duration_ms_p95": 1.7025017999578258,
+        "frame_duration_ms_p99": 4.508918009975453,
+        "hook_duration_ms_count": 45,
         "hook_duration_ms_min": 0,
-        "hook_duration_ms_max": 178,
-        "hook_duration_ms_avg": 17.330357142857142,
-        "hook_duration_ms_p50": 7,
-        "hook_duration_ms_p95": 52.89999999999998,
-        "hook_duration_ms_p99": 95.92000000000002,
-        "pre_tool_hook_duration_ms_count": 90,
+        "hook_duration_ms_max": 577,
+        "hook_duration_ms_avg": 30.488888888888887,
+        "hook_duration_ms_p50": 16,
+        "hook_duration_ms_p95": 38.8,
+        "hook_duration_ms_p99": 340.7200000000012,
+        "pre_tool_hook_duration_ms_count": 53,
         "pre_tool_hook_duration_ms_min": 0,
-        "pre_tool_hook_duration_ms_max": 12,
-        "pre_tool_hook_duration_ms_avg": 0.23333333333333334,
+        "pre_tool_hook_duration_ms_max": 9,
+        "pre_tool_hook_duration_ms_avg": 0.24528301886792453,
         "pre_tool_hook_duration_ms_p50": 0,
         "pre_tool_hook_duration_ms_p95": 1,
-        "pre_tool_hook_duration_ms_p99": 3.0999999999999943
+        "pre_tool_hook_duration_ms_p99": 4.839999999999975
       },
       "hasCompletedProjectOnboarding": true,
       "lastHintSessionId": "abc9ad38-a254-4e91-9b14-b196d52e184a",
@@ -583,7 +583,7 @@
       "timestamp": 1778204110668
     }
   },
-  "closedIssuesLastChecked": 1778138321193,
+  "closedIssuesLastChecked": 1778226796898,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {
