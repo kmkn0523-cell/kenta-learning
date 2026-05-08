@@ -1,5 +1,5 @@
 {
-  "numStartups": 78,
+  "numStartups": 79,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -507,7 +507,7 @@
         "day01.png",
         "get_instagram_id.py"
       ],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
