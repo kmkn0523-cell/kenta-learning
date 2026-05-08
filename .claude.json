@@ -4,7 +4,7 @@
   "tipsHistory": {
     "new-user-warmup": 4,
     "plan-mode-for-complex-tasks": 76,
-    "memory-command": 62,
+    "memory-command": 77,
     "theme-command": 61,
     "status-line": 1,
     "prompt-queue": 47,
@@ -13,8 +13,8 @@
     "install-github-app": 75,
     "install-slack-app": 75,
     "drag-and-drop-images": 76,
-    "double-esc-code-restore": 67,
-    "continue": 67,
+    "double-esc-code-restore": 77,
+    "continue": 77,
     "shift-tab": 69,
     "image-paste": 61,
     "desktop-app": 64,
@@ -30,7 +30,7 @@
     "rename-conversation": 72,
     "custom-commands": 42,
     "frontend-design-plugin": 74,
-    "default-permission-mode-config": 67,
+    "default-permission-mode-config": 77,
     "git-worktrees": 71
   },
   "promptQueueUseCount": 22,
@@ -565,9 +565,9 @@
         "pre_tool_hook_duration_ms_p99": 4.839999999999975
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "abc9ad38-a254-4e91-9b14-b196d52e184a",
-      "lastSessionFirstPrompt": "ローニンのインスタ自動投稿ができてない。確認して。",
-      "lastSessionModified": 1778204133587,
+      "lastHintSessionId": "b26fa1d8-baff-4ef4-a521-4d3ea617b904",
+      "lastSessionFirstPrompt": "skinのnoteが売れた！",
+      "lastSessionModified": 1778227240206,
       "exampleFilesGeneratedAt": 1778186680225
     }
   },
