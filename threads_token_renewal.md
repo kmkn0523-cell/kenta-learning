@@ -38,7 +38,7 @@ Claude Code のチャットに以下を貼る：
 
 ```
 短期トークン: （Step1でコピーしたもの）
-アプリシークレット: a85d3d1b42ceefcfdd585f8cd576aa4c
+アプリシークレット: （Meta for Developers → RoninWords → 設定 → ベーシック → アプリシークレット → 表示）
 ```
 
 → Claude が自動で長期トークン（60日）に変換して `.env` と GitHub Secrets を更新する。
