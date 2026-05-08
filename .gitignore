@@ -25,6 +25,8 @@
 !skin/skin_images/
 !skin/skin_images/*.png
 !skin/skin_images/*.jpg
+!skin/skin_instagram_images/
+!skin/skin_instagram_images/*.png
 !linkedin/
 !learning/
 !docs/

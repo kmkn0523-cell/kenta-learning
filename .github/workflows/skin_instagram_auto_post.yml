@@ -1,0 +1,42 @@
+name: skin Instagram自動投稿
+
+on:
+  schedule:
+    - cron: '7 22 * * *'   # 7:07 JST（朝投稿）
+    - cron: '7 10 * * *'   # 19:07 JST（夜投稿）
+  workflow_dispatch:  # 手動実行も可能
+
+permissions:
+  contents: write  # 進捗ファイルをコミット・プッシュするために必要
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python環境をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 必要なライブラリをインストール
+        run: pip install requests python-dotenv
+
+      - name: .envファイルを作成（GitHub Secretsから）
+        run: |
+          echo "SKIN_INSTAGRAM_ACCESS_TOKEN=${{ secrets.SKIN_INSTAGRAM_ACCESS_TOKEN }}" >> .env
+          echo "SKIN_INSTAGRAM_USER_ID=${{ secrets.SKIN_INSTAGRAM_USER_ID }}" >> .env
+
+      - name: Instagram自動投稿を実行
+        run: python3 skin/skin_instagram_auto_post.py
+
+      - name: 進捗ファイルをコミット・プッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add skin/skin_instagram_progress.json
+          git diff --cached --quiet || git commit -m "自動投稿: skin Instagram進捗更新"
+          git push
