@@ -87,7 +87,7 @@
 
 ---
 
-### 2. 肌荒れ改善note（Threads・note販売）
+### 2. 肌荒れ改善note（Threads・note販売・Instagram）
 
 **現状**: noteコンテンツ作成済み、Threads自動投稿1日16回稼働中（毎時30分 JST）。フォロワー成長機構（Day1-20学習、Day21以降最適化）完全実装済み
 
@@ -114,6 +114,10 @@
   - 月480投稿 ≈ 月$5（約750円）で稼働できる
   - スクリプト（skin_x_action.py）・ワークフロー（skin_x_post.yml）は作成済み
   - チャージ後、GitHubにX_API_KEY等のSecretsを追加してpushするだけ
+
+#### Instagram自動投稿（仕組みは完成・画像待ち）
+- [ ] Instagram投稿用画像を作り込む（現在の自動生成画像はNG・参考画像を集めてデザイン見直し）
+- [ ] 画像完成後にGitHub Actionsを有効化する（現在 disabled_manually で停止中）
 
 #### 改善
 - [ ] 画像投稿対応（Pillowで画像生成→GitHubにホスト→Threads画像投稿）
