@@ -51,5 +51,9 @@ gh workflow run ronin_instagram_auto_post.yml
 
 ## 対象
 - @RoninWords Instagram: `INSTAGRAM_ACCESS_TOKEN`
-- アプリID: `1173361818193107`
-- ユーザーID: `17841426221570497`
+  - アプリID: `1173361818193107`
+  - ユーザーID: `17841426221570497`
+- skin（肌荒れ）Instagram: `SKIN_INSTAGRAM_ACCESS_TOKEN`
+  - アプリID: `1173361818193107`（同じアプリ）
+  - ユーザーID: `17841424221734739`
+  - ※ skinアカウントでログインした状態でGraph API Explorerを開くこと
