@@ -111,6 +111,36 @@ def create_media_container(image_url, caption):
         return {}
 
 
+def wait_for_container_ready(creation_id, max_wait=120):
+    """
+    コンテナの処理完了を確認する（最大120秒まで待つ）
+    Instagramは画像を受け取った後、サーバーで処理が完了するまで公開できない
+    """
+    url = f"https://graph.facebook.com/v19.0/{creation_id}"
+    params = {
+        "fields":       "status_code",  # 処理状態を取得
+        "access_token": ACCESS_TOKEN,
+    }
+    waited = 0
+    while waited < max_wait:
+        try:
+            response = requests.get(url, params=params, timeout=15)
+            data = response.json()
+            status = data.get("status_code", "UNKNOWN")
+            print(f"  ⏳ コンテナ状態: {status}（{waited}秒経過）")
+            if status == "FINISHED":
+                return True   # 処理完了
+            if status == "ERROR":
+                print(f"❌ コンテナ処理エラー: {data}")
+                return False  # 失敗
+        except Exception as e:
+            print(f"  ⚠️ 状態確認エラー: {e}")
+        time.sleep(10)
+        waited += 10
+    print(f"❌ {max_wait}秒待っても処理が完了しませんでした")
+    return False
+
+
 def publish_media(creation_id):
     """
     Step2: 下書きを実際にInstagramに公開する
@@ -197,9 +227,11 @@ def main():
     creation_id = container_result["id"]
     print(f"✅ コンテナID取得: {creation_id}")
 
-    # 画像アップロードの処理待ち
-    print("⏳ 30秒待機中（APIの処理時間）...")
-    time.sleep(30)
+    # 画像処理の完了を確認してから公開（最大120秒）
+    print("⏳ 画像処理完了を確認中...")
+    if not wait_for_container_ready(creation_id):
+        print("❌ コンテナが処理完了しなかったため投稿を中止します")
+        sys.exit(1)
 
     # Step2: 投稿を公開
     print("📤 Step2: 投稿を公開中...")
