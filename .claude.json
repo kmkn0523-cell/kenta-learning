@@ -23,15 +23,15 @@
     "remote-control": 33,
     "voice-mode": 80,
     "shift-enter": 80,
-    "custom-agents": 66,
+    "custom-agents": 81,
     "agent-flag": 37,
     "feedback-command": 68,
-    "permissions": 71,
+    "permissions": 81,
     "rename-conversation": 72,
     "custom-commands": 42,
     "frontend-design-plugin": 74,
     "default-permission-mode-config": 77,
-    "git-worktrees": 71
+    "git-worktrees": 81
   },
   "promptQueueUseCount": 27,
   "cachedGrowthBookFeatures": {

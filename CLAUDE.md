@@ -104,6 +104,9 @@
 python3 ronin/ronin_threads_action.py
 python3 skin/skin_threads_auto_post.py
 
+インスタが増えてない
+
+
 # GitHub Actions確認
 # → https://github.com/ からリポジトリのActionsタブを見る
 
