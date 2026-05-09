@@ -51,4 +51,5 @@ jobs:
           git config user.name "GitHub Action"
           git add linkedin/linkedin_posting_progress.json linkedin/linkedin_analytics.json
           git commit -m "auto: update LinkedIn progress $(date '+%Y/%m/%d %H:%M' -u)" || true
+          git pull --rebase origin main
           git push

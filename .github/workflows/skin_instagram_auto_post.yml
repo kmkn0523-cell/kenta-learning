@@ -41,4 +41,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add skin/skin_instagram_progress.json
           git diff --cached --quiet || git commit -m "自動投稿: skin Instagram進捗更新"
+          git pull --rebase origin main
           git push
