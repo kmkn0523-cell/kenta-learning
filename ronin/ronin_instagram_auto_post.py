@@ -59,11 +59,31 @@ def save_progress(next_index):
 # =============================
 
 def load_posts():
-    """threads_posts.jsonから全投稿データを読み込む"""
+    """
+    threads_posts.jsonから全投稿データを読み込み、フラットな配列に変換する
+    朝投稿と夜投稿を交互に並べることで120種類の投稿を確保する
+    （例: Day1朝→Day1夜→Day2朝→Day2夜→...→Day60夜）
+    """
     try:
         with open(POSTS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
-            return data["posts"]
+        flat = []
+        for post in data["posts"]:
+            # 朝投稿を追加
+            flat.append({
+                "day": post["day"],
+                "type": "morning",
+                "content": post["morning"],
+                "hashtags": post.get("hashtags_set_A", [])
+            })
+            # 夜投稿を追加（短めのテキスト）
+            flat.append({
+                "day": post["day"],
+                "type": "evening",
+                "content": post["evening"],
+                "hashtags": post.get("hashtags_set_A", [])
+            })
+        return flat
     except FileNotFoundError:
         print("❌ threads_posts.jsonが見つかりません")
         return []
@@ -155,15 +175,16 @@ def main():
     post = posts[current_index]
     day = post["day"]
 
-    # 投稿テキストを組み立てる（morning投稿 + ハッシュタグ）
-    hashtags = " ".join(post.get("hashtags_set_A", []))
-    caption = post["morning"] + CTA + "\n\n" + hashtags
+    # 投稿テキストを組み立てる（本文 + フォロー誘導 + ハッシュタグ）
+    hashtags = " ".join(post.get("hashtags", []))
+    caption = post["content"] + CTA + "\n\n" + hashtags
 
     # 画像URLを組み立てる（例: day01.png）
     image_filename = f"day{day:02d}.png"  # day1 → "day01.png"
     image_url = f"{GITHUB_RAW_BASE}/{image_filename}"
 
-    print(f"📅 Day{day:02d} の投稿を準備中...")
+    time_label = "朝" if post["type"] == "morning" else "夜"
+    print(f"📅 Day{day:02d} {time_label}投稿を準備中...")
     print(f"🖼️  画像URL: {image_url}")
     print(f"📝 テキスト（先頭100文字）: {caption[:100]}...")
 
@@ -193,7 +214,9 @@ def main():
 
     # 次回の進捗を保存
     save_progress(current_index + 1)
-    print(f"📊 次回: Day{posts[(current_index + 1) % len(posts)]['day']:02d}")
+    next_post = posts[(current_index + 1) % len(posts)]
+    next_label = "朝" if next_post["type"] == "morning" else "夜"
+    print(f"📊 次回: Day{next_post['day']:02d} {next_label}投稿")
     print("=== 完了 ===")
 
 
