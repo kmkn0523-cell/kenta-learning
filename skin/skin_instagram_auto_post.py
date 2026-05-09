@@ -62,11 +62,21 @@ def save_progress(next_index):
 # =============================
 
 def load_threads():
-    """skin_threads_posts.json から全テーマデータを読み込む"""
+    """
+    skin_threads_posts.json から全テーマデータを読み込む
+    skin_images に .jpg 画像がないテーマ（theme45以降）は除外する
+    """
     try:
         with open(POSTS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
-            return data["threads"]
+        script_dir = os.path.dirname(__file__)
+        images_dir = os.path.join(script_dir, "skin_images")
+        result = []
+        for thread in data["threads"]:
+            image_path = os.path.join(images_dir, f"theme{thread['id']:02d}.jpg")
+            if os.path.exists(image_path):  # 画像ファイルがある場合だけ追加
+                result.append(thread)
+        return result
     except FileNotFoundError:
         print("❌ skin_threads_posts.jsonが見つかりません")
         return []
