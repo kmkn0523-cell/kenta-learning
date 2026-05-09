@@ -546,9 +546,9 @@
         "hook_duration_ms_p99": 180
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "b26fa1d8-baff-4ef4-a521-4d3ea617b904",
-      "lastSessionFirstPrompt": "skinのnoteが売れた！",
-      "lastSessionModified": 1778227240206,
+      "lastHintSessionId": "db2652c2-ddd9-40e9-8fc6-b84f89ca75dd",
+      "lastSessionFirstPrompt": "ローニンのスレッズ自動投稿、同じ投稿が２連続で投稿されてる部分があるから修正して。",
+      "lastSessionModified": 1778284646539,
       "exampleFilesGeneratedAt": 1778186680225
     }
   },
