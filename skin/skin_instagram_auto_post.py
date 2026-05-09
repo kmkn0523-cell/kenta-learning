@@ -19,8 +19,8 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 ACCESS_TOKEN = os.getenv("SKIN_INSTAGRAM_ACCESS_TOKEN")  # skinアカウントのアクセストークン
 USER_ID      = os.getenv("SKIN_INSTAGRAM_USER_ID")        # skinアカウントのユーザーID
 
-# GitHubに保存した画像へのURL（rawで直接アクセスできる）
-GITHUB_RAW_BASE = "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/skin/skin_instagram_images"
+# GitHubに保存した画像へのURL（Threads自動投稿と同じ画像を流用）
+GITHUB_RAW_BASE = "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/skin/skin_images"
 
 # ファイルのパス
 POSTS_FILE    = os.path.join(os.path.dirname(__file__), "skin_threads_posts.json")      # 投稿データ
@@ -168,8 +168,8 @@ def main():
     hook_text = thread["posts"][0]                # 1投稿目（フック）をキャプションに使う
     caption   = hook_text + CTA + HASHTAGS
 
-    # 画像URLを組み立てる（例: theme01.png）
-    image_filename = f"theme{theme_id:02d}.png"
+    # 画像URLを組み立てる（Threads自動投稿と同じ.jpg形式）
+    image_filename = f"theme{theme_id:02d}.jpg"
     image_url      = f"{GITHUB_RAW_BASE}/{image_filename}"
 
     print(f"📌 テーマ: {theme_name}（index={current_index}）")
