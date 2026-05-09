@@ -16,7 +16,7 @@
     "double-esc-code-restore": 77,
     "continue": 77,
     "shift-tab": 80,
-    "image-paste": 61,
+    "image-paste": 81,
     "desktop-app": 80,
     "color-when-multi-clauding": 75,
     "web-app": 80,
@@ -33,7 +33,7 @@
     "default-permission-mode-config": 77,
     "git-worktrees": 71
   },
-  "promptQueueUseCount": 25,
+  "promptQueueUseCount": 27,
   "cachedGrowthBookFeatures": {
     "tengu_classifier_summary_llm_emit": false,
     "tengu_slate_harbor_experiment": false,
