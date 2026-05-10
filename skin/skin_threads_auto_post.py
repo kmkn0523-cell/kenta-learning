@@ -16,7 +16,7 @@ THREADS_ACCESS_TOKEN = os.getenv("THREADS_ACCESS_TOKEN")
 THREADS_USER_ID      = os.getenv("THREADS_USER_ID")
 
 # 投稿データと進捗ファイルのパス
-POSTS_FILE    = "/home/kenta_kamijyo/skin/skin_x_posts.json"
+POSTS_FILE    = "/home/kenta_kamijyo/skin/skin_x_posts.json"  # 注意: このファイルはメニュー形式の手動投稿用。GitHub Actionsは skin_threads_action.py を使用
 PROGRESS_FILE = "/home/kenta_kamijyo/skin/skin_threads_progress.json"
 
 # 全投稿に自動でつけるハッシュタグ
