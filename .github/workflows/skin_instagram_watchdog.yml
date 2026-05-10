@@ -1,0 +1,50 @@
+name: skin Instagram 監視・自動修復
+
+# 30分おきに発火して「最近投稿されているか？」を確認する
+# 投稿が遅れていたら自動で投稿スクリプトを実行する（ウォッチドッグ）
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # 毎時 0分 UTC（= JST 9時・11時・13時...）
+    - cron: '30 * * * *'  # 毎時30分 UTC（= JST 9時30分・11時30分...）
+  workflow_dispatch:  # 手動実行も可能（テスト用）
+
+permissions:
+  contents: write  # 進捗ファイルをコミット・プッシュするために必要
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python環境をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 必要なライブラリをインストール
+        run: pip install requests python-dotenv
+
+      - name: .envファイルを作成（GitHub Secretsから）
+        run: |
+          echo "SKIN_INSTAGRAM_ACCESS_TOKEN=${{ secrets.SKIN_INSTAGRAM_ACCESS_TOKEN }}" >> .env
+          echo "SKIN_INSTAGRAM_USER_ID=${{ secrets.SKIN_INSTAGRAM_USER_ID }}" >> .env
+
+      # 投稿スクリプトを実行する
+      # スクリプト内のヘルスチェックが「90分以内に投稿済みなら自動スキップ」を判定する
+      # 90分以上経過していれば自動で投稿する（自動修復）
+      - name: 監視・自動修復を実行
+        run: python3 skin/skin_instagram_auto_post.py
+
+      # 進捗ファイルをGitに保存する（投稿した場合のみコミットされる）
+      - name: 進捗ファイルをコミット・プッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add skin/skin_instagram_progress.json
+          git diff --cached --quiet || git commit -m "自動修復: skin Instagram進捗更新"
+          git pull --rebase origin main
+          git push
