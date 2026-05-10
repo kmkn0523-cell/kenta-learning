@@ -43,6 +43,8 @@ on:
 jobs:
   post:
     runs-on: ubuntu-latest  # GitHubのサーバーで動かす
+    permissions:
+      contents: write  # git pushに必要な書き込み権限
 
     steps:
       # Step 1: リポジトリのファイルをダウンロードする
