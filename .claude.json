@@ -1,5 +1,5 @@
 {
-  "numStartups": 81,
+  "numStartups": 82,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -484,7 +484,7 @@
   "shiftEnterKeyBindingInstalled": true,
   "hasCompletedOnboarding": true,
   "lastOnboardingVersion": "2.1.118",
-  "lastReleaseNotesSeen": "2.1.137",
+  "lastReleaseNotesSeen": "2.1.138",
   "projects": {
     "/home/kenta_kamijyo": {
       "allowedTools": [],
@@ -513,66 +513,66 @@
         "get_instagram_id.py"
       ],
       "lastGracefulShutdown": false,
-      "lastCost": 3.6657048499999996,
-      "lastAPIDuration": 1086674,
-      "lastAPIDurationWithoutRetries": 1086306,
-      "lastToolDuration": 142414,
-      "lastDuration": 15352207,
-      "lastLinesAdded": 89,
-      "lastLinesRemoved": 32,
-      "lastTotalInputTokens": 517,
-      "lastTotalOutputTokens": 56483,
-      "lastTotalCacheCreationInputTokens": 189751,
-      "lastTotalCacheReadInputTokens": 7021522,
+      "lastCost": 1.4157587,
+      "lastAPIDuration": 421638,
+      "lastAPIDurationWithoutRetries": 421020,
+      "lastToolDuration": 19331,
+      "lastDuration": 49918638,
+      "lastLinesAdded": 42,
+      "lastLinesRemoved": 4,
+      "lastTotalInputTokens": 431,
+      "lastTotalOutputTokens": 20209,
+      "lastTotalCacheCreationInputTokens": 136350,
+      "lastTotalCacheReadInputTokens": 2003294,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 1.36,
-      "lastFpsLow1Pct": 119.36,
+      "lastFpsAverage": 0.17,
+      "lastFpsLow1Pct": 170.88,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 397,
-          "outputTokens": 32,
+          "inputTokens": 370,
+          "outputTokens": 23,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.000557
+          "costUSD": 0.00048499999999999997
         },
         "claude-sonnet-4-6": {
-          "inputTokens": 120,
-          "outputTokens": 56451,
-          "cacheReadInputTokens": 7021522,
-          "cacheCreationInputTokens": 189751,
+          "inputTokens": 61,
+          "outputTokens": 20186,
+          "cacheReadInputTokens": 2003294,
+          "cacheCreationInputTokens": 136350,
           "webSearchRequests": 0,
-          "costUSD": 3.66514785
+          "costUSD": 1.4152737000000002
         }
       },
-      "lastSessionId": "db2652c2-ddd9-40e9-8fc6-b84f89ca75dd",
+      "lastSessionId": "fba50d23-ec47-411e-9bbe-2e53895bcb57",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 20761,
-        "frame_duration_ms_min": 0.0939250000519678,
-        "frame_duration_ms_max": 25.19111100025475,
-        "frame_duration_ms_avg": 1.0738916915501981,
-        "frame_duration_ms_p50": 0.9379380000755191,
-        "frame_duration_ms_p95": 2.0237514499574893,
-        "frame_duration_ms_p99": 3.6108584995195265,
-        "hook_duration_ms_count": 64,
+        "frame_duration_ms_count": 8320,
+        "frame_duration_ms_min": 0.09174200000416022,
+        "frame_duration_ms_max": 67.81416299939156,
+        "frame_duration_ms_avg": 0.8859740594811337,
+        "frame_duration_ms_p50": 0.7461904999581748,
+        "frame_duration_ms_p95": 1.487400600593537,
+        "frame_duration_ms_p99": 4.151408070046439,
+        "hook_duration_ms_count": 41,
         "hook_duration_ms_min": 0,
-        "hook_duration_ms_max": 165,
-        "hook_duration_ms_avg": 23.6875,
-        "hook_duration_ms_p50": 19,
-        "hook_duration_ms_p95": 50.69999999999999,
-        "hook_duration_ms_p99": 107.66999999999976,
-        "pre_tool_hook_duration_ms_count": 72,
+        "hook_duration_ms_max": 244,
+        "hook_duration_ms_avg": 28.975609756097562,
+        "hook_duration_ms_p50": 28,
+        "hook_duration_ms_p95": 45,
+        "hook_duration_ms_p99": 174.40000000000026,
+        "pre_tool_hook_duration_ms_count": 35,
         "pre_tool_hook_duration_ms_min": 0,
-        "pre_tool_hook_duration_ms_max": 1,
-        "pre_tool_hook_duration_ms_avg": 0.18055555555555555,
+        "pre_tool_hook_duration_ms_max": 23,
+        "pre_tool_hook_duration_ms_avg": 0.7428571428571429,
         "pre_tool_hook_duration_ms_p50": 0,
         "pre_tool_hook_duration_ms_p95": 1,
-        "pre_tool_hook_duration_ms_p99": 1
+        "pre_tool_hook_duration_ms_p99": 15.519999999999925
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "fba50d23-ec47-411e-9bbe-2e53895bcb57",
-      "lastSessionFirstPrompt": "skinのインスタ自動投稿ができてない",
-      "lastSessionModified": 1778309586097,
+      "lastHintSessionId": "c7b3935e-87ac-4816-9915-9e8aee975ec1",
+      "lastSessionFirstPrompt": "自動投稿がエラー出まくってる。同一内容連続投稿とかも。徹底的に分析して修正して。",
+      "lastSessionModified": 1778377553490,
       "exampleFilesGeneratedAt": 1778186680225
     }
   },
@@ -588,7 +588,7 @@
       "timestamp": 1778298864436
     }
   },
-  "closedIssuesLastChecked": 1778226796898,
+  "closedIssuesLastChecked": 1778377519891,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {
