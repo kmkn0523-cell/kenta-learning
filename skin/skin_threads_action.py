@@ -6,7 +6,7 @@ import json                    # JSONファイルを扱う道具
 import os                      # 環境変数を読み込む道具
 import time                    # 待機処理に使う道具
 import requests                # インターネットにリクエストを送る道具
-from datetime import datetime  # 今の日時を取得する道具
+from datetime import datetime, timezone  # 今の日時とタイムゾーンを扱う道具
 
 # ローカル実行時は .env ファイルからAPIキーを読み込む（GitHub Actionsでは不要）
 try:
@@ -123,9 +123,76 @@ def save_progress(progress):
         json.dump(progress, f, ensure_ascii=False, indent=2)
 
 
+def get_last_post_time():
+    """
+    Threads APIで自分の最新投稿の時刻を取得する
+    成功したらdatetimeオブジェクト（UTC）、失敗したらNoneを返す
+    """
+    try:
+        url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads"
+        params = {
+            "fields": "id,timestamp",  # 投稿IDと投稿時刻だけ取得
+            "limit": 1,                # 最新の1件だけ取得
+            "access_token": THREADS_ACCESS_TOKEN
+        }
+        response = requests.get(url, params=params, timeout=15)
+        data = response.json()
+
+        posts = data.get("data", [])
+        if not posts:
+            print("⚠️ 投稿履歴が見つかりませんでした（初回投稿の可能性）")
+            return None
+
+        # タイムスタンプは "2024-01-01T00:00:00+0000" 形式で返ってくる
+        timestamp_str = posts[0].get("timestamp", "")
+        if not timestamp_str:
+            return None
+
+        # Pythonが読めるUTC日時に変換する
+        last_post_dt = datetime.fromisoformat(timestamp_str.replace("+0000", "+00:00"))
+        return last_post_dt
+
+    except Exception as e:
+        print(f"⚠️ 最新投稿時刻の取得に失敗しました: {e}")
+        return None
+
+
+def check_should_skip(skip_minutes=90):
+    """
+    直近 skip_minutes 分以内に投稿済みなら True を返す（スキップすべき状態）
+    APIエラーのときは False を返す（念のため投稿を続行する）
+
+    - 90分以内に投稿あり → スキップ（重複防止）
+    - 90分以上たっている → 投稿する（自動修復）
+    - API取得失敗 → 投稿する（フェイルセーフ）
+    """
+    last_post_time = get_last_post_time()
+    if last_post_time is None:
+        print("⚠️ 最新投稿が確認できませんでした。念のため投稿を続行します。")
+        return False
+
+    now_utc = datetime.now(timezone.utc)
+    minutes_since_last = (now_utc - last_post_time).total_seconds() / 60
+
+    print(f"📊 ヘルスチェック: 最新投稿から {minutes_since_last:.1f} 分経過")
+
+    if minutes_since_last < skip_minutes:
+        print(f"✅ {skip_minutes}分以内に投稿済みのためスキップします（重複防止）")
+        return True
+
+    print(f"📢 {skip_minutes}分以上経過しています。投稿を実行します。")
+    return False
+
+
 def main():
     """メイン処理（全自動・対話なし）"""
     now = datetime.now().strftime("%Y/%m/%d %H:%M")
+    print(f"=== skin自動投稿ヘルスチェック: {now} ===")
+
+    # 直近90分以内に投稿済みならスキップする（重複防止・自動修復の起点）
+    if check_should_skip(skip_minutes=90):
+        return  # 投稿済みなので何もしない
+
     print(f"=== skin自動投稿開始: {now} ===")
 
     # 投稿データと進捗を読み込む
