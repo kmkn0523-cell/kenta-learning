@@ -10,7 +10,7 @@
     "prompt-queue": 47,
     "enter-to-steer-in-relatime": 81,
     "todo-list": 81,
-    "install-github-app": 75,
+    "install-github-app": 85,
     "install-slack-app": 75,
     "drag-and-drop-images": 76,
     "double-esc-code-restore": 77,
@@ -546,9 +546,9 @@
         "hook_duration_ms_p99": 214
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "79130aea-286c-4be1-b276-576b1e532e70",
-      "lastSessionFirstPrompt": "Run cd skin && python skin_threads_action.py Traceback (most recent call last): === skin自動投稿ヘルスチェック: 2026/05/10 03:00 === 📊 ヘルスチェック: 最新投稿から 928.9 分経過 📢 90分以上経過しています。投稿を実行します。 === skin自動投稿開始: 2026/05",
-      "lastSessionModified": 1778384319062,
+      "lastHintSessionId": "6e70b300-5c4a-4227-8b8d-ddcb0657d720",
+      "lastSessionFirstPrompt": "rimit?",
+      "lastSessionModified": 1778428826153,
       "exampleFilesGeneratedAt": 1778186680225
     }
   },
