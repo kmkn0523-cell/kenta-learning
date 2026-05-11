@@ -70,5 +70,10 @@
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)"
+    ]
+  }
 }
