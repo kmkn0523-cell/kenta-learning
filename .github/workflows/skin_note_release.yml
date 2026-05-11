@@ -76,13 +76,16 @@ jobs:
           except Exception:
               pass
 
+          # GitHub の記事URL（Safariで開くと太字・見出しが表示される）
+          github_url = "https://github.com/kmkn0523-cell/kenta-learning/blob/main/skin/note_ready.md"
+
           # MarkdownをHTMLに変換する
           html_body = markdown.markdown(article_body, extensions=["extra"])
 
-          # HTML全体を組み立てる（スマホで見やすいスタイルを付ける）
+          # 画像の案内
           image_note = ""
           if lp_path:
-              image_note = "<p>📎 <strong>ヘッダー画像を添付しました。</strong>noteにアップロードしてください。</p><hr>"
+              image_note = "<p>📎 <strong>ヘッダー画像を添付しました。</strong>noteにアップロードしてください。</p>"
 
           html = f"""<!DOCTYPE html>
           <html><head><meta charset="utf-8">
@@ -94,11 +97,18 @@ jobs:
             strong {{ color: #111; }}
             hr {{ border: none; border-top: 1px solid #ddd; margin: 20px 0; }}
             blockquote {{ border-left: 4px solid #aaa; margin: 0; padding-left: 16px; color: #555; }}
-            .header {{ background: #f5f5f5; padding: 12px 16px; border-radius: 8px;
-                       margin-bottom: 20px; font-size: 14px; color: #555; }}
+            .step-box {{ background: #e8f4ff; border-radius: 10px; padding: 16px; margin-bottom: 20px; }}
+            .step-box a {{ color: #0066cc; font-weight: bold; font-size: 17px; }}
           </style></head><body>
-          <div class="header">👇 noteにそのままコピペしてください</div>
+          <div class="step-box">
+            <p><strong>📋 太字をそのままnoteに貼る手順</strong></p>
+            <p>① <a href="{github_url}">▶ ここをタップ → Safariで開く</a></p>
+            <p>② 画面を長押し →「すべて選択」→「コピー」</p>
+            <p>③ noteに貼り付け</p>
+          </div>
           {image_note}
+          <hr>
+          <p style="color:#888;font-size:13px;">↓ テキスト版（書式なし）</p>
           {html_body}
           </body></html>"""
 
@@ -108,10 +118,10 @@ jobs:
           msg["To"]      = "kmkn0523@gmail.com"
           msg["Subject"] = f"【skin note】{title}"
 
-          # HTML本文を添付する
+          # HTML本文
           msg_body = MIMEMultipart("alternative")
-          msg_body.attach(MIMEText(article_body, "plain", "utf-8"))   # テキスト版（fallback）
-          msg_body.attach(MIMEText(html, "html", "utf-8"))             # HTML版
+          msg_body.attach(MIMEText(article_body, "plain", "utf-8"))
+          msg_body.attach(MIMEText(html, "html", "utf-8"))
           msg.attach(msg_body)
 
           # LP画像を添付する（存在する場合のみ）
