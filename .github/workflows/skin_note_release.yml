@@ -33,27 +33,42 @@ jobs:
           git pull --rebase origin main
           git push
 
-      - name: メールで記事を通知する
+      - name: メールで記事と画像を通知する
         env:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: |
           python3 - << 'EOF'
-          import smtplib                          # メール送信の道具
-          import os                               # 環境変数を読む道具
-          from email.mime.text import MIMEText    # メール本文を作る道具
-          from email.mime.multipart import MIMEMultipart  # メール全体を組み立てる道具
+          import smtplib, os, json, re
+          from email.mime.text import MIMEText
+          from email.mime.multipart import MIMEMultipart
+          from email.mime.image import MIMEImage   # 画像を添付する道具
 
           # note_ready.md を読み込む
           with open("skin/note_ready.md", "r", encoding="utf-8") as f:
               content = f.read()
 
-          # 1行目のコメント（<!-- ... -->）を除いた本文を取得する
+          # 1行目のコメントから記事ファイル名を取得する（例: article_05.md）
+          match = re.search(r'<!--.*?\|\s*(article_\d+\.md)', content)
+          article_filename = match.group(1) if match else ""
+
+          # コメント行を除いた記事本文を取得する
           lines = content.split("\n")
           body_lines = [l for l in lines if not l.startswith("<!--")]
           article_body = "\n".join(body_lines).strip()
 
-          # 記事タイトルを取得する（# で始まる最初の行）
+          # 記事タイトルを取得する
           title = next((l.lstrip("# ") for l in body_lines if l.startswith("# ")), "今週の記事")
+
+          # マッピングファイルからLP画像を特定する
+          lp_path = None
+          try:
+              with open("skin/note_lp_map.json", "r", encoding="utf-8") as f:
+                  lp_map = json.load(f)
+              lp_filename = lp_map.get(article_filename)
+              if lp_filename:
+                  lp_path = f"skin/{lp_filename}"
+          except Exception:
+              pass
 
           # メールを組み立てる
           msg = MIMEMultipart()
@@ -62,7 +77,16 @@ jobs:
           msg["Subject"] = f"【今週のskin note】{title}"
 
           body = f"👇 noteにそのままコピペしてください\n\n{article_body}"
+          if lp_path:
+              body += "\n\n---\n📎 ヘッダー画像を添付しました。noteにアップロードしてください。"
           msg.attach(MIMEText(body, "plain", "utf-8"))
+
+          # LP画像を添付する（存在する場合のみ）
+          if lp_path and os.path.exists(lp_path):
+              with open(lp_path, "rb") as f:
+                  img = MIMEImage(f.read(), name=os.path.basename(lp_path))
+              msg.attach(img)
+              print(f"📎 画像を添付: {lp_path}")
 
           # Gmailに接続して送信する
           password = os.environ["GMAIL_APP_PASSWORD"]
