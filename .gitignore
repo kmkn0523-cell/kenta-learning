@@ -22,6 +22,8 @@
 !ronin/ronin_images/
 !ronin/ronin_images/*.png
 !skin/
+!skin/note_queue/
+!skin/note_queue/*.md
 !skin/skin_images/
 !skin/skin_images/*.png
 !skin/skin_images/*.jpg
