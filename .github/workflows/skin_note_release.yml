@@ -26,17 +26,23 @@ jobs:
       - name: 次の記事を note_ready.md に展開する
         run: python3 skin/release_note.py
 
+      - name: ライブラリをインストール
+        run: pip install markdown --quiet
+
+      - name: GitHub Pages 用HTMLページを生成する
+        run: python3 skin/generate_note_page.py
+
       - name: 変更をコミット・プッシュする
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add skin/note_ready.md skin/note_queue_progress.json
+          git add skin/note_ready.md skin/note_queue_progress.json note_article.html
           git diff --cached --quiet || git commit -m "自動リリース: 今週のnote記事を展開"
           git pull --rebase origin main
           git push
 
-      - name: ライブラリをインストール
-        run: pip install markdown --quiet
+      - name: GitHub Pages のデプロイを待つ
+        run: sleep 60
 
       - name: メールで記事と画像を通知する
         env:

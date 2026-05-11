@@ -1,14 +1,11 @@
 # send_note_email.py
-# note_ready.md の内容をHTMLファイル添付でメール送信するスクリプト
+# GitHub Pages URLをリンクしたメールを送信するスクリプト
 # GitHub Actions から呼び出される
 
 import smtplib, os, json, re
-import markdown
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
-from email.mime.base import MIMEBase
-from email import encoders
 
 # note_ready.md を読み込む
 with open("skin/note_ready.md", "r", encoding="utf-8") as f:
@@ -37,57 +34,8 @@ try:
 except Exception:
     pass
 
-# MarkdownをHTMLに変換する
-html_body = markdown.markdown(article_body, extensions=["extra"])
-
-# コピーボタン付きHTMLファイルを生成する
-article_html = """<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-body { font-family: sans-serif; font-size: 16px; line-height: 1.8; max-width: 680px; margin: 0 auto; padding: 16px; color: #222; }
-h1 { font-size: 22px; border-bottom: 2px solid #ccc; padding-bottom: 8px; }
-h2 { font-size: 18px; margin-top: 24px; color: #333; }
-strong { font-weight: bold; color: #111; }
-hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
-blockquote { border-left: 4px solid #aaa; margin: 0; padding-left: 16px; color: #555; }
-#copy-btn { display: block; width: 100%; padding: 16px; font-size: 18px; font-weight: bold; background: #0066cc; color: white; border: none; border-radius: 10px; margin-bottom: 24px; cursor: pointer; }
-#copy-btn.done { background: #28a745; }
-</style>
-</head>
-<body>
-<button id="copy-btn" onclick="copyArticle()">📋 記事をコピーする</button>
-<div id="article">ARTICLE_HTML</div>
-<script>
-function copyArticle() {
-  var el = document.getElementById('article');
-  var html = el.innerHTML;
-  var text = el.innerText;
-  try {
-    var item = new ClipboardItem({
-      'text/html': new Blob([html], {type: 'text/html'}),
-      'text/plain': new Blob([text], {type: 'text/plain'})
-    });
-    navigator.clipboard.write([item]).then(function() {
-      var btn = document.getElementById('copy-btn');
-      btn.textContent = 'コピーしました！noteに貼り付けてください';
-      btn.className = 'done';
-    });
-  } catch(e) {
-    var range = document.createRange();
-    range.selectNode(el);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-    document.execCommand('copy');
-    document.getElementById('copy-btn').textContent = 'コピーしました！noteに貼り付けてください';
-    document.getElementById('copy-btn').className = 'done';
-  }
-}
-</script>
-</body>
-</html>""".replace("ARTICLE_HTML", html_body)
+# GitHub Pages の URL（コピーボタン付きページ）
+pages_url = "https://kmkn0523-cell.github.io/kenta-learning/note_article.html"
 
 # メール本文HTML
 image_note = ""
@@ -99,17 +47,19 @@ mail_html = f"""<!DOCTYPE html>
 <head><meta charset="utf-8">
 <style>
 body {{ font-family: sans-serif; font-size: 16px; line-height: 1.8; max-width: 680px; margin: 0 auto; padding: 16px; }}
-.step-box {{ background: #e8f4ff; border-radius: 10px; padding: 16px; margin-bottom: 16px; }}
-.step-box p {{ margin: 6px 0; font-size: 15px; }}
+.step-box {{ background: #e8f4ff; border-radius: 12px; padding: 18px; margin-bottom: 16px; }}
+.step-box p {{ margin: 8px 0; font-size: 15px; }}
+.step-box a {{ color: #0066cc; font-weight: bold; font-size: 17px; }}
 </style>
 </head>
 <body>
 <div class="step-box">
 <p><strong>📋 太字をそのままnoteに貼る手順</strong></p>
-<p>① 添付の <strong>article.html</strong> をタップ</p>
-<p>② Safariで開く</p>
-<p>③ 青いボタン「📋 記事をコピーする」をタップ</p>
-<p>④ noteに貼り付け → 太字・見出しがそのまま入る</p>
+<p>① 下のリンクをタップ（Brave / Safari どちらでもOK）</p>
+<p><a href="{pages_url}">▶ 記事ページを開く</a></p>
+<p>② 青いボタン「📋 記事をコピーする」をタップ</p>
+<p>③ noteアプリで新規記事 → 貼り付け</p>
+<p style="color:#888;font-size:13px;">※ 太字・見出しがそのまま入ります</p>
 </div>
 {image_note}
 </body>
@@ -122,17 +72,11 @@ msg["To"] = "kmkn0523@gmail.com"
 msg["Subject"] = f"【skin note】{title}"
 
 # メール本文
+plain = f"記事ページを開く: {pages_url}\n青いボタンをタップ → noteに貼り付け"
 msg_body = MIMEMultipart("alternative")
-msg_body.attach(MIMEText("添付のarticle.htmlをSafariで開いて、青いボタンをタップするとコピーできます。", "plain", "utf-8"))
+msg_body.attach(MIMEText(plain, "plain", "utf-8"))
 msg_body.attach(MIMEText(mail_html, "html", "utf-8"))
 msg.attach(msg_body)
-
-# HTMLファイルを添付する（コピーボタン付き記事）
-html_attachment = MIMEBase("text", "html")
-html_attachment.set_payload(article_html.encode("utf-8"))
-encoders.encode_base64(html_attachment)
-html_attachment.add_header("Content-Disposition", 'attachment; filename="article.html"')
-msg.attach(html_attachment)
 
 # LP画像を添付する（存在する場合のみ）
 if lp_path and os.path.exists(lp_path):
