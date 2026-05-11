@@ -11,14 +11,14 @@
     "enter-to-steer-in-relatime": 81,
     "todo-list": 81,
     "install-github-app": 85,
-    "install-slack-app": 75,
-    "drag-and-drop-images": 76,
-    "double-esc-code-restore": 77,
+    "install-slack-app": 87,
+    "drag-and-drop-images": 87,
+    "double-esc-code-restore": 87,
     "continue": 77,
     "shift-tab": 80,
     "image-paste": 81,
     "desktop-app": 80,
-    "color-when-multi-clauding": 75,
+    "color-when-multi-clauding": 87,
     "web-app": 80,
     "remote-control": 33,
     "voice-mode": 80,
@@ -27,10 +27,10 @@
     "agent-flag": 37,
     "feedback-command": 83,
     "permissions": 81,
-    "rename-conversation": 72,
+    "rename-conversation": 87,
     "custom-commands": 42,
     "frontend-design-plugin": 74,
-    "default-permission-mode-config": 77,
+    "default-permission-mode-config": 87,
     "git-worktrees": 81
   },
   "promptQueueUseCount": 27,
@@ -546,9 +546,9 @@
         "hook_duration_ms_p99": 182
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "6e70b300-5c4a-4227-8b8d-ddcb0657d720",
-      "lastSessionFirstPrompt": "rimit?",
-      "lastSessionModified": 1778428826153,
+      "lastHintSessionId": "de1d4347-27c3-4e35-a199-2a1f92039445",
+      "lastSessionFirstPrompt": "ろーにんのインスタ自動投稿が止まっている",
+      "lastSessionModified": 1778508705731,
       "exampleFilesGeneratedAt": 1778186680225
     }
   },
@@ -561,7 +561,7 @@
   "groveConfigCache": {
     "bf7efc70-b78a-4fb9-bdc2-c371585a6b66": {
       "grove_enabled": true,
-      "timestamp": 1778410371403
+      "timestamp": 1778509171524
     }
   },
   "closedIssuesLastChecked": 1778473536011,
@@ -605,8 +605,8 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 7,
-      "lastUsedAt": 1778154140704
+      "usageCount": 8,
+      "lastUsedAt": 1778509158608
     },
     "superpowers:writing-plans": {
       "usageCount": 7,
