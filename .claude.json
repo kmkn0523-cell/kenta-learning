@@ -623,6 +623,10 @@
     "superpowers:subagent-driven-development": {
       "usageCount": 3,
       "lastUsedAt": 1778154850709
+    },
+    "superpowers:systematic-debugging": {
+      "usageCount": 1,
+      "lastUsedAt": 1778513134212
     }
   },
   "opus47LaunchSeenCount": 5,

@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "mcp__claude_ai_Google_Calendar__list_events"
+    ]
+  },
   "hooks": {
     "SessionStart": [
       {
@@ -70,10 +76,5 @@
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "agentPushNotifEnabled": true,
-  "permissions": {
-    "allow": [
-      "Bash(python3 -c ' *)"
-    ]
-  }
+  "agentPushNotifEnabled": true
 }
