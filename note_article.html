@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>note 記事</title>
+<style>
+body { font-family: sans-serif; font-size: 16px; line-height: 1.9; max-width: 720px; margin: 0 auto; padding: 20px; color: #222; }
+h1 { font-size: 22px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+h2 { font-size: 18px; margin-top: 28px; }
+strong { font-weight: bold; }
+hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+blockquote { border-left: 4px solid #ccc; margin: 0; padding: 4px 16px; color: #555; }
+#copy-btn {
+  display: block; width: 100%; padding: 18px;
+  font-size: 18px; font-weight: bold;
+  background: #0066cc; color: white;
+  border: none; border-radius: 12px;
+  margin-bottom: 28px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#copy-btn.done { background: #28a745; }
+#article { padding: 4px 0; }
+</style>
+</head>
+<body>
+<button id="copy-btn" onclick="copyArticle()">📋 記事をコピーする</button>
+<div id="article"><h1>「日焼けは肌荒れを悪化させる」を知らない人が多すぎる。</h1>
+<p>「日焼け止めって面倒くさい」と思っている人へ。</p>
+<p>肌荒れが慢性化している人の多くが、紫外線ダメージを軽視しています。日焼けは「単なる色黒」ではなく、肌の炎症反応です。</p>
+<hr />
+<h2>UVが炎症を起こすメカニズム</h2>
+<p>紫外線（特にUVA）は肌の真皮層まで届き、コラーゲンを分解する酵素を活性化させます。さらに活性酸素を発生させ、細胞を酸化ダメージにさらす。これが慢性的な炎症の原因になります。</p>
+<p>ニキビ跡が消えにくい・毛穴が目立つ・肌がくすむ、という症状のほとんどはUVダメージによる炎症が根本にあります。</p>
+<h2>曇りの日・室内でもUVは届く</h2>
+<p>UVAはガラスを透過します。室内にいても、窓際では日焼けしています。曇りの日もUVAは60〜80%届いている。「晴れた日だけ日焼け止めを塗る」では不十分です。</p>
+<p>毎日の紫外線対策が、スキンケア以前の大前提です。</p>
+<h2>正しい日焼け止めの選び方</h2>
+<p>肌荒れ肌には「ノンコメドジェニック（毛穴を詰まらせない）」「SPF30以上・PA+++以上」「紫外線吸収剤不使用（散乱剤のみ）」の3つを満たすものを選ぶと安心です。</p>
+<hr />
+<p>このnoteでは紫外線対策を含む、外側・内側両面からの肌荒れ改善プログラムを解説しています。</p></div>
+<script>
+function copyArticle() {
+  var el = document.getElementById('article');
+  var html = el.innerHTML;
+  var text = el.innerText;
+  var btn = document.getElementById('copy-btn');
+  if (navigator.clipboard && window.ClipboardItem) {
+    navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html': new Blob([html], {type: 'text/html'}),
+        'text/plain': new Blob([text], {type: 'text/plain'})
+      })
+    ]).then(function() {
+      btn.textContent = '✅ コピーしました！noteに貼り付けてください';
+      btn.className = 'done';
+    }).catch(function() { fallbackCopy(el, btn); });
+  } else {
+    fallbackCopy(el, btn);
+  }
+}
+function fallbackCopy(el, btn) {
+  var range = document.createRange();
+  range.selectNode(el);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  document.execCommand('copy');
+  window.getSelection().removeAllRanges();
+  btn.textContent = '✅ コピーしました！noteに貼り付けてください';
+  btn.className = 'done';
+}
+</script>
+</body>
+</html>
