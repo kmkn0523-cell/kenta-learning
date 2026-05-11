@@ -1,5 +1,5 @@
 {
-  "numStartups": 86,
+  "numStartups": 87,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -512,7 +512,7 @@
         "day01.png",
         "get_instagram_id.py"
       ],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
@@ -564,7 +564,7 @@
       "timestamp": 1778410371403
     }
   },
-  "closedIssuesLastChecked": 1778377519891,
+  "closedIssuesLastChecked": 1778473536011,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {
