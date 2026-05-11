@@ -17,8 +17,14 @@ lines = content.split("\n")
 body_lines = [l for l in lines if not l.startswith("<!--")]
 article_body = "\n".join(body_lines).strip()
 
-# MarkdownをHTMLに変換する
+# MarkdownをHTMLに変換する（見出しを太字段落に変換してnoteで大文字にならないようにする）
 html_body = markdown.markdown(article_body, extensions=["extra"])
+
+# h1・h2タグを太字の段落に置き換える（noteが大きな見出しとして扱うのを防ぐ）
+import re as _re
+html_body = _re.sub(r'<h1>(.*?)</h1>', r'<p><strong>\1</strong></p>', html_body)
+html_body = _re.sub(r'<h2>(.*?)</h2>', r'<p><strong>\1</strong></p>', html_body)
+html_body = _re.sub(r'<h3>(.*?)</h3>', r'<p><strong>\1</strong></p>', html_body)
 
 # コピーボタン付きHTMLページを生成する
 html = """<!DOCTYPE html>
