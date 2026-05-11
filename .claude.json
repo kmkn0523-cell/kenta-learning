@@ -34,6 +34,7 @@
     "git-worktrees": 81
   },
   "promptQueueUseCount": 27,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_birthday_hat": false,
     "tengu_1p_event_batch_config": {
@@ -613,8 +614,8 @@
       "lastUsedAt": 1778509543759
     },
     "superpowers:executing-plans": {
-      "usageCount": 2,
-      "lastUsedAt": 1778044671503
+      "usageCount": 3,
+      "lastUsedAt": 1778510020015
     },
     "vercel:deploy": {
       "usageCount": 2,
