@@ -35,21 +35,25 @@ jobs:
           git pull --rebase origin main
           git push
 
+      - name: markdownライブラリをインストール
+        run: pip install markdown --quiet
+
       - name: メールで記事と画像を通知する
         env:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: |
           python3 - << 'EOF'
           import smtplib, os, json, re
+          import markdown                           # MarkdownをHTMLに変換する道具
           from email.mime.text import MIMEText
           from email.mime.multipart import MIMEMultipart
-          from email.mime.image import MIMEImage   # 画像を添付する道具
+          from email.mime.image import MIMEImage
 
           # note_ready.md を読み込む
           with open("skin/note_ready.md", "r", encoding="utf-8") as f:
               content = f.read()
 
-          # 1行目のコメントから記事ファイル名を取得する（例: article_05.md）
+          # 1行目のコメントから記事ファイル名を取得する
           match = re.search(r'<!--.*?\|\s*(article_\d+\.md)', content)
           article_filename = match.group(1) if match else ""
 
@@ -72,16 +76,43 @@ jobs:
           except Exception:
               pass
 
-          # メールを組み立てる
-          msg = MIMEMultipart()
+          # MarkdownをHTMLに変換する
+          html_body = markdown.markdown(article_body, extensions=["extra"])
+
+          # HTML全体を組み立てる（スマホで見やすいスタイルを付ける）
+          image_note = ""
+          if lp_path:
+              image_note = "<p>📎 <strong>ヘッダー画像を添付しました。</strong>noteにアップロードしてください。</p><hr>"
+
+          html = f"""<!DOCTYPE html>
+          <html><head><meta charset="utf-8">
+          <style>
+            body {{ font-family: sans-serif; font-size: 16px; line-height: 1.8;
+                   max-width: 680px; margin: 0 auto; padding: 16px; color: #222; }}
+            h1 {{ font-size: 22px; border-bottom: 2px solid #ccc; padding-bottom: 8px; }}
+            h2 {{ font-size: 18px; margin-top: 24px; }}
+            strong {{ color: #111; }}
+            hr {{ border: none; border-top: 1px solid #ddd; margin: 20px 0; }}
+            blockquote {{ border-left: 4px solid #aaa; margin: 0; padding-left: 16px; color: #555; }}
+            .header {{ background: #f5f5f5; padding: 12px 16px; border-radius: 8px;
+                       margin-bottom: 20px; font-size: 14px; color: #555; }}
+          </style></head><body>
+          <div class="header">👇 noteにそのままコピペしてください</div>
+          {image_note}
+          {html_body}
+          </body></html>"""
+
+          # メールを組み立てる（HTML形式）
+          msg = MIMEMultipart("mixed")
           msg["From"]    = "kmkn0523@gmail.com"
           msg["To"]      = "kmkn0523@gmail.com"
-          msg["Subject"] = f"【今週のskin note】{title}"
+          msg["Subject"] = f"【skin note】{title}"
 
-          body = f"👇 noteにそのままコピペしてください\n\n{article_body}"
-          if lp_path:
-              body += "\n\n---\n📎 ヘッダー画像を添付しました。noteにアップロードしてください。"
-          msg.attach(MIMEText(body, "plain", "utf-8"))
+          # HTML本文を添付する
+          msg_body = MIMEMultipart("alternative")
+          msg_body.attach(MIMEText(article_body, "plain", "utf-8"))   # テキスト版（fallback）
+          msg_body.attach(MIMEText(html, "html", "utf-8"))             # HTML版
+          msg.attach(msg_body)
 
           # LP画像を添付する（存在する場合のみ）
           if lp_path and os.path.exists(lp_path):
