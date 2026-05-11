@@ -32,3 +32,43 @@ jobs:
           git diff --cached --quiet || git commit -m "自動リリース: 今週のnote記事を展開"
           git pull --rebase origin main
           git push
+
+      - name: メールで記事を通知する
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: |
+          python3 - << 'EOF'
+          import smtplib                          # メール送信の道具
+          import os                               # 環境変数を読む道具
+          from email.mime.text import MIMEText    # メール本文を作る道具
+          from email.mime.multipart import MIMEMultipart  # メール全体を組み立てる道具
+
+          # note_ready.md を読み込む
+          with open("skin/note_ready.md", "r", encoding="utf-8") as f:
+              content = f.read()
+
+          # 1行目のコメント（<!-- ... -->）を除いた本文を取得する
+          lines = content.split("\n")
+          body_lines = [l for l in lines if not l.startswith("<!--")]
+          article_body = "\n".join(body_lines).strip()
+
+          # 記事タイトルを取得する（# で始まる最初の行）
+          title = next((l.lstrip("# ") for l in body_lines if l.startswith("# ")), "今週の記事")
+
+          # メールを組み立てる
+          msg = MIMEMultipart()
+          msg["From"]    = "kmkn0523@gmail.com"
+          msg["To"]      = "kmkn0523@gmail.com"
+          msg["Subject"] = f"【今週のskin note】{title}"
+
+          body = f"👇 noteにそのままコピペしてください\n\n{article_body}"
+          msg.attach(MIMEText(body, "plain", "utf-8"))
+
+          # Gmailに接続して送信する
+          password = os.environ["GMAIL_APP_PASSWORD"]
+          with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+              server.login("kmkn0523@gmail.com", password)
+              server.send_message(msg)
+
+          print("✅ メール送信完了")
+          EOF
