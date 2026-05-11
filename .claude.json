@@ -34,7 +34,6 @@
     "git-worktrees": 81
   },
   "promptQueueUseCount": 27,
-  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_birthday_hat": false,
     "tengu_1p_event_batch_config": {
@@ -598,8 +597,8 @@
       "lastUsedAt": 1778110445662
     },
     "schedule": {
-      "usageCount": 5,
-      "lastUsedAt": 1778228390819
+      "usageCount": 6,
+      "lastUsedAt": 1778510557653
     },
     "last30days": {
       "usageCount": 4,
