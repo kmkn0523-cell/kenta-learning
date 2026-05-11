@@ -3,7 +3,7 @@
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
-    "plan-mode-for-complex-tasks": 81,
+    "plan-mode-for-complex-tasks": 87,
     "memory-command": 77,
     "theme-command": 81,
     "status-line": 1,
@@ -14,7 +14,7 @@
     "install-slack-app": 87,
     "drag-and-drop-images": 87,
     "double-esc-code-restore": 87,
-    "continue": 77,
+    "continue": 87,
     "shift-tab": 80,
     "image-paste": 81,
     "desktop-app": 80,
@@ -609,8 +609,8 @@
       "lastUsedAt": 1778509158608
     },
     "superpowers:writing-plans": {
-      "usageCount": 7,
-      "lastUsedAt": 1778154590117
+      "usageCount": 8,
+      "lastUsedAt": 1778509543759
     },
     "superpowers:executing-plans": {
       "usageCount": 2,
