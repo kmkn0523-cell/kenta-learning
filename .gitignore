@@ -5,6 +5,7 @@
 !.gitignore
 !*.py
 !*.md
+!note_article.html
 !*.json
 !*.jsx
 !*.png
