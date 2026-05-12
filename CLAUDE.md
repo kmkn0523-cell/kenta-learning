@@ -1,8 +1,9 @@
-# Kenta Kamijyo's Learning Project
+# Kenta's SNS自動化 & マネタイズプロジェクト
 
 ## プロジェクトの目標
-- Threadsで自動投稿できるようになること
-- 段階的に他のSNS(Instagram等)にも横展開する
+- SNS自動投稿でフォロワーを増やす（Threads / Instagram / X / LinkedIn）
+- noteとアフィリエイトで収益化する
+- 家計簿アプリ（finance_web）をマネタイズする
 
 ## 学習方針
 - プログラミング基礎の深い理解より、AIへの指示力を重視する
