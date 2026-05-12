@@ -1,5 +1,5 @@
 {
-  "numStartups": 88,
+  "numStartups": 89,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -461,7 +461,7 @@
   "sonnet1m45MigrationComplete": true,
   "migrationVersion": 13,
   "userID": "e1e0b328f95cdab91c6b1ec207de9a11f08e9c77b3d1d6fac6eadfd7503f91bb",
-  "changelogLastFetched": 1778309571322,
+  "changelogLastFetched": 1778555912921,
   "oauthAccount": {
     "accountUuid": "bf7efc70-b78a-4fb9-bdc2-c371585a6b66",
     "emailAddress": "kmkn0523@gmail.com",
@@ -486,7 +486,7 @@
   "shiftEnterKeyBindingInstalled": true,
   "hasCompletedOnboarding": true,
   "lastOnboardingVersion": "2.1.118",
-  "lastReleaseNotesSeen": "2.1.138",
+  "lastReleaseNotesSeen": "2.1.139",
   "projects": {
     "/home/kenta_kamijyo": {
       "allowedTools": [],
@@ -514,7 +514,7 @@
         "day01.png",
         "get_instagram_id.py"
       ],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
@@ -551,7 +551,8 @@
       "lastHintSessionId": "de1d4347-27c3-4e35-a199-2a1f92039445",
       "lastSessionFirstPrompt": "ろーにんのインスタ自動投稿が止まっている",
       "lastSessionModified": 1778508705731,
-      "exampleFilesGeneratedAt": 1778186680225
+      "exampleFilesGeneratedAt": 1778186680225,
+      "lastVersionBase": "2.1.139"
     }
   },
   "penguinModeOrgEnabled": false,
