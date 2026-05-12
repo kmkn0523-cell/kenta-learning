@@ -548,9 +548,9 @@
         "hook_duration_ms_p99": 185.19
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "5d9737f8-c85b-4579-9195-320b05df6516",
-      "lastSessionFirstPrompt": "インスタは一旦走ってるからok",
-      "lastSessionModified": 1778578683017,
+      "lastHintSessionId": "c1c66bae-e1f4-411b-8f64-03fbf0182819",
+      "lastSessionFirstPrompt": "macbookを買おうと思う。今の環境を引き継ぎたい場合は？",
+      "lastSessionModified": 1778587243802,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.139"
     }
