@@ -548,9 +548,9 @@
         "hook_duration_ms_p99": 185.19
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "de1d4347-27c3-4e35-a199-2a1f92039445",
-      "lastSessionFirstPrompt": "ろーにんのインスタ自動投稿が止まっている",
-      "lastSessionModified": 1778508705731,
+      "lastHintSessionId": "5d9737f8-c85b-4579-9195-320b05df6516",
+      "lastSessionFirstPrompt": "TODO",
+      "lastSessionModified": 1778574346980,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.139"
     }
