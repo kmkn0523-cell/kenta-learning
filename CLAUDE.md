@@ -42,10 +42,10 @@
 
 ## 稼働中の自動化システム
 - **@RoninWords Threads自動投稿**: 1日16回（7:30〜22:30 毎時30分 JST）GitHub Actions経由
-- **skin（肌荒れ）Threads自動投稿**: 1日16回（7:30〜22:30 毎時30分 JST）GitHub Actions経由
+- **skin（肌荒れ）Threads自動投稿**: 1日4回（7:30/12:30/18:30/21:30 JST）GitHub Actions経由
 - **Threadsトークン期限**: 2026/06/26頃（60日後にリマインド予約済み）
-- 投稿データ: `threads_posts.json`（Day01〜60の朝夜120投稿をローテーション）
-- 進捗管理: `ronin_threads_progress.json`（次に投稿する番号を記録）
+- 投稿データ: `ronin/threads_posts.json`（Day01〜60、120投稿をローテーション）
+- 進捗管理: `ronin/ronin_threads_progress.json`・`skin/skin_threads_progress.json`
 
 ## 安全のための確認ルール（実行前に必ず聞く）
 - ファイル・フォルダの削除（特に複数まとめての削除）
@@ -68,8 +68,12 @@
 /home/kenta_kamijyo/
 ├── ronin/          ← @RoninWords 関連ファイル
 ├── skin/           ← skin（肌荒れ）アカウント関連ファイル
+├── linkedin/       ← LinkedIn関連ファイル
 ├── learning/       ← 学習用Pythonスクリプト
 ├── finance_web/    ← 家計簿Webアプリ（React）
+├── docs/           ← ドキュメント・手順書
+├── tests/          ← テスト用スクリプト
+├── fonts/          ← フォントファイル
 └── CLAUDE.md / TODO.md / .env など
 ```
 
@@ -95,7 +99,7 @@
 |---|---|
 | `.env` | APIキーなどの秘密情報（Gitに入れない） |
 | `TODO.md` | 現在のタスク一覧（セッション開始時に必ず読む） |
-| `threads_token_renewal.md` | Threadsトークン更新の手順書 |
+| `docs/threads_token_renewal.md` | Threadsトークン更新の手順書 |
 | `learning/learning_notes.md` | 学習メモ・作成したプログラム一覧 |
 
 ## よく使うコマンド
@@ -103,9 +107,6 @@
 # Threads手動投稿テスト
 python3 ronin/ronin_threads_action.py
 python3 skin/skin_threads_auto_post.py
-
-インスタが増えてない
-
 
 # GitHub Actions確認
 # → https://github.com/ からリポジトリのActionsタブを見る
@@ -119,7 +120,7 @@ git add . && git commit -m "更新" && git push
 ```
 
 ## Threadsトークン更新
-- 期限: **2026/06/26頃**（詳細手順は `threads_token_renewal.md` を参照）
+- 期限: **2026/06/26頃**（詳細手順は `docs/threads_token_renewal.md` を参照）
 
 ## 困ったときの対応
 - エラーが出たらエラーメッセージを全文受け取って原因を特定
