@@ -548,9 +548,9 @@
         "hook_duration_ms_p99": 185.19
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "c1c66bae-e1f4-411b-8f64-03fbf0182819",
-      "lastSessionFirstPrompt": "macbookを買おうと思う。今の環境を引き継ぎたい場合は？",
-      "lastSessionModified": 1778587243802,
+      "lastHintSessionId": "a6cde4fe-47d0-4505-b71f-005d7c8a5211",
+      "lastSessionFirstPrompt": "1 MCP server needs auth · /mcp　これなに？",
+      "lastSessionModified": 1778595184584,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.139"
     }
