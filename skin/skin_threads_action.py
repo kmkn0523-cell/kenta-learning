@@ -206,28 +206,16 @@ def main():
 
     print(f"投稿セット: {index + 1}/{len(threads_list)} ({thread_set['theme']})")
 
-    # 3本の投稿テキストを準備する（3本目にハッシュタグを追加する）
-    text_1 = thread_set["posts"][0]
-    text_2 = thread_set["posts"][1]
-    text_3 = thread_set["posts"][2] + HASHTAGS
+    # 本1（フック）＋本2（本題）を1つに合体してハッシュタグを追加する
+    post_text = thread_set["posts"][0] + "\n\n" + thread_set["posts"][1] + HASHTAGS
 
-    # 本1を投稿する（新規投稿・ツリーの起点・画像付き）
-    print("\n本1を投稿中（フック＋画像）...")
+    # 画像付き1投稿で公開する
+    print("\n投稿中（フック＋本題＋画像）...")
     image_url = get_image_url(thread_set["id"])
-    post_id_1 = post_to_threads(text_1, image_url=image_url)
-    print(f"  ✅ 本1投稿成功！（ID: {post_id_1}）")
+    post_id = post_to_threads(post_text, image_url=image_url)
+    print(f"  ✅ 投稿成功！（ID: {post_id}）")
 
-    # 本2を本1にリプライする（ツリーの2本目）
-    print("\n本2を投稿中（本題）...")
-    post_id_2 = post_to_threads(text_2, reply_to_id=post_id_1)
-    print(f"  ✅ 本2投稿成功！（ID: {post_id_2}）")
-
-    # 本3を本2にリプライする（ツリーの3本目）
-    print("\n本3を投稿中（CTA）...")
-    post_id_3 = post_to_threads(text_3, reply_to_id=post_id_2)
-    print(f"  ✅ 本3投稿成功！（ID: {post_id_3}）")
-
-    # 次の投稿番号に進める（14セットを超えたら0に戻る）
+    # 次の投稿番号に進める（100セットを超えたら0に戻る）
     progress["daily_index"] = (index + 1) % len(threads_list)
     next_thread = threads_list[progress["daily_index"]]
     print(f"\n次回: {next_thread['theme']}")
@@ -238,9 +226,7 @@ def main():
     progress["history"].append({
         "date": now,
         "theme": thread_set["theme"],
-        "post_id_1": post_id_1,
-        "post_id_2": post_id_2,
-        "post_id_3": post_id_3
+        "post_id": post_id
     })
 
     save_progress(progress)  # 進捗を保存する
