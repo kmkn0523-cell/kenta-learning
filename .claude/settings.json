@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(python3 -c ' *)",
-      "mcp__claude_ai_Google_Calendar__list_events"
+      "mcp__claude_ai_Google_Calendar__list_events",
+      "Bash(git *)",
+      "Bash(python3 *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(grep *)"
     ]
   },
   "hooks": {
@@ -76,5 +82,8 @@
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "fileCheckpointingEnabled": true,
+  "autoCompactEnabled": true,
+  "showTurnDuration": true
 }
