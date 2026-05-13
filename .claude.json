@@ -585,9 +585,9 @@
         "pre_tool_hook_duration_ms_p99": 1.7899999999999991
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "bc3a64cb-004b-46e1-a383-f8aa3316fb7c",
-      "lastSessionFirstPrompt": "悪い癖5つと具体的な改善策を出して",
-      "lastSessionModified": 1778653576686,
+      "lastHintSessionId": "947321d3-66c4-4c04-ab27-d2fe1b4a6115",
+      "lastSessionFirstPrompt": "skinのインスタ投稿のエラーメールがきたけど、インスタ投稿はできてる。詳細を確認して。 Run git config user.name \"github-actions[bot]\" From https://github.com/kmkn0523-cell/kenta-learning  * branch            main       -> FETCH_HEAD Already u",
+      "lastSessionModified": 1778660703569,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.140"
     }
