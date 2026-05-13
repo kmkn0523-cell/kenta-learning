@@ -9,6 +9,12 @@ on:
     - cron: '30 * * * *'  # 毎時30分 UTC（= JST 9時30分・11時30分...）
   workflow_dispatch:  # 手動実行も可能（テスト用）
 
+# 同時に複数のジョブが動いてgit pushがぶつかるのを防ぐ設定
+# メイン投稿ワークフローと同じグループ名にすることで、どちらかが動いている間は待機する
+concurrency:
+  group: skin-instagram-push
+  cancel-in-progress: false  # キャンセルせず、順番待ちにする
+
 permissions:
   contents: write  # 進捗ファイルをコミット・プッシュするために必要
 

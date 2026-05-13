@@ -12,6 +12,12 @@ on:
     - cron: '0 12 * * *'   # 21:00 JST
   workflow_dispatch:  # 手動実行も可能
 
+# 同時に複数のジョブが動いてgit pushがぶつかるのを防ぐ設定
+# 同じグループ名のジョブは、前のジョブが終わるまで待ってから実行される
+concurrency:
+  group: skin-instagram-push
+  cancel-in-progress: false  # キャンセルせず、順番待ちにする
+
 permissions:
   contents: write  # 進捗ファイルをコミット・プッシュするために必要
 
