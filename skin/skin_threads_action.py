@@ -215,10 +215,14 @@ def main():
         post_text = thread_set["posts"][0] + "\n\n" + thread_set["posts"][1] + HASHTAGS
         print("  📝 従来版（posts[0]+posts[1]）を使用")
 
-    # 画像付き1投稿で公開する
-    print("\n投稿中（フック＋本題＋画像）...")
-    image_url = get_image_url(thread_set["id"])
-    post_id = post_to_threads(post_text, image_url=image_url)
+    # 画像付きか・テキストのみかを決める（skip_imageフラグで切り替え）
+    if thread_set.get("skip_image"):
+        print("\n投稿中（テキストのみ・ABテスト用）...")
+        post_id = post_to_threads(post_text)
+    else:
+        print("\n投稿中（画像付き）...")
+        image_url = get_image_url(thread_set["id"])
+        post_id = post_to_threads(post_text, image_url=image_url)
     print(f"  ✅ 投稿成功！（ID: {post_id}）")
 
     # 次の投稿番号に進める（100セットを超えたら0に戻る）
