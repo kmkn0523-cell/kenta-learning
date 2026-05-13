@@ -15,7 +15,7 @@ load_dotenv()
 
 # Threads APIに必要なキーを.envから読み込む
 THREADS_ACCESS_TOKEN = os.getenv("THREADS_ACCESS_TOKEN")
-THREADS_BUSINESS_ACCOUNT_ID_SKIN = os.getenv("THREADS_BUSINESS_ACCOUNT_ID_SKIN")
+THREADS_USER_ID = os.getenv("THREADS_USER_ID")
 
 # ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
 _DIR = os.path.dirname(os.path.abspath(__file__))
@@ -37,17 +37,18 @@ def fetch_threads_data():
         print("❌ エラー: THREADS_ACCESS_TOKENが.envに設定されていません")
         return []
 
-    if not THREADS_BUSINESS_ACCOUNT_ID_SKIN:
-        print("❌ エラー: THREADS_BUSINESS_ACCOUNT_ID_SKINが.envに設定されていません")
+    if not THREADS_USER_ID:
+        print("❌ エラー: THREADS_USER_IDが.envに設定されていません")
         return []
+
 
     try:
         # Threads APIのエンドポイント
-        api_url = f"https://graph.threads.net/v1.0/{THREADS_BUSINESS_ACCOUNT_ID_SKIN}/threads"
+        api_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads"
 
         # APIに送るパラメータ（取得したいデータフィールドを指定）
         params = {
-            "fields": "id,text,timestamp,insights.metric(likes,comments,shares,views)",
+            "fields": "id,text,timestamp,insights.metric(likes,replies,shares,views)",
             "access_token": THREADS_ACCESS_TOKEN
         }
 
@@ -187,7 +188,7 @@ def save_analytics(posts_data):
 
                 # insightsの各メトリクスを解析する
                 for insight in insights_data:
-                    metric_name = insight.get("metric", "")
+                    metric_name = insight.get("name", "")
                     values = insight.get("values", [])
 
                     if len(values) > 0:
@@ -195,7 +196,7 @@ def save_analytics(posts_data):
 
                         if metric_name == "likes":
                             likes = value
-                        elif metric_name == "comments":
+                        elif metric_name == "replies":
                             comments = value
                         elif metric_name == "shares":
                             shares = value
