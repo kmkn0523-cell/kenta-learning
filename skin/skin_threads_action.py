@@ -206,8 +206,14 @@ def main():
 
     print(f"投稿セット: {index + 1}/{len(threads_list)} ({thread_set['theme']})")
 
-    # 本1（フック）＋本2（本題）を1つに合体してハッシュタグを追加する
-    post_text = thread_set["posts"][0] + "\n\n" + thread_set["posts"][1] + HASHTAGS
+    # human_post があればそれを優先（人間っぽい短い完結型）
+    # なければ従来通り posts[0]+posts[1]+固定ハッシュタグ
+    if thread_set.get("human_post"):
+        post_text = thread_set["human_post"]
+        print("  📝 human_post を使用")
+    else:
+        post_text = thread_set["posts"][0] + "\n\n" + thread_set["posts"][1] + HASHTAGS
+        print("  📝 従来版（posts[0]+posts[1]）を使用")
 
     # 画像付き1投稿で公開する
     print("\n投稿中（フック＋本題＋画像）...")
