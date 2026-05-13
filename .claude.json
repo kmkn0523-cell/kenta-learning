@@ -666,6 +666,10 @@
     "superpowers:systematic-debugging": {
       "usageCount": 1,
       "lastUsedAt": 1778513134212
+    },
+    "insights": {
+      "usageCount": 1,
+      "lastUsedAt": 1778653464731
     }
   },
   "opus47LaunchSeenCount": 5,
