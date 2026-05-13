@@ -12,7 +12,6 @@
       "Bash(pip install *)"
     ]
   },
-  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
