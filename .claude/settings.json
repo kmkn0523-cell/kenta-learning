@@ -107,7 +107,12 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "autoCompactEnabled": true,
+  "autoCompactWindow": 100000,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skillListingMaxDescChars": 300,
+  "skillListingBudgetFraction": 0.005,
+  "spinnerTipsEnabled": false,
+  "verbose": false
 }
