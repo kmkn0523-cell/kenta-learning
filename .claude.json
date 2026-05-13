@@ -585,9 +585,9 @@
         "pre_tool_hook_duration_ms_p99": 4.499999999999943
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "059cb3ca-6e56-4384-ba36-69c1b9c8578f",
-      "lastSessionFirstPrompt": "git status",
-      "lastSessionModified": 1778631084755,
+      "lastHintSessionId": "bc3a64cb-004b-46e1-a383-f8aa3316fb7c",
+      "lastSessionFirstPrompt": "悪い癖5つと具体的な改善策を出して",
+      "lastSessionModified": 1778653576686,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.140"
     }
