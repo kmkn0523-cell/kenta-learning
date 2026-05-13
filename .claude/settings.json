@@ -92,8 +92,9 @@
   "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "agentPushNotifEnabled": true,
-  "fileCheckpointingEnabled": true,
   "autoCompactEnabled": true,
-  "showTurnDuration": true
+  "fileCheckpointingEnabled": true,
+  "showTurnDuration": true,
+  "agentPushNotifEnabled": true,
+  "model": "opus"
 }
