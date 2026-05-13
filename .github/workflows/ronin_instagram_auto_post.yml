@@ -1,8 +1,9 @@
 name: RoninWords Instagram自動投稿 (v2)
 
 on:
-  # schedule は無効化（自動投稿停止中）
-  workflow_dispatch:  # 手動実行のみ
+  schedule:
+    - cron: '17 12 * * *'  # 毎日21:17 JST（UTC+9なので12:17 UTC）
+  workflow_dispatch:  # 手動実行も可能
 
 permissions:
   contents: write  # 進捗ファイルをコミット・プッシュするために必要
