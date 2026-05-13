@@ -8,9 +8,11 @@
       "Bash(ls *)",
       "Bash(cat *)",
       "Bash(find *)",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "Bash(pip install *)"
     ]
   },
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -95,6 +97,5 @@
   "autoCompactEnabled": true,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
-  "agentPushNotifEnabled": true,
-  "model": "opus"
+  "agentPushNotifEnabled": true
 }
