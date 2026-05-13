@@ -34,8 +34,8 @@
         "hooks": [
           {
             "type": "command",
-            "if": "Bash(git *)",
             "command": "input=$(cat); cmd=$(echo \"$input\" | jq -r '.tool_input.command // \"\"'); if echo \"$cmd\" | grep -qE 'git (commit|push)'; then secrets=$(cd /home/kenta_kamijyo 2>/dev/null && git diff --cached 2>/dev/null | grep -E '^\\+[^+]' | grep -E '(EAAG|EAAl|ghp_|ghs_|sk-ant-api|ACCESS_TOKEN\\s*=\\s*[A-Za-z0-9]{10}|_TOKEN\\s*=\\s*[A-Za-z0-9]{20,})' || true); if [ -n \"$secrets\" ]; then echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"⚠️ シークレット検出！トークン/APIキーがコミット差分に含まれています。.envに移動してからコミットしてください。\"}}'; fi; fi",
+            "if": "Bash(git *)",
             "statusMessage": "シークレットをスキャン中..."
           }
         ]
@@ -109,5 +109,6 @@
   "autoCompactEnabled": true,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "model": "opus"
 }
