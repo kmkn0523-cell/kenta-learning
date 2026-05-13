@@ -109,6 +109,5 @@
   "autoCompactEnabled": true,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
-  "agentPushNotifEnabled": true,
-  "model": "opus"
+  "agentPushNotifEnabled": true
 }
