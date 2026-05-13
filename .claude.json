@@ -31,7 +31,7 @@
     "custom-commands": 42,
     "frontend-design-plugin": 74,
     "default-permission-mode-config": 87,
-    "git-worktrees": 81
+    "git-worktrees": 91
   },
   "promptQueueUseCount": 27,
   "cachedGrowthBookFeatures": {
@@ -554,8 +554,8 @@
       },
       "hasCompletedProjectOnboarding": true,
       "lastHintSessionId": "059cb3ca-6e56-4384-ba36-69c1b9c8578f",
-      "lastSessionFirstPrompt": "git pull",
-      "lastSessionModified": 1778630938979,
+      "lastSessionFirstPrompt": "git status",
+      "lastSessionModified": 1778631084755,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.139"
     }
