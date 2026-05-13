@@ -61,21 +61,36 @@ th { background: #f6f6f6; }
   margin-top: 32px; margin-bottom: 16px;
   font-weight: bold; color: #0066cc;
 }
+.btn-row { display: flex; gap: 8px; margin: 16px 0 12px; flex-wrap: wrap; }
 .copy-btn {
-  display: block; width: 100%; padding: 18px;
-  font-size: 17px; font-weight: bold;
+  flex: 1; min-width: 200px; padding: 16px;
+  font-size: 16px; font-weight: bold;
   background: #0066cc; color: white;
-  border: none; border-radius: 12px;
-  margin: 16px 0 28px; cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  border: none; border-radius: 10px;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
+.copy-btn:hover { background: #004499; }
 .copy-btn.done { background: #28a745; }
 .copy-btn.paid { background: #d97706; }
+.copy-btn.paid:hover { background: #b45309; }
 .copy-btn.paid.done { background: #28a745; }
+.copy-btn.select-btn { background: #6b7280; flex: 0 0 auto; min-width: 160px; }
+.copy-btn.select-btn:hover { background: #4b5563; }
 .content-box { padding: 4px 0; border-left: 3px solid #eee; padding-left: 16px; }
+.content-box.selected { border-left-color: #0066cc; background: #f0f8ff; }
 .instruction {
-  background: #fff8dc; padding: 12px; border-radius: 8px;
-  font-size: 14px; margin-bottom: 20px;
+  background: #fff8dc; padding: 14px; border-radius: 8px;
+  font-size: 14px; margin-bottom: 20px; line-height: 1.7;
+}
+.tip {
+  background: #e7f5e7; padding: 10px 14px; border-radius: 6px;
+  font-size: 13px; margin: 8px 0 20px; color: #2d5a2d;
+}
+kbd {
+  display: inline-block; padding: 2px 6px;
+  background: #f4f4f5; border: 1px solid #d4d4d8;
+  border-radius: 4px; font-size: 12px;
+  font-family: monospace;
 }
 </style>
 </head>
@@ -84,27 +99,35 @@ th { background: #f6f6f6; }
 <div class="instruction">
 📝 <strong>使い方</strong><br>
 ① noteで新規記事を作成<br>
-② 下の「無料部分をコピー」を押す<br>
-③ noteに貼り付け<br>
-④ 「ここから有料エリア」のラインを設定<br>
-⑤ 「有料部分をコピー」を押す<br>
-⑥ ラインの下に貼り付け
+② 下のセクションごとに「コピー」ボタンを押す（PC・スマホ両対応）<br>
+③ noteに貼り付け（Ctrl+V / Cmd+V / 長押し → ペースト）<br>
+④ noteで「ここから有料エリア」のラインを設定して、有料部分を貼る
+</div>
+
+<div class="tip">
+💡 <strong>PCで使うコツ</strong>：コピーボタンが効かない場合は「<strong>範囲を選択</strong>」ボタンを押してから <kbd>Ctrl</kbd>+<kbd>C</kbd>（Macは <kbd>Cmd</kbd>+<kbd>C</kbd>）でコピーできます。
 </div>
 
 <div class="section-header">📖 無料プレビュー部分（購入前に表示される部分）</div>
-<button class="copy-btn" onclick="copySection('free')">📋 無料部分をコピー</button>
+<div class="btn-row">
+  <button class="copy-btn" onclick="copySection('free', this)">📋 無料部分をコピー</button>
+  <button class="copy-btn select-btn" onclick="selectSection('free', this)">🖱 範囲を選択</button>
+</div>
 <div id="free-content" class="content-box">FREE_HTML</div>
 
 <div class="section-header">🔒 有料部分（購入後に表示される部分）</div>
-<button class="copy-btn paid" onclick="copySection('paid')">📋 有料部分をコピー</button>
+<div class="btn-row">
+  <button class="copy-btn paid" onclick="copySection('paid', this)">📋 有料部分をコピー</button>
+  <button class="copy-btn select-btn" onclick="selectSection('paid', this)">🖱 範囲を選択</button>
+</div>
 <div id="paid-content" class="content-box">PAID_HTML</div>
 
 <script>
-function copySection(type) {
+function copySection(type, btn) {
   var el = document.getElementById(type + '-content');
-  var btn = event.target;
   var html = el.innerHTML;
   var text = el.innerText;
+  var originalText = btn.textContent;
   if (navigator.clipboard && window.ClipboardItem) {
     navigator.clipboard.write([
       new ClipboardItem({
@@ -114,20 +137,42 @@ function copySection(type) {
     ]).then(function() {
       btn.textContent = '✅ コピー完了！noteに貼り付けてください';
       btn.classList.add('done');
-    }).catch(function() { fallbackCopy(el, btn); });
+      setTimeout(function(){ btn.textContent = originalText; btn.classList.remove('done'); }, 4000);
+    }).catch(function() { fallbackCopy(el, btn, originalText); });
   } else {
-    fallbackCopy(el, btn);
+    fallbackCopy(el, btn, originalText);
   }
 }
-function fallbackCopy(el, btn) {
+function fallbackCopy(el, btn, originalText) {
   var range = document.createRange();
   range.selectNode(el);
   window.getSelection().removeAllRanges();
   window.getSelection().addRange(range);
-  document.execCommand('copy');
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch(e) {}
   window.getSelection().removeAllRanges();
-  btn.textContent = '✅ コピー完了！noteに貼り付けてください';
-  btn.classList.add('done');
+  if (ok) {
+    btn.textContent = '✅ コピー完了！noteに貼り付けてください';
+    btn.classList.add('done');
+    setTimeout(function(){ btn.textContent = originalText; btn.classList.remove('done'); }, 4000);
+  } else {
+    btn.textContent = '⚠ 自動コピー失敗。「範囲を選択」→ Ctrl+C を使ってください';
+  }
+}
+function selectSection(type, btn) {
+  // すべてのcontent-boxの選択状態をリセット
+  document.querySelectorAll('.content-box').forEach(function(b){ b.classList.remove('selected'); });
+  var el = document.getElementById(type + '-content');
+  el.classList.add('selected');
+  var range = document.createRange();
+  range.selectNode(el);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  // ユーザーへフィードバック
+  btn.textContent = '✅ 選択中：Ctrl+C（Cmd+C）でコピー';
+  setTimeout(function(){ btn.textContent = '🖱 範囲を選択'; }, 5000);
+  // 範囲が見やすいよう、選択箇所までスクロール
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
 </body>
