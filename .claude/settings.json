@@ -18,6 +18,11 @@
           {
             "type": "command",
             "command": "rm -f ~/.claude/oauth-usage-cache.json"
+          },
+          {
+            "type": "command",
+            "command": "cd /home/kenta_kamijyo && git pull --no-rebase 2>/dev/null || true",
+            "statusMessage": "GitHubから最新を取得中..."
           }
         ]
       }
@@ -55,6 +60,11 @@
             "type": "command",
             "command": "echo '📝 TODO.md の更新を忘れずに'",
             "statusMessage": ""
+          },
+          {
+            "type": "command",
+            "command": "cd /home/kenta_kamijyo && git add . && (git diff --cached --quiet || git commit -m \"自動同期: $(date '+%Y/%m/%d %H:%M')\") && git push 2>/dev/null || true",
+            "statusMessage": "GitHubに保存中..."
           }
         ]
       }
