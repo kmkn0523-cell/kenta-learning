@@ -632,8 +632,8 @@
   "remoteControlUpsellSeenCount": 3,
   "skillUsage": {
     "update-config": {
-      "usageCount": 13,
-      "lastUsedAt": 1778631761847
+      "usageCount": 14,
+      "lastUsedAt": 1778653628045
     },
     "schedule": {
       "usageCount": 6,
