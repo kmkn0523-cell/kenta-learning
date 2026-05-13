@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>note 記事</title>
+<style>
+body { font-family: sans-serif; font-size: 16px; line-height: 1.9; max-width: 720px; margin: 0 auto; padding: 20px; color: #222; }
+h1 { font-size: 22px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+h2 { font-size: 18px; margin-top: 28px; }
+strong { font-weight: bold; }
+hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+blockquote { border-left: 4px solid #ccc; margin: 0; padding: 4px 16px; color: #555; }
+#copy-btn {
+  display: block; width: 100%; padding: 18px;
+  font-size: 18px; font-weight: bold;
+  background: #0066cc; color: white;
+  border: none; border-radius: 12px;
+  margin-bottom: 28px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#copy-btn.done { background: #28a745; }
+#article { padding: 4px 0; }
+</style>
+</head>
+<body>
+<button id="copy-btn" onclick="copyArticle()">📋 記事をコピーする</button>
+<div id="article"><p><strong>ヨーグルトを毎日食べても腸が整わない理由。「通過する菌」と「定着する菌」の話。</strong></p>
+<p>「腸活のためにヨーグルトを毎日食べている。でも便通も肌もあんまり変わらない」</p>
+<p>私もそうでした。原因はヨーグルトだけに頼っていたこと。</p>
+<hr />
+<p><strong>ヨーグルトの菌のほとんどは「通過するだけ」</strong></p>
+<p>人の腸には100兆個の細菌がいます。理想のバランスは善玉菌2：悪玉菌1：日和見菌7。</p>
+<p>ところが市販ヨーグルトの乳酸菌の多くは「通過菌」と呼ばれていて、腸を通り抜けるだけで定着しません。複数の研究で「ヨーグルトを食べるのをやめると数日〜数週間で元の腸内環境に戻る」ことが確認されています。</p>
+<p>つまり、永遠に食べ続けないと効果が消える。これではコスパが悪い。</p>
+<p><strong>「自分の善玉菌」を育てるほうが効率的</strong></p>
+<p>腸に元々住んでいる善玉菌を育てるアプローチに切り替えると、長期的に腸が変わります。エサになるのは食物繊維とオリゴ糖。</p>
+<p>代表的な食材：
+- ごぼう（食物繊維が豊富）
+- 玉ねぎ（オリゴ糖）
+- バナナ（オリゴ糖と食物繊維のW)
+- 大豆製品（豆腐・納豆・きな粉）
+- もち麦（白米に混ぜるだけ）</p>
+<p>このうち2〜3品を毎日。早い人は2週間、ほとんどの人は1ヶ月で便通の変化を感じます。</p>
+<p><strong>発酵食品は「種類」をローテーションする</strong></p>
+<p>動物性（ヨーグルト）だけでなく、植物性（味噌・納豆・ぬか漬け・キムチ）を組み合わせると腸内環境が安定します。</p>
+<p>ありがちなNG：
+- 味噌汁を煮立てる（60度以上で菌が死ぬ）
+- 添加物入りキムチ（甘味料・保存料が善玉菌を弱らせる）
+- ヨーグルトに砂糖入りグラノーラを乗せる（砂糖は悪玉菌のエサ）</p>
+<p>「無糖・無添加・加熱しすぎない」の3原則を意識するだけで効果が変わります。</p>
+<hr />
+<p>このnoteでは腸内環境を整える食品リスト30選、避けるべき食品リスト、30日間の食事改善プログラム（朝昼夜のメニュー付き）を具体的に解説しています。</p></div>
+<script>
+function copyArticle() {
+  var el = document.getElementById('article');
+  var html = el.innerHTML;
+  var text = el.innerText;
+  var btn = document.getElementById('copy-btn');
+  if (navigator.clipboard && window.ClipboardItem) {
+    navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html': new Blob([html], {type: 'text/html'}),
+        'text/plain': new Blob([text], {type: 'text/plain'})
+      })
+    ]).then(function() {
+      btn.textContent = '✅ コピーしました！noteに貼り付けてください';
+      btn.className = 'done';
+    }).catch(function() { fallbackCopy(el, btn); });
+  } else {
+    fallbackCopy(el, btn);
+  }
+}
+function fallbackCopy(el, btn) {
+  var range = document.createRange();
+  range.selectNode(el);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  document.execCommand('copy');
+  window.getSelection().removeAllRanges();
+  btn.textContent = '✅ コピーしました！noteに貼り付けてください';
+  btn.className = 'done';
+}
+</script>
+</body>
+</html>
