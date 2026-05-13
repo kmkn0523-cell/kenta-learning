@@ -2,8 +2,16 @@ name: RoninWords Instagram自動投稿 (v2)
 
 on:
   schedule:
-    - cron: '17 12 * * *'  # 毎日21:17 JST（UTC+9なので12:17 UTC）
+    - cron: '0 22 * * *'   # 毎日 7:00 JST（UTC+9なので前日22:00 UTC）
+    - cron: '0 3 * * *'    # 毎日12:00 JST（UTC 3:00）
+    - cron: '0 9 * * *'    # 毎日18:00 JST（UTC 9:00）
+    - cron: '0 12 * * *'   # 毎日21:00 JST（UTC 12:00）
   workflow_dispatch:  # 手動実行も可能
+
+# 同時実行でgit pushがバッティングするのを防ぐ設定
+concurrency:
+  group: ronin-instagram-push
+  cancel-in-progress: false  # キャンセルせず、順番待ちにする
 
 permissions:
   contents: write  # 進捗ファイルをコミット・プッシュするために必要
