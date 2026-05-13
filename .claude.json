@@ -1,5 +1,5 @@
 {
-  "numStartups": 93,
+  "numStartups": 94,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -519,7 +519,7 @@
         "day01.png",
         "get_instagram_id.py"
       ],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 0.36174205000000004,
       "lastAPIDuration": 71006,
       "lastAPIDurationWithoutRetries": 70934,
@@ -577,9 +577,9 @@
         "pre_tool_hook_duration_ms_p99": 26
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "947321d3-66c4-4c04-ab27-d2fe1b4a6115",
-      "lastSessionFirstPrompt": "skinのインスタ投稿のエラーメールがきたけど、インスタ投稿はできてる。詳細を確認して。 Run git config user.name \"github-actions[bot]\" From https://github.com/kmkn0523-cell/kenta-learning  * branch            main       -> FETCH_HEAD Already u",
-      "lastSessionModified": 1778660703569,
+      "lastHintSessionId": "9ef4b4d5-4828-443b-9a6f-1bad08c50622",
+      "lastSessionFirstPrompt": "RONINのインスタを再開して。１日何投稿になってる？",
+      "lastSessionModified": 1778681635174,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.140"
     }
@@ -595,7 +595,7 @@
       "timestamp": 1778596915734
     }
   },
-  "closedIssuesLastChecked": 1778587195114,
+  "closedIssuesLastChecked": 1778681611962,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {
