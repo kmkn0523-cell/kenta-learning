@@ -27,9 +27,64 @@ else:
     paid_part = ""
 
 
+def convert_tables_to_lists(md_text):
+    """マークダウンの表を、note.comで崩れない箇条書きに変換する
+
+    変換例:
+    | 名前 | 値 | 備考 |
+    |---|---|---|
+    | A | 1 | xxx |
+    | B | 2 | yyy |
+
+    ↓
+
+    ▼ A
+    ・値: 1
+    ・備考: xxx
+
+    ▼ B
+    ・値: 2
+    ・備考: yyy
+    """
+    lines = md_text.split("\n")
+    output = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        # 表のヘッダー行を検出（パイプを含み、次行が区切り |---|---| 形式）
+        if "|" in line and i + 1 < len(lines) and re.match(r'^\s*\|?(\s*:?-+:?\s*\|)+\s*:?-+:?\s*\|?\s*$', lines[i+1]):
+            # ヘッダーを取り出す
+            headers = [h.strip() for h in line.strip().strip("|").split("|")]
+            # 区切り行を飛ばす
+            i += 2
+            # データ行を集める
+            rows = []
+            while i < len(lines) and "|" in lines[i] and lines[i].strip():
+                cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                if any(cells):
+                    rows.append(cells)
+                i += 1
+            # 箇条書きに変換する
+            for row in rows:
+                if not row:
+                    continue
+                # 1列目を見出しに、残りをサブ項目に
+                output.append(f"▼ **{row[0]}**")
+                for col_idx in range(1, min(len(row), len(headers))):
+                    if row[col_idx]:
+                        output.append(f"・{headers[col_idx]}: {row[col_idx]}")
+                output.append("")  # 空行で区切り
+        else:
+            output.append(line)
+            i += 1
+    return "\n".join(output)
+
+
 def md_to_html(md_text):
     """マークダウンをHTMLに変換し、noteで扱いやすい形に整形する"""
-    html = markdown.markdown(md_text, extensions=["extra", "tables"])
+    # 先に表を箇条書きに変換（note.comは表非対応のため）
+    md_text = convert_tables_to_lists(md_text)
+    html = markdown.markdown(md_text, extensions=["extra"])
     # h1〜h3を太字段落に変換（noteで大見出し扱いにならないようにする）
     html = re.sub(r'<h1>(.*?)</h1>', r'<p><strong>\1</strong></p>', html)
     html = re.sub(r'<h2>(.*?)</h2>', r'<p><strong>\1</strong></p>', html)
