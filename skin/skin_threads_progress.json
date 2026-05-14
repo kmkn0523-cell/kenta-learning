@@ -1,5 +1,5 @@
 {
-  "daily_index": 41,
+  "daily_index": 42,
   "launch_index": 0,
   "history": [
     {
@@ -2837,8 +2837,14 @@
       "theme": "AB_B_ストレスと皮脂",
       "ab_group": "B",
       "post_id": "18088693148458682"
+    },
+    {
+      "date": "2026/05/14 16:00",
+      "theme": "ニキビを触らない",
+      "ab_group": "A",
+      "post_id": "17964959688074402"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 3
 }
