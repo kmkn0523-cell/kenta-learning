@@ -22,6 +22,8 @@
 !ronin/
 !ronin/fonts/
 !ronin/fonts/*
+!ronin/substack/
+!ronin/substack/*.md
 !ronin/ronin_images/
 !ronin/ronin_images/*.png
 !skin/

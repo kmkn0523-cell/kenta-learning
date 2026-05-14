@@ -46,3 +46,31 @@ They've simply found something that makes being alive feel worthwhile.
 The Western diagram turned this humble, daily orientation toward life into an achievement to unlock. It made *ikigai* into a destination rather than a practice. And in doing so, it made it much, much harder to find — because it made the criteria impossibly high.
 
 You can't find your *ikigai* if you're looking for something that justifies your entire existence. But you can notice it in almost any ordinary moment, if you know what you're looking for.
+
+---
+
+## What Okinawa Actually Taught Us
+
+The centenarians of Okinawa — the real inspiration behind the modern *ikigai* conversation — were studied by researcher Dan Buettner as part of his Blue Zones project. What he found was not a population of people who had discovered their perfect life purpose. He found people who had woven small, consistent sources of meaning into the fabric of daily life.
+
+Their *ikigai* was not a career. It was a *moai* — a small social group that met regularly and supported one another for decades. It was the act of growing bitter melon in a garden you've tended for fifty years. It was the habit of moving your body, eating slowly, and sitting with neighbors in the evening sun.
+
+Researchers Michiko Kumano and Akihiro Hasegawa, who have spent careers studying *ikigai* in Japanese populations, describe it not as a purpose to find but as a *subjective wellbeing* — a felt sense of life's worth that arises from engagement, connection, and presence.
+
+The scale they use to measure it asks questions like:
+
+- *Do you feel that your daily life is fulfilling?*
+- *Do you feel that your life has meaning?*
+- *Are you satisfied with your life?*
+
+Notice what's absent: questions about career fit, marketable skills, or world-changing missions.
+
+Japanese psychiatrist Mieko Kamiya, who wrote the foundational text on *ikigai* in 1966, described it as having seven components: life satisfaction, meaning and worth, existence, freedom, self-actualization, change and growth, and the future. It is a constellation, not a single star.
+
+This is the crucial difference. The Western version asks you to find *the thing*. The Japanese original asks you to cultivate *a way of living*.
+
+One is a treasure hunt with no guaranteed ending. The other is a daily practice available to anyone, starting today.
+
+The Okinawan elders didn't wake up each morning because they had found the perfect intersection of passion and income. They woke up because there were people who needed them, plants that needed watering, and a bowl of miso soup that wouldn't make itself.
+
+That, it turns out, is enough.
