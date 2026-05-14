@@ -34,6 +34,7 @@
     "git-worktrees": 91
   },
   "promptQueueUseCount": 33,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_ember_latch": true,
     "tengu_sepia_moth": false,
@@ -494,7 +495,7 @@
   "shiftEnterKeyBindingInstalled": true,
   "hasCompletedOnboarding": true,
   "lastOnboardingVersion": "2.1.118",
-  "lastReleaseNotesSeen": "2.1.140",
+  "lastReleaseNotesSeen": "2.1.141",
   "projects": {
     "/home/kenta_kamijyo": {
       "allowedTools": [],
@@ -580,9 +581,9 @@
         "pre_tool_hook_duration_ms_p99": 26.74
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "1ca81e08-97a6-4213-8ca8-79a7f0e68f4f",
-      "lastSessionFirstPrompt": "ここでの作業が完了したタイミングとか、承認を求められたタイミングで作業が完了＆一時停止した時に気が付きやすいように、何かしらの効果音が鳴るようにしてほしい。",
-      "lastSessionModified": 1778742408878,
+      "lastHintSessionId": "791b20a9-dbe1-4812-b98e-0ea6bb15de45",
+      "lastSessionFirstPrompt": "ローニンのサブスタック用の記事書きたい。",
+      "lastSessionModified": 1778744816949,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.141"
     }
@@ -639,8 +640,8 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 9,
-      "lastUsedAt": 1778732291243
+      "usageCount": 10,
+      "lastUsedAt": 1778744820290
     },
     "superpowers:writing-plans": {
       "usageCount": 9,
