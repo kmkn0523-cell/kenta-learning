@@ -1,5 +1,5 @@
 {
-  "daily_index": 42,
+  "daily_index": 43,
   "launch_index": 0,
   "history": [
     {
@@ -2849,8 +2849,14 @@
       "theme": "AB_B_砂糖とニキビ直線ルート",
       "ab_group": "B",
       "post_id": "18125993566716480"
+    },
+    {
+      "date": "2026/05/14 20:00",
+      "theme": "食物繊維と腸",
+      "ab_group": "A",
+      "post_id": "18099461017852326"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 4
 }
