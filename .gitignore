@@ -3,6 +3,7 @@
 
 # 以下のファイル・フォルダだけをGitHubに含める（!で除外から外す）
 !.gitignore
+!.nojekyll
 !*.py
 !*.md
 !note_article.html
