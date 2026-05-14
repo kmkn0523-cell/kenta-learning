@@ -2831,8 +2831,14 @@
       "theme": "水を飲むタイミング",
       "ab_group": "A",
       "post_id": "17969870946062982"
+    },
+    {
+      "date": "2026/05/14 14:00",
+      "theme": "AB_B_ストレスと皮脂",
+      "ab_group": "B",
+      "post_id": "18088693148458682"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 2
+  "ab_next": "A",
+  "ab_b_index": 3
 }
