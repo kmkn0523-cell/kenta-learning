@@ -51,9 +51,9 @@ def make_base_image() -> tuple:
 
 def draw_text_wrapped(draw, text: str, x: int, y: int, max_width: int,
                       font: ImageFont.FreeTypeFont, color: tuple, line_spacing: int = 12,
-                      dry_run: bool = False) -> int:
-    """長いテキストを折り返して描画し、描画後のY座標を返す。dry_run=Trueなら描画せず高さだけ計算"""
-    # 1文字あたりの幅を概算して折り返し文字数を決める
+                      dry_run: bool = False, bold: bool = False) -> int:
+    """長いテキストを折り返して描画し、描画後のY座標を返す。
+    dry_run=Trueなら描画せず高さだけ計算。bold=Trueなら1px右にずらして重ね描きして太字風にする"""
     bbox       = font.getbbox('あ')
     char_width = bbox[2] - bbox[0]
     wrap_chars = max(1, max_width // char_width)
@@ -67,6 +67,9 @@ def draw_text_wrapped(draw, text: str, x: int, y: int, max_width: int,
     line_height = font.getbbox('あ')[3] - font.getbbox('あ')[1]
     for line in lines:
         if not dry_run:
+            if bold:
+                # 1px右にずらして重ね描きすることで太字風に見せる
+                draw.text((x + 1, current_y), line, font=font, fill=color)
             draw.text((x, current_y), line, font=font, fill=color)
         current_y += line_height + line_spacing
     return current_y
@@ -137,35 +140,44 @@ def make_list_image(slide_num: int, heading: str, items: list) -> Image.Image:
     draw.rectangle([75, 115, 80, 175], fill=COLOR_ACCENT)
     draw_text_wrapped(draw, heading, 100, 115, IMAGE_SIZE - 175, font_head, COLOR_TEXT, line_spacing=8)
 
-    # リスト項目
-    font_item = get_font(30)
-    ITEMS_TOP    = 230                 # アイテム描画の開始Y座標
-    ITEMS_BOTTOM = IMAGE_SIZE - 100   # アカウント名の上（余白含む）
+    # リスト項目（大題＝太字・白、→説明＝細字・グレーで分けて描画）
+    font_title = get_font(30)   # 大題：少し大きめ・太字風
+    font_exp   = get_font(25)   # 説明文：小さめ・グレー
+    ITEMS_TOP    = 230
+    ITEMS_BOTTOM = IMAGE_SIZE - 100
 
-    # 各アイテムの高さをdry_runで計測する
-    item_heights = [
-        draw_text_wrapped(None, item, 120, 0, IMAGE_SIZE - 200, font_item, COLOR_TEXT,
-                          line_spacing=8, dry_run=True)
-        for item in items
-    ]
+    def item_height(item: str) -> int:
+        """1アイテム分の描画高さを計算する（dry_run）"""
+        parts = item.split('\n→', 1)
+        title_h = draw_text_wrapped(None, parts[0], 120, 0, IMAGE_SIZE - 200,
+                                    font_title, COLOR_TEXT, line_spacing=8, dry_run=True)
+        if len(parts) > 1:
+            title_h += draw_text_wrapped(None, '→' + parts[1], 120, 0, IMAGE_SIZE - 200,
+                                         font_exp, COLOR_SUB, line_spacing=6, dry_run=True)
+        return title_h
 
-    # アイテム間のギャップを計算して均等に分散させる
+    # 各アイテムの高さを計測してギャップを均等計算
+    item_heights       = [item_height(item) for item in items]
     total_items_height = sum(item_heights)
     available          = ITEMS_BOTTOM - ITEMS_TOP
     n                  = len(items)
-    if n > 1:
-        gap = max(20, (available - total_items_height) // (n - 1))
-    else:
-        gap = 0
+    gap = max(20, (available - total_items_height) // (n - 1)) if n > 1 else 0
 
-    # 上下中央になるよう開始Y座標を調整する
+    # 上下中央になるよう開始Y座標を調整
     used_height = total_items_height + gap * (n - 1)
     y = ITEMS_TOP + max(0, (available - used_height) // 2)
 
     # 実際に描画する
     for i, item in enumerate(items):
+        parts = item.split('\n→', 1)
         draw.text((75, y), '▶', font=get_font(24), fill=COLOR_ACCENT)
-        y = draw_text_wrapped(draw, item, 120, y, IMAGE_SIZE - 200, font_item, COLOR_TEXT, line_spacing=8)
+        # 大題：太字風・白
+        y = draw_text_wrapped(draw, parts[0], 120, y, IMAGE_SIZE - 200,
+                               font_title, COLOR_TEXT, line_spacing=8, bold=True)
+        # 説明文（→以降）：細字・グレー
+        if len(parts) > 1:
+            y = draw_text_wrapped(draw, '→' + parts[1], 120, y, IMAGE_SIZE - 200,
+                                   font_exp, COLOR_SUB, line_spacing=6)
         if i < n - 1:
             y += gap
 
