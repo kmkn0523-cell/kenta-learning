@@ -139,13 +139,35 @@ def make_list_image(slide_num: int, heading: str, items: list) -> Image.Image:
 
     # リスト項目
     font_item = get_font(30)
-    y = 230
-    for item in items:
-        # 矢印マーク
+    ITEMS_TOP    = 230                 # アイテム描画の開始Y座標
+    ITEMS_BOTTOM = IMAGE_SIZE - 100   # アカウント名の上（余白含む）
+
+    # 各アイテムの高さをdry_runで計測する
+    item_heights = [
+        draw_text_wrapped(None, item, 120, 0, IMAGE_SIZE - 200, font_item, COLOR_TEXT,
+                          line_spacing=8, dry_run=True)
+        for item in items
+    ]
+
+    # アイテム間のギャップを計算して均等に分散させる
+    total_items_height = sum(item_heights)
+    available          = ITEMS_BOTTOM - ITEMS_TOP
+    n                  = len(items)
+    if n > 1:
+        gap = max(20, (available - total_items_height) // (n - 1))
+    else:
+        gap = 0
+
+    # 上下中央になるよう開始Y座標を調整する
+    used_height = total_items_height + gap * (n - 1)
+    y = ITEMS_TOP + max(0, (available - used_height) // 2)
+
+    # 実際に描画する
+    for i, item in enumerate(items):
         draw.text((75, y), '▶', font=get_font(24), fill=COLOR_ACCENT)
-        # 項目テキスト（折り返しあり）
         y = draw_text_wrapped(draw, item, 120, y, IMAGE_SIZE - 200, font_item, COLOR_TEXT, line_spacing=8)
-        y += 20
+        if i < n - 1:
+            y += gap
 
     draw_account_name(draw)
     return img
