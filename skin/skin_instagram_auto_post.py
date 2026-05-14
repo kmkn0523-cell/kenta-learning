@@ -19,11 +19,14 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 ACCESS_TOKEN = os.getenv("SKIN_INSTAGRAM_ACCESS_TOKEN")  # skinアカウントのアクセストークン
 USER_ID      = os.getenv("SKIN_INSTAGRAM_USER_ID")        # skinアカウントのユーザーID
 
-# GitHubに保存した画像へのURL（Threads自動投稿と同じ画像を流用）
-GITHUB_RAW_BASE = "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/skin/skin_images"
+# GitHubに保存した画像へのURL
+GITHUB_RAW_BASE       = "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/skin/skin_images"
+GITHUB_CAROUSEL_BASE  = "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/skin/skin_instagram_carousels"
+CAROUSEL_CONTENT_FILE = os.path.join(os.path.dirname(__file__), "carousel_content.json")
+SLIDES_PER_CAROUSEL   = 5  # 1投稿あたりのスライド枚数
 
 # ファイルのパス
-POSTS_FILE    = os.path.join(os.path.dirname(__file__), "skin_threads_posts.json")      # 投稿データ
+POSTS_FILE    = os.path.join(os.path.dirname(__file__), "skin_threads_posts.json")      # 投稿データ（旧）
 PROGRESS_FILE = os.path.join(os.path.dirname(__file__), "skin_instagram_progress.json") # 進捗記録
 
 # 投稿のキャプションに使うハッシュタグ
@@ -58,7 +61,81 @@ def save_progress(next_index):
 
 
 # =============================
-# 投稿データの読み込み
+# カルーセルコンテンツの読み込み
+# =============================
+
+def load_carousel_content():
+    """carousel_content.json からカルーセルテーマ定義を読み込む"""
+    try:
+        with open(CAROUSEL_CONTENT_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return data['themes']
+    except FileNotFoundError:
+        print("❌ carousel_content.json が見つかりません")
+        return []
+    except json.JSONDecodeError:
+        print("❌ carousel_content.json の形式が正しくありません")
+        return []
+
+
+def build_carousel_image_urls(theme_id: int) -> list:
+    """テーマIDからカルーセル画像のURL一覧を作る（5枚分）"""
+    return [
+        f"{GITHUB_CAROUSEL_BASE}/theme{theme_id:02d}_slide{i}.png"
+        for i in range(1, SLIDES_PER_CAROUSEL + 1)
+    ]
+
+
+# =============================
+# カルーセル投稿API処理
+# =============================
+
+def create_child_container(image_url: str) -> str:
+    """
+    カルーセルの子コンテナを作る（1枚ずつ登録する）
+    カルーセルは: 子コンテナ×N枚 → カルーセルコンテナ → 公開 の順で処理する
+    """
+    url    = f"https://graph.facebook.com/v19.0/{USER_ID}/media"
+    params = {
+        "image_url":        image_url,
+        "is_carousel_item": "true",
+        "access_token":     ACCESS_TOKEN,
+    }
+    try:
+        response = requests.post(url, params=params, timeout=30)
+        data     = response.json()
+        if "id" in data:
+            return data["id"]
+        print(f"❌ 子コンテナ作成失敗: {data}")
+        return ""
+    except Exception as e:
+        print(f"❌ 子コンテナ作成エラー: {e}")
+        return ""
+
+
+def create_carousel_container(child_ids: list, caption: str) -> str:
+    """カルーセルコンテナを作る（子コンテナIDをまとめて渡す）"""
+    url    = f"https://graph.facebook.com/v19.0/{USER_ID}/media"
+    params = {
+        "media_type":   "CAROUSEL",
+        "children":     ",".join(child_ids),
+        "caption":      caption,
+        "access_token": ACCESS_TOKEN,
+    }
+    try:
+        response = requests.post(url, params=params, timeout=30)
+        data     = response.json()
+        if "id" in data:
+            return data["id"]
+        print(f"❌ カルーセルコンテナ作成失敗: {data}")
+        return ""
+    except Exception as e:
+        print(f"❌ カルーセルコンテナ作成エラー: {e}")
+        return ""
+
+
+# =============================
+# 投稿データの読み込み（旧・参照用に残す）
 # =============================
 
 def load_threads():
@@ -263,63 +340,66 @@ def main():
 
     print(f"=== skin Instagram自動投稿開始 ({datetime.now().strftime('%Y-%m-%d %H:%M')}) ===")
 
-    # 投稿データを読み込む
-    threads = load_threads()
-    if not threads:
-        print("❌ 投稿データが読み込めませんでした。終了します。")
+    # カルーセルコンテンツを読み込む
+    themes = load_carousel_content()
+    if not themes:
+        print("❌ carousel_content.json が読み込めませんでした。終了します。")
         sys.exit(1)
 
     # 前回の進捗を読み込む（全テーマをループ）
     progress      = load_progress()
-    current_index = progress["next_index"] % len(threads)
-    thread        = threads[current_index]
-    theme_id      = thread["id"]
-    theme_name    = thread["theme"]
+    current_index = progress["next_index"] % len(themes)
+    theme         = themes[current_index]
+    theme_id      = theme["id"]
+    caption       = theme["caption"]
 
-    # キャプションを組み立てる（フックテキスト + CTA + ハッシュタグ）
-    hook_text = thread["posts"][0]                # 1投稿目（フック）をキャプションに使う
-    caption   = hook_text + CTA + HASHTAGS
+    print(f"📌 テーマ{theme_id:02d}（index={current_index}）")
 
-    # 画像URLを組み立てる（Threads自動投稿と同じ.jpg形式）
-    image_filename = f"theme{theme_id:02d}.jpg"
-    image_url      = f"{GITHUB_RAW_BASE}/{image_filename}"
+    # カルーセル画像のURLを5枚分作る
+    image_urls = build_carousel_image_urls(theme_id)
+    print(f"🖼️  スライド画像: {len(image_urls)}枚")
 
-    print(f"📌 テーマ: {theme_name}（index={current_index}）")
-    print(f"🖼️  画像URL: {image_url}")
-    print(f"📝 キャプション（先頭100文字）: {caption[:100]}...")
+    # Step1: 各スライドの子コンテナを作る
+    print("📤 Step1: 子コンテナを作成中...")
+    child_ids = []
+    for i, url in enumerate(image_urls, start=1):
+        print(f"  スライド{i}: {os.path.basename(url)}")
+        child_id = create_child_container(url)
+        if not child_id:
+            print(f"❌ スライド{i}の子コンテナ作成に失敗しました")
+            sys.exit(1)
+        child_ids.append(child_id)
+        time.sleep(2)  # API制限を避けるため少し待つ
 
-    # Step1: メディアコンテナを作成
-    print("📤 Step1: メディアコンテナ作成中...")
-    container_result = create_media_container(image_url, caption)
+    print(f"✅ 子コンテナ{len(child_ids)}件 作成完了")
 
-    if "id" not in container_result:
-        print(f"❌ メディアコンテナ作成失敗: {container_result}")
+    # Step2: カルーセルコンテナを作る
+    print("📤 Step2: カルーセルコンテナを作成中...")
+    carousel_id = create_carousel_container(child_ids, caption)
+    if not carousel_id:
+        print("❌ カルーセルコンテナ作成に失敗しました")
+        sys.exit(1)
+    print(f"✅ カルーセルコンテナID: {carousel_id}")
+
+    # カルーセルの処理完了を待つ
+    print("⏳ カルーセル処理完了を確認中...")
+    if not wait_for_container_ready(carousel_id):
+        print("❌ カルーセルが処理完了しなかったため投稿を中止します")
         sys.exit(1)
 
-    creation_id = container_result["id"]
-    print(f"✅ コンテナID取得: {creation_id}")
-
-    # 画像処理の完了を確認してから公開（最大120秒）
-    print("⏳ 画像処理完了を確認中...")
-    if not wait_for_container_ready(creation_id):
-        print("❌ コンテナが処理完了しなかったため投稿を中止します")
-        sys.exit(1)
-
-    # Step2: 投稿を公開
-    print("📤 Step2: 投稿を公開中...")
-    publish_result = publish_media(creation_id)
-
+    # Step3: 投稿を公開する
+    print("📤 Step3: 投稿を公開中...")
+    publish_result = publish_media(carousel_id)
     if "id" not in publish_result:
         print(f"❌ 投稿公開失敗: {publish_result}")
         sys.exit(1)
 
-    print(f"✅ 投稿成功！投稿ID: {publish_result['id']}")
+    print(f"✅ カルーセル投稿成功！投稿ID: {publish_result['id']}")
 
-    # 次回の進捗を保存
+    # 次回の進捗を保存する
     next_index = current_index + 1
     save_progress(next_index)
-    next_theme = threads[next_index % len(threads)]["theme"]
-    print(f"📊 次回: {next_theme}（index={next_index % len(threads)}）")
+    print(f"📊 次回テーマ: {themes[next_index % len(themes)]['id']:02d}（index={next_index % len(themes)}）")
     print("=== 完了 ===")
 
 
