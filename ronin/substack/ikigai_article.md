@@ -17,3 +17,32 @@ This distinction matters more than you might expect — because the version you 
 That pressure is not Japanese. It's not even philosophical. It's Western productivity culture wearing a kimono.
 
 What the Japanese actually mean by *ikigai* is something older, quieter, and far more useful. And once you understand it, you won't need a diagram at all.
+
+---
+
+## The Map That Wasn't the Territory
+
+Marc Winn didn't set out to mislead anyone. In 2014, he was writing a blog post about purpose and came across a diagram by Spanish author Andrés Zuzunaga — a Venn diagram about finding *purpose* that had nothing to do with Japan. At the same time, he'd been reading about the Japanese island of Okinawa and its unusually high number of centenarians, whose longevity was often attributed to having a sense of *ikigai*.
+
+He combined the two ideas, labeled Zuzunaga's circles with the word *ikigai*, and posted it. It spread.
+
+The result is a concept that sounds Japanese, looks systematic, and feels profound — but is actually a Western framework for career optimization dressed in Eastern clothes.
+
+The real word, 生き甲斐, breaks down like this:
+
+- **生き** (*iki*) — to live, to be alive
+- **甲斐** (*gai*) — worth, effect, result, benefit
+
+Together: *the worth of being alive*. Or more simply: *a reason to get up in the morning*.
+
+That's it. There is no diagram. There are no four circles. There is no optimization exercise.
+
+In Japan, *ikigai* is used in ordinary conversation. A grandmother talks about her *ikigai* when she describes tending her garden. A retired engineer finds his *ikigai* in teaching neighborhood kids origami on weekends. A fisherman's *ikigai* is the ritual of preparing his boat before dawn.
+
+None of these people are at the intersection of passion, mission, vocation, and profession. They haven't been paid to do what they love. They haven't found their life's calling in any grand sense.
+
+They've simply found something that makes being alive feel worthwhile.
+
+The Western diagram turned this humble, daily orientation toward life into an achievement to unlock. It made *ikigai* into a destination rather than a practice. And in doing so, it made it much, much harder to find — because it made the criteria impossibly high.
+
+You can't find your *ikigai* if you're looking for something that justifies your entire existence. But you can notice it in almost any ordinary moment, if you know what you're looking for.
