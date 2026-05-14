@@ -144,3 +144,21 @@ Not to comfort you. To tell the truth. The older self has survived the urgency, 
 ---
 
 You don't need all seven answers to change anything. One honest answer — really honest — is enough to shift your orientation. *Ikigai* is not a destination you reach. It's a direction you practice pointing toward.
+
+---
+
+## The Ronin's *Ikigai*
+
+A ronin — a samurai without a master — had no lord to define his purpose for him. No mission handed down from above. No framework to tell him where his passion met his market.
+
+He had only the question every free person eventually faces: *what do I live for, now that I must decide for myself?*
+
+The ones who answered that question well didn't find one perfect answer. They built a life with many small answers. They practiced their craft not because it would make them famous, but because the practice itself was worth doing.
+
+That's *ikigai*. Not a discovery. Not a diagram. A daily decision to notice what makes being alive worthwhile — and to keep showing up for it.
+
+---
+
+*If this article shifted something for you, share it with someone who's been stuck looking for "the answer." Sometimes the most useful thing we can do for the people we care about is hand them a different question.*
+
+*Next week: the Japanese concept of* **Wabi-Sabi** *— and why imperfection might be the most radical act of self-respect you can practice.*
