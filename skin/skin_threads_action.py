@@ -184,6 +184,36 @@ def check_should_skip(skip_minutes=90):
     return False
 
 
+def pick_ab_thread(threads_list, progress):
+    """
+    A/Bテスト用の投稿セットを選ぶ
+    ab_next が "B" なら B型（新フォーマット）、"A" なら A型（既存）を返す
+    それぞれ独立したインデックスで管理する
+    """
+    ab_next = progress.get("ab_next", "A")
+
+    # A型とB型に分ける
+    a_posts = [p for p in threads_list if not p.get("ab_group") == "B"]
+    b_posts = [p for p in threads_list if p.get("ab_group") == "B"]
+
+    if ab_next == "B" and b_posts:
+        # B型を選ぶ
+        index = progress.get("ab_b_index", 0) % len(b_posts)
+        thread_set = b_posts[index]
+        progress["ab_b_index"] = (index + 1) % len(b_posts)
+        progress["ab_next"] = "A"  # 次回はAに戻す
+        print(f"  📊 ABテスト: B型 ({index + 1}/{len(b_posts)})")
+    else:
+        # A型を選ぶ（デフォルト・B型がなければAにフォールバック）
+        index = progress.get("daily_index", 0) % len(a_posts)
+        thread_set = a_posts[index]
+        progress["daily_index"] = (index + 1) % len(a_posts)
+        progress["ab_next"] = "B" if b_posts else "A"  # 次回はBへ
+        print(f"  📊 ABテスト: A型 ({index + 1}/{len(a_posts)})")
+
+    return thread_set
+
+
 def main():
     """メイン処理（全自動・対話なし）"""
     now = datetime.now().strftime("%Y/%m/%d %H:%M")
@@ -199,12 +229,12 @@ def main():
     posts    = load_posts()
     progress = load_progress()
 
-    # ローテーションで今回のセットを選ぶ（14セットを繰り返す）
+    # A/Bテストで今回の投稿セットを選ぶ
     threads_list = posts["threads"]
-    index        = progress.get("daily_index", 0) % len(threads_list)
-    thread_set   = threads_list[index]
+    thread_set   = pick_ab_thread(threads_list, progress)
+    ab_group     = thread_set.get("ab_group", "A")  # グループ記録用
 
-    print(f"投稿セット: {index + 1}/{len(threads_list)} ({thread_set['theme']})")
+    print(f"投稿セット: {thread_set['theme']}")
 
     # human_post があればそれを優先（人間っぽい短い完結型）
     # なければ従来通り posts[0]+posts[1]+固定ハッシュタグ
@@ -217,7 +247,7 @@ def main():
 
     # 画像付きか・テキストのみかを決める（skip_imageフラグで切り替え）
     if thread_set.get("skip_image"):
-        print("\n投稿中（テキストのみ・ABテスト用）...")
+        print("\n投稿中（テキストのみ）...")
         post_id = post_to_threads(post_text)
     else:
         print("\n投稿中（画像付き）...")
@@ -225,17 +255,13 @@ def main():
         post_id = post_to_threads(post_text, image_url=image_url)
     print(f"  ✅ 投稿成功！（ID: {post_id}）")
 
-    # 次の投稿番号に進める（100セットを超えたら0に戻る）
-    progress["daily_index"] = (index + 1) % len(threads_list)
-    next_thread = threads_list[progress["daily_index"]]
-    print(f"\n次回: {next_thread['theme']}")
-
-    # 履歴に記録する
+    # 履歴に記録する（ab_group を含めて後で比較できるようにする）
     if "history" not in progress:
         progress["history"] = []
     progress["history"].append({
         "date": now,
         "theme": thread_set["theme"],
+        "ab_group": ab_group,
         "post_id": post_id
     })
 
