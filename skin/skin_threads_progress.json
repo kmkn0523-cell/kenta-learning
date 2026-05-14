@@ -1,5 +1,5 @@
 {
-  "daily_index": 39,
+  "daily_index": 40,
   "launch_index": 0,
   "history": [
     {
@@ -2813,8 +2813,14 @@
       "theme": "AB_B_洗顔料を変えすぎ",
       "ab_group": "B",
       "post_id": "18165814876425948"
+    },
+    {
+      "date": "2026/05/14 08:00",
+      "theme": "日焼けと肌荒れ",
+      "ab_group": "A",
+      "post_id": "18584097115013200"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 1
 }
