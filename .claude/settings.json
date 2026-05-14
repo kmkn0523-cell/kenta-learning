@@ -62,9 +62,25 @@
         ]
       }
     ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -c \"[System.Media.SystemSounds]::Exclamation.Play(); Start-Sleep -Milliseconds 800\" 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -c \"[System.Media.SystemSounds]::Asterisk.Play(); Start-Sleep -Milliseconds 800\" 2>/dev/null || true",
+            "async": true
+          },
           {
             "type": "command",
             "command": "[ -f /tmp/finance_web_changed ] && rm /tmp/finance_web_changed && cd /home/kenta_kamijyo/finance_web && npx vercel --prod 2>/dev/null && echo '✅ デプロイ完了 → https://finance-web-kmkns-projects.vercel.app' || true",
