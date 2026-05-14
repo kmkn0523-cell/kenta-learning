@@ -107,6 +107,8 @@ They didn't find purpose. They built it, piece by piece, day by day.
 
 ## The 7 Questions That Find What the Diagram Can't
 
+Most self-help systems promise you a map. Ikigai — the real one — doesn't give you a map. It trains you to notice what's already calling to you, if you stop long enough to listen.
+
 The following questions are not a framework. They're not a system. They're an invitation to pay attention to what's already there.
 
 Take these to a journal. Give each one ten minutes. Don't aim for a final answer — aim for honesty.
