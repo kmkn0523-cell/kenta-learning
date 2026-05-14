@@ -2819,8 +2819,14 @@
       "theme": "日焼けと肌荒れ",
       "ab_group": "A",
       "post_id": "18584097115013200"
+    },
+    {
+      "date": "2026/05/14 10:00",
+      "theme": "AB_B_睡眠と肌",
+      "ab_group": "B",
+      "post_id": "18018969686673980"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 1
+  "ab_next": "A",
+  "ab_b_index": 2
 }
