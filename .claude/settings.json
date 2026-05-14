@@ -71,7 +71,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -c \"[console]::beep(1000,150); [console]::beep(800,150); [console]::beep(1000,150); [console]::beep(800,400)\" 2>/dev/null || true",
+            "command": "powershell.exe -c \"[console]::beep(1200,120); Start-Sleep -Milliseconds 80; [console]::beep(1200,120); Start-Sleep -Milliseconds 80; [console]::beep(1200,120)\" 2>/dev/null || true",
             "async": true
           }
         ]
