@@ -2855,8 +2855,14 @@
       "theme": "食物繊維と腸",
       "ab_group": "A",
       "post_id": "18099461017852326"
+    },
+    {
+      "date": "2026/05/14 22:00",
+      "theme": "AB_B_乳製品と大人ニキビ",
+      "ab_group": "B",
+      "post_id": "18133538104492591"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 4
+  "ab_next": "A",
+  "ab_b_index": 5
 }
