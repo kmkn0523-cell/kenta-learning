@@ -135,15 +135,10 @@ def make_list_image(slide_num: int, heading: str, items: list) -> Image.Image:
     font_num = get_font(22)
     draw.text((75, 65), f"{slide_num} / 5", font=font_num, fill=COLOR_ACCENT)
 
-    # 見出し（左にアクセントバー）
-    font_head = get_font(36)
-    draw.rectangle([75, 115, 80, 175], fill=COLOR_ACCENT)
-    draw_text_wrapped(draw, heading, 100, 115, IMAGE_SIZE - 175, font_head, COLOR_TEXT, line_spacing=8)
-
     # リスト項目（大題＝太字・白、→説明＝細字・グレーで分けて描画）
     font_title = get_font(30)   # 大題：少し大きめ・太字風
     font_exp   = get_font(25)   # 説明文：小さめ・グレー
-    ITEMS_TOP    = 230
+    ITEMS_TOP    = 130
     ITEMS_BOTTOM = IMAGE_SIZE - 100
 
     def item_height(item: str) -> int:
