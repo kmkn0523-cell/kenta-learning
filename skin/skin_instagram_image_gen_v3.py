@@ -161,9 +161,12 @@ def make_list_image(slide_num: int, heading: str, items: list) -> Image.Image:
     total_items_height = sum(item_heights)
     available          = ITEMS_BOTTOM - ITEMS_TOP
     n                  = len(items)
-    gap = max(20, (available - total_items_height) // (n - 1)) if n > 1 else 0
+    # ギャップは最小20px・最大70pxに制限する（開きすぎ防止）
+    MAX_GAP = 70
+    ideal_gap = (available - total_items_height) // (n - 1) if n > 1 else 0
+    gap = min(MAX_GAP, max(20, ideal_gap))
 
-    # 上下中央になるよう開始Y座標を調整
+    # ギャップ制限後の余白は上下で均等に分けて中央寄せにする
     used_height = total_items_height + gap * (n - 1)
     y = ITEMS_TOP + max(0, (available - used_height) // 2)
 
