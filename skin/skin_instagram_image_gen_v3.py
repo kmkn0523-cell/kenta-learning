@@ -1,144 +1,248 @@
 # skin_instagram_image_gen_v3.py
-# カルーセル投稿用の画像をHTML→PNG方式で一括生成するスクリプト
+# カルーセル投稿用の画像をPIL方式で一括生成するスクリプト
 # 使い方: python3 skin/skin_instagram_image_gen_v3.py
 # ※ローカル環境でのみ実行する（GitHub Actionsでは不要）
 
-import json  # JSONファイルを読み込む道具
-import os    # ファイルパスを扱う道具
+import json   # JSONファイルを読み込む道具
+import os     # ファイルパスを扱う道具
+import textwrap  # 長いテキストを折り返す道具
 
-from playwright.sync_api import sync_playwright  # HTML→PNGに変換する道具
+from PIL import Image, ImageDraw, ImageFont  # 画像を作る道具
 
 
 # =============================
 # 設定
 # =============================
-SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))              # このスクリプトの場所
-CONTENT_FILE = os.path.join(SCRIPT_DIR, 'carousel_content.json')       # テーマ定義ファイル
-OUTPUT_DIR   = os.path.join(SCRIPT_DIR, 'skin_instagram_carousels')    # 画像の出力先
-IMAGE_SIZE   = 1080                                                      # Instagram推奨サイズ（正方形）
+SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))               # このスクリプトの場所
+CONTENT_FILE = os.path.join(SCRIPT_DIR, 'carousel_content.json')        # テーマ定義ファイル
+OUTPUT_DIR   = os.path.join(SCRIPT_DIR, 'skin_instagram_carousels')     # 画像の出力先
+FONT_PATH    = os.path.join(os.path.dirname(SCRIPT_DIR), 'fonts', 'NotoSerifJP.otf')  # 日本語フォント
+IMAGE_SIZE   = 1080  # Instagram推奨サイズ（正方形）
 
-# デザインカラー
-COLOR_BG     = '#0f0f0f'   # 背景（ほぼ黒）
-COLOR_TEXT   = '#f0ede8'   # メインテキスト（温かみのある白）
-COLOR_ACCENT = '#c8a97e'   # アクセント（ゴールドベージュ）
-COLOR_SUB    = '#888888'   # サブテキスト（グレー）
+# デザインカラー（RGB タプル形式）
+COLOR_BG     = (15, 15, 15)     # 背景（ほぼ黒）
+COLOR_TEXT   = (240, 237, 232)  # メインテキスト（温かみのある白）
+COLOR_ACCENT = (200, 169, 126)  # アクセント（ゴールドベージュ）
+COLOR_SUB    = (136, 136, 136)  # サブテキスト（グレー）
+COLOR_CARD   = (30, 30, 30)     # カード背景色
+COLOR_RED    = (255, 112, 112)  # 比較スライドのNG色
 ACCOUNT_NAME = '@skin_reform_jp'  # アカウント名（必要に応じて変更）
 
 
 # =============================
-# HTMLテンプレート生成
+# フォント読み込み
 # =============================
 
-def make_base_html(body_content: str) -> str:
-    """全スライド共通のHTMLラッパーを作る"""
-    return f"""<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-    * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-    body {{
-      width: {IMAGE_SIZE}px;
-      height: {IMAGE_SIZE}px;
-      background: {COLOR_BG};
-      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-      color: {COLOR_TEXT};
-      overflow: hidden;
-    }}
-  </style>
-</head>
-<body>
-{body_content}
-</body>
-</html>"""
+def get_font(size: int) -> ImageFont.FreeTypeFont:
+    """指定サイズのフォントを返す"""
+    return ImageFont.truetype(FONT_PATH, size)
 
 
-def make_cover_html(title: str, subtitle: str) -> str:
-    """カバー（1枚目）スライドのHTMLを作る"""
-    title_html    = title.replace('\n', '<br>')
-    subtitle_html = subtitle.replace('\n', '<br>')
-    return make_base_html(f"""
-<div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px; position:relative;">
-  <div style="width:60px; height:5px; background:{COLOR_ACCENT}; margin-bottom:50px;"></div>
-  <h1 style="font-size:64px; font-weight:900; line-height:1.5; text-align:center; letter-spacing:2px;">{title_html}</h1>
-  <p style="font-size:26px; color:{COLOR_SUB}; margin-top:40px; text-align:center; line-height:1.6;">{subtitle_html}</p>
-  <div style="position:absolute; bottom:50px; display:flex; align-items:center; gap:12px;">
-    <div style="width:40px; height:2px; background:{COLOR_ACCENT};"></div>
-    <p style="color:{COLOR_ACCENT}; font-size:22px;">{ACCOUNT_NAME}</p>
-    <div style="width:40px; height:2px; background:{COLOR_ACCENT};"></div>
-  </div>
-</div>""")
+# =============================
+# 共通描画ヘルパー
+# =============================
+
+def make_base_image() -> tuple:
+    """背景画像とDrawオブジェクトを作る"""
+    img  = Image.new('RGB', (IMAGE_SIZE, IMAGE_SIZE), COLOR_BG)
+    draw = ImageDraw.Draw(img)
+    return img, draw
 
 
-def make_list_html(slide_num: int, heading: str, items: list) -> str:
-    """リスト形式スライドのHTMLを作る"""
-    items_html = ''
+def draw_text_wrapped(draw, text: str, x: int, y: int, max_width: int,
+                      font: ImageFont.FreeTypeFont, color: tuple, line_spacing: int = 12) -> int:
+    """長いテキストを折り返して描画し、描画後のY座標を返す"""
+    # 1文字あたりの幅を概算して折り返し文字数を決める
+    bbox       = font.getbbox('あ')
+    char_width = bbox[2] - bbox[0]
+    wrap_chars = max(1, max_width // char_width)
+
+    lines   = []
+    for paragraph in text.split('\n'):
+        wrapped = textwrap.wrap(paragraph, width=wrap_chars) if paragraph else ['']
+        lines.extend(wrapped)
+
+    current_y = y
+    line_height = font.getbbox('あ')[3] - font.getbbox('あ')[1]
+    for line in lines:
+        draw.text((x, current_y), line, font=font, fill=color)
+        current_y += line_height + line_spacing
+    return current_y
+
+
+def draw_account_name(draw):
+    """右下にアカウント名を描画する"""
+    font = get_font(22)
+    bbox = font.getbbox(ACCOUNT_NAME)
+    w    = bbox[2] - bbox[0]
+    draw.text((IMAGE_SIZE - w - 60, IMAGE_SIZE - 60), ACCOUNT_NAME, font=font, fill=COLOR_ACCENT)
+
+
+# =============================
+# スライドタイプ別画像生成
+# =============================
+
+def make_cover_image(title: str, subtitle: str) -> Image.Image:
+    """カバー（1枚目）スライドを作る"""
+    img, draw = make_base_image()
+
+    # アクセントライン（上部中央）
+    line_w = 60
+    cx     = IMAGE_SIZE // 2
+    draw.rectangle([cx - line_w // 2, 320, cx + line_w // 2, 325], fill=COLOR_ACCENT)
+
+    # タイトル（大きく中央）
+    font_title = get_font(62)
+    y = 370
+    for line in title.split('\n'):
+        bbox = font_title.getbbox(line)
+        tw   = bbox[2] - bbox[0]
+        draw.text(((IMAGE_SIZE - tw) // 2, y), line, font=font_title, fill=COLOR_TEXT)
+        y += (bbox[3] - bbox[1]) + 20
+
+    # サブタイトル（中央）
+    if subtitle:
+        font_sub = get_font(26)
+        y += 30
+        for line in subtitle.split('\n'):
+            bbox = font_sub.getbbox(line)
+            sw   = bbox[2] - bbox[0]
+            draw.text(((IMAGE_SIZE - sw) // 2, y), line, font=font_sub, fill=COLOR_SUB)
+            y += (bbox[3] - bbox[1]) + 10
+
+    # アカウント名（下部中央）
+    font_acc = get_font(22)
+    # 左右のライン
+    draw.rectangle([cx - 120, IMAGE_SIZE - 75, cx - 60, IMAGE_SIZE - 72], fill=COLOR_ACCENT)
+    draw.rectangle([cx + 60, IMAGE_SIZE - 75, cx + 120, IMAGE_SIZE - 72], fill=COLOR_ACCENT)
+    bbox_acc = font_acc.getbbox(ACCOUNT_NAME)
+    aw = bbox_acc[2] - bbox_acc[0]
+    draw.text(((IMAGE_SIZE - aw) // 2, IMAGE_SIZE - 85), ACCOUNT_NAME, font=font_acc, fill=COLOR_ACCENT)
+
+    return img
+
+
+def make_list_image(slide_num: int, heading: str, items: list) -> Image.Image:
+    """リスト形式スライドを作る"""
+    img, draw = make_base_image()
+
+    # スライド番号
+    font_num = get_font(22)
+    draw.text((75, 65), f"{slide_num} / 5", font=font_num, fill=COLOR_ACCENT)
+
+    # 見出し（左にアクセントバー）
+    font_head = get_font(36)
+    draw.rectangle([75, 115, 80, 175], fill=COLOR_ACCENT)
+    draw_text_wrapped(draw, heading, 100, 115, IMAGE_SIZE - 175, font_head, COLOR_TEXT, line_spacing=8)
+
+    # リスト項目
+    font_item = get_font(30)
+    y = 230
     for item in items:
-        item_html = item.replace('\n', '<br>')
-        items_html += f"""
-    <div style="display:flex; align-items:flex-start; margin-bottom:32px;">
-      <span style="color:{COLOR_ACCENT}; font-size:26px; min-width:36px; margin-top:6px; flex-shrink:0;">▶</span>
-      <p style="font-size:30px; line-height:1.65; color:{COLOR_TEXT};">{item_html}</p>
-    </div>"""
+        # 矢印マーク
+        draw.text((75, y), '▶', font=get_font(24), fill=COLOR_ACCENT)
+        # 項目テキスト（折り返しあり）
+        y = draw_text_wrapped(draw, item, 120, y, IMAGE_SIZE - 200, font_item, COLOR_TEXT, line_spacing=8)
+        y += 20
 
-    return make_base_html(f"""
-<div style="width:100%; height:100%; padding:65px 75px; position:relative; display:flex; flex-direction:column; justify-content:center;">
-  <p style="color:{COLOR_ACCENT}; font-size:22px; margin-bottom:20px;">{slide_num} / 5</p>
-  <h2 style="font-size:36px; font-weight:700; border-left:5px solid {COLOR_ACCENT}; padding-left:20px; margin-bottom:45px; line-height:1.5;">{heading}</h2>
-  <div>{items_html}</div>
-  <p style="position:absolute; bottom:40px; right:75px; color:{COLOR_SUB}; font-size:20px;">{ACCOUNT_NAME}</p>
-</div>""")
+    draw_account_name(draw)
+    return img
 
 
-def make_comparison_html(slide_num: int, heading: str, left: str, right: str) -> str:
-    """比較形式スライドのHTMLを作る"""
-    left_html  = left.replace('\n', '<br>')
-    right_html = right.replace('\n', '<br>')
-    return make_base_html(f"""
-<div style="width:100%; height:100%; padding:65px 75px; display:flex; flex-direction:column; justify-content:center; position:relative;">
-  <p style="color:{COLOR_ACCENT}; font-size:22px; margin-bottom:20px;">{slide_num} / 5</p>
-  <h2 style="font-size:36px; font-weight:700; border-left:5px solid {COLOR_ACCENT}; padding-left:20px; margin-bottom:45px;">{heading}</h2>
-  <div style="display:flex; gap:24px; align-items:stretch;">
-    <div style="flex:1; background:#1e1e1e; border-radius:16px; padding:35px; border:2px solid #333;">
-      <p style="color:#ff7070; font-size:20px; margin-bottom:14px; font-weight:700;">❌ 以前</p>
-      <p style="font-size:28px; line-height:1.65;">{left_html}</p>
-    </div>
-    <div style="width:4px; background:{COLOR_ACCENT}; border-radius:4px; align-self:stretch;"></div>
-    <div style="flex:1; background:#1e1e1e; border-radius:16px; padding:35px; border:2px solid {COLOR_ACCENT};">
-      <p style="color:{COLOR_ACCENT}; font-size:20px; margin-bottom:14px; font-weight:700;">✅ 今</p>
-      <p style="font-size:28px; line-height:1.65;">{right_html}</p>
-    </div>
-  </div>
-  <p style="position:absolute; bottom:40px; right:75px; color:{COLOR_SUB}; font-size:20px;">{ACCOUNT_NAME}</p>
-</div>""")
+def make_comparison_image(slide_num: int, heading: str, left: str, right: str) -> Image.Image:
+    """比較形式スライドを作る"""
+    img, draw = make_base_image()
+
+    # スライド番号
+    font_num = get_font(22)
+    draw.text((75, 65), f"{slide_num} / 5", font=font_num, fill=COLOR_ACCENT)
+
+    # 見出し
+    font_head = get_font(36)
+    draw.rectangle([75, 115, 80, 175], fill=COLOR_ACCENT)
+    draw_text_wrapped(draw, heading, 100, 115, IMAGE_SIZE - 175, font_head, COLOR_TEXT, line_spacing=8)
+
+    # 左カード（NG）
+    card_top    = 240
+    card_bottom = 860
+    card_left   = 60
+    card_mid    = 510
+    card_right  = IMAGE_SIZE - 60
+
+    draw.rounded_rectangle([card_left, card_top, card_mid - 15, card_bottom],
+                           radius=16, fill=COLOR_CARD, outline=(51, 51, 51), width=2)
+    draw.text((card_left + 30, card_top + 28), '❌ 以前', font=get_font(22), fill=COLOR_RED)
+    draw_text_wrapped(draw, left, card_left + 30, card_top + 78, card_mid - card_left - 60,
+                      get_font(28), COLOR_TEXT, line_spacing=10)
+
+    # 中央のアクセントライン
+    draw.rectangle([card_mid - 4, card_top + 40, card_mid + 4, card_bottom - 40], fill=COLOR_ACCENT)
+
+    # 右カード（今）
+    draw.rounded_rectangle([card_mid + 15, card_top, card_right, card_bottom],
+                           radius=16, fill=COLOR_CARD, outline=COLOR_ACCENT, width=2)
+    draw.text((card_mid + 45, card_top + 28), '✅ 今', font=get_font(22), fill=COLOR_ACCENT)
+    draw_text_wrapped(draw, right, card_mid + 45, card_top + 78, card_right - card_mid - 60,
+                      get_font(28), COLOR_TEXT, line_spacing=10)
+
+    draw_account_name(draw)
+    return img
 
 
-def make_cta_html(text: str, sub: str) -> str:
-    """CTA（最終スライド）のHTMLを作る"""
-    text_html = text.replace('\n', '<br>')
-    sub_html  = sub.replace('\n', '<br>')
-    return make_base_html(f"""
-<div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px; text-align:center;">
-  <p style="font-size:56px; margin-bottom:28px;">🔖</p>
-  <h2 style="font-size:52px; font-weight:900; line-height:1.65; margin-bottom:36px;">{text_html}</h2>
-  <div style="width:80px; height:3px; background:{COLOR_ACCENT}; margin-bottom:36px;"></div>
-  <p style="font-size:26px; color:{COLOR_SUB}; line-height:1.8;">{sub_html}</p>
-  <p style="font-size:22px; color:{COLOR_ACCENT}; margin-top:48px;">{ACCOUNT_NAME}</p>
-</div>""")
+def make_cta_image(text: str, sub: str) -> Image.Image:
+    """CTA（最終スライド）を作る"""
+    img, draw = make_base_image()
+    cx        = IMAGE_SIZE // 2
+
+    # 保存アイコン（テキストで代用）
+    font_icon = get_font(60)
+    icon_text = '[ 保存 ]'
+    bbox_icon = font_icon.getbbox(icon_text)
+    iw        = bbox_icon[2] - bbox_icon[0]
+    draw.text(((IMAGE_SIZE - iw) // 2, 250), icon_text, font=font_icon, fill=COLOR_ACCENT)
+
+    # メインテキスト
+    font_main = get_font(52)
+    y = 370
+    for line in text.split('\n'):
+        bbox = font_main.getbbox(line)
+        tw   = bbox[2] - bbox[0]
+        draw.text(((IMAGE_SIZE - tw) // 2, y), line, font=font_main, fill=COLOR_TEXT)
+        y += (bbox[3] - bbox[1]) + 20
+
+    # 区切り線
+    y += 30
+    draw.rectangle([cx - 40, y, cx + 40, y + 3], fill=COLOR_ACCENT)
+    y += 30
+
+    # サブテキスト
+    font_sub = get_font(26)
+    for line in sub.split('\n'):
+        bbox = font_sub.getbbox(line)
+        sw   = bbox[2] - bbox[0]
+        draw.text(((IMAGE_SIZE - sw) // 2, y), line, font=font_sub, fill=COLOR_SUB)
+        y += (bbox[3] - bbox[1]) + 10
+
+    # アカウント名
+    font_acc = get_font(22)
+    bbox_acc = font_acc.getbbox(ACCOUNT_NAME)
+    aw       = bbox_acc[2] - bbox_acc[0]
+    draw.text(((IMAGE_SIZE - aw) // 2, IMAGE_SIZE - 80), ACCOUNT_NAME, font=font_acc, fill=COLOR_ACCENT)
+
+    return img
 
 
-def slide_to_html(slide: dict, slide_num: int) -> str:
-    """スライドの種類に応じてHTMLを選ぶ"""
+def slide_to_image(slide: dict, slide_num: int) -> Image.Image:
+    """スライドの種類に応じて画像を生成する"""
     slide_type = slide['type']
     if slide_type == 'cover':
-        return make_cover_html(slide['title'], slide.get('subtitle', ''))
+        return make_cover_image(slide['title'], slide.get('subtitle', ''))
     elif slide_type == 'list':
-        return make_list_html(slide_num, slide['heading'], slide['items'])
+        return make_list_image(slide_num, slide['heading'], slide['items'])
     elif slide_type == 'comparison':
-        return make_comparison_html(slide_num, slide['heading'], slide['left'], slide['right'])
+        return make_comparison_image(slide_num, slide['heading'], slide['left'], slide['right'])
     elif slide_type == 'cta':
-        return make_cta_html(slide['text'], slide.get('sub', ''))
+        return make_cta_image(slide['text'], slide.get('sub', ''))
     else:
         raise ValueError(f"未知のスライドタイプ: {slide_type}")
 
@@ -149,6 +253,11 @@ def slide_to_html(slide: dict, slide_num: int) -> str:
 
 def generate_all_images():
     """全テーマのカルーセル画像を一括生成する"""
+    # フォントの存在確認
+    if not os.path.exists(FONT_PATH):
+        print(f"❌ フォントが見つかりません: {FONT_PATH}")
+        return
+
     # 出力ディレクトリを作る（なければ作成）
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -160,27 +269,19 @@ def generate_all_images():
     total  = len(themes) * 5
     print(f"=== カルーセル画像生成開始（{len(themes)}テーマ × 5枚 = {total}枚）===")
 
-    # playwright でブラウザを起動する（画面なしのヘッドレスモード）
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page    = browser.new_page(viewport={'width': IMAGE_SIZE, 'height': IMAGE_SIZE})
+    for theme in themes:
+        theme_id = theme['id']
+        slides   = theme['slides']
+        print(f"テーマ{theme_id:02d} 生成中...")
 
-        for theme in themes:
-            theme_id = theme['id']
-            slides   = theme['slides']
-            print(f"テーマ{theme_id:02d} 生成中...")
+        for slide_num, slide in enumerate(slides, start=1):
+            # 画像を生成する
+            img = slide_to_image(slide, slide_num)
 
-            for slide_num, slide in enumerate(slides, start=1):
-                # HTMLを生成してブラウザに読み込む
-                html_content = slide_to_html(slide, slide_num)
-                page.set_content(html_content, wait_until='networkidle')
-
-                # PNGとして保存する
-                output_path = os.path.join(OUTPUT_DIR, f"theme{theme_id:02d}_slide{slide_num}.png")
-                page.screenshot(path=output_path, type='png')
-                print(f"  ✅ slide{slide_num} → {os.path.basename(output_path)}")
-
-        browser.close()
+            # PNGとして保存する
+            output_path = os.path.join(OUTPUT_DIR, f"theme{theme_id:02d}_slide{slide_num}.png")
+            img.save(output_path, 'PNG')
+            print(f"  ✅ slide{slide_num} → {os.path.basename(output_path)}")
 
     print(f"=== 完了: {OUTPUT_DIR} に {total}枚の画像を生成しました ===")
 
