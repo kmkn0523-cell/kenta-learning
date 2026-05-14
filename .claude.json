@@ -558,8 +558,8 @@
       },
       "hasCompletedProjectOnboarding": true,
       "lastHintSessionId": "221613a9-4650-4703-a55f-02d6e9cbb9b5",
-      "lastSessionFirstPrompt": "進めて",
-      "lastSessionModified": 1778754345999,
+      "lastSessionFirstPrompt": "ここからモデルをSONNETに変えても問題ない？",
+      "lastSessionModified": 1778754656809,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.141"
     }
