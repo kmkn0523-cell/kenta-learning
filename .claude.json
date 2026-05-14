@@ -580,9 +580,9 @@
         "pre_tool_hook_duration_ms_p99": 26.74
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "78c629b7-5aa8-44a0-8fcf-709b4c7c02c5",
-      "lastSessionFirstPrompt": "オートコンパクトを今後オンにして",
-      "lastSessionModified": 1778715291426,
+      "lastHintSessionId": "a8f0d91f-66be-458a-9eac-6aa2cb3888f4",
+      "lastSessionFirstPrompt": "Claude Code GitHub Actions　ってなに？",
+      "lastSessionModified": 1778731091459,
       "exampleFilesGeneratedAt": 1778186680225,
       "lastVersionBase": "2.1.140"
     }
