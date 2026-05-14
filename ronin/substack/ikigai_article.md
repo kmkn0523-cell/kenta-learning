@@ -102,3 +102,45 @@ Maybe that's your craft. Maybe it's a relationship. Maybe it's a physical practi
 The Samurai understood this. A warrior whose *ikigai* was only combat was a warrior without an inner life — brittle, purposeless in peacetime, and dangerous to himself. The great ones cultivated multiple sources of meaning: poetry, calligraphy, the tea ceremony, loyalty to a lord, love of a craft.
 
 They didn't find purpose. They built it, piece by piece, day by day.
+
+---
+
+## The 7 Questions That Find What the Diagram Can't
+
+The following questions are not a framework. They're not a system. They're an invitation to pay attention to what's already there.
+
+Take these to a journal. Give each one ten minutes. Don't aim for a final answer — aim for honesty.
+
+---
+
+**1. What did you do this week that made time disappear?**
+
+Not what you were proud of or what someone else praised. What made an hour feel like ten minutes? Flow states are one of the clearest signals the body gives about genuine engagement. Note it, even if it seems trivial.
+
+**2. What would you do even if no one paid you or praised you for it?**
+
+Strip away the audience. Strip away the income. What would remain? This isn't about finding a career — it's about locating desire that isn't borrowed from other people's expectations.
+
+**3. What small moment this week made you feel most alive?**
+
+Not happy, necessarily. *Alive*. Present, engaged, real. It might have been a difficult conversation, a physical effort, a moment of beauty. Where did life feel most concentrated?
+
+**4. What skill do you have that feels natural to you but effortful to others?**
+
+Not what you've been trained for — what you're wired for. The thing you do without thinking that others find impressive or mysterious. This is often closer to your *ikigai* than any passion you can name.
+
+**5. What do people thank you for, without you asking?**
+
+The specific way you show up that others notice. Not your job title. Not your achievements. The quality of your presence, your listening, your way of solving a problem or holding a difficult moment.
+
+**6. What would you regret not doing at the end of your life?**
+
+Not what you want to achieve. What you would regret *not having been*. This question usually bypasses the ego's ambitions and goes straight to what actually matters.
+
+**7. What would the 80-year-old version of you say to you right now?**
+
+Not to comfort you. To tell the truth. The older self has survived the urgency, the comparison, the fear of missing out. What do they see from that vantage point that you can't see yet?
+
+---
+
+You don't need all seven answers to change anything. One honest answer — really honest — is enough to shift your orientation. *Ikigai* is not a destination you reach. It's a direction you practice pointing toward.
