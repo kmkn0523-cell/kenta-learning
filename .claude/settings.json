@@ -67,7 +67,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -c \"[System.Media.SystemSounds]::Exclamation.Play(); Start-Sleep -Milliseconds 800\" 2>/dev/null || true",
+            "command": "powershell.exe -c \"[console]::beep(1000,150); [console]::beep(800,150); [console]::beep(1000,150); [console]::beep(800,400)\" 2>/dev/null || true",
             "async": true
           }
         ]
@@ -78,7 +78,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -c \"[System.Media.SystemSounds]::Asterisk.Play(); Start-Sleep -Milliseconds 800\" 2>/dev/null || true",
+            "command": "powershell.exe -c \"[console]::beep(784,150); [console]::beep(659,150); [console]::beep(523,150); [console]::beep(784,400)\" 2>/dev/null || true",
             "async": true
           },
           {
