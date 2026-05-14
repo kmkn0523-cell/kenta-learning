@@ -74,3 +74,31 @@ One is a treasure hunt with no guaranteed ending. The other is a daily practice 
 The Okinawan elders didn't wake up each morning because they had found the perfect intersection of passion and income. They woke up because there were people who needed them, plants that needed watering, and a bowl of miso soup that wouldn't make itself.
 
 That, it turns out, is enough.
+
+---
+
+## The Tyranny of the Perfect Purpose
+
+Here is what the Western *ikigai* framework quietly does to you.
+
+It tells you that your life has a *correct answer* — and that until you've found it, you're living incorrectly. It says your work should be your passion. Your passion should serve the world. The world should pay you for it. And you should be good at it too, or it doesn't count.
+
+By those standards, most people on earth have no *ikigai*. The fisherman doesn't qualify. The grandmother doesn't qualify. The retired engineer teaching origami doesn't qualify.
+
+This framework doesn't liberate you. It paralyzes you.
+
+There's a phenomenon psychologist Barry Schwartz called *the paradox of choice* — the finding that more options don't make people happier, they make them more anxious, more prone to regret, and less able to choose. The Western *ikigai* diagram applies this paradox directly to the question of meaning: it turns the open landscape of a good life into a high-stakes optimization problem.
+
+The result? People who spend their thirties anxious about whether they've found their "true calling." People who leave perfectly meaningful jobs because they don't also qualify as passions. People who feel like failures because their *ikigai* diagram doesn't produce a clean answer.
+
+This is not a Japanese problem. Japan consistently ranks among the highest in the world for sense of life meaning in elderly populations — precisely because the culture doesn't demand that meaning come from one dramatic source.
+
+Your *ikigai* is allowed to be small. It's allowed to be multiple things. It's allowed to change as you change. It doesn't need to make you money. It doesn't need to save the world.
+
+It just needs to make you feel that being alive today is worth something.
+
+Maybe that's your craft. Maybe it's a relationship. Maybe it's a physical practice, a creative habit, or the quiet ritual of a morning you've built for yourself.
+
+The Samurai understood this. A warrior whose *ikigai* was only combat was a warrior without an inner life — brittle, purposeless in peacetime, and dangerous to himself. The great ones cultivated multiple sources of meaning: poetry, calligraphy, the tea ceremony, loyalty to a lord, love of a craft.
+
+They didn't find purpose. They built it, piece by piece, day by day.
