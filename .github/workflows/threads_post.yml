@@ -70,6 +70,9 @@ jobs:
           git add skin/skin_threads_progress.json
           if ! git diff --staged --quiet; then
             git commit -m "自動同期: skin Threads進捗更新"
-            git pull --rebase origin main
-            git push
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
           fi
