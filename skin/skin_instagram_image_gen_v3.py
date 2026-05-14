@@ -50,8 +50,9 @@ def make_base_image() -> tuple:
 
 
 def draw_text_wrapped(draw, text: str, x: int, y: int, max_width: int,
-                      font: ImageFont.FreeTypeFont, color: tuple, line_spacing: int = 12) -> int:
-    """長いテキストを折り返して描画し、描画後のY座標を返す"""
+                      font: ImageFont.FreeTypeFont, color: tuple, line_spacing: int = 12,
+                      dry_run: bool = False) -> int:
+    """長いテキストを折り返して描画し、描画後のY座標を返す。dry_run=Trueなら描画せず高さだけ計算"""
     # 1文字あたりの幅を概算して折り返し文字数を決める
     bbox       = font.getbbox('あ')
     char_width = bbox[2] - bbox[0]
@@ -65,7 +66,8 @@ def draw_text_wrapped(draw, text: str, x: int, y: int, max_width: int,
     current_y = y
     line_height = font.getbbox('あ')[3] - font.getbbox('あ')[1]
     for line in lines:
-        draw.text((x, current_y), line, font=font, fill=color)
+        if not dry_run:
+            draw.text((x, current_y), line, font=font, fill=color)
         current_y += line_height + line_spacing
     return current_y
 
