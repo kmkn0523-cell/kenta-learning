@@ -66,7 +66,7 @@
         ]
       }
     ],
-    "Notification": [
+    "PermissionRequest": [
       {
         "hooks": [
           {
