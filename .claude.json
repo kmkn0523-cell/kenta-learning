@@ -1,5 +1,5 @@
 {
-  "numStartups": 95,
+  "numStartups": 96,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -469,7 +469,7 @@
   "sonnet1m45MigrationComplete": true,
   "migrationVersion": 13,
   "userID": "e1e0b328f95cdab91c6b1ec207de9a11f08e9c77b3d1d6fac6eadfd7503f91bb",
-  "changelogLastFetched": 1778645900839,
+  "changelogLastFetched": 1778742568693,
   "oauthAccount": {
     "accountUuid": "bf7efc70-b78a-4fb9-bdc2-c371585a6b66",
     "emailAddress": "kmkn0523@gmail.com",
@@ -584,7 +584,7 @@
       "lastSessionFirstPrompt": "ここでの作業が完了したタイミングとか、承認を求められたタイミングで作業が完了＆一時停止した時に気が付きやすいように、何かしらの効果音が鳴るようにしてほしい。",
       "lastSessionModified": 1778742408878,
       "exampleFilesGeneratedAt": 1778186680225,
-      "lastVersionBase": "2.1.140"
+      "lastVersionBase": "2.1.141"
     }
   },
   "penguinModeOrgEnabled": false,
