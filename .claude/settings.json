@@ -58,6 +58,10 @@
           {
             "type": "command",
             "command": "python3 /home/kenta_kamijyo/.claude/model_suggest.py"
+          },
+          {
+            "type": "command",
+            "command": "date +%s > /tmp/claude_task_start"
           }
         ]
       }
@@ -78,7 +82,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -c \"[console]::beep(784,150); [console]::beep(659,150); [console]::beep(523,150); [console]::beep(784,400)\" 2>/dev/null || true",
+            "command": "start=$(cat /tmp/claude_task_start 2>/dev/null || echo 0); elapsed=$(( $(date +%s) - start )); [ $elapsed -ge 30 ] && powershell.exe -c \"[console]::beep(784,150); [console]::beep(659,150); [console]::beep(523,150); [console]::beep(784,400)\" 2>/dev/null || true",
             "async": true
           },
           {
