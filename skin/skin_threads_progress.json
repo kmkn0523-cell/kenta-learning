@@ -1,5 +1,5 @@
 {
-  "daily_index": 47,
+  "daily_index": 48,
   "launch_index": 0,
   "history": [
     {
@@ -2909,8 +2909,14 @@
       "theme": "AB_B_洗顔料を変えすぎ",
       "ab_group": "B",
       "post_id": "18079915562169293"
+    },
+    {
+      "date": "2026/05/15 18:00",
+      "theme": "添加物・加工食品と肌",
+      "ab_group": "A",
+      "post_id": "17884576482395235"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 1
 }
