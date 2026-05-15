@@ -1,5 +1,5 @@
 {
-  "daily_index": 45,
+  "daily_index": 46,
   "launch_index": 0,
   "history": [
     {
@@ -2885,8 +2885,14 @@
       "theme": "AB_B_枕カバーの落とし穴",
       "ab_group": "B",
       "post_id": "17932281426263915"
+    },
+    {
+      "date": "2026/05/15 08:02",
+      "theme": "生理周期と肌",
+      "ab_group": "A",
+      "post_id": "18113247106829729"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 7
 }
