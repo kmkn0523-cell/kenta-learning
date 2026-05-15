@@ -2891,8 +2891,14 @@
       "theme": "生理周期と肌",
       "ab_group": "A",
       "post_id": "17899932267434281"
+    },
+    {
+      "date": "2026/05/15 11:32",
+      "theme": "AB_B_引き算スキンケア",
+      "ab_group": "B",
+      "post_id": "18097548089024398"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 7
+  "ab_next": "A",
+  "ab_b_index": 0
 }
