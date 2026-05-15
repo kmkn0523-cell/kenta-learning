@@ -1,5 +1,5 @@
 {
-  "numStartups": 101,
+  "numStartups": 102,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -34,6 +34,7 @@
     "git-worktrees": 91
   },
   "promptQueueUseCount": 35,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_ember_latch": true,
     "tengu_sepia_moth": false,
@@ -589,9 +590,9 @@
         "pre_tool_hook_duration_ms_p99": 14.439999999999998
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "f6e1862a-53cf-4faf-9903-f7f30cf06363",
-      "lastSessionFirstPrompt": "Run git config --local user.email \"github-actions[bot]@users.noreply.github.com\" [main 68b64ce] 自動同期: Ronin進捗更新  1 file changed, 7 insertions(+), 1 deletion(-) From https://github.com/kmkn0523-cell/ke",
-      "lastSessionModified": 1778819798054,
+      "lastHintSessionId": "87fd1fdb-8c20-4d2f-91f1-51c6a41c0c90",
+      "lastSessionFirstPrompt": "ファイナンスアプリを参照して、より使いやすく便利な機能",
+      "lastSessionModified": 1778847709840,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.142"
     }
@@ -648,8 +649,8 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 11,
-      "lastUsedAt": 1778803938092
+      "usageCount": 12,
+      "lastUsedAt": 1778847723892
     },
     "superpowers:writing-plans": {
       "usageCount": 10,
