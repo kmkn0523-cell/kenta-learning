@@ -137,14 +137,22 @@ def publish_media(creation_id):
             if "id" in data:
                 return data  # 成功
 
-            # is_transient=True（Meta側の一時障害）なら待ってリトライ
             error_info = data.get("error", {})
-            if error_info.get("is_transient") and attempt < 3:
+            error_code = error_info.get("code")
+
+            # レート制限（1日50投稿の上限）: リトライしても意味がないので即終了
+            # is_transient=False かつ code=4 がその目印
+            if not error_info.get("is_transient", False):
+                print(f"❌ 投稿公開失敗（試行{attempt}/3）: {data}")
+                if error_code == 4:
+                    # 特別なキーを入れてmainに「レート制限」と伝える
+                    return {"rate_limited": True}
+                return {}
+
+            # is_transient=True（Meta側の一時障害）なら待ってリトライ
+            if attempt < 3:
                 print(f"  ⚠️ 一時的なAPIエラー（試行{attempt}/3）。30秒後にリトライします...")
                 time.sleep(30)
-            else:
-                print(f"❌ 投稿公開失敗（試行{attempt}/3）: {data}")
-                return {}
 
         except requests.exceptions.Timeout:
             print(f"❌ タイムアウト（試行{attempt}/3）: 投稿公開に失敗しました")
