@@ -14,6 +14,8 @@ jobs:
   post_and_analyze:
     # Ubuntu最新版の環境で実行
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Node.js 24を使う（Node.js 20廃止対応）
     steps:
       # リポジトリのコードをチェックアウト
       - uses: actions/checkout@v4

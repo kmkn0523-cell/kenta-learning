@@ -13,6 +13,8 @@ on:
 jobs:
   post:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Node.js 24を使う（Node.js 20廃止対応）
 
     permissions:
       contents: write  # 進捗ファイルをコミットするために必要
