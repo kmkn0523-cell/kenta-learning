@@ -2915,8 +2915,14 @@
       "theme": "添加物・加工食品と肌",
       "ab_group": "A",
       "post_id": "17884576482395235"
+    },
+    {
+      "date": "2026/05/15 20:00",
+      "theme": "AB_B_睡眠と肌",
+      "ab_group": "B",
+      "post_id": "17867102586654023"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 1
+  "ab_next": "A",
+  "ab_b_index": 2
 }
