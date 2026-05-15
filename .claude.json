@@ -1,5 +1,5 @@
 {
-  "numStartups": 98,
+  "numStartups": 99,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -516,74 +516,74 @@
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [
+        "skin_threads_action.py",
         "ronin_threads_action.py",
+        "theme01_slide2.png",
         "skin_threads_auto_post.py",
-        "linkedin_auto_post.py",
-        "day01.png",
-        "get_instagram_id.py"
+        "linkedin_auto_post.py"
       ],
       "lastGracefulShutdown": false,
-      "lastCost": 43.07718505000003,
-      "lastAPIDuration": 6414480,
-      "lastAPIDurationWithoutRetries": 5887422,
-      "lastToolDuration": 1316911,
-      "lastDuration": 62617857,
-      "lastLinesAdded": 3269,
-      "lastLinesRemoved": 431,
-      "lastTotalInputTokens": 34884,
-      "lastTotalOutputTokens": 259341,
-      "lastTotalCacheCreationInputTokens": 2099499,
-      "lastTotalCacheReadInputTokens": 107406677,
+      "lastCost": 1.3689171499999992,
+      "lastAPIDuration": 316437,
+      "lastAPIDurationWithoutRetries": 316238,
+      "lastToolDuration": 186548,
+      "lastDuration": 631649,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 2858,
+      "lastTotalOutputTokens": 12007,
+      "lastTotalCacheCreationInputTokens": 100673,
+      "lastTotalCacheReadInputTokens": 2681808,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 2.02,
-      "lastFpsLow1Pct": 204.49,
+      "lastFpsAverage": 13.26,
+      "lastFpsLow1Pct": 527.74,
       "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 3680,
-          "outputTokens": 17069,
-          "cacheReadInputTokens": 2568119,
-          "cacheCreationInputTokens": 128413,
-          "webSearchRequests": 0,
-          "costUSD": 0.5063531500000001
-        },
         "claude-sonnet-4-6": {
-          "inputTokens": 31204,
-          "outputTokens": 242272,
-          "cacheReadInputTokens": 104838558,
-          "cacheCreationInputTokens": 1971086,
+          "inputTokens": 2089,
+          "outputTokens": 11978,
+          "cacheReadInputTokens": 2681808,
+          "cacheCreationInputTokens": 100673,
           "webSearchRequests": 0,
-          "costUSD": 42.57083190000004
+          "costUSD": 1.3680031499999992
+        },
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 769,
+          "outputTokens": 29,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.0009140000000000001
         }
       },
-      "lastSessionId": "791b20a9-dbe1-4812-b98e-0ea6bb15de45",
+      "lastSessionId": "951cfd01-9124-44de-a0f9-e70c715db1c4",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 125296,
-        "frame_duration_ms_min": 0.0687750019133091,
-        "frame_duration_ms_max": 189.4736349992454,
-        "frame_duration_ms_avg": 1.1071094964259145,
-        "frame_duration_ms_p50": 0.9464429994113743,
-        "frame_duration_ms_p95": 1.8418111005797981,
-        "frame_duration_ms_p99": 2.9737680315226314,
-        "hook_duration_ms_count": 408,
+        "frame_duration_ms_count": 8355,
+        "frame_duration_ms_min": 0.057911000039894134,
+        "frame_duration_ms_max": 17.58363000000827,
+        "frame_duration_ms_avg": 0.5369320482343067,
+        "frame_duration_ms_p50": 0.4980340000183787,
+        "frame_duration_ms_p95": 0.9180496000000856,
+        "frame_duration_ms_p99": 1.8377817499871876,
+        "hook_duration_ms_count": 8,
         "hook_duration_ms_min": 0,
-        "hook_duration_ms_max": 18407,
-        "hook_duration_ms_avg": 572.6960784313726,
-        "hook_duration_ms_p50": 32,
-        "hook_duration_ms_p95": 1765.5499999999997,
-        "hook_duration_ms_p99": 14488.820000000007,
-        "pre_tool_hook_duration_ms_count": 560,
+        "hook_duration_ms_max": 1956,
+        "hook_duration_ms_avg": 500.375,
+        "hook_duration_ms_p50": 248,
+        "hook_duration_ms_p95": 1613.3499999999995,
+        "hook_duration_ms_p99": 1887.4699999999998,
+        "pre_tool_hook_duration_ms_count": 59,
         "pre_tool_hook_duration_ms_min": 0,
-        "pre_tool_hook_duration_ms_max": 41,
-        "pre_tool_hook_duration_ms_avg": 2.317857142857143,
+        "pre_tool_hook_duration_ms_max": 1,
+        "pre_tool_hook_duration_ms_avg": 0.2542372881355932,
         "pre_tool_hook_duration_ms_p50": 0,
-        "pre_tool_hook_duration_ms_p95": 21,
-        "pre_tool_hook_duration_ms_p99": 28.409999999999968
+        "pre_tool_hook_duration_ms_p95": 1,
+        "pre_tool_hook_duration_ms_p99": 1
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "951cfd01-9124-44de-a0f9-e70c715db1c4",
-      "lastSessionFirstPrompt": "RoninWords Substack — 完成状況    項目: Ikigai有料記事   状況: ✅ 公開・フォーマット修正済み・ペイウォール設定済み   ────────────────────────────────────────   項目: 無料記事3本（Shokunin / Ma / Hara Hachi Bu）   状況: ✅ 公開済み   ────────────────────",
-      "lastSessionModified": 1778777719548,
-      "exampleFilesGeneratedAt": 1778186680225,
+      "lastHintSessionId": "6e5d3790-ebac-4a03-9248-e12220484726",
+      "lastSessionFirstPrompt": "サブスタックのプロフィール考えて",
+      "lastSessionModified": 1778803934992,
+      "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.141"
     }
   },
@@ -595,7 +595,7 @@
   "additionalModelCostsCache": {},
   "groveConfigCache": {
     "bf7efc70-b78a-4fb9-bdc2-c371585a6b66": {
-      "timestamp": 1778715020653
+      "timestamp": 1778803919509
     }
   },
   "closedIssuesLastChecked": 1778775696153,
@@ -639,8 +639,8 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 10,
-      "lastUsedAt": 1778744820290
+      "usageCount": 11,
+      "lastUsedAt": 1778803938092
     },
     "superpowers:writing-plans": {
       "usageCount": 10,
