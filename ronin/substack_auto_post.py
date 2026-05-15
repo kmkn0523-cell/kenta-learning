@@ -5,7 +5,9 @@
 import os           # パソコンの環境変数を読み込む道具
 import re           # 文字列のパターン検索をする道具
 import json         # JSONファイルを読み書きする道具
+import base64       # 画像をbase64形式に変換する道具
 import requests     # インターネットにリクエストを送る道具
+from urllib.parse import unquote         # URLエンコードを元に戻す道具
 from datetime import datetime, timezone  # 日時を扱う道具
 from dotenv import load_dotenv           # .envファイルからAPIキーを読み込む道具
 
@@ -89,8 +91,9 @@ def get_session():
         raise ValueError("SUBSTACK_SID が .env に設定されていません")
 
     session = requests.Session()
-    # substack.sid クッキーをセットして認証する
-    session.cookies.set("substack.sid", SUBSTACK_SID, domain=".substack.com")
+    # .env の値はURLエンコードされているのでデコードしてからセットする
+    sid_decoded = unquote(SUBSTACK_SID)
+    session.cookies.set("substack.sid", sid_decoded, domain=".substack.com")
     session.headers.update({
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                       "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -103,16 +106,21 @@ def get_session():
 def upload_image(session, image_path):
     """画像を Substack の CDN にアップロードして URL を返す"""
     with open(image_path, "rb") as f:
-        response = session.post(
-            "https://substack.com/api/v1/image",
-            files={"image": ("image.png", f, "image/png")},
-        )
+        image_bytes = f.read()
+
+    # Substack API は base64 エンコードした画像を JSON で受け取る
+    b64 = base64.b64encode(image_bytes).decode("utf-8")
+    payload = {"image": f"data:image/png;base64,{b64}"}
+
+    response = session.post(
+        f"{PUBLICATION_URL}/api/v1/image",
+        json=payload,
+    )
 
     if response.status_code != 200:
         raise RuntimeError(f"画像アップロード失敗 [{response.status_code}]: {response.text}")
 
     data = response.json()
-    # レスポンスの形式に応じてURLを取り出す
     url = data.get("url") or data.get("image_url") or data.get("uri")
     if not url:
         raise RuntimeError(f"画像URLが取得できませんでした: {data}")
@@ -142,6 +150,7 @@ def build_post_html(proverb, image_url):
 def create_and_publish_post(session, title, body_html):
     """Substack に記事を作成して無料公開する（2ステップ）"""
     # Step 1: ドラフトを作成する
+    # draft_bylines には著者のユーザーIDを渡す（is_guest=False で本人投稿）
     draft_payload = {
         "draft_title":      title,
         "draft_body":       body_html,
@@ -149,9 +158,10 @@ def create_and_publish_post(session, title, body_html):
         "type":             "newsletter",
         "draft_section_id": None,
         "audience":         "everyone",  # 全員（無料）公開
+        "draft_bylines":    [{"id": 509075677, "is_guest": False}],
     }
     resp = session.post(
-        f"{PUBLICATION_URL}/api/v1/posts",
+        f"{PUBLICATION_URL}/api/v1/drafts",
         json=draft_payload,
         headers={"Content-Type": "application/json"},
     )
@@ -161,13 +171,12 @@ def create_and_publish_post(session, title, body_html):
     post     = resp.json()
     post_id  = post["id"]
 
-    # Step 2: ドラフトを公開する
+    # Step 2: ドラフトを公開する（drafts/{id}/publish エンドポイント）
     publish_payload = {
-        "draft":    False,
         "audience": "everyone",
     }
-    resp2 = session.put(
-        f"{PUBLICATION_URL}/api/v1/posts/{post_id}",
+    resp2 = session.post(
+        f"{PUBLICATION_URL}/api/v1/drafts/{post_id}/publish",
         json=publish_payload,
         headers={"Content-Type": "application/json"},
     )
