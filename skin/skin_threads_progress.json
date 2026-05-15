@@ -2867,8 +2867,14 @@
       "theme": "血糖値と肌まとめ",
       "ab_group": "A",
       "post_id": "17915549673376438"
+    },
+    {
+      "date": "2026/05/15 02:00",
+      "theme": "AB_B_乾燥なのにニキビ",
+      "ab_group": "B",
+      "post_id": "18102098083890182"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 5
+  "ab_next": "A",
+  "ab_b_index": 6
 }
