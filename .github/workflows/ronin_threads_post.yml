@@ -104,10 +104,18 @@ jobs:
           git add ronin/ronin_threads_progress.json
           if ! git diff --staged --quiet; then
             git commit -m "自動同期: Ronin進捗更新"
+            pushed=false
             for i in 1 2 3; do
-              git pull --rebase origin main && git push && break
+              git pull --rebase origin main
+              if git push; then
+                pushed=true
+                break
+              fi
               echo "push失敗 リトライ $i/3..."
               sleep 5
             done
+            if [ "$pushed" = "false" ]; then
+              echo "⚠ push全試行失敗（Threads投稿は成功済み・キャッシュに保存済み）"
+            fi
           fi
 
