@@ -179,8 +179,10 @@ def main():
     hashtags = " ".join(post.get("hashtags", []))
     caption = post["content"] + CTA + "\n\n" + hashtags
 
-    # 画像URLを組み立てる（例: day01.png）
-    image_filename = f"day{day:02d}.png"  # day1 → "day01.png"
+    # 画像URLを組み立てる（投稿インデックスから決める → 連続投稿で同じ画像が使われるのを防ぐ）
+    # 100枚の画像をインデックス順に使い、101枚目以降は最初に戻る
+    image_num = (current_index % 100) + 1
+    image_filename = f"day{image_num:02d}.png"
     image_url = f"{GITHUB_RAW_BASE}/{image_filename}"
 
     time_label = "朝" if post["type"] == "morning" else "夜"
