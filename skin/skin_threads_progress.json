@@ -1,5 +1,5 @@
 {
-  "daily_index": 48,
+  "daily_index": 49,
   "launch_index": 0,
   "history": [
     {
@@ -2921,8 +2921,14 @@
       "theme": "AB_B_睡眠と肌",
       "ab_group": "B",
       "post_id": "17867102586654023"
+    },
+    {
+      "date": "2026/05/15 22:00",
+      "theme": "口呼吸と肌荒れ",
+      "ab_group": "A",
+      "post_id": "18266129815293714"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 2
 }
