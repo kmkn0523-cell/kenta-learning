@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-14T12:21:23.022621",
+  "last_updated": "2026-05-15T12:25:00.801644",
   "posts_history": [
     {
       "day": 28,
@@ -286,6 +286,61 @@
       "shares": 0,
       "views": 8,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 46,
+      "type": "生理周期と肌",
+      "post_id": "17899932267434281",
+      "posted_at": "2026-05-15T09:35:52+0000",
+      "likes": 2,
+      "comments": 0,
+      "shares": 0,
+      "views": 42,
+      "engagement_rate": 4.76
+    },
+    {
+      "day": 46,
+      "type": "生理周期と肌",
+      "post_id": "18113247106829729",
+      "posted_at": "2026-05-15T08:03:14+0000",
+      "likes": 2,
+      "comments": 0,
+      "shares": 0,
+      "views": 36,
+      "engagement_rate": 5.56
+    },
+    {
+      "day": 45,
+      "type": "花粉・アレルギーと肌",
+      "post_id": "17963211768119670",
+      "posted_at": "2026-05-15T04:01:07+0000",
+      "likes": 2,
+      "comments": 0,
+      "shares": 0,
+      "views": 19,
+      "engagement_rate": 10.53
+    },
+    {
+      "day": 44,
+      "type": "血糖値と肌まとめ",
+      "post_id": "17915549673376438",
+      "posted_at": "2026-05-15T00:01:12+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 1,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 43,
+      "type": "食物繊維と腸",
+      "post_id": "18099461017852326",
+      "posted_at": "2026-05-14T20:01:15+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 11,
+      "engagement_rate": 9.09
     }
   ]
 }
