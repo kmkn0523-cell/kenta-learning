@@ -99,7 +99,7 @@
           },
           {
             "type": "command",
-            "command": "cd /home/kenta_kamijyo && git add . && (git diff --cached --quiet || git commit -m \"自動同期: $(date '+%Y/%m/%d %H:%M')\") && git push 2>/dev/null || true",
+            "command": "cd /home/kenta_kamijyo && git add -u && (git diff --cached --quiet || git commit -m \"自動同期: $(date '+%Y/%m/%d %H:%M')\") && git push 2>/dev/null || true",
             "statusMessage": "GitHubに保存中..."
           }
         ]

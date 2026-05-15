@@ -1,6 +1,6 @@
 # TODO リスト
 
-最終更新: 2026/05/07（LinkedInオートメーション実装完了・アカウント作成待ち）
+最終更新: 2026/05/15（GitHub Actionsワークフロー全面整備完了）
 
 ---
 
@@ -161,6 +161,12 @@
 - [x] Facebook認証問題を解決してAPIキー取得（skin + ronin両方）
 - [x] cron混雑回避修正（skin=7分・ronin=17分発火）
 - [x] 60日後トークン期限リマインドをスケジュール予約（2026/06/20 9:00）
+- [x] GitHub Actionsワークフロー全面整備（2026/05/15）
+  - 全11ワークフローに `concurrency: group: git-push-main` 追加（push競合完全解消）
+  - 全ワークフローに `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` 追加（Node.js 20廃止対応）
+  - 全ワークフローのgit pushに3回リトライループ追加
+  - skin_instagram_watchdog を48回/日 → 8回/日に削減
+  - ronin/skinアナリティクスのgit設定バグ修正（|| true → if guard）
 - [ ] 投稿ログを1箇所にまとめて見られるようにする
 
 ---
