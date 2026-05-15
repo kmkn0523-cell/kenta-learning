@@ -2903,8 +2903,14 @@
       "theme": "体温と肌",
       "ab_group": "A",
       "post_id": "18063848333697618"
+    },
+    {
+      "date": "2026/05/15 16:00",
+      "theme": "AB_B_洗顔料を変えすぎ",
+      "ab_group": "B",
+      "post_id": "18079915562169293"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 0
+  "ab_next": "A",
+  "ab_b_index": 1
 }
