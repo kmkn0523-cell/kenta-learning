@@ -580,9 +580,9 @@
         "pre_tool_hook_duration_ms_p99": 0
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "6e5d3790-ebac-4a03-9248-e12220484726",
-      "lastSessionFirstPrompt": "サブスタックのプロフィール考えて",
-      "lastSessionModified": 1778803934992,
+      "lastHintSessionId": "8afc5bb6-265f-4f55-b9f3-13faaa4b8bc2",
+      "lastSessionFirstPrompt": "エラー？",
+      "lastSessionModified": 1778805185254,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.142"
     }
