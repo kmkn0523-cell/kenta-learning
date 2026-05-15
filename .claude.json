@@ -589,9 +589,9 @@
         "pre_tool_hook_duration_ms_p99": 14.439999999999998
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "1605302f-a232-4374-9236-1cd08d2c0ccf",
-      "lastSessionFirstPrompt": "Substackのプロフィールページにアクセ   スしてAboutページの内容を入力して",
-      "lastSessionModified": 1778805864285,
+      "lastHintSessionId": "2b6cfaed-d055-49ce-82f9-39f1af28ecbb",
+      "lastSessionFirstPrompt": "ローニンのインスタ自動投稿がバグってる。同じのが投稿されてるから修正して",
+      "lastSessionModified": 1778816882366,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.142"
     }
@@ -668,8 +668,8 @@
       "lastUsedAt": 1778745411215
     },
     "superpowers:systematic-debugging": {
-      "usageCount": 1,
-      "lastUsedAt": 1778513134212
+      "usageCount": 2,
+      "lastUsedAt": 1778816885788
     },
     "insights": {
       "usageCount": 1,
