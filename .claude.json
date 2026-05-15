@@ -591,8 +591,8 @@
       },
       "hasCompletedProjectOnboarding": true,
       "lastHintSessionId": "24e01006-1d83-4b09-b15f-1b4021bd8d86",
-      "lastSessionFirstPrompt": "繋がった？",
-      "lastSessionModified": 1778885604037,
+      "lastSessionFirstPrompt": "このリモートは、別ターミナルは同期されない？",
+      "lastSessionModified": 1778885640809,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
