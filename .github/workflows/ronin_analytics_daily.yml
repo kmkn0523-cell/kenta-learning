@@ -6,6 +6,11 @@ on:
     - cron: '0 7 * * *'
   workflow_dispatch:
 
+# 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
+concurrency:
+  group: git-push-main
+  cancel-in-progress: false
+
 jobs:
   analytics:
     runs-on: ubuntu-latest

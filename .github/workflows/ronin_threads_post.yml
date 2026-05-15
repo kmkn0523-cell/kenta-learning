@@ -40,6 +40,11 @@ on:
     - cron: '30 13 * * *'
   workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
 
+# 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
+concurrency:
+  group: git-push-main
+  cancel-in-progress: false  # 実行中のジョブを止めず、後から来たジョブを待たせる
+
 jobs:
   post:
     runs-on: ubuntu-latest  # GitHubのサーバーで動かす
