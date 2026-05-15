@@ -127,33 +127,70 @@ def upload_image(session, image_path):
     return url
 
 
-def build_post_html(proverb, image_url):
-    """記事のHTML本文を組み立てる"""
+def build_post_body(proverb, image_url):
+    """記事の本文をSubstack用のProseMirror JSON形式で組み立てる"""
+    # Substack の draft_body は ProseMirror JSON（エディタの内部形式）を文字列で渡す必要がある
+    # type="image" のノードに src/alt を設定すると画像として正しく表示される
     japanese    = proverb["japanese"]
     romanji     = proverb["romanji"]
     english     = proverb["english"]
     explanation = proverb["explanation"]
 
-    html = (
-        f'<div class="captioned-image-container">'
-        f'<figure><img src="{image_url}" alt="{japanese}"></figure>'
-        f'</div>'
-        f'<p><strong>{japanese}</strong><br>'
-        f'<em>{romanji}</em></p>'
-        f'<p>{english}</p>'
-        f'<p>{explanation}</p>'
-        f'<p>— <em>RoninWords</em></p>'
-    )
-    return html
+    doc = {
+        "type": "doc",
+        "content": [
+            # 書道カード画像
+            {
+                "type": "image",
+                "attrs": {
+                    "src":   image_url,
+                    "alt":   japanese,
+                    "title": japanese,
+                }
+            },
+            # 漢字（太字）＋ 読み方（斜体）
+            {
+                "type": "paragraph",
+                "attrs": {"textAlign": None},
+                "content": [
+                    {"type": "text", "marks": [{"type": "strong"}], "text": japanese},
+                    {"type": "hardBreak"},
+                    {"type": "text", "marks": [{"type": "em"}],     "text": romanji},
+                ]
+            },
+            # 英語訳
+            {
+                "type": "paragraph",
+                "attrs": {"textAlign": None},
+                "content": [{"type": "text", "text": english}]
+            },
+            # 説明文
+            {
+                "type": "paragraph",
+                "attrs": {"textAlign": None},
+                "content": [{"type": "text", "text": explanation}]
+            },
+            # 署名
+            {
+                "type": "paragraph",
+                "attrs": {"textAlign": None},
+                "content": [
+                    {"type": "text", "marks": [{"type": "em"}], "text": "— RoninWords"}
+                ]
+            },
+        ]
+    }
+    # ProseMirror JSON は文字列として渡す
+    return json.dumps(doc, ensure_ascii=False)
 
 
-def create_and_publish_post(session, title, body_html):
+def create_and_publish_post(session, title, body_json):
     """Substack に記事を作成して無料公開する（2ステップ）"""
     # Step 1: ドラフトを作成する
     # draft_bylines には著者のユーザーIDを渡す（is_guest=False で本人投稿）
     draft_payload = {
         "draft_title":      title,
-        "draft_body":       body_html,
+        "draft_body":       body_json,
         "draft_subtitle":   "",
         "type":             "newsletter",
         "draft_section_id": None,
@@ -220,11 +257,11 @@ def main():
 
     # 記事タイトルと本文を組み立てる
     title     = f"{proverb['japanese']} — {proverb['english']}"
-    body_html = build_post_html(proverb, image_url)
+    body_json = build_post_body(proverb, image_url)
 
     # 記事を作成して公開する
     print(f"  記事を公開中: {title}")
-    post_id = create_and_publish_post(session, title, body_html)
+    post_id = create_and_publish_post(session, title, body_json)
     print(f"  公開完了! Post ID: {post_id}")
 
     # 進捗を保存する（次回は day+1 から投稿する）
