@@ -217,6 +217,12 @@ def main():
     publish_result = publish_media(creation_id)
 
     if "id" not in publish_result:
+        if publish_result.get("rate_limited"):
+            # 1日の投稿上限に達した場合はスキップ（進捗は進めない）
+            # 次回実行時に同じ投稿を再試行する
+            print("⏭️ Instagramの1日投稿上限に達したためスキップ（24時間後にリセット）")
+            print("📊 進捗は保存しません（次回また同じ投稿から再試行します）")
+            sys.exit(0)  # 正常終了（GitHub Actionsを赤くしない）
         print(f"❌ 投稿公開失敗: {publish_result}")
         sys.exit(1)  # 失敗を GitHub Actions に伝える
 
