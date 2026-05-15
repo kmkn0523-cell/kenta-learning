@@ -1,5 +1,5 @@
 {
-  "daily_index": 46,
+  "daily_index": 47,
   "launch_index": 0,
   "history": [
     {
@@ -2897,8 +2897,14 @@
       "theme": "AB_B_引き算スキンケア",
       "ab_group": "B",
       "post_id": "18097548089024398"
+    },
+    {
+      "date": "2026/05/15 14:00",
+      "theme": "体温と肌",
+      "ab_group": "A",
+      "post_id": "18063848333697618"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 0
 }
