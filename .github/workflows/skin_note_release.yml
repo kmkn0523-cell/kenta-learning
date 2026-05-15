@@ -6,6 +6,11 @@ on:
 permissions:
   contents: write  # ファイルをコミット・プッシュするために必要
 
+# 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
+concurrency:
+  group: git-push-main
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -35,9 +40,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add skin/note_ready.md skin/note_queue_progress.json note_article.html
-          git diff --cached --quiet || git commit -m "自動リリース: 今週のnote記事を展開"
-          git pull --rebase origin main
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "自動リリース: 今週のnote記事を展開"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
 
       - name: GitHub Pages のデプロイを待つ
         run: sleep 60

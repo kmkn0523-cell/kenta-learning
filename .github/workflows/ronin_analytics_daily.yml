@@ -42,9 +42,14 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config user.email "github-action@example.com"
-          git config user.name "GitHub Action"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
           git add ronin/ronin_analytics.json ronin/ronin_optimization_index.json
-          git commit -m "自動更新: ronin analytics $(date '+%Y/%m/%d %H:%M' -u)" || true
-          git pull --rebase origin main
-          git push
+          if ! git diff --staged --quiet; then
+            git commit -m "自動更新: ronin analytics $(date '+%Y/%m/%d %H:%M' -u)"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi

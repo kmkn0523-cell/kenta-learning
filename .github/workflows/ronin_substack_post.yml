@@ -10,6 +10,11 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:  # 手動実行も可能（テスト用）
 
+# 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
+concurrency:
+  group: git-push-main
+  cancel-in-progress: false
+
 jobs:
   post:
     runs-on: ubuntu-latest
@@ -64,6 +69,9 @@ jobs:
           git add ronin/substack/substack_progress.json
           if ! git diff --staged --quiet; then
             git commit -m "自動同期: Substack進捗更新"
-            git pull --rebase origin main
-            git push
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
           fi
