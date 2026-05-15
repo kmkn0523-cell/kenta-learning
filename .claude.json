@@ -33,7 +33,7 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 35,
+  "promptQueueUseCount": 36,
   "cachedGrowthBookFeatures": {
     "tengu_ember_latch": true,
     "tengu_sepia_moth": false,
@@ -607,7 +607,7 @@
       "timestamp": 1778803919509
     }
   },
-  "closedIssuesLastChecked": 1778775696153,
+  "closedIssuesLastChecked": 1778867628133,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {
@@ -664,8 +664,8 @@
       "lastUsedAt": 1778155665086
     },
     "superpowers:subagent-driven-development": {
-      "usageCount": 4,
-      "lastUsedAt": 1778745411215
+      "usageCount": 5,
+      "lastUsedAt": 1778867563552
     },
     "superpowers:systematic-debugging": {
       "usageCount": 2,
