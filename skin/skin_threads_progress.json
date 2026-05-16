@@ -2927,8 +2927,14 @@
       "theme": "口呼吸と肌荒れ",
       "ab_group": "A",
       "post_id": "18266129815293714"
+    },
+    {
+      "date": "2026/05/16 00:00",
+      "theme": "AB_B_ストレスと皮脂",
+      "ab_group": "B",
+      "post_id": "17936765571054378"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 2
+  "ab_next": "A",
+  "ab_b_index": 3
 }
