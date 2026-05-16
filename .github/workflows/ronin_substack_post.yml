@@ -37,7 +37,11 @@ jobs:
 
       # Step 3: 必要なライブラリをインストールする
       - name: ライブラリをインストール
-        run: pip install requests python-dotenv
+        run: pip install playwright python-dotenv
+
+      # Step 3b: Playwright の Chromium ブラウザをインストールする（Cloudflare回避に必要）
+      - name: Playwright Chromium をインストール
+        run: playwright install chromium --with-deps
 
       # Step 4: 進捗ファイルをキャッシュから復元する
       - name: 進捗ファイルをキャッシュから復元

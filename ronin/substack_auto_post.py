@@ -1,15 +1,16 @@
 # substack_auto_post.py
 # 書道カード画像 + 諺テキストを Substack に自動投稿するスクリプト
+# Playwright（実ブラウザ）でCloudflareのボット検知を回避する
 # 使い方: python3 substack_auto_post.py
 
 import os           # パソコンの環境変数を読み込む道具
 import re           # 文字列のパターン検索をする道具
 import json         # JSONファイルを読み書きする道具
-import base64       # 画像をbase64形式に変換する道具
-import requests     # インターネットにリクエストを送る道具
+import time         # 待機処理に使う道具
 from urllib.parse import unquote         # URLエンコードを元に戻す道具
 from datetime import datetime, timezone  # 日時を扱う道具
 from dotenv import load_dotenv           # .envファイルからAPIキーを読み込む道具
+from playwright.sync_api import sync_playwright  # 実ブラウザ操作ライブラリ（Cloudflare回避）
 
 # .envファイルを読み込む
 load_dotenv()
@@ -17,7 +18,7 @@ load_dotenv()
 # =============================
 # 設定
 # =============================
-SUBSTACK_SID     = os.getenv("SUBSTACK_SID")       # Substackのセッションクッキー
+SUBSTACK_SID     = os.getenv("SUBSTACK_SID")          # Substackのセッションクッキー
 PUBLICATION_URL  = "https://roninwords.substack.com"  # パブリケーションのURL
 # GitHub Pages の画像ベースURL（Substack CDNへのアップロードはCloudflareでブロックされるため）
 GITHUB_PAGES_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_images"
@@ -108,53 +109,8 @@ def parse_proverbs():
 
 
 # =============================
-# Substack API 操作
+# 記事本文の組み立て
 # =============================
-def get_session():
-    """Substackの認証情報を持ったセッションを作る"""
-    if not SUBSTACK_SID:
-        raise ValueError("SUBSTACK_SID が .env に設定されていません")
-
-    session = requests.Session()
-    # .env の値はURLエンコードされているのでデコードしてからセットする
-    sid_decoded = unquote(SUBSTACK_SID)
-    session.cookies.set("substack.sid", sid_decoded, domain=".substack.com")
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                      "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Origin":     "https://substack.com",
-        "Referer":    "https://substack.com/",
-    })
-    return session
-
-
-def upload_image(session, image_path):
-    """画像を Substack の CDN にアップロードして URL を返す"""
-    with open(image_path, "rb") as f:
-        image_bytes = f.read()
-
-    # Substack API は base64 エンコードした画像を JSON で受け取る
-    b64 = base64.b64encode(image_bytes).decode("utf-8")
-    payload = {"image": f"data:image/png;base64,{b64}"}
-
-    response = session.post(
-        f"{PUBLICATION_URL}/api/v1/image",
-        json=payload,
-    )
-
-    if response.status_code != 200:
-        # stdoutに出力してGitHub Actionsのログに確実に残す
-        print(f"[DEBUG] 画像アップロード失敗 ステータス: {response.status_code}", flush=True)
-        print(f"[DEBUG] レスポンス本文: {response.text[:500]}", flush=True)
-        raise RuntimeError(f"画像アップロード失敗 [{response.status_code}]: {response.text}")
-
-    data = response.json()
-    url = data.get("url") or data.get("image_url") or data.get("uri")
-    if not url:
-        raise RuntimeError(f"画像URLが取得できませんでした: {data}")
-    return url
-
-
 def build_post_body(proverb, image_url):
     """記事の本文をSubstack用のProseMirror JSON形式で組み立てる"""
     # Substack の draft_body は ProseMirror JSON（エディタの内部形式）を文字列で渡す必要がある
@@ -212,43 +168,117 @@ def build_post_body(proverb, image_url):
     return json.dumps(doc, ensure_ascii=False)
 
 
-def create_and_publish_post(session, title, body_json):
-    """Substack に記事を作成して無料公開する（2ステップ）"""
-    # Step 1: ドラフトを作成する
-    # draft_bylines には著者のユーザーIDを渡す（is_guest=False で本人投稿）
-    draft_payload = {
-        "draft_title":      title,
-        "draft_body":       body_json,
-        "draft_subtitle":   "",
-        "type":             "newsletter",
-        "draft_section_id": None,
-        "audience":         "everyone",  # 全員（無料）公開
-        "draft_bylines":    [{"id": 509075677, "is_guest": False}],
-    }
-    resp = session.post(
-        f"{PUBLICATION_URL}/api/v1/drafts",
-        json=draft_payload,
-        headers={"Content-Type": "application/json"},
-    )
-    if resp.status_code not in (200, 201):
-        raise RuntimeError(f"ドラフト作成失敗 [{resp.status_code}]: {resp.text}")
+# =============================
+# Playwright で Substack に投稿
+# =============================
+def create_and_publish_post(proverb, image_url):
+    """Playwright（実ブラウザ）を使ってSubstackに記事を作成・公開する
 
-    post     = resp.json()
-    post_id  = post["id"]
+    CloudflareがGitHub ActionsのIPをrequestsライブラリでブロックするため、
+    実ブラウザ（Chromium）でアクセスしてボット検知を回避する。
+    """
+    if not SUBSTACK_SID:
+        raise ValueError("SUBSTACK_SID が .env に設定されていません")
 
-    # Step 2: ドラフトを公開する（drafts/{id}/publish エンドポイント）
-    publish_payload = {
-        "audience": "everyone",
-    }
-    resp2 = session.post(
-        f"{PUBLICATION_URL}/api/v1/drafts/{post_id}/publish",
-        json=publish_payload,
-        headers={"Content-Type": "application/json"},
-    )
-    if resp2.status_code not in (200, 201):
-        raise RuntimeError(f"公開失敗 [{resp2.status_code}]: {resp2.text}")
+    title     = f"{proverb['japanese']} — {proverb['english']}"
+    body_json = build_post_body(proverb, image_url)
 
-    return post_id
+    # substack.sid クッキーのURLエンコードを解除する
+    sid_decoded = unquote(SUBSTACK_SID)
+
+    with sync_playwright() as p:
+        # Chromiumブラウザを起動（headless=True はGUIなし、サーバー上で動く）
+        browser = p.chromium.launch(headless=True)
+
+        # ブラウザコンテキスト（ブラウザのウィンドウ1枚分）を作成する
+        context = browser.new_context(
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/124.0.0.0 Safari/537.36"
+            )
+        )
+
+        # substack.sid クッキーをブラウザにセットする
+        context.add_cookies([{
+            "name":   "substack.sid",
+            "value":  sid_decoded,
+            "domain": ".substack.com",
+            "path":   "/",
+            "secure": True,
+            "httpOnly": True,
+            "sameSite": "Lax",
+        }])
+
+        page = context.new_page()
+
+        # まず Substack のサイトを開いてCloudflareチャレンジを通過する
+        print(f"  Substackにアクセスしてセッションを確立中...", flush=True)
+        try:
+            page.goto(PUBLICATION_URL, wait_until="networkidle", timeout=60000)
+        except Exception as e:
+            # タイムアウトしても続行（ページが途中まで読み込めていれば十分）
+            print(f"  [INFO] goto タイムアウト（続行）: {e}", flush=True)
+
+        # Cloudflareのチャレンジ解決を待つ（念のため少し待機）
+        time.sleep(3)
+
+        print(f"  現在のURL: {page.url}", flush=True)
+
+        # =============================
+        # Step 1: ドラフトを作成する
+        # =============================
+        draft_payload = {
+            "draft_title":      title,
+            "draft_body":       body_json,
+            "draft_subtitle":   "",
+            "type":             "newsletter",
+            "draft_section_id": None,
+            "audience":         "everyone",  # 全員（無料）公開
+            "draft_bylines":    [{"id": 509075677, "is_guest": False}],
+        }
+
+        print(f"  ドラフト作成中...", flush=True)
+        resp = context.request.post(
+            f"{PUBLICATION_URL}/api/v1/drafts",
+            data=json.dumps(draft_payload),
+            headers={
+                "Content-Type": "application/json",
+                "Origin":       "https://substack.com",
+                "Referer":      PUBLICATION_URL + "/",
+            },
+        )
+
+        print(f"  ドラフト作成レスポンス: {resp.status}", flush=True)
+        if resp.status not in (200, 201):
+            raise RuntimeError(f"ドラフト作成失敗 [{resp.status}]: {resp.text()}")
+
+        post    = resp.json()
+        post_id = post["id"]
+        print(f"  ドラフトID: {post_id}", flush=True)
+
+        # =============================
+        # Step 2: ドラフトを公開する
+        # =============================
+        publish_payload = {"audience": "everyone"}
+
+        print(f"  公開処理中...", flush=True)
+        resp2 = context.request.post(
+            f"{PUBLICATION_URL}/api/v1/drafts/{post_id}/publish",
+            data=json.dumps(publish_payload),
+            headers={
+                "Content-Type": "application/json",
+                "Origin":       "https://substack.com",
+                "Referer":      PUBLICATION_URL + "/",
+            },
+        )
+
+        print(f"  公開レスポンス: {resp2.status}", flush=True)
+        if resp2.status not in (200, 201):
+            raise RuntimeError(f"公開失敗 [{resp2.status}]: {resp2.text()}")
+
+        browser.close()
+        return post_id
 
 
 # =============================
@@ -273,23 +303,17 @@ def main():
     if not os.path.exists(image_path):
         raise RuntimeError(f"画像ファイルが見つかりません: {image_path}")
 
-    print(f"[Day {day}] 投稿開始: {proverb['japanese']}")
-
-    # セッションを作る
-    session = get_session()
+    print(f"[Day {day}] 投稿開始: {proverb['japanese']}", flush=True)
 
     # GitHub Pages の画像URL を直接使う（Substack CDNへのアップロードはCloudflareでブロックされるため）
     image_url = f"{GITHUB_PAGES_BASE}/day{day:02d}.png"
-    print(f"  画像URL: {image_url}")
+    print(f"  画像URL: {image_url}", flush=True)
 
-    # 記事タイトルと本文を組み立てる
-    title     = f"{proverb['japanese']} — {proverb['english']}"
-    body_json = build_post_body(proverb, image_url)
-
-    # 記事を作成して公開する
-    print(f"  記事を公開中: {title}")
-    post_id = create_and_publish_post(session, title, body_json)
-    print(f"  公開完了! Post ID: {post_id}")
+    # 記事を作成して公開する（Playwright経由）
+    title = f"{proverb['japanese']} — {proverb['english']}"
+    print(f"  記事を公開中: {title}", flush=True)
+    post_id = create_and_publish_post(proverb, image_url)
+    print(f"  公開完了! Post ID: {post_id}", flush=True)
 
     # 進捗を保存する（次回は day+1 から投稿する）
     now = datetime.now(timezone.utc).strftime("%Y/%m/%d %H:%M")
@@ -302,7 +326,7 @@ def main():
     progress["next_day"] = day + 1
     save_progress(progress)
 
-    print(f"[Day {day}] 完了。次回は Day {day + 1} を投稿します。")
+    print(f"[Day {day}] 完了。次回は Day {day + 1} を投稿します。", flush=True)
 
 
 if __name__ == "__main__":
