@@ -2963,8 +2963,14 @@
       "theme": "リンパと肌",
       "ab_group": "A",
       "post_id": "17875993545665211"
+    },
+    {
+      "date": "2026/05/16 12:00",
+      "theme": "AB_B_乾燥なのにニキビ",
+      "ab_group": "B",
+      "post_id": "18143718181448950"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 5
+  "ab_next": "A",
+  "ab_b_index": 6
 }
