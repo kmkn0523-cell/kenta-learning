@@ -127,6 +127,7 @@
       }
     }
   },
+  "remoteControlAtStartup": true,
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "spinnerTipsEnabled": false,
