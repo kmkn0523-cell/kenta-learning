@@ -190,7 +190,15 @@ def create_and_publish_post(proverb, image_url):
 
     with sync_playwright() as p:
         # Chromiumブラウザを起動（headless=True はGUIなし、サーバー上で動く）
-        browser = p.chromium.launch(headless=True)
+        # --disable-blink-features=AutomationControlled で自動化フラグを無効化する
+        browser = p.chromium.launch(
+            headless=True,
+            args=[
+                "--disable-blink-features=AutomationControlled",  # Cloudflare検知回避
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+            ],
+        )
 
         # ブラウザコンテキスト（ブラウザのウィンドウ1枚分）を作成する
         context = browser.new_context(
@@ -214,19 +222,25 @@ def create_and_publish_post(proverb, image_url):
 
         page = context.new_page()
 
+        # navigator.webdriver を隠してCloudflareのbot検知を回避する
+        # 各ページ読み込みの前に実行されるJS初期化スクリプト
+        page.add_init_script("""
+            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+            window.chrome = { runtime: {} };
+        """)
+
         # まず Substack のサイトを開いてCloudflareチャレンジを通過する
-        # wait_until="load" にする（networkidle はタイムアウトしやすいため）
         print(f"  Substackにアクセスしてセッションを確立中...", flush=True)
         try:
             page.goto(PUBLICATION_URL, wait_until="load", timeout=30000)
         except Exception as e:
             print(f"  [INFO] goto タイムアウト（続行）: {e}", flush=True)
 
-        # Cloudflareの「Just a moment...」チャレンジが解決するまで待つ
+        # Cloudflareの「Just a moment...」チャレンジが解決するまで最大60秒待つ
         try:
             page.wait_for_function(
                 "document.title !== 'Just a moment...'",
-                timeout=30000,
+                timeout=60000,
             )
             print(f"  Cloudflareチャレンジ通過", flush=True)
         except Exception:
