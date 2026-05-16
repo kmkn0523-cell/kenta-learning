@@ -176,6 +176,8 @@ def create_and_publish_post(proverb, image_url):
 
     CloudflareがGitHub ActionsのIPをrequestsライブラリでブロックするため、
     実ブラウザ（Chromium）でアクセスしてボット検知を回避する。
+    APIリクエストは page.evaluate() でブラウザJS内のfetch()から送る
+    （context.request はブラウザと別クライアントなのでcf_clearanceが使えない）。
     """
     if not SUBSTACK_SID:
         raise ValueError("SUBSTACK_SID が .env に設定されていません")
@@ -213,20 +215,31 @@ def create_and_publish_post(proverb, image_url):
         page = context.new_page()
 
         # まず Substack のサイトを開いてCloudflareチャレンジを通過する
+        # wait_until="load" にする（networkidle はタイムアウトしやすいため）
         print(f"  Substackにアクセスしてセッションを確立中...", flush=True)
         try:
-            page.goto(PUBLICATION_URL, wait_until="networkidle", timeout=60000)
+            page.goto(PUBLICATION_URL, wait_until="load", timeout=30000)
         except Exception as e:
-            # タイムアウトしても続行（ページが途中まで読み込めていれば十分）
             print(f"  [INFO] goto タイムアウト（続行）: {e}", flush=True)
 
-        # Cloudflareのチャレンジ解決を待つ（念のため少し待機）
-        time.sleep(3)
+        # Cloudflareの「Just a moment...」チャレンジが解決するまで待つ
+        try:
+            page.wait_for_function(
+                "document.title !== 'Just a moment...'",
+                timeout=30000,
+            )
+            print(f"  Cloudflareチャレンジ通過", flush=True)
+        except Exception:
+            print(f"  [INFO] Cloudflareチャレンジ待機タイムアウト（続行）", flush=True)
+
+        time.sleep(2)  # クッキー確定のための念のため待機
 
         print(f"  現在のURL: {page.url}", flush=True)
+        print(f"  タイトル: {page.title()}", flush=True)
 
         # =============================
         # Step 1: ドラフトを作成する
+        # ブラウザJS内の fetch() で呼ぶ → cf_clearance クッキーが自動付与される
         # =============================
         draft_payload = {
             "draft_title":      title,
@@ -239,43 +252,59 @@ def create_and_publish_post(proverb, image_url):
         }
 
         print(f"  ドラフト作成中...", flush=True)
-        resp = context.request.post(
-            f"{PUBLICATION_URL}/api/v1/drafts",
-            data=json.dumps(draft_payload),
-            headers={
-                "Content-Type": "application/json",
-                "Origin":       "https://substack.com",
-                "Referer":      PUBLICATION_URL + "/",
+        # page.evaluate() でブラウザ内JSのfetch()を実行する
+        # credentialsを "include" にしてクッキーを送る
+        draft_result = page.evaluate(
+            """async (args) => {
+                const resp = await fetch(args.url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(args.payload),
+                    credentials: 'include',
+                });
+                return { status: resp.status, text: await resp.text() };
+            }""",
+            {
+                "url":     f"{PUBLICATION_URL}/api/v1/drafts",
+                "payload": draft_payload,
             },
         )
 
-        print(f"  ドラフト作成レスポンス: {resp.status}", flush=True)
-        if resp.status not in (200, 201):
-            raise RuntimeError(f"ドラフト作成失敗 [{resp.status}]: {resp.text()}")
+        print(f"  ドラフト作成レスポンス: {draft_result['status']}", flush=True)
+        if draft_result["status"] not in (200, 201):
+            raise RuntimeError(
+                f"ドラフト作成失敗 [{draft_result['status']}]: {draft_result['text'][:500]}"
+            )
 
-        post    = resp.json()
+        post    = json.loads(draft_result["text"])
         post_id = post["id"]
         print(f"  ドラフトID: {post_id}", flush=True)
 
         # =============================
         # Step 2: ドラフトを公開する
         # =============================
-        publish_payload = {"audience": "everyone"}
-
         print(f"  公開処理中...", flush=True)
-        resp2 = context.request.post(
-            f"{PUBLICATION_URL}/api/v1/drafts/{post_id}/publish",
-            data=json.dumps(publish_payload),
-            headers={
-                "Content-Type": "application/json",
-                "Origin":       "https://substack.com",
-                "Referer":      PUBLICATION_URL + "/",
+        publish_result = page.evaluate(
+            """async (args) => {
+                const resp = await fetch(args.url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(args.payload),
+                    credentials: 'include',
+                });
+                return { status: resp.status, text: await resp.text() };
+            }""",
+            {
+                "url":     f"{PUBLICATION_URL}/api/v1/drafts/{post_id}/publish",
+                "payload": {"audience": "everyone"},
             },
         )
 
-        print(f"  公開レスポンス: {resp2.status}", flush=True)
-        if resp2.status not in (200, 201):
-            raise RuntimeError(f"公開失敗 [{resp2.status}]: {resp2.text()}")
+        print(f"  公開レスポンス: {publish_result['status']}", flush=True)
+        if publish_result["status"] not in (200, 201):
+            raise RuntimeError(
+                f"公開失敗 [{publish_result['status']}]: {publish_result['text'][:500]}"
+            )
 
         browser.close()
         return post_id
