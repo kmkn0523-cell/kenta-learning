@@ -1,5 +1,5 @@
 {
-  "daily_index": 52,
+  "daily_index": 53,
   "launch_index": 0,
   "history": [
     {
@@ -2969,8 +2969,14 @@
       "theme": "AB_B_乾燥なのにニキビ",
       "ab_group": "B",
       "post_id": "18143718181448950"
+    },
+    {
+      "date": "2026/05/16 15:00",
+      "theme": "塩分と肌",
+      "ab_group": "A",
+      "post_id": "18105217895491786"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 6
 }
