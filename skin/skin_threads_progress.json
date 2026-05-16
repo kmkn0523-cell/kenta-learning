@@ -2975,8 +2975,14 @@
       "theme": "塩分と肌",
       "ab_group": "A",
       "post_id": "18105217895491786"
+    },
+    {
+      "date": "2026/05/16 17:00",
+      "theme": "AB_B_枕カバーの落とし穴",
+      "ab_group": "B",
+      "post_id": "18192267661367525"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 6
+  "ab_next": "A",
+  "ab_b_index": 7
 }
