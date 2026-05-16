@@ -1,16 +1,15 @@
 # substack_auto_post.py
 # 書道カード画像 + 諺テキストを Substack に自動投稿するスクリプト
-# Playwright（実ブラウザ）でCloudflareのボット検知を回避する
+# curl_cffi: Chrome の TLS フィンガープリントを完全に再現して Cloudflare を回避する
 # 使い方: python3 substack_auto_post.py
 
 import os           # パソコンの環境変数を読み込む道具
 import re           # 文字列のパターン検索をする道具
 import json         # JSONファイルを読み書きする道具
-import time         # 待機処理に使う道具
 from urllib.parse import unquote         # URLエンコードを元に戻す道具
 from datetime import datetime, timezone  # 日時を扱う道具
 from dotenv import load_dotenv           # .envファイルからAPIキーを読み込む道具
-from playwright.sync_api import sync_playwright  # 実ブラウザ操作ライブラリ（Cloudflare回避）
+from curl_cffi import requests as cf     # ChromeのTLSフィンガープリントを模倣してCloudflare回避
 
 # .envファイルを読み込む
 load_dotenv()
@@ -169,15 +168,14 @@ def build_post_body(proverb, image_url):
 
 
 # =============================
-# Playwright で Substack に投稿
+# curl_cffi で Substack に投稿
 # =============================
 def create_and_publish_post(proverb, image_url):
-    """Playwright（実ブラウザ）を使ってSubstackに記事を作成・公開する
+    """curl_cffi（Chrome TLSフィンガープリント偽装）でSubstackに記事を作成・公開する
 
-    CloudflareがGitHub ActionsのIPをrequestsライブラリでブロックするため、
-    実ブラウザ（Chromium）でアクセスしてボット検知を回避する。
-    APIリクエストは page.evaluate() でブラウザJS内のfetch()から送る
-    （context.request はブラウザと別クライアントなのでcf_clearanceが使えない）。
+    curl_cffi は requests ライクなAPIで curl-impersonate をバックエンドに使う。
+    impersonate="chrome124" でTLSハンドシェイク・HTTP/2フレームをChromeと完全一致させ、
+    Cloudflare のフィンガープリント検知を回避する。
     """
     if not SUBSTACK_SID:
         raise ValueError("SUBSTACK_SID が .env に設定されていません")
@@ -188,140 +186,57 @@ def create_and_publish_post(proverb, image_url):
     # substack.sid クッキーのURLエンコードを解除する
     sid_decoded = unquote(SUBSTACK_SID)
 
-    with sync_playwright() as p:
-        # Chromiumブラウザを起動（headless=False + Xvfb仮想ディスプレイでCloudflare headless検知を回避）
-        browser = p.chromium.launch(
-            headless=False,
-            args=[
-                "--disable-blink-features=AutomationControlled",  # Cloudflare検知回避
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-            ],
+    # ChromeのTLSフィンガープリントを使ってリクエストを送るセッションを作る
+    session = cf.Session(impersonate="chrome124")
+
+    # substack.sid クッキーをセットする
+    session.cookies.set("substack.sid", sid_decoded, domain=".substack.com")
+
+    # =============================
+    # Step 1: ドラフトを作成する
+    # =============================
+    draft_payload = {
+        "draft_title":      title,
+        "draft_body":       body_json,
+        "draft_subtitle":   "",
+        "type":             "newsletter",
+        "draft_section_id": None,
+        "audience":         "everyone",  # 全員（無料）公開
+        "draft_bylines":    [{"id": 509075677, "is_guest": False}],
+    }
+
+    print(f"  ドラフト作成中...", flush=True)
+    draft_resp = session.post(
+        f"{PUBLICATION_URL}/api/v1/drafts",
+        json=draft_payload,
+    )
+
+    print(f"  ドラフト作成レスポンス: {draft_resp.status_code}", flush=True)
+    if draft_resp.status_code not in (200, 201):
+        raise RuntimeError(
+            f"ドラフト作成失敗 [{draft_resp.status_code}]: {draft_resp.text[:500]}"
         )
 
-        # ブラウザコンテキスト（ブラウザのウィンドウ1枚分）を作成する
-        context = browser.new_context(
-            user_agent=(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/124.0.0.0 Safari/537.36"
-            )
+    post    = draft_resp.json()
+    post_id = post["id"]
+    print(f"  ドラフトID: {post_id}", flush=True)
+
+    # =============================
+    # Step 2: ドラフトを公開する
+    # =============================
+    print(f"  公開処理中...", flush=True)
+    publish_resp = session.post(
+        f"{PUBLICATION_URL}/api/v1/drafts/{post_id}/publish",
+        json={"audience": "everyone"},
+    )
+
+    print(f"  公開レスポンス: {publish_resp.status_code}", flush=True)
+    if publish_resp.status_code not in (200, 201):
+        raise RuntimeError(
+            f"公開失敗 [{publish_resp.status_code}]: {publish_resp.text[:500]}"
         )
 
-        # substack.sid クッキーをブラウザにセットする
-        context.add_cookies([{
-            "name":   "substack.sid",
-            "value":  sid_decoded,
-            "domain": ".substack.com",
-            "path":   "/",
-            "secure": True,
-            "httpOnly": True,
-            "sameSite": "Lax",
-        }])
-
-        page = context.new_page()
-
-        # navigator.webdriver を undefined に偽装してボット検知を回避する
-        page.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-            window.chrome = { runtime: {} };
-            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
-            Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
-        """)
-
-        # まず Substack のサイトを開いてCloudflareチャレンジを通過する
-        print(f"  Substackにアクセスしてセッションを確立中...", flush=True)
-        try:
-            page.goto(PUBLICATION_URL, wait_until="load", timeout=30000)
-        except Exception as e:
-            print(f"  [INFO] goto タイムアウト（続行）: {e}", flush=True)
-
-        # Cloudflareの「Just a moment...」チャレンジが解決するまで最大60秒待つ
-        try:
-            page.wait_for_function(
-                "document.title !== 'Just a moment...'",
-                timeout=60000,
-            )
-            print(f"  Cloudflareチャレンジ通過", flush=True)
-        except Exception:
-            print(f"  [INFO] Cloudflareチャレンジ待機タイムアウト（続行）", flush=True)
-
-        time.sleep(2)  # クッキー確定のための念のため待機
-
-        print(f"  現在のURL: {page.url}", flush=True)
-        print(f"  タイトル: {page.title()}", flush=True)
-
-        # =============================
-        # Step 1: ドラフトを作成する
-        # ブラウザJS内の fetch() で呼ぶ → cf_clearance クッキーが自動付与される
-        # =============================
-        draft_payload = {
-            "draft_title":      title,
-            "draft_body":       body_json,
-            "draft_subtitle":   "",
-            "type":             "newsletter",
-            "draft_section_id": None,
-            "audience":         "everyone",  # 全員（無料）公開
-            "draft_bylines":    [{"id": 509075677, "is_guest": False}],
-        }
-
-        print(f"  ドラフト作成中...", flush=True)
-        # page.evaluate() でブラウザ内JSのfetch()を実行する
-        # credentialsを "include" にしてクッキーを送る
-        draft_result = page.evaluate(
-            """async (args) => {
-                const resp = await fetch(args.url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(args.payload),
-                    credentials: 'include',
-                });
-                return { status: resp.status, text: await resp.text() };
-            }""",
-            {
-                "url":     f"{PUBLICATION_URL}/api/v1/drafts",
-                "payload": draft_payload,
-            },
-        )
-
-        print(f"  ドラフト作成レスポンス: {draft_result['status']}", flush=True)
-        if draft_result["status"] not in (200, 201):
-            raise RuntimeError(
-                f"ドラフト作成失敗 [{draft_result['status']}]: {draft_result['text'][:500]}"
-            )
-
-        post    = json.loads(draft_result["text"])
-        post_id = post["id"]
-        print(f"  ドラフトID: {post_id}", flush=True)
-
-        # =============================
-        # Step 2: ドラフトを公開する
-        # =============================
-        print(f"  公開処理中...", flush=True)
-        publish_result = page.evaluate(
-            """async (args) => {
-                const resp = await fetch(args.url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(args.payload),
-                    credentials: 'include',
-                });
-                return { status: resp.status, text: await resp.text() };
-            }""",
-            {
-                "url":     f"{PUBLICATION_URL}/api/v1/drafts/{post_id}/publish",
-                "payload": {"audience": "everyone"},
-            },
-        )
-
-        print(f"  公開レスポンス: {publish_result['status']}", flush=True)
-        if publish_result["status"] not in (200, 201):
-            raise RuntimeError(
-                f"公開失敗 [{publish_result['status']}]: {publish_result['text'][:500]}"
-            )
-
-        browser.close()
-        return post_id
+    return post_id
 
 
 # =============================
@@ -352,7 +267,7 @@ def main():
     image_url = f"{GITHUB_PAGES_BASE}/day{day:02d}.png"
     print(f"  画像URL: {image_url}", flush=True)
 
-    # 記事を作成して公開する（Playwright経由）
+    # 記事を作成して公開する（curl_cffi経由）
     title = f"{proverb['japanese']} — {proverb['english']}"
     print(f"  記事を公開中: {title}", flush=True)
     post_id = create_and_publish_post(proverb, image_url)
