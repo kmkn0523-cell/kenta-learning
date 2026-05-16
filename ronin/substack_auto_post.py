@@ -19,6 +19,8 @@ load_dotenv()
 # =============================
 SUBSTACK_SID     = os.getenv("SUBSTACK_SID")       # Substackのセッションクッキー
 PUBLICATION_URL  = "https://roninwords.substack.com"  # パブリケーションのURL
+# GitHub Pages の画像ベースURL（Substack CDNへのアップロードはCloudflareでブロックされるため）
+GITHUB_PAGES_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_images"
 SCRIPT_DIR       = os.path.dirname(os.path.abspath(__file__))
 IMAGES_DIR       = os.path.join(SCRIPT_DIR, "ronin_images")
 CARDS_FILE       = os.path.join(SCRIPT_DIR, "generate_ronin_cards.py")   # 画像と1対1で対応するデータ
@@ -276,10 +278,9 @@ def main():
     # セッションを作る
     session = get_session()
 
-    # 画像をアップロードする
-    print(f"  画像をアップロード中: {image_path}")
-    image_url = upload_image(session, image_path)
-    print(f"  アップロード完了: {image_url}")
+    # GitHub Pages の画像URL を直接使う（Substack CDNへのアップロードはCloudflareでブロックされるため）
+    image_url = f"{GITHUB_PAGES_BASE}/day{day:02d}.png"
+    print(f"  画像URL: {image_url}")
 
     # 記事タイトルと本文を組み立てる
     title     = f"{proverb['japanese']} — {proverb['english']}"
