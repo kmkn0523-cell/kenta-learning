@@ -1,5 +1,5 @@
 {
-  "daily_index": 49,
+  "daily_index": 50,
   "launch_index": 0,
   "history": [
     {
@@ -2933,8 +2933,14 @@
       "theme": "AB_B_ストレスと皮脂",
       "ab_group": "B",
       "post_id": "17936765571054378"
+    },
+    {
+      "date": "2026/05/16 02:00",
+      "theme": "姿勢・血流と肌",
+      "ab_group": "A",
+      "post_id": "18096113366273539"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 3
 }
