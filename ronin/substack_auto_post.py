@@ -189,10 +189,9 @@ def create_and_publish_post(proverb, image_url):
     sid_decoded = unquote(SUBSTACK_SID)
 
     with sync_playwright() as p:
-        # Chromiumブラウザを起動（headless=True はGUIなし、サーバー上で動く）
-        # --disable-blink-features=AutomationControlled で自動化フラグを無効化する
+        # Chromiumブラウザを起動（headless=False + Xvfb仮想ディスプレイでCloudflare headless検知を回避）
         browser = p.chromium.launch(
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",  # Cloudflare検知回避
                 "--no-sandbox",
