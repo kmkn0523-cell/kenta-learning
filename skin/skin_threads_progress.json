@@ -1,5 +1,5 @@
 {
-  "daily_index": 50,
+  "daily_index": 51,
   "launch_index": 0,
   "history": [
     {
@@ -2945,8 +2945,14 @@
       "theme": "AB_B_砂糖とニキビ直線ルート",
       "ab_group": "B",
       "post_id": "18088032788618136"
+    },
+    {
+      "date": "2026/05/16 06:00",
+      "theme": "部位別ニキビの原因",
+      "ab_group": "A",
+      "post_id": "18050457920758204"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 4
 }
