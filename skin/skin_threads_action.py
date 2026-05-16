@@ -25,7 +25,10 @@ GITHUB_BASE = "https://kmkn0523-cell.github.io/kenta-learning/skin/skin_images"
 
 def get_image_url(thread_id):
     """スレッドIDに対応するカード画像のURLを返す（GitHub Pages）"""
-    return f"{GITHUB_BASE}/theme{thread_id:02d}.jpg"
+    # 画像は theme01〜theme53 の53枚しかないので、超えたら1に戻るようにする
+    IMAGE_COUNT = 53
+    image_id = ((thread_id - 1) % IMAGE_COUNT) + 1
+    return f"{GITHUB_BASE}/theme{image_id:02d}.jpg"
 
 # 投稿データと進捗ファイルのパス
 POSTS_FILE    = "skin_threads_posts.json"      # ツリー用の新しい投稿データ
