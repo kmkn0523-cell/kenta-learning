@@ -15,7 +15,18 @@
       "Bash(npx tsc *)",
       "Bash(npx vitest *)",
       "Bash(npm run *)",
-      "Bash(npx vite *)"
+      "Bash(npx vite *)",
+      "Bash(cat > *)",
+      "Bash(ls /mnt/c/Users/)",
+      "Read(//mnt/c/Users/**)",
+      "Bash(powershell.exe -Command ' *)",
+      "Bash(powershell.exe -Command \"Start-Process powershell -Verb RunAs -ArgumentList '-Command Register-ScheduledTask -TaskName \\\\\"WSL Runner\\\\\" -Action \\(New-ScheduledTaskAction -Execute \\\\\"\\\\\\\\\\\\\"C:\\\\\\\\Users\\\\\\\\kenta kamijyo\\\\\\\\start_wsl_runner.bat\\\\\\\\\\\\\"\\\\\"\\) -Trigger \\(New-ScheduledTaskTrigger -AtLogOn\\) -RunLevel Highest -Force'\")",
+      "Bash(powershell.exe -Command \"Get-ScheduledTask -TaskName 'WSL Runner' 2>&1\")",
+      "Bash(schtasks.exe /Create /TN \"WSL Runner 自動起動\" /TR \"\\\\\"C:\\\\\\\\Users\\\\\\\\kenta kamijyo\\\\\\\\start_wsl_runner.bat\\\\\"\" /SC ONLOGON /RL HIGHEST /F)"
+    ],
+    "additionalDirectories": [
+      "/mnt/c/Users/kenta_kamijyo",
+      "/mnt/c/Users/kenta kamijyo"
     ]
   },
   "hooks": {
@@ -127,7 +138,6 @@
       }
     }
   },
-  "remoteControlAtStartup": true,
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "spinnerTipsEnabled": false,
@@ -139,6 +149,7 @@
   "autoCompactEnabled": true,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
+  "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true
 }
