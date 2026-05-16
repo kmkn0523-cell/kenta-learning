@@ -1,5 +1,5 @@
 {
-  "daily_index": 51,
+  "daily_index": 52,
   "launch_index": 0,
   "history": [
     {
@@ -2957,8 +2957,14 @@
       "theme": "AB_B_乳製品と大人ニキビ",
       "ab_group": "B",
       "post_id": "17897682003304442"
+    },
+    {
+      "date": "2026/05/16 10:00",
+      "theme": "リンパと肌",
+      "ab_group": "A",
+      "post_id": "17875993545665211"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 5
 }
