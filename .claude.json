@@ -1,5 +1,5 @@
 {
-  "numStartups": 103,
+  "numStartups": 104,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -533,69 +533,62 @@
         "skin_threads_auto_post.py",
         "linkedin_auto_post.py"
       ],
-      "lastGracefulShutdown": true,
-      "lastCost": 16.551907949999997,
-      "lastAPIDuration": 6158817,
-      "lastAPIDurationWithoutRetries": 6156913,
-      "lastToolDuration": 753103,
-      "lastDuration": 80174350,
-      "lastLinesAdded": 774,
-      "lastLinesRemoved": 175,
-      "lastTotalInputTokens": 96901,
-      "lastTotalOutputTokens": 296748,
-      "lastTotalCacheCreationInputTokens": 1224053,
-      "lastTotalCacheReadInputTokens": 24079574,
+      "lastGracefulShutdown": false,
+      "lastCost": 0.525024,
+      "lastAPIDuration": 79489,
+      "lastAPIDurationWithoutRetries": 79404,
+      "lastToolDuration": 0,
+      "lastDuration": 42011852,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 2249,
+      "lastTotalOutputTokens": 2643,
+      "lastTotalCacheCreationInputTokens": 37838,
+      "lastTotalCacheReadInputTokens": 427201,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 1.43,
-      "lastFpsLow1Pct": 476.7,
+      "lastFpsAverage": 0.05,
+      "lastFpsLow1Pct": 361.69,
       "lastModelUsage": {
+        "claude-opus-4-7": {
+          "inputTokens": 1778,
+          "outputTokens": 2618,
+          "cacheReadInputTokens": 427201,
+          "cacheCreationInputTokens": 37838,
+          "webSearchRequests": 0,
+          "costUSD": 0.524428
+        },
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 1683,
-          "outputTokens": 72,
+          "inputTokens": 471,
+          "outputTokens": 25,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.0020429999999999997
-        },
-        "claude-sonnet-4-6": {
-          "inputTokens": 95218,
-          "outputTokens": 296676,
-          "cacheReadInputTokens": 24079574,
-          "cacheCreationInputTokens": 1224053,
-          "webSearchRequests": 0,
-          "costUSD": 16.549864949999996
+          "costUSD": 0.000596
         }
       },
-      "lastSessionId": "f6e1862a-53cf-4faf-9903-f7f30cf06363",
+      "lastSessionId": "24e01006-1d83-4b09-b15f-1b4021bd8d86",
       "lastSessionMetrics": {
-        "frame_duration_ms_count": 112863,
-        "frame_duration_ms_min": 0.043504999950528145,
-        "frame_duration_ms_max": 71.12142799794674,
-        "frame_duration_ms_avg": 0.6739012691124907,
-        "frame_duration_ms_p50": 0.6038884958252311,
-        "frame_duration_ms_p95": 1.1838738000951707,
-        "frame_duration_ms_p99": 2.072991460300978,
-        "hook_duration_ms_count": 322,
-        "hook_duration_ms_min": 0,
-        "hook_duration_ms_max": 18022,
-        "hook_duration_ms_avg": 529.5993788819876,
-        "hook_duration_ms_p50": 21.5,
-        "hook_duration_ms_p95": 1156.6499999999999,
-        "hook_duration_ms_p99": 15056.300000000027,
-        "pre_tool_hook_duration_ms_count": 449,
-        "pre_tool_hook_duration_ms_min": 0,
-        "pre_tool_hook_duration_ms_max": 64,
-        "pre_tool_hook_duration_ms_avg": 2.2516703786191536,
-        "pre_tool_hook_duration_ms_p50": 0,
-        "pre_tool_hook_duration_ms_p95": 15,
-        "pre_tool_hook_duration_ms_p99": 26
+        "frame_duration_ms_count": 2085,
+        "frame_duration_ms_min": 0.11673999999766238,
+        "frame_duration_ms_max": 23.97002800554037,
+        "frame_duration_ms_avg": 0.8773389366722628,
+        "frame_duration_ms_p50": 0.711170500042499,
+        "frame_duration_ms_p95": 1.650311850162688,
+        "frame_duration_ms_p99": 3.0002314915135493,
+        "hook_duration_ms_count": 17,
+        "hook_duration_ms_min": 33,
+        "hook_duration_ms_max": 13954,
+        "hook_duration_ms_avg": 2734.8823529411766,
+        "hook_duration_ms_p50": 912,
+        "hook_duration_ms_p95": 12823.599999999999,
+        "hook_duration_ms_p99": 13727.92
       },
       "hasCompletedProjectOnboarding": true,
       "lastHintSessionId": "24e01006-1d83-4b09-b15f-1b4021bd8d86",
       "lastSessionFirstPrompt": "このリモートは、別ターミナルは同期されない？",
       "lastSessionModified": 1778885640809,
       "exampleFilesGeneratedAt": 1778803920155,
-      "lastVersionBase": "2.1.142"
+      "lastVersionBase": "2.1.143"
     }
   },
   "penguinModeOrgEnabled": false,
@@ -606,7 +599,7 @@
   "additionalModelCostsCache": {},
   "groveConfigCache": {
     "bf7efc70-b78a-4fb9-bdc2-c371585a6b66": {
-      "timestamp": 1778803919509
+      "timestamp": 1778927897445
     }
   },
   "closedIssuesLastChecked": 1778867628133,
