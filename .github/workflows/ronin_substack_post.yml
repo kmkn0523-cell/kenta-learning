@@ -37,7 +37,7 @@ jobs:
 
       # Step 3: 必要なライブラリをインストールする
       - name: ライブラリをインストール
-        run: pip install playwright playwright-stealth python-dotenv
+        run: pip install playwright "playwright-stealth<2.0" python-dotenv
 
       # Step 3b: Playwright の Chromium ブラウザをインストールする（Cloudflare回避に必要）
       - name: Playwright Chromium をインストール
