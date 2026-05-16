@@ -141,6 +141,9 @@ def upload_image(session, image_path):
     )
 
     if response.status_code != 200:
+        # stdoutに出力してGitHub Actionsのログに確実に残す
+        print(f"[DEBUG] 画像アップロード失敗 ステータス: {response.status_code}", flush=True)
+        print(f"[DEBUG] レスポンス本文: {response.text[:500]}", flush=True)
         raise RuntimeError(f"画像アップロード失敗 [{response.status_code}]: {response.text}")
 
     data = response.json()
