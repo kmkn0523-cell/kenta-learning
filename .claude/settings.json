@@ -11,7 +11,11 @@
       "Bash(cat *)",
       "Bash(find *)",
       "Bash(grep *)",
-      "Bash(pip install *)"
+      "Bash(pip install *)",
+      "Bash(npx tsc *)",
+      "Bash(npx vitest *)",
+      "Bash(npm run *)",
+      "Bash(npx vite *)"
     ]
   },
   "hooks": {
