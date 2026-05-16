@@ -591,9 +591,9 @@
         "pre_tool_hook_duration_ms_p99": 30.090000000000003
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "8615eae3-6fa0-437e-b3d6-27d213fa7f6d",
-      "lastSessionFirstPrompt": "本日０時以降のgithubエラーメールを参照して修正して。",
-      "lastSessionModified": 1778972292153,
+      "lastHintSessionId": "ad340a75-9743-4d17-968e-e018eae8fc58",
+      "lastSessionFirstPrompt": "オートコンパクト設定にしてるけど、デメリットは？",
+      "lastSessionModified": 1778973170352,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
