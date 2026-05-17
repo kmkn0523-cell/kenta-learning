@@ -19,8 +19,6 @@ load_dotenv()
 # =============================
 SUBSTACK_SID     = os.getenv("SUBSTACK_SID")          # Substackのセッションクッキー
 PUBLICATION_URL  = "https://roninwords.substack.com"  # パブリケーションのURL
-# GitHub Pages の画像ベースURL（Substack CDNへのアップロードはCloudflareでブロックされるため）
-GITHUB_PAGES_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_images"
 SCRIPT_DIR       = os.path.dirname(os.path.abspath(__file__))
 IMAGES_DIR       = os.path.join(SCRIPT_DIR, "ronin_images")
 CARDS_FILE       = os.path.join(SCRIPT_DIR, "generate_ronin_cards.py")   # 画像と1対1で対応するデータ
@@ -170,7 +168,37 @@ def build_post_body(proverb, image_url):
 # =============================
 # curl_cffi で Substack に投稿
 # =============================
-def create_and_publish_post(proverb, image_url):
+def upload_image_to_substack(session, image_path):
+    """ローカル画像ファイルをSubstack CDNにアップロードしてCDN URLを返す
+
+    同じChrome偽装セッションを使うのでCloudflareに弾かれない。
+    Substack は外部URLの画像を記事内で表示しないため、CDNへのアップロードが必須。
+    """
+    print(f"  画像をSubstack CDNにアップロード中: {image_path}", flush=True)
+
+    # 画像ファイルをバイナリで開いてmultipart/form-dataとして送る
+    with open(image_path, "rb") as f:
+        files = {"image": (os.path.basename(image_path), f, "image/png")}
+        resp = session.post(
+            "https://substack.com/api/v1/image",
+            files=files,
+        )
+
+    print(f"  画像アップロードレスポンス: {resp.status_code}", flush=True)
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(
+            f"画像アップロード失敗 [{resp.status_code}]: {resp.text[:500]}"
+        )
+
+    cdn_url = resp.json().get("url")
+    if not cdn_url:
+        raise RuntimeError(f"画像アップロード後にURLが取得できませんでした: {resp.text[:500]}")
+
+    print(f"  CDN URL取得: {cdn_url}", flush=True)
+    return cdn_url
+
+
+def create_and_publish_post(proverb, image_path):
     """curl_cffi（Chrome TLSフィンガープリント偽装）でSubstackに記事を作成・公開する
 
     curl_cffi は requests ライクなAPIで curl-impersonate をバックエンドに使う。
@@ -180,9 +208,6 @@ def create_and_publish_post(proverb, image_url):
     if not SUBSTACK_SID:
         raise ValueError("SUBSTACK_SID が .env に設定されていません")
 
-    title     = f"{proverb['japanese']} — {proverb['english']}"
-    body_json = build_post_body(proverb, image_url)
-
     # substack.sid クッキーのURLエンコードを解除する
     sid_decoded = unquote(SUBSTACK_SID)
 
@@ -191,6 +216,12 @@ def create_and_publish_post(proverb, image_url):
 
     # substack.sid クッキーをセットする
     session.cookies.set("substack.sid", sid_decoded, domain=".substack.com")
+
+    # 画像をSubstack CDNにアップロードしてCDN URLを取得する
+    image_url = upload_image_to_substack(session, image_path)
+
+    title     = f"{proverb['japanese']} — {proverb['english']}"
+    body_json = build_post_body(proverb, image_url)
 
     # =============================
     # Step 1: ドラフトを作成する
@@ -263,14 +294,10 @@ def main():
 
     print(f"[Day {day}] 投稿開始: {proverb['japanese']}", flush=True)
 
-    # GitHub Pages の画像URL を直接使う（Substack CDNへのアップロードはCloudflareでブロックされるため）
-    image_url = f"{GITHUB_PAGES_BASE}/day{day:02d}.png"
-    print(f"  画像URL: {image_url}", flush=True)
-
-    # 記事を作成して公開する（curl_cffi経由）
+    # 記事を作成して公開する（curl_cffi経由・画像はCDNにアップロード）
     title = f"{proverb['japanese']} — {proverb['english']}"
     print(f"  記事を公開中: {title}", flush=True)
-    post_id = create_and_publish_post(proverb, image_url)
+    post_id = create_and_publish_post(proverb, image_path)
     print(f"  公開完了! Post ID: {post_id}", flush=True)
 
     # 進捗を保存する（次回は day+1 から投稿する）
