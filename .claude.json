@@ -1,5 +1,5 @@
 {
-  "numStartups": 108,
+  "numStartups": 109,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -533,7 +533,7 @@
         "skin_threads_auto_post.py",
         "linkedin_auto_post.py"
       ],
-      "lastGracefulShutdown": true,
+      "lastGracefulShutdown": false,
       "lastCost": 1.50557685,
       "lastAPIDuration": 478352,
       "lastAPIDurationWithoutRetries": 478162,
@@ -591,9 +591,9 @@
         "pre_tool_hook_duration_ms_p99": 28.049999999999983
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "d5a05b58-e30e-4719-b424-f91049bbe381",
-      "lastSessionFirstPrompt": "ローニンのインスタ、投稿内容が同じになってるから調べて修正して",
-      "lastSessionModified": 1778976081593,
+      "lastHintSessionId": "97cdeed9-0791-4562-ad63-22fa6e04adf3",
+      "lastSessionFirstPrompt": "ローニンのインスタ自動投稿が同じやつ連投されてるのって直したんだっけ？",
+      "lastSessionModified": 1779000813889,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
