@@ -1,5 +1,5 @@
 {
-  "daily_index": 57,
+  "daily_index": 58,
   "launch_index": 0,
   "history": [
     {
@@ -3029,8 +3029,14 @@
       "theme": "AB_B_ストレスと皮脂",
       "ab_group": "B",
       "post_id": "17937941316228810"
+    },
+    {
+      "date": "2026/05/17 15:00",
+      "theme": "黒ずみ毛穴の対策",
+      "ab_group": "A",
+      "post_id": "18121865932734979"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 3
 }
