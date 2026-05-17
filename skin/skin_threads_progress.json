@@ -1,5 +1,5 @@
 {
-  "daily_index": 58,
+  "daily_index": 59,
   "launch_index": 0,
   "history": [
     {
@@ -3041,8 +3041,14 @@
       "theme": "AB_B_砂糖とニキビ直線ルート",
       "ab_group": "B",
       "post_id": "18108845096485918"
+    },
+    {
+      "date": "2026/05/17 19:00",
+      "theme": "洗顔料の選び方",
+      "ab_group": "A",
+      "post_id": "18103434415798478"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 4
 }
