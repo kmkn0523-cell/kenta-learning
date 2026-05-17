@@ -3,7 +3,6 @@ name: Ronin Threads Analytics Daily
 on:
   schedule:
     - cron: '0 6 * * *'
-    - cron: '0 7 * * *'
   workflow_dispatch:
 
 # 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
