@@ -1,5 +1,5 @@
 {
-  "daily_index": 55,
+  "daily_index": 56,
   "launch_index": 0,
   "history": [
     {
@@ -3005,8 +3005,14 @@
       "theme": "AB_B_洗顔料を変えすぎ",
       "ab_group": "B",
       "post_id": "18437956918190286"
+    },
+    {
+      "date": "2026/05/17 07:01",
+      "theme": "ニキビ跡を消す方法",
+      "ab_group": "A",
+      "post_id": "18083727536257420"
     }
   ],
-  "ab_next": "A",
+  "ab_next": "B",
   "ab_b_index": 1
 }
