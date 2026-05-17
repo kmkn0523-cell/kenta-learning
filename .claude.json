@@ -34,6 +34,7 @@
     "git-worktrees": 91
   },
   "promptQueueUseCount": 49,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_post_compact_survey": false,
     "tengu_bridge_repl_v2": true,
@@ -591,9 +592,9 @@
         "pre_tool_hook_duration_ms_p99": 28.049999999999983
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "de08ae15-33f3-4ad8-9554-b2b06cfd4f1c",
-      "lastSessionFirstPrompt": "https://www.instagram.com/kurumi_luna_/?hl=ja このインスタを解析して、どのAIで作成しているか、プロンプトはどんなものか、再現性はどのぐらいのコストで可能か分析して。",
-      "lastSessionModified": 1779015678514,
+      "lastHintSessionId": "a2c4b570-1bd0-4137-8407-12809b034b00",
+      "lastSessionFirstPrompt": "スキンのスレッズと、インスタ自動投稿の内容を確認して、よりベターな制作物を作成して。プロのコンテンツクリエイターとして、今何がバズるか等も鑑みて。",
+      "lastSessionModified": 1779028368674,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
@@ -650,8 +651,8 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 12,
-      "lastUsedAt": 1778847723892
+      "usageCount": 13,
+      "lastUsedAt": 1779028676811
     },
     "superpowers:writing-plans": {
       "usageCount": 11,
