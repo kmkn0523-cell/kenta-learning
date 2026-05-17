@@ -236,14 +236,20 @@ def publish_media(creation_id):
             if "id" in data:
                 return data  # 成功
 
-            # is_transient=True（Meta側の一時障害）なら待ってリトライ
             error_info = data.get("error", {})
-            if error_info.get("is_transient") and attempt < 3:
+            error_code = error_info.get("code")
+
+            # レート制限（アカウントブロック）: is_transient=False かつ code=4 → リトライ不要
+            if not error_info.get("is_transient", False):
+                print(f"❌ 投稿公開失敗（試行{attempt}/3）: {data}")
+                if error_code == 4:
+                    return {"rate_limited": True}  # 上位処理に「ブロック中」と伝える
+                return {}
+
+            # is_transient=True（Meta側の一時障害）なら待ってリトライ
+            if attempt < 3:
                 print(f"  ⚠️ 一時的なAPIエラー（試行{attempt}/3）。30秒後にリトライします...")
                 time.sleep(30)
-            else:
-                print(f"❌ 投稿公開失敗（試行{attempt}/3）: {data}")
-                return {}
 
         except requests.exceptions.Timeout:
             print(f"❌ タイムアウト（試行{attempt}/3）: 投稿公開に失敗しました")
@@ -391,6 +397,14 @@ def main():
     print("📤 Step3: 投稿を公開中...")
     publish_result = publish_media(carousel_id)
     if "id" not in publish_result:
+        if publish_result.get("rate_limited"):
+            # APIブロック（error code 4）でも進捗を1つ進める
+            # 同じ投稿を何度もリトライすると「同じ内容が続く」問題が起きるため
+            save_progress(current_index + 1)
+            next_theme = themes[(current_index + 1) % len(themes)]
+            print("⏭️ InstagramのAPIブロックのためスキップ（進捗は次へ進めます）")
+            print(f"📊 次回テーマ: {next_theme['id']:02d}（index={(current_index + 1) % len(themes)}）")
+            sys.exit(0)  # 正常終了（GitHub Actionsを赤くしない）
         print(f"❌ 投稿公開失敗: {publish_result}")
         sys.exit(1)
 
