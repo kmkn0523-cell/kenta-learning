@@ -3011,8 +3011,14 @@
       "theme": "ニキビ跡を消す方法",
       "ab_group": "A",
       "post_id": "18083727536257420"
+    },
+    {
+      "date": "2026/05/17 09:00",
+      "theme": "AB_B_睡眠と肌",
+      "ab_group": "B",
+      "post_id": "17863474713572748"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 1
+  "ab_next": "A",
+  "ab_b_index": 2
 }
