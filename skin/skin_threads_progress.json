@@ -1,5 +1,5 @@
 {
-  "daily_index": 56,
+  "daily_index": 57,
   "launch_index": 0,
   "history": [
     {
@@ -3017,8 +3017,20 @@
       "theme": "AB_B_睡眠と肌",
       "ab_group": "B",
       "post_id": "17863474713572748"
+    },
+    {
+      "date": "2026/05/17 11:00",
+      "theme": "敏感肌の正体",
+      "ab_group": "A",
+      "post_id": "18102873620090850"
+    },
+    {
+      "date": "2026/05/17 13:00",
+      "theme": "AB_B_ストレスと皮脂",
+      "ab_group": "B",
+      "post_id": "17937941316228810"
     }
   ],
   "ab_next": "A",
-  "ab_b_index": 2
+  "ab_b_index": 3
 }
