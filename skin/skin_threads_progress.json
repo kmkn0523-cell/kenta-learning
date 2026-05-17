@@ -3047,8 +3047,14 @@
       "theme": "洗顔料の選び方",
       "ab_group": "A",
       "post_id": "18103434415798478"
+    },
+    {
+      "date": "2026/05/17 21:00",
+      "theme": "AB_B_乳製品と大人ニキビ",
+      "ab_group": "B",
+      "post_id": "18053079995747297"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 4
+  "ab_next": "A",
+  "ab_b_index": 5
 }
