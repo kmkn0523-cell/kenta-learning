@@ -2987,8 +2987,14 @@
       "theme": "ビタミンDと肌",
       "ab_group": "A",
       "post_id": "17958744588068146"
+    },
+    {
+      "date": "2026/05/17 01:01",
+      "theme": "AB_B_引き算スキンケア",
+      "ab_group": "B",
+      "post_id": "18149530954433890"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 7
+  "ab_next": "A",
+  "ab_b_index": 0
 }
