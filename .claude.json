@@ -33,7 +33,7 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 38,
+  "promptQueueUseCount": 39,
   "cachedGrowthBookFeatures": {
     "tengu_post_compact_survey": false,
     "tengu_bridge_repl_v2": true,
@@ -591,9 +591,9 @@
         "pre_tool_hook_duration_ms_p99": 29.519999999999996
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "ad340a75-9743-4d17-968e-e018eae8fc58",
-      "lastSessionFirstPrompt": "オートコンパクト設定にしてるけど、デメリットは？",
-      "lastSessionModified": 1778973170352,
+      "lastHintSessionId": "d5a05b58-e30e-4719-b424-f91049bbe381",
+      "lastSessionFirstPrompt": "ローニンのインスタ、投稿内容が同じになってるから調べて修正して",
+      "lastSessionModified": 1778976081593,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
