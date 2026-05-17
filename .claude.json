@@ -591,9 +591,9 @@
         "pre_tool_hook_duration_ms_p99": 28.049999999999983
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "97cdeed9-0791-4562-ad63-22fa6e04adf3",
-      "lastSessionFirstPrompt": "ローニンのインスタ自動投稿が同じやつ連投されてるのって直したんだっけ？",
-      "lastSessionModified": 1779000813889,
+      "lastHintSessionId": "de08ae15-33f3-4ad8-9554-b2b06cfd4f1c",
+      "lastSessionFirstPrompt": "https://www.instagram.com/kurumi_luna_/?hl=ja このインスタを解析して、どのAIで作成しているか、プロンプトはどんなものか、再現性はどのぐらいのコストで可能か分析して。",
+      "lastSessionModified": 1779015678514,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
