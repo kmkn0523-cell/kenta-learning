@@ -3023,8 +3023,14 @@
       "theme": "敏感肌の正体",
       "ab_group": "A",
       "post_id": "18102873620090850"
+    },
+    {
+      "date": "2026/05/17 13:00",
+      "theme": "AB_B_ストレスと皮脂",
+      "ab_group": "B",
+      "post_id": "17937941316228810"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 2
+  "ab_next": "A",
+  "ab_b_index": 3
 }
