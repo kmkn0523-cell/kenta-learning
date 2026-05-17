@@ -2999,8 +2999,14 @@
       "theme": "腸活夜ごはん",
       "ab_group": "A",
       "post_id": "18328638133265436"
+    },
+    {
+      "date": "2026/05/17 05:00",
+      "theme": "AB_B_洗顔料を変えすぎ",
+      "ab_group": "B",
+      "post_id": "18437956918190286"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 0
+  "ab_next": "A",
+  "ab_b_index": 1
 }
