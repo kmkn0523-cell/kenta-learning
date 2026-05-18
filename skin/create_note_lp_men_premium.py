@@ -4,7 +4,7 @@
 スタイル: 黒×ゴールドの高級感デザイン
 出力: lp_men_premium.png
 """
-
+ 1. Markdownをnoteエディタに貼り付け
 from PIL import Image, ImageDraw, ImageFont  # 画像を作るためのライブラリ
 import math  # 円の計算に使う
 
