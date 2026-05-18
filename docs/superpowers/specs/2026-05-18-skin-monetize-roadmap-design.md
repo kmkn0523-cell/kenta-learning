@@ -20,7 +20,8 @@
 - **主軸**: Threads（既に1日4回自動投稿稼働中）
 - **副軸**: Instagram（@skin_reset_jp、Batch 1 リリース済・自動継続）
 - **マネタイズ対象記事**: 既存 note 原稿7本（skincare / sleep / food / food_premium / chokatsu / fasting / men_premium）
-- **リソース投下**: 本業並み（平日2時間以上・週末3時間以上）。他プロジェクト（@RoninWords・finance_web・Python学習）は一部減速可
+- **リソース投下**: 本業並み（平日2時間以上・週末3時間以上、週合計約16時間）。他プロジェクト（@RoninWords・finance_web・Python学習）は一部減速可
+- **時間配分の目安**: リプ等の能動アクション 40%、コンテンツ制作（投稿・LP・note）40%、分析・改善 15%、新規施策（X・メンバーシップ）5%
 
 ### 採用アプローチ
 **A. 王道型「土台 → 集客 → 販売」直列**
