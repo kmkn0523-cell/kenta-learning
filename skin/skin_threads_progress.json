@@ -1,5 +1,5 @@
 {
-  "daily_index": 62,
+  "daily_index": 63,
   "launch_index": 0,
   "history": [
     {
@@ -3079,13 +3079,21 @@
       "theme_id": 62,
       "variant": "A",
       "post_id": "18094843568170603"
+    },
+    {
+      "date": "2026/05/18 07:01",
+      "theme": "スキンケアのやりすぎ問題",
+      "theme_id": 63,
+      "variant": "A",
+      "post_id": "18086288873380027"
     }
   ],
   "ab_next": "A",
   "ab_b_index": 6,
   "ab_index_per_theme": {
     "61": "B",
-    "62": "B"
+    "62": "B",
+    "63": "B"
   },
   "ab_results": {
     "61": {
@@ -3095,6 +3103,12 @@
       "b_posts": 0
     },
     "62": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "63": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
