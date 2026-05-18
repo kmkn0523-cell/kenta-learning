@@ -1,5 +1,5 @@
 {
-  "daily_index": 63,
+  "daily_index": 64,
   "launch_index": 0,
   "history": [
     {
@@ -3086,6 +3086,13 @@
       "theme_id": 63,
       "variant": "A",
       "post_id": "18086288873380027"
+    },
+    {
+      "date": "2026/05/18 09:00",
+      "theme": "肌のバリア機能",
+      "theme_id": 64,
+      "variant": "A",
+      "post_id": "18137965006528338"
     }
   ],
   "ab_next": "A",
@@ -3093,7 +3100,8 @@
   "ab_index_per_theme": {
     "61": "B",
     "62": "B",
-    "63": "B"
+    "63": "B",
+    "64": "B"
   },
   "ab_results": {
     "61": {
@@ -3109,6 +3117,12 @@
       "b_posts": 0
     },
     "63": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "64": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
