@@ -591,9 +591,9 @@
         "pre_tool_hook_duration_ms_p99": 28.049999999999983
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "89e0e457-4f6c-474c-afc8-68c229626a18",
-      "lastSessionFirstPrompt": "docs/superpowers/plans/2026-05-18-skin-instagram-rewrite.md の Task 6から   順番に実装してください。ブランチは skin-instagram-batch-1 です。   各タスク完了後にコミットして、次に進む前に私に確認してください。",
-      "lastSessionModified": 1779092647920,
+      "lastHintSessionId": "bc28ac94-eb79-4579-bdce-7c005c50d642",
+      "lastSessionFirstPrompt": "スキンのnoteを参照して、有料級の",
+      "lastSessionModified": 1779103659026,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
