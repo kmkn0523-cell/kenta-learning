@@ -1,5 +1,5 @@
 {
-  "numStartups": 109,
+  "numStartups": 110,
   "installMethod": "global",
   "tipsHistory": {
     "new-user-warmup": 4,
@@ -33,7 +33,7 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 63,
+  "promptQueueUseCount": 66,
   "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_collage_kaleidoscope": true,
@@ -592,9 +592,9 @@
         "pre_tool_hook_duration_ms_p99": 28.049999999999983
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "c515b5d9-ea8b-4d54-83ce-af55e84b3981",
-      "lastSessionFirstPrompt": "skin Instagram投稿（@skin_reset_jp、現在20テーマ稼働中）の内容を   プロのコンテンツクリエイター視点でブラッシュアップしたい。    参考:   - アカウント: https://www.instagram.com/skin_reset_jp/   - 既存ファイル: skin/carousel_content.json、skin/generate_skin_car",
-      "lastSessionModified": 1779068972953,
+      "lastHintSessionId": "89e0e457-4f6c-474c-afc8-68c229626a18",
+      "lastSessionFirstPrompt": "docs/superpowers/plans/2026-05-18-skin-instagram-rewrite.md の Task 6から   順番に実装してください。ブランチは skin-instagram-batch-1 です。   各タスク完了後にコミットして、次に進む前に私に確認してください。",
+      "lastSessionModified": 1779092647920,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
@@ -659,8 +659,8 @@
       "lastUsedAt": 1779085057323
     },
     "superpowers:executing-plans": {
-      "usageCount": 4,
-      "lastUsedAt": 1778736143684
+      "usageCount": 5,
+      "lastUsedAt": 1779085806118
     },
     "vercel:deploy": {
       "usageCount": 2,
@@ -718,7 +718,7 @@
       "referral_code_details": null,
       "referrer_reward": null,
       "remaining_passes": null,
-      "timestamp": 1778972249795
+      "timestamp": 1779092641774
     }
   }
 }
