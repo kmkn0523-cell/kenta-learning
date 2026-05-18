@@ -3067,12 +3067,8 @@
       "post_id": "18340619542168725"
     }
   ],
-<<<<<<< HEAD
   "ab_next": "A",
-  "ab_b_index": 6
-}
-=======
-  "ab_b_index": 4,
+  "ab_b_index": 6,
   "ab_index_per_theme": {
     "1": "A",
     "2": "A",
@@ -3834,4 +3830,3 @@
     }
   }
 }
->>>>>>> skin-threads-batch-1
