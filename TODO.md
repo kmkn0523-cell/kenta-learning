@@ -1,6 +1,6 @@
 # TODO リスト
 
-最終更新: 2026/05/15（GitHub Actionsワークフロー全面整備完了）
+最終更新: 2026/05/18（skin Threads Batch 1 リリース・A/B構造化開始）
 
 ---
 
@@ -89,7 +89,7 @@
 
 ### 2. 肌荒れ改善note（Threads・note販売・Instagram）
 
-**現状**: noteコンテンツ作成済み、Threads自動投稿1日16回稼働中（毎時30分 JST）。フォロワー成長機構（Day1-20学習、Day21以降最適化）完全実装済み
+**現状**: noteコンテンツ作成済み、Threads自動投稿1日4回稼働中（JST 7:30/12:30/18:30/21:30）。A/B構造化リライト Batch 1（テーマ1-20）リリース完了・観測期間中
 
 #### 自動化（完了）
 - [x] Meta for Developers認証・APIキー取得
@@ -114,6 +114,17 @@
   - 月480投稿 ≈ 月$5（約750円）で稼働できる
   - スクリプト（skin_x_action.py）・ワークフロー（skin_x_post.yml）は作成済み
   - チャージ後、GitHubにX_API_KEY等のSecretsを追加してpushするだけ
+
+#### Threadsリライト（A/B構造化・216セット 6バッチ計画）
+- [x] Batch 1（テーマ1-20、40セット）リリース完了（2026/05/18・コミット 38cf4da）
+  - [x] A/B選択ロジック実装（skin_threads_action.py・15テストPASS）
+  - [x] skin_ab_report.py（A/B勝者判定スクリプト）作成
+  - [x] テーマ1-20 のA/B 全40セット制作（薬機法準拠：辞書形＋活用形NG 0件）
+  - [x] バッチ進行管理ファイル（skin_threads_batch_progress.json）作成
+- [ ] 2026/05/31: Batch 1 中間レポート確認（`python3 skin/skin_ab_report.py --batch 1`）
+- [ ] 2026/06/06: Batch 1 最終レポート → status を `validated` に更新
+- [ ] 2026/06/07〜: Batch 2（テーマ21-40）制作開始・新計画書作成
+- [ ] Batch 3〜6（テーマ41-108）順次制作・リリース
 
 #### Instagram自動投稿
 - [x] GitHub Actions有効化・稼働中（2026/05/12）
