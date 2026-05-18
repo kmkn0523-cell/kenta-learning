@@ -128,6 +128,11 @@
 
 #### Instagram自動投稿
 - [x] GitHub Actions有効化・稼働中（2026/05/12）
+- [ ] **投稿内容ブラッシュアップ（プロ目線、新セッションでbrainstormingから）**
+  - アカウント: https://www.instagram.com/skin_reset_jp/
+  - 既存ファイル: skin/carousel_content.json（themes配列）、skin/generate_skin_cards.py（画像生成）、skin/skin_instagram_auto_post.py（投稿）、skin/skin_instagram_progress.json（next_index: 5）
+  - 進行状況: 20テーマ稼働中、現在 next_index=5
+  - 流れ: brainstorming → 設計 → 実装計画 → コンテンツ制作（skin Threads Batch 1 と同じプロセス）
 
 #### 改善
 - [ ] 画像投稿対応（Pillowで画像生成→GitHubにホスト→Threads画像投稿）
