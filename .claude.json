@@ -33,8 +33,7 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 81,
-  "showExpandedTodos": true,
+  "promptQueueUseCount": 82,
   "cachedGrowthBookFeatures": {
     "tengu_collage_kaleidoscope": true,
     "tengu_code_diff_cli": true,
@@ -663,8 +662,8 @@
       "lastUsedAt": 1779108948548
     },
     "superpowers:writing-plans": {
-      "usageCount": 13,
-      "lastUsedAt": 1779085057323
+      "usageCount": 14,
+      "lastUsedAt": 1779109942780
     },
     "superpowers:executing-plans": {
       "usageCount": 5,
