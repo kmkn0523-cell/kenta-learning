@@ -1,5 +1,5 @@
 {
-  "daily_index": 65,
+  "daily_index": 66,
   "launch_index": 0,
   "history": [
     {
@@ -3100,6 +3100,13 @@
       "theme_id": 65,
       "variant": "A",
       "post_id": "18392020624095328"
+    },
+    {
+      "date": "2026/05/18 13:00",
+      "theme": "仕事のストレスと肌",
+      "theme_id": 66,
+      "variant": "A",
+      "post_id": "18119976067656328"
     }
   ],
   "ab_next": "A",
@@ -3109,7 +3116,8 @@
     "62": "B",
     "63": "B",
     "64": "B",
-    "65": "B"
+    "65": "B",
+    "66": "B"
   },
   "ab_results": {
     "61": {
@@ -3137,6 +3145,12 @@
       "b_posts": 0
     },
     "65": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "66": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
