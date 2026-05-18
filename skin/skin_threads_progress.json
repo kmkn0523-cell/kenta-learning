@@ -1,5 +1,5 @@
 {
-  "daily_index": 66,
+  "daily_index": 67,
   "launch_index": 0,
   "history": [
     {
@@ -3107,6 +3107,13 @@
       "theme_id": 66,
       "variant": "A",
       "post_id": "18119976067656328"
+    },
+    {
+      "date": "2026/05/18 15:00",
+      "theme": "タンパク質不足と肌",
+      "theme_id": 67,
+      "variant": "A",
+      "post_id": "17948283642175046"
     }
   ],
   "ab_next": "A",
@@ -3117,7 +3124,8 @@
     "63": "B",
     "64": "B",
     "65": "B",
-    "66": "B"
+    "66": "B",
+    "67": "B"
   },
   "ab_results": {
     "61": {
@@ -3151,6 +3159,12 @@
       "b_posts": 0
     },
     "66": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "67": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
