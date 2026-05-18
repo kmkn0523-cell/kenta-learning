@@ -3059,8 +3059,14 @@
       "theme": "ビタミンB群と肌",
       "ab_group": "A",
       "post_id": "18117025744771704"
+    },
+    {
+      "date": "2026/05/18 01:00",
+      "theme": "AB_B_乾燥なのにニキビ",
+      "ab_group": "B",
+      "post_id": "18340619542168725"
     }
   ],
-  "ab_next": "B",
-  "ab_b_index": 5
+  "ab_next": "A",
+  "ab_b_index": 6
 }
