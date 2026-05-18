@@ -33,7 +33,7 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 53,
+  "promptQueueUseCount": 54,
   "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_collage_kaleidoscope": true,
@@ -610,7 +610,7 @@
       "timestamp": 1779035539533
     }
   },
-  "closedIssuesLastChecked": 1778968294202,
+  "closedIssuesLastChecked": 1779066534741,
   "overageCreditGrantCache": {
     "c1b9ef6d-75e7-44c0-ab66-cfcfcec6124e": {
       "info": {

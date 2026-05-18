@@ -147,7 +147,7 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "verbose": false,
-  "autoCompactEnabled": true,
+  "autoCompactEnabled": false,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
