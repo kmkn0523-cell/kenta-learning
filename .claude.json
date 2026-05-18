@@ -592,9 +592,9 @@
         "pre_tool_hook_duration_ms_p99": 28.049999999999983
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "a2c4b570-1bd0-4137-8407-12809b034b00",
-      "lastSessionFirstPrompt": "スキンのスレッズと、インスタ自動投稿の内容を確認して、よりベターな制作物を作成して。プロのコンテンツクリエイターとして、今何がバズるか等も鑑みて。",
-      "lastSessionModified": 1779028368674,
+      "lastHintSessionId": "c515b5d9-ea8b-4d54-83ce-af55e84b3981",
+      "lastSessionFirstPrompt": "skin Instagram投稿（@skin_reset_jp、現在20テーマ稼働中）の内容を   プロのコンテンツクリエイター視点でブラッシュアップしたい。    参考:   - アカウント: https://www.instagram.com/skin_reset_jp/   - 既存ファイル: skin/carousel_content.json、skin/generate_skin_car",
+      "lastSessionModified": 1779068972953,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
@@ -651,8 +651,8 @@
       "lastUsedAt": 1777985864693
     },
     "superpowers:brainstorming": {
-      "usageCount": 13,
-      "lastUsedAt": 1779028676811
+      "usageCount": 14,
+      "lastUsedAt": 1779068977576
     },
     "superpowers:writing-plans": {
       "usageCount": 12,
