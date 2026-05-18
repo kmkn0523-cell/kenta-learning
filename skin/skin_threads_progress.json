@@ -1,5 +1,5 @@
 {
-  "daily_index": 60,
+  "daily_index": 61,
   "launch_index": 0,
   "history": [
     {
@@ -3065,8 +3065,26 @@
       "theme": "AB_B_乾燥なのにニキビ",
       "ab_group": "B",
       "post_id": "18340619542168725"
+    },
+    {
+      "date": "2026/05/18 03:00",
+      "theme": "抗糖化と美肌",
+      "theme_id": 61,
+      "variant": "A",
+      "post_id": "18099976289023743"
     }
   ],
   "ab_next": "A",
-  "ab_b_index": 6
+  "ab_b_index": 6,
+  "ab_index_per_theme": {
+    "61": "B"
+  },
+  "ab_results": {
+    "61": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    }
+  }
 }
