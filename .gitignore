@@ -36,6 +36,9 @@
 !skin/skin_instagram_images/*.png
 !skin/skin_instagram_carousels/
 !skin/skin_instagram_carousels/*.png
+!skin/profile/
+!skin/profile/*.md
+!skin/profile/*.png
 !linkedin/
 !learning/
 !docs/

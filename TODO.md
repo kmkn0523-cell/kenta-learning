@@ -6,6 +6,14 @@
 
 ## 🔥 今週やること（最優先・3つだけに絞る）
 
+- [ ] skin プロフィール v2 確定（`skin/profile/profile_v2.md` 確認・修正 → Threads/Instagram にコピペ反映）
+- [ ] skin ヘッダー画像作成（Canva で「スキンケアでは、治らない。」→ `skin/profile/header_image_v2.png` 保存・SNS反映）
+- [ ] skin 観測対象10アカウントのリスト化（Threads検索 → `skin/skin_account_targets.json` に10件記入）
+
+> 計画書: `docs/superpowers/plans/2026-05-18-skin-monetize-m1-w1-w2.md`（M1 Week 1-2 全8タスク）
+> 上位スペック: `docs/superpowers/specs/2026-05-18-skin-monetize-roadmap-design.md`（半年ロードマップ・月3〜5万円目標）
+
+### 先週完了
 - [x] note: 肌荒れ改善noteの販売準備（価格設定・公開日決め）
 - [x] 肌荒れ改善Threads: 画像投稿対応（Pillowで画像生成→GitHub→Threads）
 - [x] @RoninWords: Day31以降のThreads投稿文を作る（Day31〜60完成・threads_posts.jsonに追加済み）
