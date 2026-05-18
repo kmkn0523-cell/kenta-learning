@@ -1,5 +1,5 @@
 {
-  "daily_index": 64,
+  "daily_index": 65,
   "launch_index": 0,
   "history": [
     {
@@ -3093,6 +3093,13 @@
       "theme_id": 64,
       "variant": "A",
       "post_id": "18137965006528338"
+    },
+    {
+      "date": "2026/05/18 11:00",
+      "theme": "間食と肌荒れ",
+      "theme_id": 65,
+      "variant": "A",
+      "post_id": "18392020624095328"
     }
   ],
   "ab_next": "A",
@@ -3101,7 +3108,8 @@
     "61": "B",
     "62": "B",
     "63": "B",
-    "64": "B"
+    "64": "B",
+    "65": "B"
   },
   "ab_results": {
     "61": {
@@ -3123,6 +3131,12 @@
       "b_posts": 0
     },
     "64": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "65": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
