@@ -34,6 +34,7 @@
     "git-worktrees": 91
   },
   "promptQueueUseCount": 78,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_collage_kaleidoscope": true,
     "tengu_code_diff_cli": true,
