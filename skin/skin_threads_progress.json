@@ -1,5 +1,5 @@
 {
-  "daily_index": 67,
+  "daily_index": 68,
   "launch_index": 0,
   "history": [
     {
@@ -3114,6 +3114,13 @@
       "theme_id": 67,
       "variant": "A",
       "post_id": "17948283642175046"
+    },
+    {
+      "date": "2026/05/18 17:00",
+      "theme": "体内時計と肌修復",
+      "theme_id": 68,
+      "variant": "A",
+      "post_id": "18112525297828283"
     }
   ],
   "ab_next": "A",
@@ -3125,7 +3132,8 @@
     "64": "B",
     "65": "B",
     "66": "B",
-    "67": "B"
+    "67": "B",
+    "68": "B"
   },
   "ab_results": {
     "61": {
@@ -3165,6 +3173,12 @@
       "b_posts": 0
     },
     "67": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "68": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
