@@ -30,6 +30,7 @@
       "/mnt/c/Users/kenta kamijyo"
     ]
   },
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -129,7 +130,8 @@
   },
   "enabledPlugins": {
     "vercel@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "last30days-skill": {
@@ -152,6 +154,5 @@
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "model": "opus"
+  "agentPushNotifEnabled": true
 }
