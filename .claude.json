@@ -604,9 +604,9 @@
         "pre_tool_hook_duration_ms_p99": 33
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "8126ba30-d6cc-4df6-81a6-174d30b41989",
-      "lastSessionFirstPrompt": "スキンのスレッズの投稿内容と画像が一致しないから修正して",
-      "lastSessionModified": 1779149264842,
+      "lastHintSessionId": "4262b4e9-ae6f-4869-a64c-2a45ac38bddf",
+      "lastSessionFirstPrompt": "スキンでのマネタイズのtodoは？",
+      "lastSessionModified": 1779152245159,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.143"
     }
