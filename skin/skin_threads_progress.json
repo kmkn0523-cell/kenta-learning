@@ -1,5 +1,5 @@
 {
-  "daily_index": 68,
+  "daily_index": 69,
   "launch_index": 0,
   "history": [
     {
@@ -3121,6 +3121,13 @@
       "theme_id": 68,
       "variant": "A",
       "post_id": "18112525297828283"
+    },
+    {
+      "date": "2026/05/19 01:00",
+      "theme": "肌荒れと自律神経",
+      "theme_id": 69,
+      "variant": "A",
+      "post_id": "18325342570253351"
     }
   ],
   "ab_next": "A",
@@ -3133,7 +3140,8 @@
     "65": "B",
     "66": "B",
     "67": "B",
-    "68": "B"
+    "68": "B",
+    "69": "B"
   },
   "ab_results": {
     "61": {
@@ -3179,6 +3187,12 @@
       "b_posts": 0
     },
     "68": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "69": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
