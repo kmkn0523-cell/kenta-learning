@@ -6,7 +6,7 @@
 
 ## 🔥 今週やること（最優先・3つだけに絞る）
 
-- [ ] Task 8: Instagram Batch 1 初動チェック（v2 8枚カルーセルが正常投稿されているか）
+- [x] Task 8: Instagram Batch 1 初動チェック（v2 8枚カルーセル4件・公開確認済み 2026-05-20）
 - [ ] Task 4: Instagram insights 権限申請（Facebook Developer Console で `instagram_manage_insights`）
 - [ ] Week 2 (5/25〜) リプ運用準備 — `skin/skin_account_targets.json` の10アカウントの最新投稿を再確認
 
