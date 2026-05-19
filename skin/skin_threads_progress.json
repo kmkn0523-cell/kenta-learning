@@ -1,5 +1,5 @@
 {
-  "daily_index": 70,
+  "daily_index": 71,
   "launch_index": 0,
   "history": [
     {
@@ -3135,6 +3135,13 @@
       "theme_id": 70,
       "variant": "A",
       "post_id": "18591692710005952"
+    },
+    {
+      "date": "2026/05/19 05:00",
+      "theme": "外食が多い人の肌ケア",
+      "theme_id": 71,
+      "variant": "A",
+      "post_id": "18112565686890311"
     }
   ],
   "ab_next": "A",
@@ -3149,7 +3156,8 @@
     "67": "B",
     "68": "B",
     "69": "B",
-    "70": "B"
+    "70": "B",
+    "71": "B"
   },
   "ab_results": {
     "61": {
@@ -3207,6 +3215,12 @@
       "b_posts": 0
     },
     "70": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "71": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
