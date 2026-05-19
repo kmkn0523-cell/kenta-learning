@@ -1,0 +1,94 @@
+{
+  "version": "1.0",
+  "created_at": "2026-05-19",
+  "purpose": "Threads の能動アクション（リプ・コメント）対象。週次で見直す。",
+  "review_cycle": "weekly",
+  "selection_criteria": {
+    "follower_estimate_range": [500, 50000],
+    "post_freshness": "直近1週間以内に投稿あり",
+    "themes": ["肌荒れ", "大人ニキビ", "腸活", "美肌", "インナーケア", "食事 肌", "睡眠 肌"],
+    "exclude": ["商品ブランド公式アカウント", "営業色が強いアカウント"]
+  },
+  "targets": [
+    {
+      "handle": "@example1",
+      "url": "https://www.threads.net/@example1",
+      "theme": "肌荒れ全般",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": "ここに観測メモを書く（投稿頻度・絡みやすさ・参考にしたい点など）"
+    },
+    {
+      "handle": "@example2",
+      "url": "https://www.threads.net/@example2",
+      "theme": "大人ニキビ",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example3",
+      "url": "https://www.threads.net/@example3",
+      "theme": "腸活",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example4",
+      "url": "https://www.threads.net/@example4",
+      "theme": "美肌",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example5",
+      "url": "https://www.threads.net/@example5",
+      "theme": "インナーケア",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example6",
+      "url": "https://www.threads.net/@example6",
+      "theme": "食事と肌",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example7",
+      "url": "https://www.threads.net/@example7",
+      "theme": "睡眠と肌",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example8",
+      "url": "https://www.threads.net/@example8",
+      "theme": "スキンケア引き算",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example9",
+      "url": "https://www.threads.net/@example9",
+      "theme": "肌体験談",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    },
+    {
+      "handle": "@example10",
+      "url": "https://www.threads.net/@example10",
+      "theme": "ニキビ改善体験談",
+      "follower_estimate": 0,
+      "added_at": "2026-05-19",
+      "notes": ""
+    }
+  ]
+}
