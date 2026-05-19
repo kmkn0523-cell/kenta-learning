@@ -1,5 +1,5 @@
 {
-  "daily_index": 69,
+  "daily_index": 70,
   "launch_index": 0,
   "history": [
     {
@@ -3128,6 +3128,13 @@
       "theme_id": 69,
       "variant": "A",
       "post_id": "18325342570253351"
+    },
+    {
+      "date": "2026/05/19 03:00",
+      "theme": "唇荒れの原因と対策",
+      "theme_id": 70,
+      "variant": "A",
+      "post_id": "18591692710005952"
     }
   ],
   "ab_next": "A",
@@ -3141,7 +3148,8 @@
     "66": "B",
     "67": "B",
     "68": "B",
-    "69": "B"
+    "69": "B",
+    "70": "B"
   },
   "ab_results": {
     "61": {
@@ -3193,6 +3201,12 @@
       "b_posts": 0
     },
     "69": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "70": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
