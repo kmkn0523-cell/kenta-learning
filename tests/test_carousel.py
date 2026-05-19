@@ -33,11 +33,10 @@ def test_carousel_content_no_empty_fields():
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    # TODO: id=1〜4 はcaption未生成のため一時除外。コンテンツ生成後にこの除外を削除する
-    CAPTION_TODO_IDS = {1, 2, 3, 4}
-
     for theme in data['themes']:
-        if theme.get('id') not in CAPTION_TODO_IDS:
+        # v2 は build_caption() で動的生成するため theme.caption は未使用
+        # v1 互換テーマ（version != "v2"）のときだけ caption の中身を要求する
+        if theme.get('version') != 'v2':
             assert theme['caption'].strip() != '', f"theme id={theme.get('id')} の captionが空"
         for slide in theme['slides']:
             assert slide.get('type', '').strip() != ''
