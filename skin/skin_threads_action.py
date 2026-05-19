@@ -25,8 +25,9 @@ GITHUB_BASE = "https://kmkn0523-cell.github.io/kenta-learning/skin/skin_images"
 
 def get_image_url(thread_id):
     """スレッドIDに対応するカード画像のURLを返す（GitHub Pages）"""
-    # 画像は theme01〜theme53 の53枚しかないので、超えたら1に戻るようにする
-    IMAGE_COUNT = 53
+    # 画像は theme01〜theme108 の108枚あり、各テーマと画像が1対1で対応する
+    # 範囲外のIDが来てもURLが壊れないよう、安全側で1〜108に丸める
+    IMAGE_COUNT = 108
     image_id = ((thread_id - 1) % IMAGE_COUNT) + 1
     return f"{GITHUB_BASE}/theme{image_id:02d}.jpg"
 
