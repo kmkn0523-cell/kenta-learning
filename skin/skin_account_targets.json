@@ -9,86 +9,87 @@
     "themes": ["肌荒れ", "大人ニキビ", "腸活", "美肌", "インナーケア", "食事 肌", "睡眠 肌"],
     "exclude": ["商品ブランド公式アカウント", "営業色が強いアカウント"]
   },
+  "_note": "AI が WebSearch で抽出した候補。スマホアプリでフォロワー数・投稿頻度・絡みやすさを確認して、必要なら入れ替える。follower_estimate は未確認なので 0 のまま。",
   "targets": [
     {
-      "handle": "@example1",
-      "url": "https://www.threads.net/@example1",
-      "theme": "肌荒れ全般",
+      "handle": "@shiori_wellness_kitchen",
+      "url": "https://www.threads.com/@shiori_wellness_kitchen",
+      "theme": "腸活アドバイザー・美腸活レシピ",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": "ここに観測メモを書く（投稿頻度・絡みやすさ・参考にしたい点など）"
+      "notes": "はらしおり。腸活レシピ系。料理写真と食物繊維・植物性タンパクの解説が中心。skinペルソナの「食事改善」と親和性高い。"
     },
     {
-      "handle": "@example2",
-      "url": "https://www.threads.net/@example2",
-      "theme": "大人ニキビ",
+      "handle": "@humanbioticsacademy",
+      "url": "https://www.threads.com/@humanbioticsacademy",
+      "theme": "腸活アカデミー・腸質改善",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "腸活アドバイザー講座運営。食べ過ぎ注意・摂りすぎは逆効果系の啓発投稿。教育コンテンツの参考に。"
     },
     {
-      "handle": "@example3",
-      "url": "https://www.threads.net/@example3",
-      "theme": "腸活",
+      "handle": "@lii_gohan",
+      "url": "https://www.threads.com/@lii_gohan",
+      "theme": "ゆる腸活×麹ごはん",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "りい。麹・発酵食メインで肌に寄せやすい食生活発信。距離感が近く絡みやすい。"
     },
     {
-      "handle": "@example4",
-      "url": "https://www.threads.net/@example4",
-      "theme": "美肌",
+      "handle": "@choukatsu_jane",
+      "url": "https://www.threads.com/@choukatsu_jane",
+      "theme": "腸活・マグネシウム・ニキビ",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "肌バリア・セラミド・マグネシウム系の解説。乾燥肌・ニキビと腸活を結びつける投稿。skinテーマと直接的に重なる。"
     },
     {
-      "handle": "@example5",
-      "url": "https://www.threads.net/@example5",
-      "theme": "インナーケア",
+      "handle": "@supplemiya",
+      "url": "https://www.threads.com/@supplemiya",
+      "theme": "サプリ・ビタミンD・腸活",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "サプリ知識発信。「善玉菌や食物繊維の前にビタミンD」など切り口がシャープ。"
     },
     {
-      "handle": "@example6",
-      "url": "https://www.threads.net/@example6",
-      "theme": "食事と肌",
+      "handle": "@watashino_kohkatsu",
+      "url": "https://www.threads.com/@watashino_kohkatsu",
+      "theme": "酵活・食べるフェムケア",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "福岡発のフェムケアブランド創業者。素材・無添加にこだわる発信。インナーケア×ジャム系プロダクト。"
     },
     {
-      "handle": "@example7",
-      "url": "https://www.threads.net/@example7",
-      "theme": "睡眠と肌",
+      "handle": "@skincarebunnyy",
+      "url": "https://www.threads.com/@skincarebunnyy",
+      "theme": "スキンケア×食事（糖化）",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "ジュース・糖化・肌の関係を発信。「食事が肌に与える影響」を強めに言う系。skinの引き算思想とも相性◎"
     },
     {
-      "handle": "@example8",
-      "url": "https://www.threads.net/@example8",
-      "theme": "スキンケア引き算",
+      "handle": "@skincare_kokun",
+      "url": "https://www.threads.com/@skincare_kokun",
+      "theme": "肌荒れ・スキンケア（無料で触らない美肌術）",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "毛穴・肌荒れ系。「無料で触らない美肌術」のコンセプトでプレゼント企画もやる人気アカ。"
     },
     {
-      "handle": "@example9",
-      "url": "https://www.threads.net/@example9",
-      "theme": "肌体験談",
+      "handle": "@sunaochan_biyou",
+      "url": "https://www.threads.com/@sunaochan_biyou",
+      "theme": "引き算スキンケア・体験談",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "「美容液を変えるたびに何か違う…」「使い始めてから翌朝の肌がモチモチ」など使用者目線のレビュー。skinの体験談寄り発信と親和性高い。"
     },
     {
-      "handle": "@example10",
-      "url": "https://www.threads.net/@example10",
-      "theme": "ニキビ改善体験談",
+      "handle": "@mashimashi_beauty",
+      "url": "https://www.threads.com/@mashimashi_beauty",
+      "theme": "外側＋内側ケア両立",
       "follower_estimate": 0,
       "added_at": "2026-05-19",
-      "notes": ""
+      "notes": "「外側のケアだけじゃなくて内側も整え始めたタイミングで変化感じる」と発信。skinの内側軸とほぼ同じ思想。"
     }
   ]
 }

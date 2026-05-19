@@ -8,7 +8,7 @@
 
 - [x] skin プロフィール v2 確定（`skin/profile/profile_v2.md` 確認・修正 → Threads/Instagram にコピペ反映）
 - [x] skin ヘッダー画像作成（Canva で「スキンケアでは、治らない。」→ `skin/profile/header_image_v2.png` 保存・SNS反映）
-- [ ] skin 観測対象10アカウントのリスト化（Threads検索 → `skin/skin_account_targets.json` に10件記入）
+- [x] skin 観測対象10アカウントのリスト化（Threads検索 → `skin/skin_account_targets.json` に10件記入）
 
 > 計画書: `docs/superpowers/plans/2026-05-18-skin-monetize-m1-w1-w2.md`（M1 Week 1-2 全8タスク）
 > 上位スペック: `docs/superpowers/specs/2026-05-18-skin-monetize-roadmap-design.md`（半年ロードマップ・月3〜5万円目標）
