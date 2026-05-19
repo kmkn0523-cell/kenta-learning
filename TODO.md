@@ -6,7 +6,7 @@
 
 ## 🔥 今週やること（最優先・3つだけに絞る）
 
-- [ ] skin プロフィール v2 確定（`skin/profile/profile_v2.md` 確認・修正 → Threads/Instagram にコピペ反映）
+- [x] skin プロフィール v2 確定（`skin/profile/profile_v2.md` 確認・修正 → Threads/Instagram にコピペ反映）
 - [ ] skin ヘッダー画像作成（Canva で「スキンケアでは、治らない。」→ `skin/profile/header_image_v2.png` 保存・SNS反映）
 - [ ] skin 観測対象10アカウントのリスト化（Threads検索 → `skin/skin_account_targets.json` に10件記入）
 
