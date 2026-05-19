@@ -65,11 +65,23 @@ def post_to_threads(text, image_url=None):
             "access_token": THREADS_ACCESS_TOKEN  # 認証キー
         }
 
-    response = requests.post(container_url, params=container_params)
-    data = response.json()
+    # 一時的なAPIエラー（GitHub Pagesのデプロイ遅延など）に備えてリトライする（最大2回、30秒待つ）
+    for attempt in range(1, 3):
+        response = requests.post(container_url, params=container_params)
+        data = response.json()
 
-    if "id" not in data:
-        raise Exception(f"コンテナ作成失敗: {data}")
+        if "id" in data:
+            break  # 成功したらループを抜ける
+
+        # メディア取得失敗（subcode 2207052）など一過性エラーは1回だけリトライ
+        error_info = data.get("error", {})
+        error_subcode = error_info.get("error_subcode")
+        is_transient = error_info.get("is_transient") or error_subcode == 2207052
+        if is_transient and attempt < 2:
+            print(f"  ⚠️ コンテナ作成エラー（試行{attempt}/2）。30秒後にリトライします: {error_info.get('message', '')}")
+            time.sleep(30)
+        else:
+            raise Exception(f"コンテナ作成失敗（試行{attempt}/2）: {data}")
 
     creation_id = data["id"]
 

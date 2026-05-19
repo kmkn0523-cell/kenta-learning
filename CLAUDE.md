@@ -28,6 +28,25 @@
 - **skin Threads**: 1日4回（7:30/12:30/18:30/21:30 JST）GitHub Actions経由
 - **Threadsトークン期限**: 2026/06/26頃 → 手順: `docs/threads_token_renewal.md`
 
+## Claude Code 自動化（このプロジェクト専用）
+
+### スキル（チャット欄で `/コマンド名`）
+- `/validate-threads-posts`: skin/ronin Threads投稿JSONを検証（重複/文字数/絵文字）。投稿ファイル編集後に推奨
+- `/token-expiry-check`: Threads/Instagramトークンの期限残日数を表示
+
+### サブエージェント
+- `automation-doctor`: GitHub Actions失敗診断＋progress.json状態確認＋修復手順提示。「動いてる？」と聞かれたら呼ぶ
+
+### 自動実行hook
+- `skin_/ronin_/threads_/linkedin_` 系Python編集後 → pytest自動実行（tests/, skin/tests/）
+- finance_web 編集後 → Stop時にVercel自動デプロイ
+- git commit前 → シークレット検出（PreToolUse）
+
+### MCPサーバー
+- `mcp__github__*`: GitHub Issue/PR/Actions操作（PATは `.env` の `GITHUB_PERSONAL_ACCESS_TOKEN`）
+- `mcp__context7__*`: React/Vite/Threads API などライブラリ最新ドキュメント取得
+- `mcp__claude_ai_Google_Calendar__*`: トークン期限リマインダー管理
+
 ## 実行前に必ず確認（要承認）
 - ファイル・フォルダの削除
 - `git push --force` など破壊的なgitコマンド

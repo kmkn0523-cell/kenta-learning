@@ -67,6 +67,13 @@
           {
             "type": "command",
             "command": "jq -r '.tool_input.file_path // \"\"' | grep -q '^/home/kenta_kamijyo/finance_web/' && touch /tmp/finance_web_changed 2>/dev/null || true"
+          },
+          {
+            "type": "command",
+            "command": "bash /home/kenta_kamijyo/.claude/scripts/pytest_on_edit.sh",
+            "statusMessage": "関連pytestを実行中...",
+            "async": true,
+            "timeout": 60
           }
         ]
       }

@@ -62,6 +62,9 @@ linkedin/linkedin_config.json
 # APIキーなど秘密情報は絶対に除外
 .env
 
+# Claude Code 設定（MCPサーバーのAPIキーが入るため絶対にコミットしない）
+.claude.json
+
 # Pythonキャッシュは除外
 __pycache__/
 *.pyc
