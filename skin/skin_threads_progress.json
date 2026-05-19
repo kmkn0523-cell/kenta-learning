@@ -1,5 +1,5 @@
 {
-  "daily_index": 75,
+  "daily_index": 76,
   "launch_index": 0,
   "history": [
     {
@@ -3170,6 +3170,13 @@
       "theme_id": 75,
       "variant": "A",
       "post_id": "18091448780605059"
+    },
+    {
+      "date": "2026/05/19 15:01",
+      "theme": "頭皮と肌の関係",
+      "theme_id": 76,
+      "variant": "A",
+      "post_id": "18092021051243795"
     }
   ],
   "ab_next": "A",
@@ -3189,7 +3196,8 @@
     "72": "B",
     "73": "B",
     "74": "B",
-    "75": "B"
+    "75": "B",
+    "76": "B"
   },
   "ab_results": {
     "61": {
@@ -3277,6 +3285,12 @@
       "b_posts": 0
     },
     "75": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "76": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
