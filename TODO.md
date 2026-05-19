@@ -1,15 +1,16 @@
 # TODO リスト
 
-最終更新: 2026/05/18（skin Threads Batch 1 リリース・A/B構造化開始）
+最終更新: 2026/05/20（M1 Week 1 Day 3 — Week 1主要タスク完了、残り＆Week 2準備へ）
 
 ---
 
 ## 🔥 今週やること（最優先・3つだけに絞る）
 
-- [x] skin プロフィール v2 確定（`skin/profile/profile_v2.md` 確認・修正 → Threads/Instagram にコピペ反映）
-- [x] skin ヘッダー画像作成（Canva で「スキンケアでは、治らない。」→ `skin/profile/header_image_v2.png` 保存・SNS反映）
-- [x] skin 観測対象10アカウントのリスト化（Threads検索 → `skin/skin_account_targets.json` に10件記入）
+- [ ] Task 8: Instagram Batch 1 初動チェック（v2 8枚カルーセルが正常投稿されているか）
+- [ ] Task 4: Instagram insights 権限申請（Facebook Developer Console で `instagram_manage_insights`）
+- [ ] Week 2 (5/25〜) リプ運用準備 — `skin/skin_account_targets.json` の10アカウントの最新投稿を再確認
 
+> 完了済み（5/18〜5/19）: プロフィールv2・ヘッダー画像（IG版含む）・観測対象10アカウント・日次ログ雛形
 > 計画書: `docs/superpowers/plans/2026-05-18-skin-monetize-m1-w1-w2.md`（M1 Week 1-2 全8タスク）
 > 上位スペック: `docs/superpowers/specs/2026-05-18-skin-monetize-roadmap-design.md`（半年ロードマップ・月3〜5万円目標）
 
