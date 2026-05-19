@@ -1,5 +1,5 @@
 {
-  "daily_index": 73,
+  "daily_index": 74,
   "launch_index": 0,
   "history": [
     {
@@ -3156,6 +3156,13 @@
       "theme_id": 73,
       "variant": "A",
       "post_id": "18184021822376868"
+    },
+    {
+      "date": "2026/05/19 10:49",
+      "theme": "エアコンと乾燥肌",
+      "theme_id": 74,
+      "variant": "A",
+      "post_id": "18112525672851070"
     }
   ],
   "ab_next": "A",
@@ -3173,7 +3180,8 @@
     "70": "B",
     "71": "B",
     "72": "B",
-    "73": "B"
+    "73": "B",
+    "74": "B"
   },
   "ab_results": {
     "61": {
@@ -3249,6 +3257,12 @@
       "b_posts": 0
     },
     "73": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "74": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
