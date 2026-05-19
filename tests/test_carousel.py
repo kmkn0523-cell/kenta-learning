@@ -19,7 +19,10 @@ def test_carousel_content_json_structure():
         assert 'id' in theme
         assert 'caption' in theme
         assert 'slides' in theme
-        assert len(theme['slides']) == 5         # 各テーマ5枚あること
+        # slide_count キーがあればそれと一致、無ければ最低5枚以上を期待
+        # （v2でcover+hook+point×N+ctaの8枚構成に拡張）
+        expected = theme.get('slide_count', len(theme['slides']))
+        assert len(theme['slides']) == expected
         assert theme['slides'][0]['type'] == 'cover'  # 1枚目はカバー
         assert theme['slides'][-1]['type'] == 'cta'   # 最後はCTA
 
@@ -37,7 +40,7 @@ def test_carousel_content_no_empty_fields():
 
 
 def test_build_carousel_image_urls():
-    """テーマIDからカルーセル画像URLが5件生成されることを確認する"""
+    """テーマIDとスライド枚数からカルーセル画像URLが生成されることを確認する（v2: 8枚対応）"""
     import importlib.util
     spec = importlib.util.spec_from_file_location(
         "auto_post",
@@ -46,8 +49,14 @@ def test_build_carousel_image_urls():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
 
-    urls = mod.build_carousel_image_urls(theme_id=1)
-    assert len(urls) == 5
-    assert urls[0].endswith('theme01_slide1.png')
-    assert urls[4].endswith('theme01_slide5.png')
-    assert all('raw.githubusercontent.com' in url for url in urls)
+    # 8枚（v2標準）のケース
+    urls_8 = mod.build_carousel_image_urls(theme_id=1, slide_count=8)
+    assert len(urls_8) == 8
+    assert urls_8[0].endswith('theme01_slide1.png')
+    assert urls_8[7].endswith('theme01_slide8.png')
+    assert all('raw.githubusercontent.com' in url for url in urls_8)
+
+    # 5枚（v1互換）のケースも動作することを確認
+    urls_5 = mod.build_carousel_image_urls(theme_id=1, slide_count=5)
+    assert len(urls_5) == 5
+    assert urls_5[4].endswith('theme01_slide5.png')
