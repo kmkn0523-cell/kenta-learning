@@ -502,7 +502,7 @@
   "shiftEnterKeyBindingInstalled": true,
   "hasCompletedOnboarding": true,
   "lastOnboardingVersion": "2.1.118",
-  "lastReleaseNotesSeen": "2.1.143",
+  "lastReleaseNotesSeen": "2.1.144",
   "projects": {
     "/home/kenta_kamijyo": {
       "allowedTools": [],
@@ -737,5 +737,6 @@
       "remaining_passes": null,
       "timestamp": 1779191540516
     }
-  }
+  },
+  "mcpServers": {}
 }
