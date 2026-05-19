@@ -689,6 +689,10 @@
     "insights": {
       "usageCount": 1,
       "lastUsedAt": 1778653464731
+    },
+    "claude-code-setup:claude-automation-recommender": {
+      "usageCount": 1,
+      "lastUsedAt": 1779204810992
     }
   },
   "opus47LaunchSeenCount": 5,
