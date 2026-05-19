@@ -34,6 +34,7 @@
     "git-worktrees": 91
   },
   "promptQueueUseCount": 98,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "claude_code_skills_dashboard_enabled_cli": false,
     "tengu_tool_search_unsupported_models": [
