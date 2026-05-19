@@ -1,5 +1,5 @@
 {
-  "daily_index": 74,
+  "daily_index": 75,
   "launch_index": 0,
   "history": [
     {
@@ -3163,6 +3163,13 @@
       "theme_id": 74,
       "variant": "A",
       "post_id": "18112525672851070"
+    },
+    {
+      "date": "2026/05/19 13:00",
+      "theme": "ダイエットと肌荒れ",
+      "theme_id": 75,
+      "variant": "A",
+      "post_id": "18091448780605059"
     }
   ],
   "ab_next": "A",
@@ -3181,7 +3188,8 @@
     "71": "B",
     "72": "B",
     "73": "B",
-    "74": "B"
+    "74": "B",
+    "75": "B"
   },
   "ab_results": {
     "61": {
@@ -3263,6 +3271,12 @@
       "b_posts": 0
     },
     "74": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "75": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
