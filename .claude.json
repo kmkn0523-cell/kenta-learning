@@ -604,9 +604,9 @@
         "pre_tool_hook_duration_ms_p99": 33
       },
       "hasCompletedProjectOnboarding": true,
-      "lastHintSessionId": "4262b4e9-ae6f-4869-a64c-2a45ac38bddf",
-      "lastSessionFirstPrompt": "スキンでのマネタイズのtodoは？",
-      "lastSessionModified": 1779152245159,
+      "lastHintSessionId": "300f2484-7a49-4187-8eae-33c5b5f9fe17",
+      "lastSessionFirstPrompt": "Anthropic公式の補助プラグイン「claude-code-setupってなに？",
+      "lastSessionModified": 1779204499163,
       "exampleFilesGeneratedAt": 1778803920155,
       "lastVersionBase": "2.1.144"
     }
