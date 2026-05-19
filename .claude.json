@@ -33,7 +33,8 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 93,
+  "promptQueueUseCount": 94,
+  "showExpandedTodos": true,
   "cachedGrowthBookFeatures": {
     "tengu_classifier_summary_heuristic_emit": false,
     "tengu_amber_flint": true,
