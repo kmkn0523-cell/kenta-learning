@@ -33,7 +33,7 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 86,
+  "promptQueueUseCount": 87,
   "cachedGrowthBookFeatures": {
     "tengu_sessions_elevated_auth_enforcement": false,
     "tengu_ultraplan_prompt_identifier": "visual_plan",
