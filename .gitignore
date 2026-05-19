@@ -65,6 +65,9 @@ linkedin/linkedin_config.json
 # Claude Code 設定（MCPサーバーのAPIキーが入るため絶対にコミットしない）
 .claude.json
 
+# 一時バックアップファイル（ロールバック用、ローカル保持のみ）
+*.backup_*.json
+
 # Pythonキャッシュは除外
 __pycache__/
 *.pyc
