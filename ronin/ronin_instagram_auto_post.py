@@ -187,9 +187,9 @@ def main():
     hashtags = " ".join(post.get("hashtags", []))
     caption = post["content"] + CTA + "\n\n" + hashtags
 
-    # 画像URLを組み立てる（投稿インデックスから決める → 連続投稿で同じ画像が使われるのを防ぐ）
-    # 100枚の画像をインデックス順に使い、101枚目以降は最初に戻る
-    image_num = (current_index % 100) + 1
+    # 画像URLを組み立てる（投稿のDay番号と画像のDay番号を一致させる）
+    # 同じDayの朝・夜投稿は同じ画像を使う（内容が同じ格言を扱っているため）
+    image_num = post["day"]
     image_filename = f"day{image_num:02d}.png"
     image_url = f"{GITHUB_RAW_BASE}/{image_filename}"
 
