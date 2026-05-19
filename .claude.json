@@ -33,7 +33,7 @@
     "default-permission-mode-config": 87,
     "git-worktrees": 91
   },
-  "promptQueueUseCount": 95,
+  "promptQueueUseCount": 96,
   "cachedGrowthBookFeatures": {
     "claude_code_skills_dashboard_enabled_cli": false,
     "tengu_tool_search_unsupported_models": [
