@@ -105,23 +105,62 @@ def build_caption(
 # =============================
 
 def load_progress():
-    """前回どこまで投稿したかを読み込む（ファイルがなければ最初から）"""
+    """前回までの投稿進捗を読み込む（v1/v2の交互投稿に対応）
+    新フォーマット: {"v1_index": N, "v2_index": M, "post_count": K}
+    旧フォーマット {"next_index": N} は自動マイグレーション（v2=4テーマ既出を前提）
+    """
     if not os.path.exists(PROGRESS_FILE):
-        return {"next_index": 0}
+        return {"v1_index": 0, "v2_index": 0, "post_count": 0}
     try:
         with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
     except (json.JSONDecodeError, FileNotFoundError):
-        return {"next_index": 0}
+        return {"v1_index": 0, "v2_index": 0, "post_count": 0}
+
+    # 新フォーマットならそのまま返す
+    if "post_count" in data:
+        return data
+    # 旧フォーマット → マイグレーション（next_index個 全て連番で投稿済み前提）
+    old_next = int(data.get("next_index", 0))
+    v2_count = 4  # v2テーマ数（ID 1〜4）
+    v2_done = min(old_next, v2_count)
+    v1_done = max(0, old_next - v2_count)
+    return {
+        "v1_index": v1_done,
+        "v2_index": v2_done,
+        "post_count": old_next,
+    }
 
 
-def save_progress(next_index):
-    """次に投稿するインデックスをファイルに保存する"""
+def save_progress(v1_index: int, v2_index: int, post_count: int):
+    """投稿進捗をファイルに保存する"""
     try:
         with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
-            json.dump({"next_index": next_index}, f, ensure_ascii=False, indent=2)
+            json.dump(
+                {"v1_index": v1_index, "v2_index": v2_index, "post_count": post_count},
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
     except Exception as e:
         print(f"⚠️ 進捗保存エラー: {e}")
+
+
+def select_next_theme(themes: list, progress: dict):
+    """v1:v2 = 4:1 の比率で次のテーマを選ぶ（5投稿に1回 v2）
+    戻り値: (theme, kind) — kind は "v1" or "v2"
+    """
+    v1_themes = [t for t in themes if t.get("version") != "v2"]
+    v2_themes = [t for t in themes if t.get("version") == "v2"]
+    post_count = progress.get("post_count", 0)
+    # 5投稿目（post_count=4, 9, 14, ...）を v2 に割り当てる
+    use_v2 = ((post_count + 1) % 5 == 0) and len(v2_themes) > 0
+    if use_v2:
+        idx = progress.get("v2_index", 0) % len(v2_themes)
+        return v2_themes[idx], "v2"
+    else:
+        idx = progress.get("v1_index", 0) % len(v1_themes)
+        return v1_themes[idx], "v1"
 
 
 # =============================
@@ -416,11 +455,10 @@ def main():
         print("❌ carousel_content.json が読み込めませんでした。終了します。")
         sys.exit(1)
 
-    # 前回の進捗を読み込む（全テーマをループ）
-    progress      = load_progress()
-    current_index = progress["next_index"] % len(themes)
-    theme         = themes[current_index]
-    theme_id = theme["id"]
+    # 前回の進捗を読み込んで次のテーマを選ぶ（v1:v2 = 4:1 で交互投稿）
+    progress       = load_progress()
+    theme, kind    = select_next_theme(themes, progress)
+    theme_id       = theme["id"]
 
     # v2 ならビルダーで組み立て、v1 なら既存の caption をそのまま使う（後方互換）
     if theme.get("version") == "v2":
@@ -434,7 +472,7 @@ def main():
     else:
         caption = theme["caption"]
 
-    print(f"📌 テーマ{theme_id:02d}（index={current_index}）")
+    print(f"📌 テーマ{theme_id:02d}（{kind}・post_count={progress.get('post_count', 0)}）")
 
     # カルーセル画像のURLを slide_count 分作る（v1=5, v2=8）
     slide_count = theme.get("slide_count", 5)
@@ -472,14 +510,22 @@ def main():
     # Step3: 投稿を公開する
     print("📤 Step3: 投稿を公開中...")
     publish_result = publish_media(carousel_id)
+    # 進捗を1つ進めるための新しい値を計算
+    new_v1 = progress.get("v1_index", 0) + (1 if kind == "v1" else 0)
+    new_v2 = progress.get("v2_index", 0) + (1 if kind == "v2" else 0)
+    new_count = progress.get("post_count", 0) + 1
+
     if "id" not in publish_result:
         if publish_result.get("rate_limited"):
             # APIブロック（error code 4）でも進捗を1つ進める
             # 同じ投稿を何度もリトライすると「同じ内容が続く」問題が起きるため
-            save_progress(current_index + 1)
-            next_theme = themes[(current_index + 1) % len(themes)]
+            save_progress(new_v1, new_v2, new_count)
+            next_theme, next_kind = select_next_theme(
+                themes,
+                {"v1_index": new_v1, "v2_index": new_v2, "post_count": new_count},
+            )
             print("⏭️ InstagramのAPIブロックのためスキップ（進捗は次へ進めます）")
-            print(f"📊 次回テーマ: {next_theme['id']:02d}（index={(current_index + 1) % len(themes)}）")
+            print(f"📊 次回テーマ: {next_theme['id']:02d}（{next_kind}）")
             sys.exit(0)  # 正常終了（GitHub Actionsを赤くしない）
         print(f"❌ 投稿公開失敗: {publish_result}")
         sys.exit(1)
@@ -487,9 +533,12 @@ def main():
     print(f"✅ カルーセル投稿成功！投稿ID: {publish_result['id']}")
 
     # 次回の進捗を保存する
-    next_index = current_index + 1
-    save_progress(next_index)
-    print(f"📊 次回テーマ: {themes[next_index % len(themes)]['id']:02d}（index={next_index % len(themes)}）")
+    save_progress(new_v1, new_v2, new_count)
+    next_theme, next_kind = select_next_theme(
+        themes,
+        {"v1_index": new_v1, "v2_index": new_v2, "post_count": new_count},
+    )
+    print(f"📊 次回テーマ: {next_theme['id']:02d}（{next_kind}・post_count={new_count}）")
     print("=== 完了 ===")
 
 
