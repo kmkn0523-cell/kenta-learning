@@ -23,6 +23,30 @@
 - エラーが起きそうな処理にはエラーハンドリングを入れる
 - 新しいライブラリを使うときは事前に必要か確認する
 
+## ディレクトリ構造
+- `/skin/` — skinアカウント Threads + Instagram自動投稿
+- `/ronin/` — @RoninWords Threads自動投稿（Substack連携あり）
+- `/finance_web/` — 家計簿Webアプリ（Next.js / Vercel）
+- `/linkedin/` — LinkedIn投稿スクリプト
+- `/docs/` — 運用手順書（トークン更新等）
+- `/tests/`, `/skin/tests/` — pytest対象
+- `/learning/` — 学習ノート
+- ルート直下の `.py` — 共通スクリプト
+
+## よく使うコマンド
+- pytest: `pytest tests/ skin/tests/`
+- finance_webローカル起動: `cd finance_web && npm run dev`
+- finance_web本番デプロイ: `cd finance_web && npx vercel --prod`
+- GitHub Actions手動実行: `gh workflow run <name>.yml`
+- Threadsトークン残日数確認: `/token-expiry-check`
+- 投稿JSON検証: `/validate-threads-posts`
+
+## プロジェクト固有の罠
+- `progress.json` 系は GitHub Actions が書き換える → 手動編集禁止
+- Threads投稿JSON は重複NG → 編集後必ず `/validate-threads-posts`
+- finance_web は GitHub 経由ではなく `vercel --prod` で直接デプロイ
+- `.env` の `GITHUB_PERSONAL_ACCESS_TOKEN` はMCP github用、コミット禁止
+
 ## 稼働中の自動化（触るときは慎重に）
 - **@RoninWords Threads**: 1日16回（毎時30分 7:30〜22:30 JST）GitHub Actions経由
 - **skin Threads**: 1日4回（7:30/12:30/18:30/21:30 JST）GitHub Actions経由
