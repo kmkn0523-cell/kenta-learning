@@ -1,6 +1,6 @@
 # TODO リスト
 
-最終更新: 2026/05/20（M1 Week 1 Day 3 — Week 1主要タスク完了、残り＆Week 2準備へ）
+最終更新: 2026/05/20（Instagram重複テーマ差し替え＋頻度削減＋v1/v2交互投稿実装）
 
 ---
 
@@ -137,10 +137,20 @@
 
 #### Instagram自動投稿
 - [x] GitHub Actions有効化・稼働中（2026/05/12）
+- [x] 重複4テーマ差し替え（2026/05/20）
+  - ID10: グルテンやめて1ヶ月 → 乳製品をやめて1ヶ月で起きた変化
+  - ID12: 洗顔を減らしたら起きた5つの変化 → コンビニで買える美肌食ベスト7
+  - ID19: 発酵食品を毎日 → ニキビの場所でわかる体からのサイン
+  - ID20: 今日から始めるToDo7選 → やってはいけない逆効果スキンケア7つ
+  - 画像も再生成＆GitHub push済（commit 43757ef）
+- [x] v1（5枚）/v2（8枚）の4:1交互投稿ロジック実装（2026/05/20・commit d00b1b1）
+  - 5投稿に1回 v2 を挟む。progress.json を {v1_index, v2_index, post_count} に拡張
+- [x] 投稿頻度を1日4回→2回に削減（2026/05/20・commit 1cea40e）
+  - 7:00 / 19:00 JST に集約。1周5日→10日に伸ばしてネタ切れ防止
+- [ ] **Batch 2 制作（2026/06/07予定）**：v1 16テーマを v2（8スライド）化 or 新規追加
 - [ ] **投稿内容ブラッシュアップ（プロ目線、新セッションでbrainstormingから）**
   - アカウント: https://www.instagram.com/skin_reset_jp/
-  - 既存ファイル: skin/carousel_content.json（themes配列）、skin/generate_skin_cards.py（画像生成）、skin/skin_instagram_auto_post.py（投稿）、skin/skin_instagram_progress.json（next_index: 5）
-  - 進行状況: 20テーマ稼働中、現在 next_index=5
+  - 既存ファイル: skin/carousel_content.json（themes配列）、skin/skin_instagram_image_gen_v3.py（v1画像）、skin/skin_instagram_image_gen_v4.py（v2画像）、skin/skin_instagram_auto_post.py（投稿）
   - 流れ: brainstorming → 設計 → 実装計画 → コンテンツ制作（skin Threads Batch 1 と同じプロセス）
 
 #### 改善
