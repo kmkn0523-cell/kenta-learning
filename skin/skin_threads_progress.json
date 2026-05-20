@@ -1,5 +1,5 @@
 {
-  "daily_index": 79,
+  "daily_index": 80,
   "launch_index": 0,
   "history": [
     {
@@ -3198,6 +3198,13 @@
       "theme_id": 79,
       "variant": "A",
       "post_id": "17967354870074468"
+    },
+    {
+      "date": "2026/05/20 04:00",
+      "theme": "貧血と肌荒れ",
+      "theme_id": 80,
+      "variant": "A",
+      "post_id": "17937829422229522"
     }
   ],
   "ab_next": "A",
@@ -3221,7 +3228,8 @@
     "76": "B",
     "77": "B",
     "78": "B",
-    "79": "B"
+    "79": "B",
+    "80": "B"
   },
   "ab_results": {
     "61": {
@@ -3333,6 +3341,12 @@
       "b_posts": 0
     },
     "79": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "80": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
