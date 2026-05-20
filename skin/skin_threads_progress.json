@@ -1,5 +1,5 @@
 {
-  "daily_index": 85,
+  "daily_index": 86,
   "launch_index": 0,
   "history": [
     {
@@ -3240,6 +3240,13 @@
       "theme_id": 85,
       "variant": "A",
       "post_id": "18108044065937644"
+    },
+    {
+      "date": "2026/05/20 16:00",
+      "theme": "夜のスキンケアルーティン",
+      "theme_id": 86,
+      "variant": "A",
+      "post_id": "17992582904985569"
     }
   ],
   "ab_next": "A",
@@ -3269,7 +3276,8 @@
     "82": "B",
     "83": "B",
     "84": "B",
-    "85": "B"
+    "85": "B",
+    "86": "B"
   },
   "ab_results": {
     "61": {
@@ -3417,6 +3425,12 @@
       "b_posts": 0
     },
     "85": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "86": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
