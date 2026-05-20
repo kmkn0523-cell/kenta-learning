@@ -1,5 +1,5 @@
 {
-  "daily_index": 86,
+  "daily_index": 87,
   "launch_index": 0,
   "history": [
     {
@@ -3247,6 +3247,13 @@
       "theme_id": 86,
       "variant": "A",
       "post_id": "17992582904985569"
+    },
+    {
+      "date": "2026/05/20 18:00",
+      "theme": "喫煙と肌老化",
+      "theme_id": 87,
+      "variant": "A",
+      "post_id": "18374201767165470"
     }
   ],
   "ab_next": "A",
@@ -3277,7 +3284,8 @@
     "83": "B",
     "84": "B",
     "85": "B",
-    "86": "B"
+    "86": "B",
+    "87": "B"
   },
   "ab_results": {
     "61": {
@@ -3431,6 +3439,12 @@
       "b_posts": 0
     },
     "86": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "87": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
