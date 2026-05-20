@@ -1,5 +1,5 @@
 {
-  "daily_index": 80,
+  "daily_index": 81,
   "launch_index": 0,
   "history": [
     {
@@ -3205,6 +3205,13 @@
       "theme_id": 80,
       "variant": "A",
       "post_id": "17937829422229522"
+    },
+    {
+      "date": "2026/05/20 06:00",
+      "theme": "化粧品の使用期限と肌荒れ",
+      "theme_id": 81,
+      "variant": "A",
+      "post_id": "18213464437335523"
     }
   ],
   "ab_next": "A",
@@ -3229,7 +3236,8 @@
     "77": "B",
     "78": "B",
     "79": "B",
-    "80": "B"
+    "80": "B",
+    "81": "B"
   },
   "ab_results": {
     "61": {
@@ -3347,6 +3355,12 @@
       "b_posts": 0
     },
     "80": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "81": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
