@@ -1,5 +1,5 @@
 {
-  "daily_index": 83,
+  "daily_index": 84,
   "launch_index": 0,
   "history": [
     {
@@ -3226,6 +3226,13 @@
       "theme_id": 83,
       "variant": "A",
       "post_id": "17889319065507195"
+    },
+    {
+      "date": "2026/05/20 12:00",
+      "theme": "汗と肌の関係",
+      "theme_id": 84,
+      "variant": "A",
+      "post_id": "18104110187062740"
     }
   ],
   "ab_next": "A",
@@ -3253,7 +3260,8 @@
     "80": "B",
     "81": "B",
     "82": "B",
-    "83": "B"
+    "83": "B",
+    "84": "B"
   },
   "ab_results": {
     "61": {
@@ -3389,6 +3397,12 @@
       "b_posts": 0
     },
     "83": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "84": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
