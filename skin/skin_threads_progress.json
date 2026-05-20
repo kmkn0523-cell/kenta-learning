@@ -1,5 +1,5 @@
 {
-  "daily_index": 82,
+  "daily_index": 83,
   "launch_index": 0,
   "history": [
     {
@@ -3219,6 +3219,13 @@
       "theme_id": 82,
       "variant": "A",
       "post_id": "18211391701326895"
+    },
+    {
+      "date": "2026/05/20 10:00",
+      "theme": "腸内フローラを整える",
+      "theme_id": 83,
+      "variant": "A",
+      "post_id": "17889319065507195"
     }
   ],
   "ab_next": "A",
@@ -3245,7 +3252,8 @@
     "79": "B",
     "80": "B",
     "81": "B",
-    "82": "B"
+    "82": "B",
+    "83": "B"
   },
   "ab_results": {
     "61": {
@@ -3375,6 +3383,12 @@
       "b_posts": 0
     },
     "82": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "83": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
