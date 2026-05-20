@@ -19,11 +19,7 @@
       "Bash(cat > *)",
       "Bash(ls /mnt/c/Users/)",
       "Read(//mnt/c/Users/**)",
-      "Bash(powershell.exe -Command ' *)",
-      "Bash(powershell.exe -Command \"Start-Process powershell -Verb RunAs -ArgumentList '-Command Register-ScheduledTask -TaskName \\\\\"WSL Runner\\\\\" -Action \\(New-ScheduledTaskAction -Execute \\\\\"\\\\\\\\\\\\\"C:\\\\\\\\Users\\\\\\\\kenta kamijyo\\\\\\\\start_wsl_runner.bat\\\\\\\\\\\\\"\\\\\"\\) -Trigger \\(New-ScheduledTaskTrigger -AtLogOn\\) -RunLevel Highest -Force'\")",
-      "Bash(powershell.exe -Command \"Get-ScheduledTask -TaskName 'WSL Runner' 2>&1\")",
-      "Bash(schtasks.exe /Create /TN \"WSL Runner 自動起動\" /TR \"\\\\\"C:\\\\\\\\Users\\\\\\\\kenta kamijyo\\\\\\\\start_wsl_runner.bat\\\\\"\" /SC ONLOGON /RL HIGHEST /F)",
-      "Bash(schtasks.exe /Query /TN \"WSL Runner 自動起動\" /FO LIST)"
+      "Bash(powershell.exe -Command ' *)"
     ],
     "additionalDirectories": [
       "/mnt/c/Users/kenta_kamijyo",
@@ -156,7 +152,7 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "verbose": false,
-  "autoCompactEnabled": false,
+  "autoCompactEnabled": true,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
