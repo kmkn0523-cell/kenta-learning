@@ -1,5 +1,5 @@
 {
-  "daily_index": 78,
+  "daily_index": 79,
   "launch_index": 0,
   "history": [
     {
@@ -3191,6 +3191,13 @@
       "theme_id": 78,
       "variant": "A",
       "post_id": "17943877779187889"
+    },
+    {
+      "date": "2026/05/20 02:00",
+      "theme": "免疫力と肌荒れ",
+      "theme_id": 79,
+      "variant": "A",
+      "post_id": "17967354870074468"
     }
   ],
   "ab_next": "A",
@@ -3213,7 +3220,8 @@
     "75": "B",
     "76": "B",
     "77": "B",
-    "78": "B"
+    "78": "B",
+    "79": "B"
   },
   "ab_results": {
     "61": {
@@ -3319,6 +3327,12 @@
       "b_posts": 0
     },
     "78": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "79": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
