@@ -1,5 +1,5 @@
 {
-  "next_day": 5,
+  "next_day": 6,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -24,6 +24,12 @@
       "day": 4,
       "post_id": 198236301,
       "title": "背水の陣 — Fight with your back to the river."
+    },
+    {
+      "date": "2026/05/20 09:18",
+      "day": 5,
+      "post_id": 198533082,
+      "title": "諸行無常 — Nothing in this world stays the same."
     }
   ]
 }
