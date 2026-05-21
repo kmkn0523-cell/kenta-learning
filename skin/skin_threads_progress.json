@@ -1,5 +1,5 @@
 {
-  "daily_index": 99,
+  "daily_index": 100,
   "launch_index": 0,
   "history": [
     {
@@ -3338,6 +3338,13 @@
       "theme_id": 99,
       "variant": "A",
       "post_id": "18062153204481454"
+    },
+    {
+      "date": "2026/05/21 21:01",
+      "theme": "続けることの力",
+      "theme_id": 100,
+      "variant": "A",
+      "post_id": "17906243640245432"
     }
   ],
   "ab_next": "A",
@@ -3381,7 +3388,8 @@
     "96": "B",
     "97": "B",
     "98": "B",
-    "99": "B"
+    "99": "B",
+    "100": "B"
   },
   "ab_results": {
     "61": {
@@ -3613,6 +3621,12 @@
       "b_posts": 0
     },
     "99": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "100": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
