@@ -1,5 +1,5 @@
 {
-  "daily_index": 96,
+  "daily_index": 97,
   "launch_index": 0,
   "history": [
     {
@@ -3317,6 +3317,13 @@
       "theme_id": 96,
       "variant": "A",
       "post_id": "17927461785302263"
+    },
+    {
+      "date": "2026/05/21 15:00",
+      "theme": "水の飲み方と肌",
+      "theme_id": 97,
+      "variant": "A",
+      "post_id": "17894089437467768"
     }
   ],
   "ab_next": "A",
@@ -3357,7 +3364,8 @@
     "93": "B",
     "94": "B",
     "95": "B",
-    "96": "B"
+    "96": "B",
+    "97": "B"
   },
   "ab_results": {
     "61": {
@@ -3571,6 +3579,12 @@
       "b_posts": 0
     },
     "96": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "97": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
