@@ -14,12 +14,20 @@ export const COLOR_NEGATIVE = "#f43f5e";          // マイナス・支出を示
 export const COLOR_SURFACE = "rgba(15,23,42,0.95)"; // フィルターパネルなどの表面色（ダークネイビー半透明）
 
 // カードのスタイル（グラスモーフィズム：すりガラス効果でカードに奥行きを出す）
-export const STYLE_CARD = {background:"rgba(15,23,42,0.7)",backdropFilter:"blur(20px)",border:"1px solid rgba(148,163,184,0.18)",borderRadius:18,padding:20,marginBottom:14,boxShadow:"0 4px 24px rgba(0,0,0,0.3),0 1px 0 rgba(255,255,255,0.04) inset"};
+export const STYLE_CARD = {
+  background:"rgba(15,23,42,0.7)",              // カード背景：やや透明なダークネイビー
+  backdropFilter:"blur(20px)",                  // すりガラス効果：カードの後ろを20pxぼかす
+  border:"1px solid rgba(148,163,184,0.18)",    // ボーダー：薄いグレーのふち線（不透明度0.18）
+  borderRadius:18,                              // 角丸：18pxの丸み
+  padding:20,                                   // 内側の余白：全方向20px
+  marginBottom:14,                              // 下の外側余白：カード同士の間隔
+  boxShadow:"0 4px 24px rgba(0,0,0,0.3),0 1px 0 rgba(255,255,255,0.04) inset", // 影：下向きの黒い影＋上側にうっすら白い光（立体感を出す）
+};
 
-// 入力欄（input/select）の共通スタイル（すりガラス効果を追加）
+// 入力欄（input/select）の共通スタイル（backdropFilter:blur(8px) でうっすらガラス感を追加）
 export const STYLE_INPUT = {background:"rgba(148,163,184,0.06)",backdropFilter:"blur(8px)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:"12px 14px",color:COLOR_TEXT_PRIMARY,fontSize:16,outline:"none",width:"100%",fontFamily:"inherit",minHeight:46,boxSizing:"border-box" as const};
 
-// プライマリボタン（保存・追加など）の共通スタイル（シアングローを追加）
+// プライマリボタン（保存・追加など）の共通スタイル（boxShadow でシアンのグロー光を追加）
 export const STYLE_BUTTON_PRIMARY = {border:"none",borderRadius:12,padding:"13px 0",cursor:"pointer",fontSize:15,fontWeight:700,background:COLOR_ACCENT,color:"#070b14",width:"100%",fontFamily:"inherit",minHeight:46,boxShadow:"0 0 20px rgba(34,211,238,0.3),0 0 40px rgba(34,211,238,0.1)"};
 
 // セカンダリボタン（キャンセル・編集など）の共通スタイル
