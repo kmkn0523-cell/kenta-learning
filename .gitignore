@@ -67,6 +67,11 @@ finance_web/.env.local
 !docs/superpowers/specs/*.md
 !docs/superpowers/plans/
 !docs/superpowers/plans/*.md
+!finance_web/docs/superpowers/
+!finance_web/docs/superpowers/specs/
+!finance_web/docs/superpowers/specs/*.md
+!finance_web/docs/superpowers/plans/
+!finance_web/docs/superpowers/plans/*.md
 !tests/
 !tests/*.py
 
