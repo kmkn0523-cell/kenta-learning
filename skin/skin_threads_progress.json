@@ -1,5 +1,5 @@
 {
-  "daily_index": 93,
+  "daily_index": 94,
   "launch_index": 0,
   "history": [
     {
@@ -3296,6 +3296,13 @@
       "theme_id": 93,
       "variant": "A",
       "post_id": "18095293705901802"
+    },
+    {
+      "date": "2026/05/21 09:00",
+      "theme": "腸活と便秘改善",
+      "theme_id": 94,
+      "variant": "A",
+      "post_id": "18017540501840785"
     }
   ],
   "ab_next": "A",
@@ -3333,7 +3340,8 @@
     "90": "B",
     "91": "B",
     "92": "B",
-    "93": "B"
+    "93": "B",
+    "94": "B"
   },
   "ab_results": {
     "61": {
@@ -3529,6 +3537,12 @@
       "b_posts": 0
     },
     "93": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "94": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
