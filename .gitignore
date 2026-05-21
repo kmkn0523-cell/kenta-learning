@@ -12,6 +12,8 @@
 !*.jsx
 !*.png
 !*.js
+!*.tsx
+!*.ts
 !ronin_images/
 !ronin_images/*.png
 !.github/
@@ -42,6 +44,14 @@
 !linkedin/
 !learning/
 !docs/
+!finance_web/
+!finance_web/src/
+!finance_web/public/
+!finance_web/docs/
+finance_web/node_modules/
+finance_web/dist/
+finance_web/.vercel/
+finance_web/.env.local
 !docs/superpowers/
 !docs/superpowers/specs/
 !docs/superpowers/specs/*.md
