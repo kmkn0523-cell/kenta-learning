@@ -1,7 +1,7 @@
 // ────────── 共通UIコンポーネント ──────────
 // アプリ全体で使い回す小さな部品をまとめたファイル
 
-import { useState, useRef, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
+import { useState, useRef, useEffect, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
 import { formatAmount, formatYen } from "../utils/format";
 import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
 
@@ -15,29 +15,28 @@ interface PasswordInputProps {
 }
 export function PasswordInput({ value, onChange, onEnter, placeholder, err }: PasswordInputProps) {
   const [show, setShow] = useState(true);
-  // IME変換中フラグ（useRef = 値が変わっても再レンダリングしない）
-  // iOS フリック入力で「変換中」→「確定」の2段階があり、
-  // 変換中に onChange が複数回発火すると文字が重複するのを防ぐ
-  const composingRef = useRef(false);
+  // inputのDOM要素を直接参照するためのref
+  const inputRef = useRef<HTMLInputElement>(null);
   // エラーがある時は枠を赤くする
   const border = err ? "#f87171" : "rgba(255,255,255,0.08)";
+
+  // 親が value を書き換えたとき（例：ログイン失敗後の setPw("")）だけ DOM に反映する
+  // React の controlled input にしないことで iOS IME との競合を完全に回避する
+  useEffect(() => {
+    if (inputRef.current && inputRef.current.value !== String(value)) {
+      inputRef.current.value = String(value);
+    }
+  }, [value]);
+
   return (
     <div style={{position:"relative",marginBottom:12}}>
       <input
+        ref={inputRef}
         type="text"             // 常にtext型→iOSフリック入力が使える
         inputMode="text"        // スマホでテキストキーボードを使う
         autoComplete="off"      // オートコンプリートを無効化
-        value={value}           // 常に実際の値をinputに持たせる（IMEに干渉しない）
-        onChange={e => {
-          // IME変換中（composing）は無視して確定後だけ state を更新する
-          if (!composingRef.current) onChange(e.target.value);
-        }}
-        onCompositionStart={() => { composingRef.current = true; }}  // IME変換開始
-        onCompositionEnd={e => {
-          composingRef.current = false;  // IME変換終了
-          // 変換確定時の最終的な文字列を反映する
-          onChange((e.target as HTMLInputElement).value);
-        }}
+        defaultValue={value}    // 初期値のみ設定（以降はDOMに任せてIMEに干渉しない）
+        onChange={e => onChange(e.target.value)}  // 確定済み文字を親に渡す
         onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && onEnter && onEnter()}
         placeholder={show ? placeholder : ""}
         style={{
