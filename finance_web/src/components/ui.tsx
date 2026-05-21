@@ -1,7 +1,7 @@
 // ────────── 共通UIコンポーネント ──────────
 // アプリ全体で使い回す小さな部品をまとめたファイル
 
-import { useState, useRef, useEffect, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
+import { useState, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
 import { formatAmount, formatYen } from "../utils/format";
 import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
 
@@ -15,28 +15,17 @@ interface PasswordInputProps {
 }
 export function PasswordInput({ value, onChange, onEnter, placeholder, err }: PasswordInputProps) {
   const [show, setShow] = useState(true);
-  // inputのDOM要素を直接参照するためのref
-  const inputRef = useRef<HTMLInputElement>(null);
   // エラーがある時は枠を赤くする
   const border = err ? "#f87171" : "rgba(255,255,255,0.08)";
-
-  // 親が value を書き換えたとき（例：ログイン失敗後の setPw("")）だけ DOM に反映する
-  // React の controlled input にしないことで iOS IME との競合を完全に回避する
-  useEffect(() => {
-    if (inputRef.current && inputRef.current.value !== String(value)) {
-      inputRef.current.value = String(value);
-    }
-  }, [value]);
 
   return (
     <div style={{position:"relative",marginBottom:12}}>
       <input
-        ref={inputRef}
         type="text"             // 常にtext型→iOSフリック入力が使える
         inputMode="text"        // スマホでテキストキーボードを使う
         autoComplete="off"      // オートコンプリートを無効化
-        defaultValue={value}    // 初期値のみ設定（以降はDOMに任せてIMEに干渉しない）
-        onChange={e => onChange(e.target.value)}  // 確定済み文字を親に渡す
+        value={value}           // Reactが値を管理するcontrolled input
+        onChange={e => onChange(e.target.value)}  // 入力のたびに親に値を渡す
         onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && onEnter && onEnter()}
         placeholder={show ? placeholder : ""}
         style={{
