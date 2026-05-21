@@ -27,6 +27,7 @@ import MonthNav from "./components/MonthNav";
 import StatBlock from "./components/StatBlock";
 // DashboardView は初期表示タブなので即時ロード
 import DashboardView from "./views/DashboardView";
+import TutorialModal from "./components/TutorialModal";
 // それ以外のビューは初回ロードを軽くするためタブを開いた時に動的ロード（コード分割）
 const IncomeView = lazy(() => import("./views/IncomeView"));
 const FixedExpenseView = lazy(() => import("./views/FixedExpenseView"));
@@ -142,12 +143,20 @@ function AppInner(){
   // 口座間振替を先頭に追加する
   function addTransfer(transfer: Transfer){setTransfers(prev=>[transfer,...prev]);showT("振替しました");}
 
+  // チュートリアル表示状態（localStorage に kk_tutorial_done=1 がなければ初回表示）
+  const [showTutorial, setShowTutorial] = useState(() => localStorage.getItem("kk_tutorial_done") !== "1");
+  // チュートリアルを閉じる：表示済みフラグを localStorage に保存する
+  function handleCloseTutorial() {
+    localStorage.setItem("kk_tutorial_done", "1");
+    setShowTutorial(false);
+  }
 
   if(!allOk) return <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:COLOR_BACKGROUND,flexDirection:"column",gap:14}}><div style={{fontSize:40,filter:"drop-shadow(0 0 12px rgba(34,211,238,0.5))"}}>💰</div><div style={{color:COLOR_TEXT_SECONDARY,fontSize:13,letterSpacing:"2px",textTransform:"uppercase"}}>Loading...</div></div>;
 
   return <div style={{background:COLOR_BACKGROUND,minHeight:"100vh",color:COLOR_TEXT_PRIMARY,fontFamily:'"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif',WebkitTapHighlightColor:"transparent"}}>
     <Toast data={toast}/>
     <ConfirmDialog data={dlg} onOk={()=>{dlg?.onOk();setDlg(null);}} onCancel={()=>setDlg(null)}/>
+    <TutorialModal open={showTutorial} onClose={handleCloseTutorial}/>
     <div style={{position:"sticky",top:0,zIndex:50,background:"rgba(7,11,20,0.95)",backdropFilter:"blur(24px)",borderBottom:`1px solid ${COLOR_BORDER_GLOW}`,padding:"0 16px"}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0 12px",maxWidth:520,margin:"0 auto"}}>
         <div><div style={{fontSize:9,letterSpacing:"3px",color:COLOR_ACCENT,textTransform:"uppercase",marginBottom:3,fontWeight:600}}>Family Finance</div><div style={{fontSize:18,fontWeight:700,letterSpacing:"-0.5px"}}>家計管理</div></div>
@@ -272,6 +281,7 @@ function AppInner(){
         fixedExpenses={fixedExpenses}
         setFixedExpenses={setFixedExpenses}
         onReset={()=>{}}
+        onOpenTutorial={() => setShowTutorial(true)}
       />}
       </Suspense>
     </div>
