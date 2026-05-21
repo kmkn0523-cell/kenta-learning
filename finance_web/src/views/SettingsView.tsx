@@ -26,6 +26,7 @@ interface SettingsViewProps {
   fixedExpenses: FixedExpense[];
   setFixedExpenses: (updater: FixedExpense[] | ((p: FixedExpense[]) => FixedExpense[])) => void;
   onReset: () => void;
+  onOpenTutorial: () => void;
 }
 
 export default function SettingsView(props: SettingsViewProps) {
@@ -296,6 +297,16 @@ export default function SettingsView(props: SettingsViewProps) {
           </div>
         </div>
       )}
+
+      {/* ────────── 使い方カード ────────── */}
+      <div style={{ ...STYLE_CARD, marginTop: 16 }}>
+        <button
+          onClick={props.onOpenTutorial}
+          style={{ ...STYLE_BUTTON_OUTLINE, width: "100%" }}
+        >
+          📖 使い方を見る
+        </button>
+      </div>
 
       {/* ────────── アプリ情報カード（バージョン・制作者・著作権） ────────── */}
       <div style={{ ...STYLE_CARD, marginTop: 16 }}>
