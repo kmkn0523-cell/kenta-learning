@@ -46,6 +46,16 @@
 !docs/
 !finance_web/
 !finance_web/src/
+!finance_web/src/components/
+!finance_web/src/components/*.tsx
+!finance_web/src/hooks/
+!finance_web/src/hooks/*.ts
+!finance_web/src/views/
+!finance_web/src/views/*.tsx
+!finance_web/src/utils/
+!finance_web/src/utils/*.ts
+!finance_web/src/contexts/
+!finance_web/src/contexts/*.ts
 !finance_web/public/
 !finance_web/docs/
 finance_web/node_modules/

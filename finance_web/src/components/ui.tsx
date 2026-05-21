@@ -21,6 +21,7 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
     <div style={{position:"relative",marginBottom:12}}>
       <input
         type={show ? "text" : "password"}
+        inputMode="text"        // スマホでフリック入力キーボードを使えるようにする
         value={value}
         onChange={e => onChange(e.target.value)}
         onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && onEnter && onEnter()}
