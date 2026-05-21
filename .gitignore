@@ -56,6 +56,9 @@
 !finance_web/src/utils/*.ts
 !finance_web/src/contexts/
 !finance_web/src/contexts/*.ts
+!finance_web/src/test/
+!finance_web/src/test/components/
+!finance_web/src/test/components/*.tsx
 !finance_web/public/
 !finance_web/docs/
 finance_web/node_modules/
