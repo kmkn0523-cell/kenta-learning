@@ -67,9 +67,9 @@
           {
             "type": "command",
             "command": "bash /home/kenta_kamijyo/.claude/scripts/pytest_on_edit.sh",
+            "timeout": 60,
             "statusMessage": "関連pytestを実行中...",
-            "async": true,
-            "timeout": 60
+            "async": true
           }
         ]
       }
