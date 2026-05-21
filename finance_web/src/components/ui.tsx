@@ -14,13 +14,15 @@ interface PasswordInputProps {
   err?: boolean;
 }
 export function PasswordInput({ value, onChange, onEnter, placeholder, err }: PasswordInputProps) {
-  const [show, setShow] = useState(false);
+  // デフォルトは「表示状態」にしてフリック入力を使えるようにする
+  // type="password" はiOSで日本語入力が完全にブロックされるため使わない
+  const [show, setShow] = useState(true);
   // エラーがある時は枠を赤くする
   const border = err ? "#f87171" : "rgba(255,255,255,0.08)";
   return (
     <div style={{position:"relative",marginBottom:12}}>
       <input
-        type="text"             // 常にtextにしてフリック入力を許可する（type="password"はiOSで日本語入力不可）
+        type={show ? "text" : "password"} // 表示時はtext（フリック可）、非表示時はpassword
         inputMode="text"        // スマホでテキストキーボードを使う
         autoComplete="off"      // オートコンプリートを無効化
         value={value}
@@ -40,10 +42,7 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
           fontFamily:"inherit",
           textAlign:"center",
           letterSpacing:"0.2em",
-          // show=falseのとき•で文字を隠す（iOS/Chrome対応のCSSプロパティ）
-          // type="text"のまま見た目だけパスワード風にする
-          WebkitTextSecurity: show ? "none" : "disc",
-        } as React.CSSProperties}
+        }}
       />
       {/* 👁️ボタン：クリックするたびに表示/非表示が切り替わる */}
       <button onClick={() => setShow(s => !s)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
