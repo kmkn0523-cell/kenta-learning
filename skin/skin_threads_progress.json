@@ -1,5 +1,5 @@
 {
-  "daily_index": 90,
+  "daily_index": 91,
   "launch_index": 0,
   "history": [
     {
@@ -3275,6 +3275,13 @@
       "theme_id": 90,
       "variant": "A",
       "post_id": "17980591763847712"
+    },
+    {
+      "date": "2026/05/21 03:00",
+      "theme": "目の下のクマと肌ケア",
+      "theme_id": 91,
+      "variant": "A",
+      "post_id": "18116730532690353"
     }
   ],
   "ab_next": "A",
@@ -3309,7 +3316,8 @@
     "87": "B",
     "88": "B",
     "89": "B",
-    "90": "B"
+    "90": "B",
+    "91": "B"
   },
   "ab_results": {
     "61": {
@@ -3487,6 +3495,12 @@
       "b_posts": 0
     },
     "90": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "91": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
