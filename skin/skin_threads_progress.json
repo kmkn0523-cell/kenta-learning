@@ -1,5 +1,5 @@
 {
-  "daily_index": 97,
+  "daily_index": 98,
   "launch_index": 0,
   "history": [
     {
@@ -3324,6 +3324,13 @@
       "theme_id": 97,
       "variant": "A",
       "post_id": "17894089437467768"
+    },
+    {
+      "date": "2026/05/21 17:00",
+      "theme": "更年期と肌荒れ",
+      "theme_id": 98,
+      "variant": "A",
+      "post_id": "18088135304058618"
     }
   ],
   "ab_next": "A",
@@ -3365,7 +3372,8 @@
     "94": "B",
     "95": "B",
     "96": "B",
-    "97": "B"
+    "97": "B",
+    "98": "B"
   },
   "ab_results": {
     "61": {
@@ -3585,6 +3593,12 @@
       "b_posts": 0
     },
     "97": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "98": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
