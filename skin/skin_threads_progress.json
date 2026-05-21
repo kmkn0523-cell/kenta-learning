@@ -1,5 +1,5 @@
 {
-  "daily_index": 92,
+  "daily_index": 93,
   "launch_index": 0,
   "history": [
     {
@@ -3289,6 +3289,13 @@
       "theme_id": 92,
       "variant": "A",
       "post_id": "18116507239743636"
+    },
+    {
+      "date": "2026/05/21 07:00",
+      "theme": "肌荒れ改善チェックリスト",
+      "theme_id": 93,
+      "variant": "A",
+      "post_id": "18095293705901802"
     }
   ],
   "ab_next": "A",
@@ -3325,7 +3332,8 @@
     "89": "B",
     "90": "B",
     "91": "B",
-    "92": "B"
+    "92": "B",
+    "93": "B"
   },
   "ab_results": {
     "61": {
@@ -3515,6 +3523,12 @@
       "b_posts": 0
     },
     "92": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "93": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
