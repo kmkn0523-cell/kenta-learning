@@ -82,7 +82,7 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
       )}
       {/* 👁️ボタン：クリックするたびに表示/非表示が切り替わる */}
       <button onClick={() => setShow(s => !s)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
-        {show ? "🙈" : "👁️"}
+        {show ? "👁️" : "🙈"}
       </button>
     </div>
   );
