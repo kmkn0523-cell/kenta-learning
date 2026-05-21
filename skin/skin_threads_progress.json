@@ -1,5 +1,5 @@
 {
-  "daily_index": 94,
+  "daily_index": 95,
   "launch_index": 0,
   "history": [
     {
@@ -3303,6 +3303,13 @@
       "theme_id": 94,
       "variant": "A",
       "post_id": "18017540501840785"
+    },
+    {
+      "date": "2026/05/21 10:55",
+      "theme": "肌に良いサプリの選び方",
+      "theme_id": 95,
+      "variant": "A",
+      "post_id": "17912982189393263"
     }
   ],
   "ab_next": "A",
@@ -3341,7 +3348,8 @@
     "91": "B",
     "92": "B",
     "93": "B",
-    "94": "B"
+    "94": "B",
+    "95": "B"
   },
   "ab_results": {
     "61": {
@@ -3543,6 +3551,12 @@
       "b_posts": 0
     },
     "94": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "95": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
