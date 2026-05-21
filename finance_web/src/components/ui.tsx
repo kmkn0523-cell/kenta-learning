@@ -20,13 +20,30 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
   return (
     <div style={{position:"relative",marginBottom:12}}>
       <input
-        type={show ? "text" : "password"}
-        inputMode="text"        // スマホでフリック入力キーボードを使えるようにする
+        type="text"             // 常にtextにしてフリック入力を許可する（type="password"はiOSで日本語入力不可）
+        inputMode="text"        // スマホでテキストキーボードを使う
+        autoComplete="off"      // オートコンプリートを無効化
         value={value}
         onChange={e => onChange(e.target.value)}
         onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && onEnter && onEnter()}
         placeholder={placeholder}
-        style={{background:"rgba(255,255,255,0.05)",border:`1px solid ${border}`,borderRadius:10,padding:"13px 44px 13px 16px",color:"#f5f5f7",fontSize:16,outline:"none",width:"100%",boxSizing:"border-box",fontFamily:"inherit",textAlign:"center",letterSpacing:"0.2em"}}
+        style={{
+          background:"rgba(255,255,255,0.05)",
+          border:`1px solid ${border}`,
+          borderRadius:10,
+          padding:"13px 44px 13px 16px",
+          color:"#f5f5f7",
+          fontSize:16,
+          outline:"none",
+          width:"100%",
+          boxSizing:"border-box",
+          fontFamily:"inherit",
+          textAlign:"center",
+          letterSpacing:"0.2em",
+          // show=falseのとき•で文字を隠す（iOS/Chrome対応のCSSプロパティ）
+          // type="text"のまま見た目だけパスワード風にする
+          WebkitTextSecurity: show ? "none" : "disc",
+        } as React.CSSProperties}
       />
       {/* 👁️ボタン：クリックするたびに表示/非表示が切り替わる */}
       <button onClick={() => setShow(s => !s)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
