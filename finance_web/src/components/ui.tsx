@@ -1,7 +1,7 @@
 // ────────── 共通UIコンポーネント ──────────
 // アプリ全体で使い回す小さな部品をまとめたファイル
 
-import { useState, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
+import { useState, useRef, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
 import { formatAmount, formatYen } from "../utils/format";
 import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
 
@@ -15,18 +15,51 @@ interface PasswordInputProps {
 }
 export function PasswordInput({ value, onChange, onEnter, placeholder, err }: PasswordInputProps) {
   // デフォルトは「表示状態」にしてフリック入力を使えるようにする
-  // type="password" はiOSで日本語入力が完全にブロックされるため使わない
   const [show, setShow] = useState(true);
+  // 非表示モード時に表示する文字（実際の文字数分の •）
+  // type="text" を維持することでiOSフリック入力を常に使えるようにする
+  const displayValue = show ? value : "•".repeat(value.length);
   // エラーがある時は枠を赤くする
   const border = err ? "#f87171" : "rgba(255,255,255,0.08)";
+  // 非表示モード時の入力ハンドラ
+  // •を維持しつつ文字数の差分で実際のパスワードを再構築する
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (show) {
+      // 表示モードはそのまま渡す
+      onChange(e.target.value);
+      return;
+    }
+    const newDisplay = e.target.value;
+    const oldLen = value.length;
+    const newLen = newDisplay.length;
+    if (newLen > oldLen) {
+      // 文字が追加された：末尾に追加された文字だけ取り出して元の値に結合
+      const added = newDisplay.slice(oldLen);
+      onChange(value + added);
+    } else {
+      // 文字が削除された：末尾から削った分だけ切り詰める
+      onChange(value.slice(0, newLen));
+    }
+  };
+  // 表示/非表示の切り替え時、カーソルを末尾に移動させる
+  const inputRef = useRef<HTMLInputElement>(null);
+  const toggleShow = () => {
+    setShow(s => !s);
+    // 次のレンダリング後にカーソルを末尾へ（切り替え直後のずれ防止）
+    setTimeout(() => {
+      const el = inputRef.current;
+      if (el) { el.setSelectionRange(el.value.length, el.value.length); }
+    }, 0);
+  };
   return (
     <div style={{position:"relative",marginBottom:12}}>
       <input
-        type={show ? "text" : "password"} // 表示時はtext（フリック可）、非表示時はpassword
+        ref={inputRef}
+        type="text"             // 常にtext型→iOSフリック入力が使える
         inputMode="text"        // スマホでテキストキーボードを使う
         autoComplete="off"      // オートコンプリートを無効化
-        value={value}
-        onChange={e => onChange(e.target.value)}
+        value={displayValue}
+        onChange={handleChange}
         onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && onEnter && onEnter()}
         placeholder={placeholder}
         style={{
@@ -45,7 +78,7 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
         }}
       />
       {/* 👁️ボタン：クリックするたびに表示/非表示が切り替わる */}
-      <button onClick={() => setShow(s => !s)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
+      <button onClick={toggleShow} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
         {show ? "🙈" : "👁️"}
       </button>
     </div>
