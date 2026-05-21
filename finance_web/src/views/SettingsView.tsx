@@ -309,7 +309,7 @@ export default function SettingsView(props: SettingsViewProps) {
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>バージョン</span>
-            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.2.0</span>
+            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.2.1</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>制作</span>
