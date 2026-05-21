@@ -92,7 +92,7 @@ interface ProgressBarProps {
   label: string;
   value: number;
   max: number;
-  color: string;
+  color: string; // グラデーション固定のため未使用（呼び出し元との型互換のため残している）
   icon?: string;
 }
 export const ProgressBar = ({label, value, max, color, icon}: ProgressBarProps) =>
