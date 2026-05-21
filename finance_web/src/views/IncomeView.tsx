@@ -1,0 +1,494 @@
+// ────────── 収入タブ ビューコンポーネント ──────────
+// 収入の入力フォーム・月別ナビ・検索フィルター・一覧表示をまとめたコンポーネント
+// 検索・並び替えは内部 state で管理する（App.tsx に持ち出さない）
+
+import React, { useMemo, useState, useRef } from "react";
+import { Income, CategoryConfig } from "../types";
+import {
+  MONTH_LABELS,
+} from "../utils/format";
+import {
+  COLOR_TEXT_PRIMARY,
+  COLOR_TEXT_SECONDARY,
+  COLOR_TEXT_HINT,
+  COLOR_BORDER,
+  COLOR_ACCENT,
+  COLOR_SURFACE,
+  STYLE_CARD,
+  STYLE_BUTTON_PRIMARY,
+  STYLE_BUTTON_OUTLINE,
+} from "../utils/styles";
+import { filterAndSortItems, TransactionFilter } from "../utils/filterTransactions";
+import { Input, Select } from "../components/ui";
+import TxRow from "../components/TxRow";
+import MonthNav from "../components/MonthNav";
+
+// このコンポーネントが受け取るデータの型定義
+// incSq/setIncSq/incFcat/setIncFcat/fInc はコンポーネント内部で管理するため削除済み
+interface IncomeViewProps {
+  // 収入入力フォームの現在の値
+  incF: { cat: string; amt: string; date: string; memo: string };
+  // 収入フォームの値を更新する関数
+  setIncF: (
+    u:
+      | { cat: string; amt: string; date: string; memo: string }
+      | ((prev: {
+          cat: string;
+          amt: string;
+          date: string;
+          memo: string;
+        }) => { cat: string; amt: string; date: string; memo: string })
+  ) => void;
+  // 収入を追加するボタンを押したときの処理（成功時 true、失敗時 false を返す）
+  addInc: () => boolean;
+  // 現在選択中の年
+  selectedYear: number;
+  // 現在選択中の月（0〜11）
+  selectedMonth: number;
+  // 月を切り替えたときの処理
+  onMonthChange: (y: number, m: number) => void;
+  // 月別収入データをCSVファイルとして書き出す処理
+  exportMonthlyIncomeCsv: (label: string) => void;
+  // 選択中の月の収入一覧
+  monthlyIncomes: Income[];
+  // 収入データ全体を更新する関数
+  setIncomes: (u: Income[] | ((prev: Income[]) => Income[])) => void;
+  // トースト通知を表示する関数
+  showT: (msg: string, type?: string) => void;
+  // 確認ダイアログを表示する関数
+  ask: (title: string, msg: string, ok: () => void) => void;
+  // カテゴリ設定（動的にカテゴリ名・アイコンを取得するために使う）
+  categoryConfig: CategoryConfig;
+  // 削除＋Undo：即削除してToastに「元に戻す」を出す
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  delItem: (id: string, setArr: (u: any) => void, label?: string) => void;
+}
+
+// 収入タブ全体のUIを返すコンポーネント
+export default function IncomeView({
+  incF,
+  setIncF,
+  addInc,
+  selectedYear,
+  selectedMonth,
+  onMonthChange,
+  exportMonthlyIncomeCsv,
+  monthlyIncomes,
+  setIncomes,
+  showT,
+  ask,
+  categoryConfig,
+  delItem,
+}: IncomeViewProps) {
+  // categoryConfig.income を order 順で並べ、カテゴリ名とアイコンのマップを作る
+  const incomeCategoryNames = categoryConfig.income.slice().sort((a, b) => a.order - b.order).map(c => c.name);
+  const incomeCategoryIcons: Record<string, string> = Object.fromEntries(categoryConfig.income.map(c => [c.name, c.icon]));
+  // 検索・絞り込み条件をまとめた state（デフォルトは日付の新しい順）
+  const [filter, setFilter] = useState<TransactionFilter>({ sortBy: "date", sortDir: "desc" });
+  // フィルターパネルの表示フラグ
+  const [showFilter, setShowFilter] = useState(false);
+  // 金額入力欄への参照：連続入力時に追加成功後の再フォーカスに使う
+  const amountInputRef = useRef<HTMLInputElement>(null);
+
+  // フィルター・並び替えを適用した収入一覧
+  const filteredIncomes = useMemo(
+    () => filterAndSortItems(monthlyIncomes, filter),
+    [monthlyIncomes, filter]
+  );
+
+  // この月に登場するカテゴリだけを抽出
+  const categories = useMemo(
+    () => incomeCategoryNames.filter(c => monthlyIncomes.some(i => i.category === c)),
+    [monthlyIncomes]
+  );
+
+  return (
+    <div>
+      {/* ── 収入入力フォーム ── */}
+      <div style={STYLE_CARD}>
+        <div
+          style={{
+            fontSize: 10,
+            color: COLOR_TEXT_HINT,
+            textTransform: "uppercase",
+            letterSpacing: "1.5px",
+            marginBottom: 14,
+          }}
+        >
+          収入を入力
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            marginBottom: 12,
+          }}
+        >
+          {/* カテゴリ選択 */}
+          <Select
+            value={incF.cat}
+            onChange={e => setIncF(f => ({ ...f, cat: e.target.value }))}
+            options={incomeCategoryNames}
+            icons={incomeCategoryIcons}
+          />
+          {/* 金額入力 */}
+          <Input
+            ref={amountInputRef}
+            money
+            type="number"
+            value={incF.amt}
+            onChange={e => setIncF(f => ({ ...f, amt: e.target.value }))}
+            placeholder="金額（円）"
+          />
+          {/* 日付入力 */}
+          <Input
+            type="date"
+            value={incF.date}
+            onChange={e => setIncF(f => ({ ...f, date: e.target.value }))}
+          />
+          {/* メモ入力 */}
+          <Input
+            value={incF.memo}
+            onChange={e => setIncF(f => ({ ...f, memo: e.target.value }))}
+            placeholder="メモ（任意）"
+          />
+        </div>
+        {/* 追加ボタン（成功時は金額入力欄に再フォーカスして連続入力できるように） */}
+        <button onClick={()=>{if(addInc()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>
+          追加
+        </button>
+      </div>
+
+      {/* ── 月を切り替えるナビゲーション ── */}
+      <MonthNav
+        selectedYear={selectedYear}
+        selectedMonth={selectedMonth}
+        onChange={onMonthChange}
+      />
+
+      {/* ── CSV出力ボタン（データがある月だけ表示） ── */}
+      {monthlyIncomes.length > 0 && (
+        <button
+          onClick={() =>
+            exportMonthlyIncomeCsv(
+              `${selectedYear}年${MONTH_LABELS[selectedMonth]}`
+            )
+          }
+          style={{
+            ...STYLE_BUTTON_OUTLINE,
+            width: "100%",
+            marginBottom: 10,
+            fontSize: 12,
+          }}
+        >
+          📥 CSV出力
+        </button>
+      )}
+
+      {/* ── 検索バー（収入がある月だけ表示） ── */}
+      {monthlyIncomes.length > 0 && (
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+            {/* キーワード検索入力 */}
+            <Input
+              value={filter.text || ""}
+              onChange={e =>
+                setFilter(f => ({ ...f, text: e.target.value || undefined }))
+              }
+              placeholder="キーワード検索（メモ・カテゴリ）"
+            />
+            {/* 絞り込みパネルを開くボタン（アクティブ時は色が変わる） */}
+            <button
+              onClick={() => setShowFilter(f => !f)}
+              style={{
+                ...STYLE_BUTTON_OUTLINE,
+                padding: "0 14px",
+                whiteSpace: "nowrap",
+                background: showFilter ? COLOR_ACCENT : undefined,
+                color: showFilter ? "#fff" : undefined,
+              }}
+            >
+              絞り込み
+            </button>
+          </div>
+
+          {/* フィルターパネル（絞り込みボタンを押したときだけ表示） */}
+          {showFilter && (
+            <div
+              style={{
+                background: COLOR_SURFACE,
+                borderRadius: 10,
+                padding: 14,
+                marginBottom: 12,
+              }}
+            >
+              {/* カテゴリ選択 */}
+              <div
+                style={{
+                  fontSize: 12,
+                  color: COLOR_TEXT_SECONDARY,
+                  marginBottom: 6,
+                }}
+              >
+                カテゴリ
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 6,
+                  marginBottom: 10,
+                }}
+              >
+                {categories.map(cat => {
+                  // このカテゴリが選択中かどうか確認
+                  const checked = (filter.categories || []).includes(cat);
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() =>
+                        setFilter(f => {
+                          const prev = f.categories || [];
+                          // 選択中なら外す、未選択なら追加する
+                          return {
+                            ...f,
+                            categories: checked
+                              ? prev.filter(c => c !== cat)
+                              : [...prev, cat],
+                          };
+                        })
+                      }
+                      style={{
+                        padding: "4px 10px",
+                        borderRadius: 999,
+                        border: `1px solid ${checked ? COLOR_ACCENT : COLOR_BORDER}`,
+                        background: checked ? COLOR_ACCENT : "transparent",
+                        color: checked ? "#fff" : COLOR_TEXT_PRIMARY,
+                        fontSize: 13,
+                        cursor: "pointer",
+                      }}
+                    >
+                      {cat}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* 日付範囲 */}
+              <div
+                style={{
+                  fontSize: 12,
+                  color: COLOR_TEXT_SECONDARY,
+                  marginBottom: 6,
+                }}
+              >
+                日付
+              </div>
+              <div
+                style={{ display: "flex", gap: 8, marginBottom: 10 }}
+              >
+                <Input
+                  type="date"
+                  value={filter.dateFrom || ""}
+                  onChange={e =>
+                    setFilter(f => ({
+                      ...f,
+                      dateFrom: e.target.value || undefined,
+                    }))
+                  }
+                />
+                <span
+                  style={{ color: COLOR_TEXT_SECONDARY, alignSelf: "center" }}
+                >
+                  〜
+                </span>
+                <Input
+                  type="date"
+                  value={filter.dateTo || ""}
+                  onChange={e =>
+                    setFilter(f => ({
+                      ...f,
+                      dateTo: e.target.value || undefined,
+                    }))
+                  }
+                />
+              </div>
+
+              {/* 金額範囲 */}
+              <div
+                style={{
+                  fontSize: 12,
+                  color: COLOR_TEXT_SECONDARY,
+                  marginBottom: 6,
+                }}
+              >
+                金額
+              </div>
+              <div
+                style={{ display: "flex", gap: 8, marginBottom: 10 }}
+              >
+                <Input
+                  money
+                  placeholder="下限"
+                  value={
+                    filter.amountMin !== undefined
+                      ? String(filter.amountMin)
+                      : ""
+                  }
+                  onChange={e =>
+                    setFilter(f => ({
+                      ...f,
+                      amountMin: e.target.value
+                        ? Number(e.target.value)
+                        : undefined,
+                    }))
+                  }
+                />
+                <span
+                  style={{ color: COLOR_TEXT_SECONDARY, alignSelf: "center" }}
+                >
+                  〜
+                </span>
+                <Input
+                  money
+                  placeholder="上限"
+                  value={
+                    filter.amountMax !== undefined
+                      ? String(filter.amountMax)
+                      : ""
+                  }
+                  onChange={e =>
+                    setFilter(f => ({
+                      ...f,
+                      amountMax: e.target.value
+                        ? Number(e.target.value)
+                        : undefined,
+                    }))
+                  }
+                />
+              </div>
+
+              {/* ソート選択 */}
+              <div
+                style={{
+                  fontSize: 12,
+                  color: COLOR_TEXT_SECONDARY,
+                  marginBottom: 6,
+                }}
+              >
+                並び替え
+              </div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {(["date", "amount"] as const).map(by =>
+                  (["desc", "asc"] as const).map(dir => {
+                    // ボタンのラベル文字列を組み立てる
+                    const label =
+                      by === "date"
+                        ? dir === "desc"
+                          ? "日付 新しい順"
+                          : "日付 古い順"
+                        : dir === "desc"
+                        ? "金額 高い順"
+                        : "金額 低い順";
+                    // 現在選択中かどうか確認
+                    const active =
+                      filter.sortBy === by && filter.sortDir === dir;
+                    return (
+                      <button
+                        key={`${by}-${dir}`}
+                        onClick={() =>
+                          setFilter(f => ({ ...f, sortBy: by, sortDir: dir }))
+                        }
+                        style={{
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          border: `1px solid ${active ? COLOR_ACCENT : COLOR_BORDER}`,
+                          background: active ? COLOR_ACCENT : "transparent",
+                          color: active ? "#fff" : COLOR_TEXT_PRIMARY,
+                          fontSize: 13,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })
+                )}
+                {/* ソートをリセットするボタン（sortByが設定済みのときだけ表示） */}
+                {filter.sortBy && (
+                  <button
+                    onClick={() =>
+                      setFilter(f => ({
+                        ...f,
+                        sortBy: undefined,
+                        sortDir: undefined,
+                      }))
+                    }
+                    style={{
+                      padding: "4px 10px",
+                      borderRadius: 999,
+                      border: `1px solid ${COLOR_BORDER}`,
+                      background: "transparent",
+                      color: COLOR_TEXT_SECONDARY,
+                      fontSize: 13,
+                      cursor: "pointer",
+                    }}
+                  >
+                    リセット
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── 収入一覧 ── */}
+      {monthlyIncomes.length === 0 ? (
+        // この月にデータが無い場合の空状態表示
+        <div
+          style={{
+            textAlign: "center",
+            padding: "44px 0",
+            color: COLOR_TEXT_HINT,
+          }}
+        >
+          <div style={{ fontSize: 36, marginBottom: 10 }}>💰</div>
+          <div>この月の収入データがありません</div>
+          <div style={{ fontSize: 12, marginTop: 8 }}>
+            上のフォームから収入を入力してみましょう
+          </div>
+        </div>
+      ) : filteredIncomes.length === 0 ? (
+        // 検索結果が0件の場合
+        <div
+          style={{
+            textAlign: "center",
+            padding: "44px 0",
+            color: COLOR_TEXT_HINT,
+          }}
+        >
+          🔍 該当なし
+        </div>
+      ) : (
+        // フィルター・並び替え済みの収入一覧を表示
+        filteredIncomes.map(i => (
+          <TxRow
+            key={i.id}
+            item={i}
+            cats={incomeCategoryNames}
+            ico={incomeCategoryIcons}
+            isInc
+            onSave={u => {
+              // 編集保存：該当IDのデータを更新
+              setIncomes(p => p.map(x => (x.id === u.id ? (u as Income) : x)));
+              showT("更新しました");
+            }}
+            onDelete={() => delItem(i.id, setIncomes, "収入を削除しました")}
+          />
+        ))
+      )}
+    </div>
+  );
+}

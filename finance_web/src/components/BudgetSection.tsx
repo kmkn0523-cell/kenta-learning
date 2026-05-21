@@ -1,0 +1,184 @@
+// ────────── 予算管理コンポーネント ──────────
+// カテゴリ別の月予算を設定し、今月の実績と比較するバー表示を出す
+// 使用率が80%超で黄色、100%超で赤にして超過を視覚的に伝える
+
+import { useState } from "react";
+import { EXPENSE_CATEGORIES, EXPENSE_CATEGORY_ICONS, formatYen } from "../utils/format";
+import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_ACCENT } from "../utils/styles";
+import { Input } from "./ui";
+
+// 収支1件のデータ型（category と amount だけ使う）
+interface TxEntry {
+  category?: string;
+  amount?: number | string;
+}
+
+// このコンポーネントが受け取る props の型
+interface BudgetSectionProps {
+  budget: Record<string, number>;
+  setBudget: (b: Record<string, number>) => void;
+  mTx: TxEntry[];
+}
+
+// budget: {食費: 30000, ...} のオブジェクト
+// setBudget: budget の更新関数
+// mTx: 今月の変動支出配列（日付フィルタ済み）
+export default function BudgetSection({ budget, setBudget, mTx }: BudgetSectionProps) {
+  const [editing, setEditing] = useState(false);                  // 予算設定フォームの表示フラグ
+  const [draft, setDraft] = useState<Record<string, string>>({});  // 編集中の仮の予算値（文字列として管理）
+
+  // 今月の支出をカテゴリ別に集計する
+  const actual: Record<string, number> = {};
+  mTx.forEach(t => {
+    actual[t.category] = (actual[t.category] || 0) + Number(t.amount || 0);
+  });
+
+  // 予算か実績のどちらかがあるカテゴリだけ表示する
+  const activeCats = EXPENSE_CATEGORIES.filter(c => budget[c] || actual[c]);
+
+  // 全カテゴリの予算合計と実績合計
+  const totalBudget = EXPENSE_CATEGORIES.reduce((s, c) => s + Number(budget[c] || 0), 0);
+  const totalActual = mTx.reduce((s, t) => s + Number(t.amount || 0), 0);
+
+  // 「予算を設定」を押した時：現在の予算値をドラフトに写す
+  function startEdit() {
+    const d = {};
+    EXPENSE_CATEGORIES.forEach(c => { d[c] = String(budget[c] || ""); });
+    setDraft(d);
+    setEditing(true);
+  }
+
+  // 「保存」を押した時：空欄・0のカテゴリを除いて保存する
+  function save() {
+    const next = {};
+    EXPENSE_CATEGORIES.forEach(c => {
+      const v = Number(draft[c]);
+      if (v > 0) next[c] = v;
+    });
+    setBudget(next);
+    setEditing(false);
+  }
+
+  // 使用率に応じた色を返す（green/yellow/red）
+  function progressColor(ratio) {
+    if (ratio === null) return COLOR_TEXT_SECONDARY;
+    if (ratio > 1) return COLOR_NEGATIVE;
+    if (ratio > 0.8) return COLOR_ACCENT;
+    return COLOR_POSITIVE;
+  }
+
+  return (
+    <div style={STYLE_CARD}>
+      {/* ヘッダー：タイトルと設定ボタン */}
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
+        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>予算管理</div>
+        {!editing && (
+          <button onClick={startEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize:12, padding:"5px 12px", minHeight:32 }}>
+            予算を設定
+          </button>
+        )}
+      </div>
+
+      {/* 予算が1件も設定されていない かつ 編集中でもない時：案内メッセージ */}
+      {totalBudget === 0 && !editing && (
+        <div style={{ textAlign:"center", padding:"20px 0", color:COLOR_TEXT_HINT, fontSize:13 }}>
+          <div style={{ fontSize:28, marginBottom:8 }}>📊</div>
+          <div>「予算を設定」からカテゴリ別の月予算を入力できます</div>
+        </div>
+      )}
+
+      {/* 予算設定済みで通常表示の時：全体バー＋カテゴリ別バーを表示 */}
+      {totalBudget > 0 && !editing && (
+        <div>
+          {/* 全体の使用状況 */}
+          <div style={{ display:"flex", justifyContent:"space-between", fontSize:12, marginBottom:4 }}>
+            <span style={{ color:COLOR_TEXT_HINT }}>変動支出合計</span>
+            <span style={{ fontFamily:"monospace", color: totalActual > totalBudget ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY }}>
+              {formatYen(totalActual)} <span style={{ color:COLOR_TEXT_HINT }}>/ {formatYen(totalBudget)}</span>
+            </span>
+          </div>
+          {/* 全体プログレスバー */}
+          <div style={{ height:6, background:"rgba(255,255,255,0.08)", borderRadius:3, overflow:"hidden", marginBottom:18 }}>
+            <div style={{
+              height:"100%",
+              width: Math.min(100, totalBudget > 0 ? (totalActual / totalBudget) * 100 : 0) + "%",
+              background: progressColor(totalBudget > 0 ? totalActual / totalBudget : null),
+              borderRadius:3,
+              transition:"width 0.4s",
+            }}/>
+          </div>
+
+          {/* カテゴリ別の使用状況 */}
+          {activeCats.map(c => {
+            const b = Number(budget[c] || 0);
+            const a = Number(actual[c] || 0);
+            const ratio = b > 0 ? a / b : null; // 予算が設定されていない場合は null
+            const col = progressColor(ratio);
+            return (
+              <div key={c} style={{ marginBottom:12 }}>
+                <div style={{ display:"flex", justifyContent:"space-between", fontSize:12, marginBottom:4 }}>
+                  <span>{EXPENSE_CATEGORY_ICONS[c]} {c}</span>
+                  <span style={{ fontFamily:"monospace", color:col }}>
+                    {formatYen(a)}
+                    {b > 0 && <span style={{ color:COLOR_TEXT_HINT }}> / {formatYen(b)}</span>}
+                    {/* 超過した時は「超過」バッジを表示 */}
+                    {ratio !== null && ratio > 1 && (
+                      <span style={{ marginLeft:6, fontSize:10, background:"rgba(248,113,113,0.15)", color:COLOR_NEGATIVE, borderRadius:4, padding:"1px 5px" }}>
+                        超過
+                      </span>
+                    )}
+                  </span>
+                </div>
+                {/* 予算が設定されているカテゴリだけプログレスバーを出す */}
+                {b > 0 && (
+                  <div style={{ height:4, background:"rgba(255,255,255,0.08)", borderRadius:2, overflow:"hidden" }}>
+                    <div style={{
+                      height:"100%",
+                      width: Math.min(100, ratio * 100) + "%",
+                      background: col,
+                      borderRadius:2,
+                      transition:"width 0.4s",
+                    }}/>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* 予算設定フォーム（editing=true の時だけ表示） */}
+      {editing && (
+        <div>
+          <div style={{ fontSize:12, color:COLOR_TEXT_HINT, marginBottom:12, lineHeight:1.6 }}>
+            各カテゴリの月予算を入力してください（空欄 = 予算なし）
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:14 }}>
+            {EXPENSE_CATEGORIES.map(c => (
+              <div key={c} style={{ display:"flex", alignItems:"center", gap:10 }}>
+                {/* カテゴリ名と絵文字 */}
+                <span style={{ fontSize:13, flex:1 }}>{EXPENSE_CATEGORY_ICONS[c]} {c}</span>
+                {/* 金額入力欄：幅を固定して右端に揃える */}
+                <div style={{ width:150 }}>
+                  <Input
+                    money
+                    type="number"
+                    value={draft[c] || ""}
+                    onChange={e => setDraft(d => ({ ...d, [c]: e.target.value }))}
+                    placeholder="予算（円）"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ display:"flex", gap:10 }}>
+            <button onClick={save} style={STYLE_BUTTON_PRIMARY}>保存</button>
+            <button onClick={() => setEditing(false)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight:44, padding:"11px 18px" }}>
+              キャンセル
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
