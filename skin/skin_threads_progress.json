@@ -1,5 +1,5 @@
 {
-  "daily_index": 107,
+  "daily_index": 108,
   "launch_index": 0,
   "history": [
     {
@@ -3394,6 +3394,13 @@
       "theme_id": 107,
       "variant": "A",
       "post_id": "18086887559566604"
+    },
+    {
+      "date": "2026/05/22 14:00",
+      "theme": "AB_B_引き算スキンケア",
+      "theme_id": 108,
+      "variant": "A",
+      "post_id": "18094411711947216"
     }
   ],
   "ab_next": "A",
@@ -3445,7 +3452,8 @@
     "104": "B",
     "105": "B",
     "106": "B",
-    "107": "B"
+    "107": "B",
+    "108": "B"
   },
   "ab_results": {
     "61": {
@@ -3725,6 +3733,12 @@
       "b_posts": 0
     },
     "107": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "108": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
