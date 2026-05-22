@@ -1,0 +1,23 @@
+{
+  "id": 99,
+  "version": "v2.1",
+  "slide_count": 8,
+  "cluster": "cluster1_food",
+  "hook_type": "number",
+  "cta_type": "save",
+  "hook": "肌を荒らす食卓 5 チェック",
+  "fixed_hashtags": ["肌荒れ", "大人ニキビ", "肌改善"],
+  "theme_hashtags": ["食事と肌", "血糖値", "腸活", "食改善", "糖質", "ニキビ食事"],
+  "size_mix_hashtags": ["30代肌悩み", "20代ニキビ", "肌トラブル"],
+  "slides": [
+    {"type": "cover", "cluster_tag": "食卓と肌の関係", "title": "肌を荒らす食卓\n5 チェック", "subtitle": "あなたはいくつ当てはまる？"},
+    {"type": "hook", "body": "肌荒れの原因はスキンケアではなく、毎日の食卓にあるかもしれません。", "bullets": ["朝食の落とし穴", "間食の選び方", "夜の炭水化物"]},
+    {"type": "check", "item": "朝に菓子パンを食べている", "fact": "精製糖は血糖値を急上昇させる", "impact": "インスリン急増 → 皮脂分泌が増える", "action": "今夜から朝はゆで卵+果物に置換"},
+    {"type": "check", "item": "ジュースで水分補給している", "fact": "果糖は中性脂肪に変わりやすい", "impact": "炎症体質 → ニキビが悪化", "action": "炭酸水+レモンに切り替え"},
+    {"type": "check", "item": "夜にラーメンを食べる", "fact": "高 GI 食品 + 油の連打", "impact": "夜間血糖値スパイク → 翌朝の肌くすみ", "action": "夜は雑穀ご飯+味噌汁にする"},
+    {"type": "check", "item": "牛乳を毎日飲んでいる", "fact": "乳糖と乳製品ホルモンが皮脂を刺激", "impact": "皮脂量増加 → 毛穴詰まり", "action": "2 週間だけ豆乳に切り替えて様子見"},
+    {"type": "check", "item": "サラダ油で炒め物をする", "fact": "オメガ 6 過多は炎症を促す", "impact": "肌の赤み・かゆみが増える", "action": "オリーブ油・米油に置換"},
+    {"type": "cta", "score_levels": [{"count": "0", "label": "優等生", "comment": "今の食卓を続けて OK"}, {"count": "1-2", "label": "黄信号", "comment": "1 つから直そう"}, {"count": "3+", "label": "赤信号", "comment": "食卓の見直しを優先"}], "cta_text": "保存して食卓を見直そう", "cta_sub": "@skin_reset_jp で続きをチェック"}
+  ],
+  "caption": ""
+}

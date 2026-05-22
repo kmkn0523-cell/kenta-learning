@@ -1,6 +1,6 @@
 {
-  "current_batch": 1,
-  "total_batches": 5,
+  "current_batch": 3,
+  "total_batches": 8,
   "batches": {
     "1": {
       "themes": [
@@ -13,7 +13,7 @@
       "production_start": "2026-05-18",
       "release_date": "2026-05-24",
       "validation_until": "2026-06-06",
-      "notes": "2026-05-24 リリース完了。データ収集は2026-05-18から先行稼働中。"
+      "notes": "2026-05-24 リリース完了。クラスター再設計で内容を全面リライト予定"
     },
     "2": {
       "themes": [
@@ -22,11 +22,11 @@
         7,
         8
       ],
-      "status": "pending",
+      "status": "released",
       "production_start": "2026-05-25",
       "release_date": "2026-05-31",
       "validation_until": "2026-06-13",
-      "notes": ""
+      "notes": "2026-05-23 リリース完了（v2.1 クラスター制対応）"
     },
     "3": {
       "themes": [
@@ -66,6 +66,43 @@
       "release_date": "2026-06-21",
       "validation_until": "2026-07-04",
       "notes": ""
+    },
+    "6": {
+      "themes": [
+        21,
+        22,
+        23,
+        24
+      ],
+      "status": "pending",
+      "production_start": "2026-06-22",
+      "release_date": "2026-06-28",
+      "validation_until": "2026-07-11",
+      "notes": "クラスター 4 (スキンケア習慣) 完結バッチ"
+    },
+    "7": {
+      "themes": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "status": "pending",
+      "production_start": "2026-06-29",
+      "release_date": "2026-07-05",
+      "validation_until": "2026-07-18",
+      "notes": "クラスター 5 (体内環境・ホルモン) 前半"
+    },
+    "8": {
+      "themes": [
+        29,
+        30
+      ],
+      "status": "pending",
+      "production_start": "2026-07-06",
+      "release_date": "2026-07-12",
+      "validation_until": "2026-07-25",
+      "notes": "クラスター 5 完結。2 本構成 (theme29-30)"
     }
   }
 }
