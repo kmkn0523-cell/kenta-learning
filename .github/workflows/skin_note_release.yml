@@ -6,9 +6,9 @@ on:
 permissions:
   contents: write  # ファイルをコミット・プッシュするために必要
 
-# 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
+# note-release専用グループ：Threads等の他ワークフローとは独立して動かす（競合キャンセル防止）
 concurrency:
-  group: git-push-main
+  group: note-release
   cancel-in-progress: false
 
 jobs:
