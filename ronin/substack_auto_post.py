@@ -299,6 +299,13 @@ def main():
     if not os.path.exists(image_path):
         raise RuntimeError(f"画像ファイルが見つかりません: {image_path}")
 
+    # すでに同じdayがhistoryに存在する場合は重複投稿を防ぐためスキップする
+    # （runnerがシャットダウンしてprogress.jsonが巻き戻った場合の二重投稿対策）
+    already_posted = any(h["day"] == day for h in progress.get("history", []))
+    if already_posted:
+        print(f"[Day {day}] はすでに投稿済みのためスキップします。", flush=True)
+        return
+
     print(f"[Day {day}] 投稿開始: {proverb['japanese']}", flush=True)
 
     # 記事を作成して公開する（curl_cffi経由・画像はCDNにアップロード）
