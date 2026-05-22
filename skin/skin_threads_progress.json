@@ -1,5 +1,5 @@
 {
-  "daily_index": 104,
+  "daily_index": 105,
   "launch_index": 0,
   "history": [
     {
@@ -3373,6 +3373,13 @@
       "theme_id": 104,
       "variant": "A",
       "post_id": "18094690994229188"
+    },
+    {
+      "date": "2026/05/22 08:00",
+      "theme": "AB_B_乳製品と大人ニキビ",
+      "theme_id": 105,
+      "variant": "A",
+      "post_id": "17881699338570974"
     }
   ],
   "ab_next": "A",
@@ -3421,7 +3428,8 @@
     "101": "B",
     "102": "B",
     "103": "B",
-    "104": "B"
+    "104": "B",
+    "105": "B"
   },
   "ab_results": {
     "61": {
@@ -3683,6 +3691,12 @@
       "b_posts": 0
     },
     "104": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "105": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
