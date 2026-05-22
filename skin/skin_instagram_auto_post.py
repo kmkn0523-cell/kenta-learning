@@ -150,12 +150,14 @@ def select_next_theme(themes: list, progress: dict):
     """v1:v2 = 4:1 の比率で次のテーマを選ぶ（5投稿に1回 v2）
     戻り値: (theme, kind) — kind は "v1" or "v2"
     """
-    v1_themes = [t for t in themes if t.get("version") != "v2"]
-    v2_themes = [t for t in themes if t.get("version") == "v2"]
+    # v2 / v2.1 はどちらも v2 系として扱う（caption ビルダー対応済み）
+    v1_themes = [t for t in themes if t.get("version") not in ("v2", "v2.1")]
+    v2_themes = [t for t in themes if t.get("version") in ("v2", "v2.1")]
     post_count = progress.get("post_count", 0)
     # 5投稿目（post_count=4, 9, 14, ...）を v2 に割り当てる
     use_v2 = ((post_count + 1) % 5 == 0) and len(v2_themes) > 0
-    if use_v2:
+    # v1 が枯渇している場合は v2 にフォールバック（全テーマ v2.1 化への対応）
+    if use_v2 or len(v1_themes) == 0:
         idx = progress.get("v2_index", 0) % len(v2_themes)
         return v2_themes[idx], "v2"
     else:
@@ -461,7 +463,7 @@ def main():
     theme_id       = theme["id"]
 
     # v2 ならビルダーで組み立て、v1 なら既存の caption をそのまま使う（後方互換）
-    if theme.get("version") == "v2":
+    if theme.get("version") in ("v2", "v2.1"):
         caption = build_caption(
             theme_id=theme_id,
             hook=theme.get("hook", theme.get("slides", [{}])[0].get("title", "")),
