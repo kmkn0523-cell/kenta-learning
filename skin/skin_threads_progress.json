@@ -1,5 +1,5 @@
 {
-  "daily_index": 100,
+  "daily_index": 101,
   "launch_index": 0,
   "history": [
     {
@@ -3345,6 +3345,13 @@
       "theme_id": 100,
       "variant": "A",
       "post_id": "17906243640245432"
+    },
+    {
+      "date": "2026/05/22 00:00",
+      "theme": "AB_B_洗顔料を変えすぎ",
+      "theme_id": 101,
+      "variant": "A",
+      "post_id": "18124899952620852"
     }
   ],
   "ab_next": "A",
@@ -3389,7 +3396,8 @@
     "97": "B",
     "98": "B",
     "99": "B",
-    "100": "B"
+    "100": "B",
+    "101": "B"
   },
   "ab_results": {
     "61": {
@@ -3627,6 +3635,12 @@
       "b_posts": 0
     },
     "100": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "101": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
