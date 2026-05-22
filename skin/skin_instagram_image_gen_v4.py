@@ -298,7 +298,7 @@ def generate_theme(theme: dict) -> None:
     slides      = theme["slides"]
     slide_count = theme.get("slide_count", 5)
 
-    if theme.get("version") != "v2":
+    if not str(theme.get("version", "")).startswith("v2"):
         print(f"  ⏭️  theme{theme_id:02d}: v1 のためスキップ")
         return
 
