@@ -161,6 +161,16 @@
 - [x] noteの価格を決める
 - [x] note公開日を決める
 - [ ] `skin_x_launch_playbook.md` のローンチ投稿を実行
+- [x] **note 完全自動投稿システム実装完了**（2026-05-23・月水金9:00 JST）
+  - Playwrightでnote.comにヘッドレス自動投稿（`skin/post_to_note.py`）
+  - 投稿成功/失敗をメール通知（`skin/send_note_email.py`）
+  - 失敗時はスクリーンショットをアーティファクト保存
+  - 進捗履歴 `note_queue_progress.json` の `history[]` に追加
+  - 旧 `generate_note_page.py` / `note_article.html` は削除
+- [ ] **note 自動投稿の手動セットアップ（コミット後・要対応）**
+  - クッキー `_note_session_v5` を抽出して GitHub Secrets `NOTE_SESSION_V5` に登録（手順: `docs/note_cookie_setup.md`）
+  - cron-job.org のスケジュールを月水金 9:00 JST に設定
+  - `gh workflow run skin_note_release.yml` でテスト実行
 
 #### アフィリエイト
 - [ ] Amazonアソシエイトに登録する（affiliate.amazon.co.jp）

@@ -1,10 +1,10 @@
-name: skin 無料note 週次リリース（月水金）
+name: skin 無料note 週次リリース（月水金 自動投稿）
 
 on:
-  workflow_dispatch:  # cron-job.org が月水金 9:00 JST に外部からトリガーする（GitHub内蔵cronより正確）
+  workflow_dispatch:  # cron-job.org が月水金 9:00 JST に外部からトリガーする
 
 permissions:
-  contents: write  # ファイルをコミット・プッシュするために必要
+  contents: write  # progress.jsonの更新コミットに必要
 
 # note-release専用グループ：Threads等の他ワークフローとは独立して動かす（競合キャンセル防止）
 concurrency:
@@ -29,30 +29,45 @@ jobs:
       - name: 次の記事を note_ready.md に展開する
         run: python3 skin/release_note.py
 
-      - name: ライブラリをインストール
-        run: pip install markdown --quiet
+      - name: Playwrightをインストール
+        run: |
+          pip install playwright --quiet
+          playwright install chromium --with-deps
 
-      - name: GitHub Pages 用HTMLページを生成する
-        run: python3 skin/generate_note_page.py
+      - name: note.com に自動投稿する
+        id: post
+        continue-on-error: true  # 失敗してもメール通知ステップは動かしたい
+        env:
+          NOTE_SESSION_V5: ${{ secrets.NOTE_SESSION_V5 }}
+        run: python3 skin/post_to_note.py
 
-      - name: 変更をコミット・プッシュする
+      - name: 投稿結果メールを送信する
+        if: always()
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          NOTE_POST_STATUS: ${{ steps.post.outcome }}
+        run: python3 skin/send_note_email.py
+
+      - name: 失敗時のスクリーンショットをアーティファクトに保存
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: note-screenshots
+          path: skin/note_screenshots/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: 進捗ファイルをコミット・プッシュする
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add skin/note_ready.md skin/note_queue_progress.json note_article.html
+          git add skin/note_ready.md skin/note_queue_progress.json
           if ! git diff --cached --quiet; then
-            git commit -m "自動リリース: 今週のnote記事を展開"
+            git commit -m "自動リリース: note記事を投稿しhistory更新"
             for i in 1 2 3; do
               git pull --rebase origin main && git push && break
               echo "push失敗 リトライ $i/3..."
               sleep 5
             done
           fi
-
-      - name: GitHub Pages のデプロイを待つ
-        run: sleep 60
-
-      - name: メールで記事と画像を通知する
-        env:
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-        run: python3 skin/send_note_email.py
