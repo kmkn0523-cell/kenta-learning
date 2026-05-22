@@ -1,94 +1,155 @@
 # send_note_email.py
-# GitHub Pages URLをリンクしたメールを送信するスクリプト
-# GitHub Actions から呼び出される
+# note.com への自動投稿の結果をメールで通知するスクリプト
+# GitHub Actions の post_to_note.py のあとに呼び出される。
+#
+# 成功時: 公開URL・タイトル・記事番号をメールで通知
+# 失敗時: エラー内容と「スクリーンショットを確認してください」案内を通知
+#
+# 必要な環境変数:
+#   - GMAIL_APP_PASSWORD: Gmailアプリパスワード（GitHub Secrets）
 
-import smtplib, os, json, re
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.image import MIMEImage
+import os                                  # 環境変数を読み取る道具
+import json                                # 進捗JSONを読む道具
+import smtplib                             # メール送信する道具
+from email.mime.text import MIMEText       # メール本文を作る道具
+from email.mime.multipart import MIMEMultipart  # メール全体を組み立てる道具
 
-# note_ready.md を読み込む
-with open("skin/note_ready.md", "r", encoding="utf-8") as f:
-    content = f.read()
+# ファイルパスを定義する
+BASE_DIR = os.path.dirname(__file__)                                       # skinフォルダ
+PROGRESS_FILE = os.path.join(BASE_DIR, "note_queue_progress.json")        # 進捗ファイル
 
-# 1行目のコメントから記事ファイル名を取得する
-match = re.search(r'<!--.*?\|\s*(article_\d+\.md)', content)
-article_filename = match.group(1) if match else ""
+# 送信先と差出人（どちらも自分のGmail）
+MAIL_FROM = "kmkn0523@gmail.com"
+MAIL_TO = "kmkn0523@gmail.com"
 
-# コメント行を除いた記事本文を取得する
-lines = content.split("\n")
-body_lines = [l for l in lines if not l.startswith("<!--")]
-article_body = "\n".join(body_lines).strip()
 
-# 記事タイトルを取得する
-title = next((l.lstrip("# ") for l in body_lines if l.startswith("# ")), "今週の記事")
+def load_latest_history():
+    """note_queue_progress.json の history 配列の最新エントリを返す（無ければNone）"""
+    if not os.path.exists(PROGRESS_FILE):
+        return None
+    try:
+        with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+            progress = json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        return None
 
-# マッピングファイルからLP画像を特定する
-lp_path = None
-try:
-    with open("skin/note_lp_map.json", "r", encoding="utf-8") as f:
-        lp_map = json.load(f)
-    lp_filename = lp_map.get(article_filename)
-    if lp_filename:
-        lp_path = f"skin/{lp_filename}"
-except Exception:
-    pass
+    history = progress.get("history", [])
+    if not history:
+        return None
+    # 配列の末尾が最新（post_to_note.py が append しているため）
+    return history[-1]
 
-# GitHub Pages の URL（コピーボタン付きページ）
-pages_url = "https://kmkn0523-cell.github.io/kenta-learning/note_article.html"
 
-# メール本文HTML
-image_note = ""
-if lp_path:
-    image_note = "<p>📎 <strong>ヘッダー画像も添付しています。</strong>noteにアップロードしてください。</p>"
+def build_success_mail(latest):
+    """投稿成功時のメール件名・本文を組み立てる"""
+    title = latest.get("title", "(タイトル不明)")
+    article = latest.get("article", "(記事ファイル不明)")
+    post_url = latest.get("post_url", "(URL不明)")
+    date = latest.get("date", "")
 
-mail_html = f"""<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8">
-<style>
+    subject = f"【skin note 自動投稿成功】{title}"
+
+    plain_body = (
+        f"note.com への自動投稿が完了しました。\n\n"
+        f"記事: {article}\n"
+        f"タイトル: {title}\n"
+        f"投稿日時: {date}\n"
+        f"公開URL: {post_url}\n"
+    )
+
+    html_body = f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
 body {{ font-family: sans-serif; font-size: 16px; line-height: 1.8; max-width: 680px; margin: 0 auto; padding: 16px; }}
-.step-box {{ background: #e8f4ff; border-radius: 12px; padding: 18px; margin-bottom: 16px; }}
-.step-box p {{ margin: 8px 0; font-size: 15px; }}
-.step-box a {{ color: #0066cc; font-weight: bold; font-size: 17px; }}
-</style>
-</head>
-<body>
-<div class="step-box">
-<p><strong>📋 太字をそのままnoteに貼る手順</strong></p>
-<p>① 下のリンクをタップ（Brave / Safari どちらでもOK）</p>
-<p><a href="{pages_url}">▶ 記事ページを開く</a></p>
-<p>② 青いボタン「📋 記事をコピーする」をタップ</p>
-<p>③ noteアプリで新規記事 → 貼り付け</p>
-<p style="color:#888;font-size:13px;">※ 太字・見出しがそのまま入ります</p>
+.box {{ background: #e8ffe8; border-radius: 12px; padding: 18px; margin-bottom: 16px; }}
+.box a {{ color: #0066cc; font-weight: bold; font-size: 17px; word-break: break-all; }}
+.label {{ color: #666; font-size: 13px; }}
+</style></head><body>
+<div class="box">
+<p><strong>✅ note.com 自動投稿成功</strong></p>
+<p><span class="label">記事:</span> {article}</p>
+<p><span class="label">タイトル:</span> {title}</p>
+<p><span class="label">投稿日時:</span> {date}</p>
+<p><span class="label">公開URL:</span><br><a href="{post_url}">{post_url}</a></p>
 </div>
-{image_note}
-</body>
-</html>"""
+</body></html>"""
 
-# メールを組み立てる
-msg = MIMEMultipart("mixed")
-msg["From"] = "kmkn0523@gmail.com"
-msg["To"] = "kmkn0523@gmail.com"
-msg["Subject"] = f"【skin note】{title}"
+    return subject, plain_body, html_body
 
-# メール本文
-plain = f"記事ページを開く: {pages_url}\n青いボタンをタップ → noteに貼り付け"
-msg_body = MIMEMultipart("alternative")
-msg_body.attach(MIMEText(plain, "plain", "utf-8"))
-msg_body.attach(MIMEText(mail_html, "html", "utf-8"))
-msg.attach(msg_body)
 
-# LP画像を添付する（存在する場合のみ）
-if lp_path and os.path.exists(lp_path):
-    with open(lp_path, "rb") as f:
-        img = MIMEImage(f.read(), name=os.path.basename(lp_path))
-    msg.attach(img)
-    print(f"📎 画像を添付: {lp_path}")
+def build_failure_mail():
+    """投稿失敗時のメール件名・本文を組み立てる"""
+    subject = "【skin note 自動投稿 失敗】要確認"
 
-# Gmailに接続して送信する
-password = os.environ["GMAIL_APP_PASSWORD"]
-with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-    server.login("kmkn0523@gmail.com", password)
-    server.send_message(msg)
+    plain_body = (
+        "note.com への自動投稿に失敗しました。\n\n"
+        "確認事項:\n"
+        "1. GitHub Actions の実行ログを確認\n"
+        "   https://github.com/kmkn0523-cell/kenta-learning/actions\n"
+        "2. アーティファクト『note-screenshots』をダウンロードして失敗時の画面を確認\n"
+        "3. NOTE_SESSION_V5 クッキーが期限切れの場合は再取得して GitHub Secrets を更新\n"
+        "   手順: docs/note_cookie_setup.md\n"
+    )
 
-print("✅ メール送信完了")
+    html_body = """<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { font-family: sans-serif; font-size: 16px; line-height: 1.8; max-width: 680px; margin: 0 auto; padding: 16px; }
+.box { background: #ffe8e8; border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+.box a { color: #0066cc; word-break: break-all; }
+ol { padding-left: 20px; }
+</style></head><body>
+<div class="box">
+<p><strong>❌ note.com 自動投稿 失敗</strong></p>
+<p>以下を確認してください：</p>
+<ol>
+<li>GitHub Actions の実行ログを確認<br>
+<a href="https://github.com/kmkn0523-cell/kenta-learning/actions">github.com/kmkn0523-cell/kenta-learning/actions</a></li>
+<li>アーティファクト『note-screenshots』をダウンロードして失敗時の画面を確認</li>
+<li>NOTE_SESSION_V5 クッキーが期限切れの場合は再取得して GitHub Secrets を更新（手順: docs/note_cookie_setup.md）</li>
+</ol>
+</div>
+</body></html>"""
+
+    return subject, plain_body, html_body
+
+
+def send_mail(subject, plain_body, html_body):
+    """Gmail SMTP で送信する"""
+    password = os.environ.get("GMAIL_APP_PASSWORD", "")
+    if not password:
+        print("⚠️ GMAIL_APP_PASSWORD が未設定です。メール送信をスキップします。")
+        return
+
+    msg = MIMEMultipart("alternative")
+    msg["From"] = MAIL_FROM
+    msg["To"] = MAIL_TO
+    msg["Subject"] = subject
+    msg.attach(MIMEText(plain_body, "plain", "utf-8"))
+    msg.attach(MIMEText(html_body, "html", "utf-8"))
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(MAIL_FROM, password)
+        server.send_message(msg)
+    print("✅ 通知メール送信完了")
+
+
+def main():
+    """成功 or 失敗を判定してメールを送る"""
+    # NOTE_POST_STATUS 環境変数で成否を受け取る（GitHub Actions側でセット）
+    # "success" 以外（空・"failure" 等）はすべて失敗扱い
+    status = os.environ.get("NOTE_POST_STATUS", "").strip().lower()
+
+    latest = load_latest_history()
+
+    # 成功判定: ステータスが success かつ history に最新エントリがある
+    if status == "success" and latest:
+        subject, plain, html = build_success_mail(latest)
+        print(f"📧 成功通知を送信: {latest.get('title', '')}")
+    else:
+        subject, plain, html = build_failure_mail()
+        print(f"📧 失敗通知を送信（status={status!r}, latest={'あり' if latest else 'なし'}）")
+
+    send_mail(subject, plain, html)
+
+
+if __name__ == "__main__":
+    main()

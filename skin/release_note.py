@@ -26,9 +26,15 @@ def load_progress():
 
 
 def save_progress(next_index):
-    """次に出す記事番号をファイルに保存する"""
+    """次に出す記事番号をファイルに保存する（既存のhistory配列は保持する）"""
+    # 既存ファイルを読み込んでhistory配列を引き継ぐ（post_to_note.pyが書いた履歴を消さない）
+    existing = load_progress()
+    existing["next_index"] = next_index
+    # history キーが無ければ空配列を入れておく（あれば中身は触らない）
+    if "history" not in existing:
+        existing["history"] = []
     with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
-        json.dump({"next_index": next_index}, f, ensure_ascii=False, indent=2)
+        json.dump(existing, f, ensure_ascii=False, indent=2)
 
 
 def get_article_files():
@@ -77,7 +83,7 @@ def main():
         f.write(output_content)
 
     print(f"✅ note_ready.md を更新しました")
-    print(f"   → skin/note_ready.md を開いてnoteにコピー&ペーストしてください")
+    print(f"   → 次のステップで post_to_note.py が自動投稿します")
 
     # 進捗を更新する（次回は次の記事）
     save_progress(next_index + 1)
