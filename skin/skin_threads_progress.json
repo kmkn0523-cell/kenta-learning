@@ -1,5 +1,5 @@
 {
-  "daily_index": 102,
+  "daily_index": 103,
   "launch_index": 0,
   "history": [
     {
@@ -3359,6 +3359,13 @@
       "theme_id": 102,
       "variant": "A",
       "post_id": "17850970689692000"
+    },
+    {
+      "date": "2026/05/22 04:00",
+      "theme": "AB_B_ストレスと皮脂",
+      "theme_id": 103,
+      "variant": "A",
+      "post_id": "17888711199515680"
     }
   ],
   "ab_next": "A",
@@ -3405,7 +3412,8 @@
     "99": "B",
     "100": "B",
     "101": "B",
-    "102": "B"
+    "102": "B",
+    "103": "B"
   },
   "ab_results": {
     "61": {
@@ -3655,6 +3663,12 @@
       "b_posts": 0
     },
     "102": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "103": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
