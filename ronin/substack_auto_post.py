@@ -219,10 +219,17 @@ def create_and_publish_post(proverb, image_path):
     sid_decoded = unquote(SUBSTACK_SID)
 
     # ChromeのTLSフィンガープリントを使ってリクエストを送るセッションを作る
-    session = cf.Session(impersonate="chrome124")
+    # chrome131: CloudflareのBot検知ルール更新に対応するため最新バージョンを使う
+    session = cf.Session(impersonate="chrome131")
 
     # substack.sid クッキーをセットする
     session.cookies.set("substack.sid", sid_decoded, domain=".substack.com")
+
+    # ブラウザから送られるヘッダーを追加してCloudflareのBot検知を回避する
+    session.headers.update({
+        "Origin":  "https://substack.com",
+        "Referer": "https://substack.com/publish/post",
+    })
 
     # 画像をSubstack CDNにアップロードしてCDN URLを取得する
     image_url = upload_image_to_substack(session, image_path)
