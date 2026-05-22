@@ -1,5 +1,5 @@
 {
-  "current_batch": 5,
+  "current_batch": 6,
   "total_batches": 8,
   "batches": {
     "1": {
@@ -61,11 +61,11 @@
         19,
         20
       ],
-      "status": "pending",
+      "status": "released",
       "production_start": "2026-06-15",
       "release_date": "2026-06-21",
       "validation_until": "2026-07-04",
-      "notes": ""
+      "notes": "2026-05-23 リリース完了（v2.1 クラスター制対応）"
     },
     "6": {
       "themes": [
