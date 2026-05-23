@@ -1,6 +1,9 @@
 {
   "skillListingMaxDescChars": 300,
   "skillListingBudgetFraction": 0.005,
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "permissions": {
     "allow": [
       "Bash(python3 -c ' *)",
@@ -19,7 +22,10 @@
       "Bash(cat > *)",
       "Bash(ls /mnt/c/Users/)",
       "Read(//mnt/c/Users/**)",
-      "Bash(powershell.exe -Command ' *)"
+      "Bash(powershell.exe -Command ' *)",
+      "Bash(rm -rf /tmp/note_artifacts_v2)",
+      "Bash(mkdir /tmp/note_artifacts_v2)",
+      "Read(//tmp/note_artifacts_v2/**)"
     ],
     "additionalDirectories": [
       "/mnt/c/Users/kenta_kamijyo",
@@ -143,9 +149,6 @@
         "repo": "mvanhorn/last30days-skill"
       }
     }
-  },
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "language": "japanese",
   "feedbackSurveyRate": 0,
