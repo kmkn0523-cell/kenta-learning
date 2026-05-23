@@ -1,5 +1,5 @@
 {
-  "daily_index": 112,
+  "daily_index": 113,
   "launch_index": 0,
   "history": [
     {
@@ -3429,6 +3429,13 @@
       "theme_id": 4,
       "variant": "A",
       "post_id": "18035471483805474"
+    },
+    {
+      "date": "2026/05/23 00:00",
+      "theme": "睡眠と肌",
+      "theme_id": 5,
+      "variant": "A",
+      "post_id": "17965871706093134"
     }
   ],
   "ab_next": "A",
@@ -3485,7 +3492,8 @@
     "1": "B",
     "2": "B",
     "3": "B",
-    "4": "B"
+    "4": "B",
+    "5": "B"
   },
   "ab_results": {
     "61": {
@@ -3795,6 +3803,12 @@
       "b_posts": 0
     },
     "4": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "5": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
