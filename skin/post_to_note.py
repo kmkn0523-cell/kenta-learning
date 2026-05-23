@@ -92,8 +92,18 @@ async def take_screenshot(page, name):
         print(f"⚠️ スクリーンショット失敗 ({name}): {e}")
 
 
+def is_draft_mode():
+    """環境変数 NOTE_DRAFT_MODE が真値ならテスト/下書きモード"""
+    val = os.environ.get("NOTE_DRAFT_MODE", "").strip().lower()
+    return val in ("1", "true", "yes", "on")
+
+
 async def post_to_note_com(title, body_markdown, cover_image_path):
     """note.com にログインして記事を公開し、公開後のURLを返す"""
+    draft_mode = is_draft_mode()
+    if draft_mode:
+        print("🧪 下書きモード（DRAFT_MODE=true）：公開せず下書き保存のみ実行")
+
     # 環境変数からクッキー値を取得する
     cookie_value = os.environ.get("NOTE_SESSION_V5", "").strip()
     if not cookie_value:
@@ -260,23 +270,36 @@ async def post_to_note_com(title, body_markdown, cover_image_path):
         await page.wait_for_timeout(3000)
         await take_screenshot(page, "03_body_typed")
 
-        # 「公開に進む」ボタンを探してクリックする（エディタ右上）
-        print("🚀 公開フローを開始...")
-        publish_btn = page.get_by_role("button", name=re.compile("公開に進む|公開"))
-        await publish_btn.first.click()
-        await page.wait_for_timeout(3000)
-        await take_screenshot(page, "04_publish_modal")
+        if draft_mode:
+            # 下書きモード：エディタ右上の「下書き保存」をクリックして終了
+            print("💾 下書き保存を実行...")
+            draft_btn = page.get_by_role("button", name=re.compile("下書き保存|下書きに保存"))
+            if await draft_btn.count() == 0:
+                # フォールバック：テキストで一致する button を探す
+                draft_btn = page.locator("button:has-text('下書き')")
+            await draft_btn.first.click()
+            await page.wait_for_timeout(6000)
+            await take_screenshot(page, "04_draft_saved")
+            post_url = page.url
+            print(f"✅ 下書き保存完了: {post_url}")
+        else:
+            # 「公開に進む」ボタンを探してクリックする（エディタ右上）
+            print("🚀 公開フローを開始...")
+            publish_btn = page.get_by_role("button", name=re.compile("公開に進む|公開"))
+            await publish_btn.first.click()
+            await page.wait_for_timeout(3000)
+            await take_screenshot(page, "04_publish_modal")
 
-        # 公開モーダル内の「投稿する」/「公開する」ボタンをクリックする
-        # 複数候補がある場合はモーダル内の最後のボタンが本物の確定ボタン
-        confirm_btn = page.get_by_role("button", name=re.compile("投稿する|公開する"))
-        await confirm_btn.last.click()
-        await page.wait_for_timeout(10000)  # 投稿処理完了 + リダイレクト待ち
-        await take_screenshot(page, "05_published")
+            # 公開モーダル内の「投稿する」/「公開する」ボタンをクリックする
+            # 複数候補がある場合はモーダル内の最後のボタンが本物の確定ボタン
+            confirm_btn = page.get_by_role("button", name=re.compile("投稿する|公開する"))
+            await confirm_btn.last.click()
+            await page.wait_for_timeout(10000)  # 投稿処理完了 + リダイレクト待ち
+            await take_screenshot(page, "05_published")
 
-        # 公開後のURLを取得する（note.com/{username}/n/{id} 形式）
-        post_url = page.url
-        print(f"✅ 投稿完了: {post_url}")
+            # 公開後のURLを取得する（note.com/{username}/n/{id} 形式）
+            post_url = page.url
+            print(f"✅ 投稿完了: {post_url}")
 
         await context.close()
         await browser.close()
@@ -330,8 +353,11 @@ async def main():
     # note.com に投稿する（戻り値は公開後のURL）
     post_url = await post_to_note_com(title, body, cover_image_path)
 
-    # 進捗ファイルを更新する
-    update_progress(article_filename, title, post_url)
+    # 下書きモードでは進捗ファイルを更新しない（本番履歴を汚さないため）
+    if is_draft_mode():
+        print("🧪 下書きモードのため history への書き込みはスキップ")
+    else:
+        update_progress(article_filename, title, post_url)
 
     print("=== 完了 ===")
 
