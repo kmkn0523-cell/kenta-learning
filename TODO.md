@@ -167,11 +167,11 @@
   - 失敗時はスクリーンショットをアーティファクト保存
   - 進捗履歴 `note_queue_progress.json` の `history[]` に追加
   - 旧 `generate_note_page.py` / `note_article.html` は削除
-- [ ] **note 自動投稿の手動セットアップ（4ステップ・要対応）**
-  - [ ] ① クッキー取得：note.com にログイン状態でブラウザDevTools → Application → Cookies → `_note_session_v5` の Value をコピー（手順: `docs/note_cookie_setup.md`）
-  - [ ] ② GitHub Secrets 登録：`https://github.com/kmkn0523-cell/kenta-learning/settings/secrets/actions` で Name=`NOTE_SESSION_V5` に値を貼り付けて Add secret
-  - [ ] ③ 手動テスト実行：`gh workflow run skin_note_release.yml` を叩いて、成功メール `【skin note 自動投稿成功】...` が届くか確認（失敗時はアーティファクト `note-screenshots` でセレクタ調整）
-  - [ ] ④ cron-job.org スケジュール設定：③ 成功確認後に「月水金 9:00 JST」に変更（テスト前にcron組むと失敗投稿が連発するので最後）
+- [x] **note 自動投稿の手動セットアップ（4ステップ・完了）**
+  - [x] ① クッキー取得：note.com にログイン状態でブラウザDevTools → Application → Cookies → `_note_session_v5` の Value をコピー（手順: `docs/note_cookie_setup.md`）
+  - [x] ② GitHub Secrets 登録：`https://github.com/kmkn0523-cell/kenta-learning/settings/secrets/actions` で Name=`NOTE_SESSION_V5` に値を貼り付けて Add secret
+  - [x] ③ 手動テスト実行：`gh workflow run skin_note_release.yml` を叩いて、成功メール `【skin note 自動投稿成功】...` が届くか確認（失敗時はアーティファクト `note-screenshots` でセレクタ調整）
+  - [x] ④ cron-job.org スケジュール設定：③ 成功確認後に「月水金 9:00 JST」に変更（テスト前にcron組むと失敗投稿が連発するので最後）
 
 #### アフィリエイト
 - [ ] Amazonアソシエイトに登録する（affiliate.amazon.co.jp）
