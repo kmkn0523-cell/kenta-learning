@@ -1,7 +1,9 @@
 name: skin 無料note 週次リリース（月水金 自動投稿）
 
 on:
-  workflow_dispatch:  # cron-job.org が月水金 9:00 JST に外部からトリガーする
+  schedule:
+    - cron: '0 0 * * 1,3,5'  # UTC 0:00 = JST 9:00 月水金（GitHub Actions は5〜15分遅延あり）
+  workflow_dispatch:  # 手動実行用（テスト・即時投稿）
     inputs:
       draft_mode:
         description: "テスト用：公開せず下書き保存のみ（履歴/next_indexは更新しない）"
