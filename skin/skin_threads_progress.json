@@ -1,5 +1,5 @@
 {
-  "daily_index": 123,
+  "daily_index": 124,
   "launch_index": 0,
   "history": [
     {
@@ -3506,6 +3506,13 @@
       "theme_id": 15,
       "variant": "A",
       "post_id": "18059138627494876"
+    },
+    {
+      "date": "2026/05/23 22:00",
+      "theme": "紫外線と肌",
+      "theme_id": 16,
+      "variant": "A",
+      "post_id": "18137902234533092"
     }
   ],
   "ab_next": "A",
@@ -3573,7 +3580,8 @@
     "12": "B",
     "13": "B",
     "14": "B",
-    "15": "B"
+    "15": "B",
+    "16": "B"
   },
   "ab_results": {
     "61": {
@@ -3949,6 +3957,12 @@
       "b_posts": 0
     },
     "15": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "16": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
