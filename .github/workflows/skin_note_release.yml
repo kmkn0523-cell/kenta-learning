@@ -60,6 +60,17 @@ jobs:
           NOTE_POST_STATUS: ${{ steps.post.outcome }}
         run: python3 skin/send_note_email.py
 
+      - name: Threadsにnote公開告知を投稿する
+        # noteの投稿が成功し、かつ下書きモードでない場合のみ実行する
+        if: ${{ steps.post.outcome == 'success' && inputs.draft_mode != true }}
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          NOTE_POST_STATUS: ${{ steps.post.outcome }}
+        run: |
+          pip install requests --quiet
+          python3 skin/notify_threads_of_note.py
+
       - name: 失敗時のスクリーンショットをアーティファクトに保存
         if: always()
         uses: actions/upload-artifact@v4
