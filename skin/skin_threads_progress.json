@@ -1,5 +1,5 @@
 {
-  "daily_index": 120,
+  "daily_index": 121,
   "launch_index": 0,
   "history": [
     {
@@ -3485,6 +3485,13 @@
       "theme_id": 12,
       "variant": "A",
       "post_id": "17987885574005089"
+    },
+    {
+      "date": "2026/05/23 16:00",
+      "theme": "水分と肌",
+      "theme_id": 13,
+      "variant": "A",
+      "post_id": "18069836870336627"
     }
   ],
   "ab_next": "A",
@@ -3549,7 +3556,8 @@
     "9": "B",
     "10": "B",
     "11": "B",
-    "12": "B"
+    "12": "B",
+    "13": "B"
   },
   "ab_results": {
     "61": {
@@ -3907,6 +3915,12 @@
       "b_posts": 0
     },
     "12": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "13": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
