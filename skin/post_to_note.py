@@ -92,6 +92,68 @@ async def take_screenshot(page, name):
         print(f"⚠️ スクリーンショット失敗 ({name}): {e}")
 
 
+async def _type_with_inline_bold(page, text):
+    """1行内の **bold** マーカーを検出し、太字スタイル付きでタイプする"""
+    # **xxx** で分割（マーカー部分も保持される）
+    parts = re.split(r"(\*\*[^*]+\*\*)", text)
+    for part in parts:
+        if not part:
+            continue
+        if part.startswith("**") and part.endswith("**"):
+            # マーカーを除いた中身を太字でタイプする
+            inner = part[2:-2]
+            await page.keyboard.press("Control+b")   # 太字ON
+            await page.keyboard.type(inner, delay=5)
+            await page.keyboard.press("Control+b")   # 太字OFF
+        else:
+            await page.keyboard.type(part, delay=5)
+
+
+async def _apply_heading(page, level):
+    """直前にタイプした行全体を選択し、note のH2/H3ショートカットを当てる"""
+    # 行頭まで選択 → 見出しスタイル適用 → 行末に戻る
+    await page.keyboard.press("Shift+Home")
+    await page.keyboard.press(f"Control+Alt+Digit{level}")
+    await page.keyboard.press("End")
+
+
+async def type_body_with_formatting(page, body_markdown):
+    """markdownを解釈してnoteエディタに太字・見出し付きで入力する
+
+    対応する記法:
+      - "## xxx"  → H2見出し
+      - "### xxx" → H3見出し
+      - "**xxx**" → 太字（インラインも可）
+      - "---"     → 区切り線（noteが自動変換）
+      - その他     → 通常テキスト
+    """
+    body_lines = body_markdown.split("\n")
+    for line in body_lines:
+        if line == "":
+            await page.keyboard.press("Enter")
+            continue
+
+        # H2見出し
+        if line.startswith("## "):
+            heading_text = line[3:]
+            await _type_with_inline_bold(page, heading_text)
+            await _apply_heading(page, 2)
+            await page.keyboard.press("Enter")
+            continue
+
+        # H3見出し
+        if line.startswith("### "):
+            heading_text = line[4:]
+            await _type_with_inline_bold(page, heading_text)
+            await _apply_heading(page, 3)
+            await page.keyboard.press("Enter")
+            continue
+
+        # 通常行（インライン太字を解釈してタイプ）
+        await _type_with_inline_bold(page, line)
+        await page.keyboard.press("Enter")
+
+
 def is_draft_mode():
     """環境変数 NOTE_DRAFT_MODE が真値ならテスト/下書きモード"""
     val = os.environ.get("NOTE_DRAFT_MODE", "").strip().lower()
@@ -261,17 +323,11 @@ async def post_to_note_com(title, body_markdown, cover_image_path):
         await page.wait_for_timeout(1000)
 
         # マークダウンを1行ずつタイプする
-        # note.comのエディタは "# " "## " "**bold**" "- " などの記法を自動変換するため、
-        # マークダウン記法のままタイプすれば見出し・太字・リストが正しく成形される
-        body_lines = body_markdown.split("\n")
-        for line in body_lines:
-            if line == "":
-                # 空行は Enter のみ
-                await page.keyboard.press("Enter")
-            else:
-                # 1文字ずつタイプして改行（delayは小さくして高速化）
-                await page.keyboard.type(line, delay=5)
-                await page.keyboard.press("Enter")
+        # note.comのエディタはmarkdown記法を自動解釈しないため、
+        # ** や ## を生で入力すると星マーク・シャープがそのまま見えてしまう。
+        # ここではキーボードショートカット（Ctrl+B / Ctrl+Alt+2,3）で
+        # 太字・見出しスタイルを直接適用する。
+        await type_body_with_formatting(page, body_markdown)
 
         await page.wait_for_timeout(3000)
         await take_screenshot(page, "03_body_typed")
