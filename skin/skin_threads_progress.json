@@ -1,5 +1,5 @@
 {
-  "daily_index": 119,
+  "daily_index": 120,
   "launch_index": 0,
   "history": [
     {
@@ -3478,6 +3478,13 @@
       "theme_id": 11,
       "variant": "A",
       "post_id": "18083559497410581"
+    },
+    {
+      "date": "2026/05/23 14:01",
+      "theme": "タイプ別診断",
+      "theme_id": 12,
+      "variant": "A",
+      "post_id": "17987885574005089"
     }
   ],
   "ab_next": "A",
@@ -3541,7 +3548,8 @@
     "8": "B",
     "9": "B",
     "10": "B",
-    "11": "B"
+    "11": "B",
+    "12": "B"
   },
   "ab_results": {
     "61": {
@@ -3893,6 +3901,12 @@
       "b_posts": 0
     },
     "11": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "12": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
