@@ -1,5 +1,5 @@
 {
-  "daily_index": 115,
+  "daily_index": 116,
   "launch_index": 0,
   "history": [
     {
@@ -3450,6 +3450,13 @@
       "theme_id": 7,
       "variant": "A",
       "post_id": "18053437784744597"
+    },
+    {
+      "date": "2026/05/23 06:01",
+      "theme": "失敗談型",
+      "theme_id": 8,
+      "variant": "A",
+      "post_id": "18053690297568001"
     }
   ],
   "ab_next": "A",
@@ -3509,7 +3516,8 @@
     "4": "B",
     "5": "B",
     "6": "B",
-    "7": "B"
+    "7": "B",
+    "8": "B"
   },
   "ab_results": {
     "61": {
@@ -3837,6 +3845,12 @@
       "b_posts": 0
     },
     "7": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "8": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
