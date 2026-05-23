@@ -175,31 +175,60 @@ async def post_to_note_com(title, body_markdown, cover_image_path):
         if cover_image_path:
             print(f"🖼️ カバー画像をアップロード: {cover_image_path}")
             try:
-                # note.comエディタには非表示の <input type="file"> が常に存在する。
-                # 表示ボタン（アイコン）を経由せず、この input に直接ファイルを渡すのが最も確実。
-                # 複数候補がある場合は最初の image系input を使う。
-                file_inputs = page.locator('input[type="file"]')
-                count = await file_inputs.count()
-                if count == 0:
-                    raise Exception("input[type='file'] が見つかりません")
+                # まずデバッグ：エディタ上の input/button の状態をログ出力する
+                init_input_count = await page.locator('input[type="file"]').count()
+                print(f"   初期 input[type=file] 数: {init_input_count}")
 
-                # accept属性に "image" を含むものを優先的に選ぶ
-                target_input = None
-                for i in range(count):
-                    el = file_inputs.nth(i)
-                    accept = await el.get_attribute("accept") or ""
-                    if "image" in accept.lower():
-                        target_input = el
+                # 戦略：アイコンクリックで input を動的生成 → file_chooser を待ち受け
+                # タイトル左上の画像追加アイコンを複数セレクタで探す
+                candidate_selectors = [
+                    'button[aria-label*="画像"]',
+                    'button[aria-label*="カバー"]',
+                    'button[aria-label*="サムネイル"]',
+                    'button[aria-label*="アイキャッチ"]',
+                    'button[aria-label*="image"]',
+                    '[data-testid*="cover"]',
+                    '[data-testid*="thumbnail"]',
+                    '[data-v-cover-image]',
+                    # タイトルtextareaの兄弟/親側にある最初の button
+                    'form button:has(svg)',
+                ]
+
+                cover_btn = None
+                matched_selector = None
+                for sel in candidate_selectors:
+                    loc = page.locator(sel).first
+                    if await loc.count() > 0 and await loc.is_visible():
+                        cover_btn = loc
+                        matched_selector = sel
                         break
-                if target_input is None:
-                    target_input = file_inputs.first
 
-                # 非表示要素でも set_input_files は動作する
-                await target_input.set_input_files(cover_image_path)
-                await page.wait_for_timeout(8000)  # アップロード+トリミング画面表示待ち
+                if cover_btn is None:
+                    # 最終手段：エディタ内の全 button の aria-label をデバッグ出力
+                    all_buttons = page.locator("button")
+                    btn_count = await all_buttons.count()
+                    print(f"   エディタ内 button 総数: {btn_count}")
+                    for i in range(min(btn_count, 15)):
+                        try:
+                            label = await all_buttons.nth(i).get_attribute("aria-label")
+                            text = (await all_buttons.nth(i).inner_text())[:30]
+                            print(f"   button[{i}]: aria-label={label!r} text={text!r}")
+                        except Exception:
+                            pass
+                    raise Exception("カバー画像ボタンが見つかりません（上のデバッグログ参照）")
+
+                print(f"   マッチしたセレクタ: {matched_selector}")
+
+                # アイコンクリック → file chooser 待ち受け
+                async with page.expect_file_chooser(timeout=15000) as fc_info:
+                    await cover_btn.click()
+
+                file_chooser = await fc_info.value
+                await file_chooser.set_files(cover_image_path)
+                await page.wait_for_timeout(8000)
                 await take_screenshot(page, "02_image_uploaded")
 
-                # トリミングモーダルの「保存」「適用」「決定」「完了」ボタンを押す
+                # トリミングモーダルの確定ボタン
                 save_btn = page.get_by_role("button", name=re.compile("保存|適用|決定|完了"))
                 if await save_btn.count() > 0:
                     await save_btn.first.click()
