@@ -229,9 +229,15 @@ async def post_to_note_com(title, body_markdown, cover_image_path):
 
                 print(f"   マッチしたセレクタ: {matched_selector}")
 
-                # アイコンクリック → file chooser 待ち受け
+                # ステップ1: アイコンをクリックしてメニューを開く
+                await cover_btn.click()
+                await page.wait_for_timeout(1500)
+                await take_screenshot(page, "02a_cover_menu_opened")
+
+                # ステップ2: メニュー内の「画像をアップロード」をクリック → file_chooser
+                upload_item = page.get_by_text("画像をアップロード", exact=False).first
                 async with page.expect_file_chooser(timeout=15000) as fc_info:
-                    await cover_btn.click()
+                    await upload_item.click()
 
                 file_chooser = await fc_info.value
                 await file_chooser.set_files(cover_image_path)
