@@ -175,25 +175,36 @@ async def post_to_note_com(title, body_markdown, cover_image_path):
         if cover_image_path:
             print(f"🖼️ カバー画像をアップロード: {cover_image_path}")
             try:
-                # ファイルピッカーを開くボタンを押す前にイベントリスナーを設定する
-                async with page.expect_file_chooser() as fc_info:
-                    # 「画像を追加」「カバー画像」などのテキストを持つボタンを探す
-                    cover_btn = page.get_by_role("button", name=re.compile("画像|カバー|アイキャッチ"))
-                    if await cover_btn.count() == 0:
-                        raise Exception("カバー画像ボタンが見つかりません")
-                    await cover_btn.first.click()
+                # note.comエディタには非表示の <input type="file"> が常に存在する。
+                # 表示ボタン（アイコン）を経由せず、この input に直接ファイルを渡すのが最も確実。
+                # 複数候補がある場合は最初の image系input を使う。
+                file_inputs = page.locator('input[type="file"]')
+                count = await file_inputs.count()
+                if count == 0:
+                    raise Exception("input[type='file'] が見つかりません")
 
-                # ファイルピッカーに画像を渡す
-                file_chooser = await fc_info.value
-                await file_chooser.set_files(cover_image_path)
-                await page.wait_for_timeout(8000)  # アップロード完了待ち
+                # accept属性に "image" を含むものを優先的に選ぶ
+                target_input = None
+                for i in range(count):
+                    el = file_inputs.nth(i)
+                    accept = await el.get_attribute("accept") or ""
+                    if "image" in accept.lower():
+                        target_input = el
+                        break
+                if target_input is None:
+                    target_input = file_inputs.first
+
+                # 非表示要素でも set_input_files は動作する
+                await target_input.set_input_files(cover_image_path)
+                await page.wait_for_timeout(8000)  # アップロード+トリミング画面表示待ち
                 await take_screenshot(page, "02_image_uploaded")
 
-                # 画像トリミングのモーダルが出る場合があるので「保存」ボタンを押す
-                save_btn = page.get_by_role("button", name=re.compile("保存|決定|完了"))
+                # トリミングモーダルの「保存」「適用」「決定」「完了」ボタンを押す
+                save_btn = page.get_by_role("button", name=re.compile("保存|適用|決定|完了"))
                 if await save_btn.count() > 0:
                     await save_btn.first.click()
                     await page.wait_for_timeout(3000)
+                    await take_screenshot(page, "02b_image_saved")
             except Exception as e:
                 print(f"⚠️ カバー画像アップロード失敗（記事本文のみで進めます）: {e}")
                 await take_screenshot(page, "error_image_upload")
