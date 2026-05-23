@@ -144,6 +144,9 @@
       }
     }
   },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "spinnerTipsEnabled": false,
