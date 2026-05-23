@@ -1,5 +1,5 @@
 {
-  "daily_index": 117,
+  "daily_index": 118,
   "launch_index": 0,
   "history": [
     {
@@ -3464,6 +3464,13 @@
       "theme_id": 9,
       "variant": "A",
       "post_id": "18469298926099576"
+    },
+    {
+      "date": "2026/05/23 10:00",
+      "theme": "腸活食習慣",
+      "theme_id": 10,
+      "variant": "A",
+      "post_id": "17891586804472400"
     }
   ],
   "ab_next": "A",
@@ -3525,7 +3532,8 @@
     "6": "B",
     "7": "B",
     "8": "B",
-    "9": "B"
+    "9": "B",
+    "10": "B"
   },
   "ab_results": {
     "61": {
@@ -3865,6 +3873,12 @@
       "b_posts": 0
     },
     "9": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "10": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
