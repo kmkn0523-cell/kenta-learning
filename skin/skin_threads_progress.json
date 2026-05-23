@@ -1,5 +1,5 @@
 {
-  "daily_index": 118,
+  "daily_index": 119,
   "launch_index": 0,
   "history": [
     {
@@ -3471,6 +3471,13 @@
       "theme_id": 10,
       "variant": "A",
       "post_id": "17891586804472400"
+    },
+    {
+      "date": "2026/05/23 12:01",
+      "theme": "お金をかけない美肌",
+      "theme_id": 11,
+      "variant": "A",
+      "post_id": "18083559497410581"
     }
   ],
   "ab_next": "A",
@@ -3533,7 +3540,8 @@
     "7": "B",
     "8": "B",
     "9": "B",
-    "10": "B"
+    "10": "B",
+    "11": "B"
   },
   "ab_results": {
     "61": {
@@ -3879,6 +3887,12 @@
       "b_posts": 0
     },
     "10": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "11": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
