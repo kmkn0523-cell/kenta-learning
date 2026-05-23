@@ -1,5 +1,5 @@
 {
-  "daily_index": 113,
+  "daily_index": 114,
   "launch_index": 0,
   "history": [
     {
@@ -3436,6 +3436,13 @@
       "theme_id": 5,
       "variant": "A",
       "post_id": "17965871706093134"
+    },
+    {
+      "date": "2026/05/23 02:00",
+      "theme": "小麦とグルテン",
+      "theme_id": 6,
+      "variant": "A",
+      "post_id": "17966920866099169"
     }
   ],
   "ab_next": "A",
@@ -3493,7 +3500,8 @@
     "2": "B",
     "3": "B",
     "4": "B",
-    "5": "B"
+    "5": "B",
+    "6": "B"
   },
   "ab_results": {
     "61": {
@@ -3809,6 +3817,12 @@
       "b_posts": 0
     },
     "5": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "6": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
