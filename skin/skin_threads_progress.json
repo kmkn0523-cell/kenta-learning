@@ -1,5 +1,5 @@
 {
-  "daily_index": 121,
+  "daily_index": 122,
   "launch_index": 0,
   "history": [
     {
@@ -3492,6 +3492,13 @@
       "theme_id": 13,
       "variant": "A",
       "post_id": "18069836870336627"
+    },
+    {
+      "date": "2026/05/23 18:01",
+      "theme": "亜鉛と皮脂",
+      "theme_id": 14,
+      "variant": "A",
+      "post_id": "18000086954760963"
     }
   ],
   "ab_next": "A",
@@ -3557,7 +3564,8 @@
     "10": "B",
     "11": "B",
     "12": "B",
-    "13": "B"
+    "13": "B",
+    "14": "B"
   },
   "ab_results": {
     "61": {
@@ -3921,6 +3929,12 @@
       "b_posts": 0
     },
     "13": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "14": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
