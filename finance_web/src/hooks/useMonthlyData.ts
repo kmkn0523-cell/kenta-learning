@@ -42,8 +42,11 @@ export function useMonthlyData(args: MonthlyDataArgs) {
 
   // 固定費の合計（active が false の項目は一時停止扱いで除外）
   // active が未設定(undefined)の場合は有効とみなす
+  // autoTrack=true の項目は変動支出として transactions に自動追加されるため、ここでは除外（二重計上防止）
   const totalFixedExpense = useMemo(
-    () => fixedExpenses.filter(f => f.active !== false).reduce((s, f) => s + f.amount, 0),
+    () => fixedExpenses
+      .filter(f => f.active !== false && !f.autoTrack)
+      .reduce((s, f) => s + f.amount, 0),
     [fixedExpenses]
   );
 

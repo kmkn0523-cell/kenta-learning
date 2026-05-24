@@ -136,6 +136,14 @@ export default function SavingGoalCard({
   // 達成済み判定
   const achieved100 = goal && currentSaving >= goal.targetAmount;
 
+  // ペース指標：createdAt から deadline までの経過割合を計算して「予定進捗」と比較する
+  // 例：期間の30%が経過しているのに実績10%なら「遅れ気味」
+  const totalMs = goal ? new Date(goal.deadline).getTime() - new Date(goal.createdAt).getTime() : 0;
+  const elapsedMs = goal ? Math.max(0, Date.now() - new Date(goal.createdAt).getTime()) : 0;
+  const expectedPct = totalMs > 0 ? Math.min(100, Math.round((elapsedMs / totalMs) * 100)) : 0;
+  // 実績が予定より進んでいるか（true = 順調）
+  const onTrack = progress >= expectedPct;
+
   return (
     <>
       {/* メインの目標カード */}

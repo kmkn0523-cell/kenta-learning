@@ -17,9 +17,11 @@ export interface FixedExpense {
   name: string;
   category: string;
   amount: number;
-  payDay: string;      // "1日" 〜 "31日" または "未設定"
+  payDay: string;       // "1日" 〜 "31日" または "未設定"
   lastAutoPaid?: string; // 最後に自動引落した日付
-  active?: boolean;    // false にすると一時停止
+  active?: boolean;     // false にすると一時停止
+  autoTrack?: boolean;  // true: 毎月変動支出として transactions に自動追加する
+  lastAutoAdded?: string; // 自動追加した最後の月 "YYYY-MM"（重複防止に使う）
 }
 
 // ローン1件の形

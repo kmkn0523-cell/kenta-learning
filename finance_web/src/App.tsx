@@ -8,6 +8,7 @@ import { useMonthlyData } from "./hooks/useMonthlyData";
 import { useAutoPayment } from "./hooks/useAutoPayment";
 import { useAutoIncome } from "./hooks/useAutoIncome";
 import { useAutoExpense } from "./hooks/useAutoExpense";
+import { useAutoFixedExpense } from "./hooks/useAutoFixedExpense";
 import { useDataExport } from "./hooks/useDataExport";
 import { useToast } from "./hooks/useToast";
 import { useBackup } from "./hooks/useBackup";
@@ -142,6 +143,11 @@ function AppInner(){
   useAutoExpense({
     recurringExpenses, setRecurringExpenses, setTransactions, ready: allOk,
     onAutoAdded: (count) => notify(`繰り返し支出を${count}件自動追加しました`, "アプリを開いてご確認ください"),
+  });
+  // ──────── 固定費の自動月次反映（autoTrack=true の固定費を変動支出として自動追加） ────────
+  useAutoFixedExpense({
+    fixedExpenses, setFixedExpenses, setTransactions, ready: allOk,
+    onAutoAdded: (count) => notify(`固定費を${count}件自動追加しました`, "アプリを開いてご確認ください"),
   });
 
   // ──────── 月次レポート：月が変わった最初のアクセス時に前月振り返りを表示 ────────

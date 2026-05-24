@@ -12,6 +12,7 @@ interface FxItem {
   name: string;
   category: string;
   amount: number | string;
+  autoTrack?: boolean;  // true のとき毎月変動支出に自動追加される
 }
 // このコンポーネントが受け取る props の型
 interface FxRowProps {
@@ -20,9 +21,11 @@ interface FxRowProps {
   onDelete: () => void;
   onMoveUp: (() => void) | null;
   onMoveDown: (() => void) | null;
+  // 自動追加のON/OFFを切り替える（渡されない場合はトグルを非表示）
+  onToggleAutoTrack?: () => void;
 }
 
-export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown}: FxRowProps) {
+export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggleAutoTrack}: FxRowProps) {
   const [ed, setEd] = useState(false); // 編集モードかどうか
   const [d, setD] = useState<{name:string;cat:string;amt:string}>({name:"",cat:"",amt:""});      // 編集中のフォーム値
 
@@ -61,6 +64,54 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown}: FxRowP
         <button onClick={onMoveUp} disabled={!onMoveUp} style={{...STYLE_BUTTON_OUTLINE,opacity:onMoveUp?1:0.35,padding:"8px 16px"}}>↑</button>
         <button onClick={onMoveDown} disabled={!onMoveDown} style={{...STYLE_BUTTON_OUTLINE,opacity:onMoveDown?1:0.35,padding:"8px 16px"}}>↓</button>
       </div>
+      {/* 毎月自動追加トグル：onToggleAutoTrack が渡されているときだけ表示 */}
+      {onToggleAutoTrack && (
+        <button
+          onClick={onToggleAutoTrack}
+          style={{
+            marginTop: 8,
+            width: "100%",
+            minHeight: 32,
+            padding: "5px 12px",
+            borderRadius: 8,
+            border: `1px solid ${item.autoTrack ? "rgba(34,211,238,0.5)" : "rgba(148,163,184,0.2)"}`,
+            background: item.autoTrack ? "rgba(34,211,238,0.08)" : "rgba(148,163,184,0.04)",
+            color: item.autoTrack ? "#22d3ee" : COLOR_TEXT_HINT,
+            fontSize: 11,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+            transition: "all 0.2s",
+          }}
+        >
+          <span style={{fontSize:13}}>🔁</span>
+          <span>
+            {item.autoTrack
+              ? "毎月変動支出に自動追加中（クリックで停止）"
+              : "毎月変動支出に自動追加する（クリックで開始）"}
+          </span>
+          {/* オン/オフのインジケーター */}
+          <span style={{
+            marginLeft: "auto",
+            width: 28, height: 16, borderRadius: 8,
+            background: item.autoTrack ? "#22d3ee" : "rgba(148,163,184,0.2)",
+            position: "relative",
+            flexShrink: 0,
+            transition: "background 0.2s",
+          }}>
+            <span style={{
+              position: "absolute",
+              top: 2, left: item.autoTrack ? 14 : 2,
+              width: 12, height: 12,
+              borderRadius: "50%",
+              background: "#fff",
+              transition: "left 0.2s",
+            }}/>
+          </span>
+        </button>
+      )}
     </div>
   );
 }

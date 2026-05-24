@@ -64,6 +64,12 @@ export default function FixedExpenseView({
         <div>
           <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, marginBottom: 5, letterSpacing: "2px", textTransform: "uppercase" }}>毎月の固定費合計</div>
           <div style={{ fontFamily: "monospace", fontSize: 28, fontWeight: 700, letterSpacing: "-0.5px" }}>{formatYen(totalFixedExpense)}</div>
+          {/* 自動追加中の項目があれば補足説明を表示 */}
+          {fixedExpenses.some(f => f.autoTrack) && (
+            <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginTop: 4 }}>
+              ※ 🔁 自動追加中の項目は変動支出として集計されます
+            </div>
+          )}
         </div>
         <div style={{ fontSize: 12, color: COLOR_TEXT_HINT }}>{fixedExpenses.length}項目</div>
       </div>
@@ -92,6 +98,13 @@ export default function FixedExpenseView({
           }}
           // 削除時：即削除してToastに「元に戻す」を出す
           onDelete={() => delItem(item.id, setFixedExpenses, "固定費を削除しました")}
+          // 自動追加のON/OFFを切り替える（有効にすると毎月変動支出として自動追加される）
+          onToggleAutoTrack={() => setFixedExpenses(p => p.map(f =>
+            f.id === item.id
+              // autoTrack を反転させる。有効→無効にする場合は lastAutoAdded をリセット
+              ? { ...f, autoTrack: !f.autoTrack, lastAutoAdded: f.autoTrack ? undefined : f.lastAutoAdded }
+              : f
+          ))}
           // 上に移動：最初の項目は移動不可（null）
           onMoveUp={idx > 0 ? () => setFixedExpenses(p => {
             const a = [...p];
