@@ -1,5 +1,5 @@
 {
-  "daily_index": 130,
+  "daily_index": 131,
   "launch_index": 0,
   "history": [
     {
@@ -3555,6 +3555,13 @@
       "theme_id": 22,
       "variant": "A",
       "post_id": "18125975317719922"
+    },
+    {
+      "date": "2026/05/24 12:00",
+      "theme": "オメガ3と肌",
+      "theme_id": 23,
+      "variant": "A",
+      "post_id": "18087033716573308"
     }
   ],
   "ab_next": "A",
@@ -3629,7 +3636,8 @@
     "19": "B",
     "20": "B",
     "21": "B",
-    "22": "B"
+    "22": "B",
+    "23": "B"
   },
   "ab_results": {
     "61": {
@@ -4047,6 +4055,12 @@
       "b_posts": 0
     },
     "22": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "23": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
