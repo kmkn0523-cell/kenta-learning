@@ -203,6 +203,27 @@ export default function DashboardView({
     [accounts, transactions, incomes, transfers]
   );
 
+  // ────────── 今月末の予測残高（繰越残高トラッカー） ──────────
+  // "N日" → 数値に変換するヘルパー（"未設定"などはnullを返す）
+  function parsePayDayN(payDay: string): number | null {
+    const m = payDay?.match(/^(\d+)日$/);
+    return m ? Number(m[1]) : null;
+  }
+  // 今日以降に引き落とされる固定費の合計（今日含む・active な項目のみ）
+  const remainingFixed = useMemo(() => {
+    const todayD = today.getDate();
+    return fixedExpenses
+      .filter(f => f.active !== false)
+      .reduce((sum, f) => {
+        const d = parsePayDayN(f.payDay || "");
+        // payDay が今日以降なら残り引落に含める（未設定は月末に引き落とされると仮定して含める）
+        if (d === null || d >= todayD) return sum + Number(f.amount || 0);
+        return sum;
+      }, 0);
+  }, [fixedExpenses, today]);
+  // 今月末予測残高 = 現在の口座残高合計 − 残り固定費 − ローン月額返済合計
+  const predictedEndBalance = totalSavings - remainingFixed - totalLoanRepayment;
+
   return (
     <div>
       {/* ────────── 月次 / 年間 切り替えトグル ────────── */}
