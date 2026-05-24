@@ -50,6 +50,7 @@ export interface Account {
   id: string;
   name: string;
   balance: number;
+  color?: string;  // 口座を区別するためのカラーラベル（例: "#22c55e"）
 }
 
 // 口座間振替1件の形（例：財布→銀行 に2000円移動）

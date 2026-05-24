@@ -30,9 +30,9 @@ import {
   STYLE_BUTTON_OUTLINE,
 } from "../utils/styles";
 
-// Account 型に updatedAt フィールドを追加した拡張型
+// Account 型に updatedAt・color フィールドを追加した拡張型
 // 型定義には updatedAt がないので、ここだけローカルに定義する
-type AccountWithDate = Account & { updatedAt?: string };
+type AccountWithDate = Account & { updatedAt?: string; color?: string };
 
 // ────────── このコンポーネントが受け取る props の型定義 ──────────
 interface DashboardViewProps {
@@ -62,10 +62,10 @@ interface DashboardViewProps {
   showAccF: boolean;
   // 口座フォーム表示を切り替える関数
   setShowAccF: React.Dispatch<React.SetStateAction<boolean>>;
-  // 口座フォームの入力値
-  accF: { name: string; balance: string };
+  // 口座フォームの入力値（color は選択中のカラーコード、未選択なら空文字）
+  accF: { name: string; balance: string; color: string };
   // 口座フォームの入力値を更新する関数
-  setAccF: React.Dispatch<React.SetStateAction<{ name: string; balance: string }>>;
+  setAccF: React.Dispatch<React.SetStateAction<{ name: string; balance: string; color: string }>>;
   // 編集中の口座ID（null なら新規追加）
   editAccId: string | null;
   // 編集中の口座IDを変更する関数
@@ -265,7 +265,7 @@ export default function DashboardView({
             )}
             {/* 追加ボタン：フォームの表示・非表示を切り替える */}
             <button
-              onClick={()=>{setAccF({name:"",balance:""});setEditAccId(null);setShowAccF(v=>!v);}}
+              onClick={()=>{setAccF({name:"",balance:"",color:""});setEditAccId(null);setShowAccF(v=>!v);}}
               style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"5px 12px",minHeight:32}}
             >
               {showAccF?"閉じる":"＋ 追加"}
@@ -281,6 +281,13 @@ export default function DashboardView({
         {/* 口座一覧の表示 */}
         {accounts.map(acc=>(
           <div key={acc.id} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 0",borderBottom:`1px solid ${COLOR_BORDER}`}}>
+            {/* カラーラベルドット：color が設定されている口座はカラードットで区別する */}
+            {acc.color && (
+              <div style={{
+                width:10, height:10, borderRadius:"50%",
+                background:acc.color, flexShrink:0,
+              }}/>
+            )}
             <div style={{flex:1,minWidth:0}}>
               <div style={{fontSize:13,fontWeight:600}}>{acc.name}</div>
               {/* updatedAt（更新日）があれば表示する */}
@@ -290,9 +297,9 @@ export default function DashboardView({
             <div style={{fontFamily:"monospace",fontSize:15,fontWeight:700,color:COLOR_POSITIVE}}>
               {formatYen(calculateAccountBalance(acc, transactions, incomes, transfers))}
             </div>
-            {/* 編集ボタン：フォームに既存の値をセットして開く */}
+            {/* 編集ボタン：フォームに既存の値（color も含む）をセットして開く */}
             <button
-              onClick={()=>{setAccF({name:acc.name,balance:String(acc.balance)});setEditAccId(acc.id);setShowAccF(true);}}
+              onClick={()=>{setAccF({name:acc.name,balance:String(acc.balance),color:acc.color||""});setEditAccId(acc.id);setShowAccF(true);}}
               style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"5px 10px",minHeight:32}}
             >
               編集
@@ -321,6 +328,47 @@ export default function DashboardView({
             <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:10}}>
               <Input value={accF.name} onChange={e=>setAccF(f=>({...f,name:e.target.value}))} placeholder="口座名（例: 三井住友・楽天銀行）"/>
               <Input money type="number" value={accF.balance} onChange={e=>setAccF(f=>({...f,balance:e.target.value}))} placeholder="現在の残高（円）"/>
+              {/* ────── カラーラベル選択（プリセットスウォッチ） ────── */}
+              <div>
+                <div style={{fontSize:11,color:COLOR_TEXT_HINT,marginBottom:6}}>カラーラベル（任意）</div>
+                <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                  {/* 「なし」ボタン：カラーをクリアする */}
+                  <button
+                    onClick={()=>setAccF(f=>({...f,color:""}))}
+                    style={{
+                      width:26, height:26, borderRadius:"50%",
+                      background:"rgba(255,255,255,0.06)",
+                      border:`2px solid ${accF.color===""?"rgba(34,211,238,0.7)":"rgba(255,255,255,0.15)"}`,
+                      cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
+                      fontSize:11, color:COLOR_TEXT_HINT, padding:0,
+                    }}
+                    title="なし"
+                  >✕</button>
+                  {/* 6色のプリセットスウォッチ */}
+                  {[
+                    {c:"#22c55e", label:"グリーン"},
+                    {c:"#22d3ee", label:"シアン"},
+                    {c:"#f43f5e", label:"レッド"},
+                    {c:"#f59e0b", label:"アンバー"},
+                    {c:"#a78bfa", label:"バイオレット"},
+                    {c:"#fb923c", label:"オレンジ"},
+                  ].map(({c,label})=>(
+                    <button
+                      key={c}
+                      onClick={()=>setAccF(f=>({...f,color:c}))}
+                      style={{
+                        width:26, height:26, borderRadius:"50%",
+                        background:c,
+                        border:`2px solid ${accF.color===c?"#fff":"transparent"}`,
+                        cursor:"pointer", padding:0,
+                        boxShadow:accF.color===c?`0 0 0 2px ${c}55`:"none",
+                        transition:"border 0.15s, box-shadow 0.15s",
+                      }}
+                      title={label}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
             <div style={{display:"flex",gap:10}}>
               {/* 保存ボタン：新規追加 or 編集を判定して処理 */}
@@ -330,13 +378,13 @@ export default function DashboardView({
                   if(!accF.name||isNaN(b)){showT("口座名と残高を入力","error");return;}
                   const updated=ts;
                   if(editAccId){
-                    // 既存口座の更新
-                    setAccounts((p: AccountWithDate[])=>p.map(a=>a.id===editAccId?{...a,name:accF.name,balance:b,updatedAt:updated}:a));
+                    // 既存口座の更新（color も保存する）
+                    setAccounts((p: AccountWithDate[])=>p.map(a=>a.id===editAccId?{...a,name:accF.name,balance:b,updatedAt:updated,color:accF.color||undefined}:a));
                   }else{
-                    // 新規口座を追加
-                    setAccounts((p: AccountWithDate[])=>[...p,{id:newId(),name:accF.name,balance:b,updatedAt:updated}]);
+                    // 新規口座を追加（color も保存する）
+                    setAccounts((p: AccountWithDate[])=>[...p,{id:newId(),name:accF.name,balance:b,updatedAt:updated,color:accF.color||undefined}]);
                   }
-                  setShowAccF(false);setEditAccId(null);setAccF({name:"",balance:""});showT("保存しました");
+                  setShowAccF(false);setEditAccId(null);setAccF({name:"",balance:"",color:""});showT("保存しました");
                 }}
                 style={STYLE_BUTTON_PRIMARY}
               >

@@ -87,7 +87,8 @@ function AppInner(){
   }>({ year: 0, month: 0, income: 0, expense: 0, topCats: [], overBudget: [] });
   // 月次レポートのチェックを1回だけ実行するためのフラグ
   const reportCheckedRef = useRef(false);
-  const [accF,setAccF]=useState({name:"",balance:""}),[showAccF,setShowAccF]=useState(false),[editAccId,setEditAccId]=useState<string | null>(null);
+  // 口座フォームの入力値（name: 口座名、balance: 残高、color: カラーラベル）
+  const [accF,setAccF]=useState({name:"",balance:"",color:""}),[showAccF,setShowAccF]=useState(false),[editAccId,setEditAccId]=useState<string | null>(null);
   const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady&&recIncReady;
   // ローン・キャッシング・銀行ローンをまとめた配列（月別集計フックに渡す）
   const allL=useMemo(()=>[...loans,...cashFlow,...balance],[loans,cashFlow,balance]);
