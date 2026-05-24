@@ -3,7 +3,7 @@
 // App.tsx から切り出して、見通しを良くしている
 
 import React, { useMemo, useState, useRef } from "react";
-import { Tx, Budget, CategoryConfig, Account } from "../types";
+import { Tx, Budget, CategoryConfig, Account, RecurringExpense } from "../types";
 import { newId } from "../utils/crypto";
 import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
 import {
@@ -84,6 +84,10 @@ interface ExpenseViewProps {
   // 削除＋Undo：即削除してToastに「元に戻す」を出す
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   delItem: (id: string, setArr: (u: any) => void, label?: string) => void;
+  // 繰り返し支出の設定一覧（毎月自動追加するサブスク等を登録する）
+  recurringExpenses: RecurringExpense[];
+  // 繰り返し支出の設定を更新する関数
+  setRecurringExpenses: (u: RecurringExpense[] | ((prev: RecurringExpense[]) => RecurringExpense[])) => void;
 }
 
 // 支出タブ全体を表示するコンポーネント
@@ -111,10 +115,28 @@ export default function ExpenseView({
   categoryConfig,
   delItem,
   accounts = [],
+  recurringExpenses,
+  setRecurringExpenses,
 }: ExpenseViewProps) {
   // categoryConfig.expense を order 順で並べ、カテゴリ名とアイコンのマップを作る
   const expenseCategoryNames = categoryConfig.expense.slice().sort((a, b) => a.order - b.order).map(c => c.name);
   const expenseCategoryIcons: Record<string, string> = Object.fromEntries(categoryConfig.expense.map(c => [c.name, c.icon]));
+
+  // ────── ⚡定期支出セクションの state ──────
+  // 定期支出セクションを開いているかどうか（アコーディオン）
+  const [showRecSection, setShowRecSection] = useState(false);
+  // 定期支出の追加フォームを表示するかどうか
+  const [showRecForm, setShowRecForm] = useState(false);
+  // 定期支出フォームの入力値
+  const [recExpF, setRecExpF] = useState({
+    name: "",
+    cat: expenseCategoryNames[0] || "食費",
+    amt: "",
+    payDay: "未設定",
+  });
+  // 引落日の選択肢（1〜31日 + 未設定）
+  const PAY_DAY_OPTIONS = ["未設定", ...Array.from({length: 31}, (_, i) => `${i + 1}日`)];
+
   // 検索・絞り込み条件をまとめた state
   const [filter, setFilter] = useState<TransactionFilter>({});
   // フィルターパネルの表示フラグ
@@ -138,6 +160,153 @@ export default function ExpenseView({
 
   return (
     <div>
+      {/* ──────────────────────────────────────────── */}
+      {/* ── ⚡定期支出セクション（サブスク・ジム代等） ── */}
+      {/* ──────────────────────────────────────────── */}
+      <div style={STYLE_CARD}>
+        {/* セクションヘッダー（タップで開閉） */}
+        <div
+          style={{display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer"}}
+          onClick={() => setShowRecSection(v => !v)}
+        >
+          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>
+            ⚡ 定期支出
+            {/* 登録件数バッジ */}
+            {recurringExpenses.length > 0 && (
+              <span style={{marginLeft:8,fontSize:11,color:COLOR_ACCENT,fontFamily:"monospace"}}>
+                {recurringExpenses.length}件
+              </span>
+            )}
+          </div>
+          <span style={{fontSize:12,color:COLOR_TEXT_HINT}}>{showRecSection ? "▲" : "▼"}</span>
+        </div>
+
+        {/* 開いたときだけ中身を表示（アコーディオン） */}
+        {showRecSection && (
+          <div style={{marginTop:14}}>
+            {/* 定期支出の一覧 */}
+            {recurringExpenses.length === 0 ? (
+              <div style={{textAlign:"center",padding:"12px 0",color:COLOR_TEXT_HINT,fontSize:13}}>
+                まだ登録された定期支出はありません
+              </div>
+            ) : (
+              recurringExpenses.map(rec => (
+                <div
+                  key={rec.id}
+                  style={{display:"flex",alignItems:"center",gap:10,padding:"10px 0",borderBottom:`1px solid ${COLOR_BORDER}`}}
+                >
+                  <div style={{flex:1,minWidth:0}}>
+                    {/* 停止中はグレーで表示 */}
+                    <div style={{fontSize:13,fontWeight:600,color:rec.active===false?COLOR_TEXT_HINT:COLOR_TEXT_PRIMARY}}>
+                      {rec.active===false && "⏸ "}{rec.name}
+                    </div>
+                    <div style={{fontSize:11,color:COLOR_TEXT_SECONDARY,marginTop:2}}>
+                      {expenseCategoryIcons[rec.category]} {rec.category} · {rec.payDay} · {formatYen(rec.amount)}/月
+                    </div>
+                  </div>
+                  {/* 有効/停止の切り替えボタン */}
+                  <button
+                    onClick={() =>
+                      setRecurringExpenses(prev =>
+                        prev.map(r => r.id === rec.id ? {...r, active: r.active === false ? true : false} : r)
+                      )
+                    }
+                    style={{
+                      ...STYLE_BUTTON_OUTLINE,
+                      fontSize:11,
+                      padding:"4px 10px",
+                      minHeight:30,
+                      color: rec.active===false ? COLOR_TEXT_HINT : COLOR_ACCENT,
+                      borderColor: rec.active===false ? COLOR_BORDER : `${COLOR_ACCENT}44`,
+                    }}
+                  >
+                    {rec.active===false ? "再開" : "停止"}
+                  </button>
+                  {/* 削除ボタン */}
+                  <button
+                    onClick={() => delItem(rec.id, setRecurringExpenses, "定期支出を削除しました")}
+                    style={{...STYLE_BUTTON_OUTLINE,fontSize:11,padding:"4px 10px",minHeight:30}}
+                  >
+                    削除
+                  </button>
+                </div>
+              ))
+            )}
+
+            {/* 定期支出の追加フォームの開閉ボタン */}
+            <button
+              onClick={() => setShowRecForm(v => !v)}
+              style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginTop:10,fontSize:12}}
+            >
+              {showRecForm ? "閉じる" : "＋ 定期支出を追加"}
+            </button>
+
+            {/* 追加フォーム本体 */}
+            {showRecForm && (
+              <div style={{marginTop:10,display:"flex",flexDirection:"column",gap:10}}>
+                {/* 支出名 */}
+                <Input
+                  value={recExpF.name}
+                  onChange={e => setRecExpF(f => ({...f, name: e.target.value}))}
+                  placeholder="支出名（例: Netflix、ジム会費）"
+                />
+                {/* カテゴリ */}
+                <Select
+                  value={recExpF.cat}
+                  onChange={e => setRecExpF(f => ({...f, cat: e.target.value}))}
+                  options={expenseCategoryNames}
+                  icons={expenseCategoryIcons}
+                />
+                {/* 金額 */}
+                <Input
+                  money
+                  type="number"
+                  value={recExpF.amt}
+                  onChange={e => setRecExpF(f => ({...f, amt: e.target.value}))}
+                  placeholder="金額（円）"
+                />
+                {/* 引落日 */}
+                <Select
+                  value={recExpF.payDay}
+                  onChange={e => setRecExpF(f => ({...f, payDay: e.target.value}))}
+                  options={PAY_DAY_OPTIONS}
+                />
+                {/* 登録ボタン */}
+                <button
+                  onClick={() => {
+                    const a = parseYenAmount(recExpF.amt);
+                    if (!recExpF.name) { showT("支出名を入力してください", "error"); return; }
+                    if (!a || a <= 0) { showT("金額を入力してください", "error"); return; }
+                    setRecurringExpenses(prev => [
+                      ...prev,
+                      {
+                        id: newId(),
+                        name: recExpF.name,
+                        category: recExpF.cat,
+                        amount: a,
+                        payDay: recExpF.payDay,
+                        active: true,
+                      }
+                    ]);
+                    // フォームをリセットして閉じる
+                    setRecExpF({name:"", cat: expenseCategoryNames[0] || "食費", amt:"", payDay:"未設定"});
+                    setShowRecForm(false);
+                    showT("定期支出を登録しました");
+                  }}
+                  style={STYLE_BUTTON_PRIMARY}
+                >
+                  登録する
+                </button>
+                {/* 注意書き */}
+                <div style={{fontSize:11,color:COLOR_TEXT_HINT,lineHeight:1.6}}>
+                  ※ 引落日が来た月から自動的に変動支出として追加されます。
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* ────────── クイックテンプレート一覧 ────────── */}
       {tpls.length>0&&<div style={{marginBottom:12}}>
         <div style={{fontSize:10,color:COLOR_TEXT_HINT,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:8}}>よく使う支出</div>

@@ -387,6 +387,8 @@ function AppInner(){
         txListRef={txListRef}
         categoryConfig={categoryConfig}
         delItem={delItem}
+        recurringExpenses={recurringExpenses}
+        setRecurringExpenses={setRecurringExpenses}
       />}
       {tab==="loan"&&<LoanView
         allL={allL}
@@ -417,6 +419,8 @@ function AppInner(){
         onOpenTutorial={() => setShowTutorial(true)}
         exportBackup={exportBackup}
         importBackup={importBackup}
+        transfers={transfers}
+        setTransfers={setTransfers}
       />}
       </Suspense>
     </div>

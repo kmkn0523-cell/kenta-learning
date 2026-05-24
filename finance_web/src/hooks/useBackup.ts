@@ -20,6 +20,7 @@ const BACKUP_KEYS = [
   "kk_categories",  // カテゴリ設定（ユーザーカスタマイズ）
   "kk_savingGoal",  // 貯金目標
   "kk_rec_inc",     // 定期収入設定
+  "kk_rec_exp",     // 定期支出設定（繰り返し変動費）
   ENC_SALT_KEY,     // 暗号化用salt
 ];
 

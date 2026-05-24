@@ -1,6 +1,6 @@
 // ────────── 設定画面（カテゴリ管理） ──────────
 import { useState } from "react";
-import { CategoryConfig, CategoryItem, Tx, Income, FixedExpense } from "../types";
+import { CategoryConfig, CategoryItem, Tx, Income, FixedExpense, Transfer } from "../types";
 import { Input } from "../components/ui";
 import {
   STYLE_CARD,
@@ -32,6 +32,9 @@ interface SettingsViewProps {
   // バックアップ・リストア関数（App.tsx の useBackup フックから渡す）
   exportBackup: () => void;
   importBackup: (file: File) => void;
+  // 口座間振替一覧と更新関数（一括削除で使う）
+  transfers: Transfer[];
+  setTransfers: (updater: Transfer[] | ((p: Transfer[]) => Transfer[])) => void;
 }
 
 export default function SettingsView(props: SettingsViewProps) {
@@ -50,6 +53,17 @@ export default function SettingsView(props: SettingsViewProps) {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   // 削除確認モーダル用のターゲット
   const [deleteTarget, setDeleteTarget] = useState<CategoryItem | null>(null);
+
+  // ────── 一括削除セクションの state ──────
+  // 一括削除カードを開いているかどうか
+  const [showBulkDelete, setShowBulkDelete] = useState(false);
+  // カットオフ年（これより前のデータを削除する）
+  const currentYear = new Date().getFullYear();
+  const [bulkYear, setBulkYear] = useState(currentYear - 1);
+  // カットオフ月（0〜11 = 1〜12月）
+  const [bulkMonth, setBulkMonth] = useState(11); // デフォルト：昨年12月
+  // 一括削除の実行確認フラグ
+  const [showBulkConfirm, setShowBulkConfirm] = useState(false);
 
   // 現在のタブのカテゴリを order 順で並べる
   const items: CategoryItem[] = props.categoryConfig[kind].slice().sort((a, b) => a.order - b.order);
@@ -219,6 +233,152 @@ export default function SettingsView(props: SettingsViewProps) {
         </div>
       </div>
 
+      {/* ────────── 一括削除カード ────────── */}
+      <div style={{ ...STYLE_CARD, marginBottom: 16 }}>
+        {/* ヘッダー（タップで開閉） */}
+        <div
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
+          onClick={() => { setShowBulkDelete(v => !v); setShowBulkConfirm(false); }}
+        >
+          <div style={{ fontSize: 15, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
+            🗑️ 古いデータを一括削除
+          </div>
+          <span style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY }}>{showBulkDelete ? "▲" : "▼"}</span>
+        </div>
+
+        {showBulkDelete && (() => {
+          // 選択した「年YYYY・月mm（0始まり）」より前のデータ件数を計算する
+          // 例：2024年12月を選んだ場合 → 2024-12-31以前が対象
+          const cutoffStr =
+            bulkYear + "-" + String(bulkMonth + 1).padStart(2, "0") + "-31";
+
+          // 各データ配列で cutoff 以前のものの件数を数える
+          const txCount = props.transactions.filter(t => t.date <= cutoffStr).length;
+          const incCount = props.incomes.filter(i => i.date <= cutoffStr).length;
+          const trCount = props.transfers.filter(t => t.date <= cutoffStr).length;
+          const totalCount = txCount + incCount + trCount;
+
+          // 年の選択肢（5年前〜今年）
+          const yearOptions = Array.from({ length: 6 }, (_, i) => currentYear - 5 + i);
+          const monthLabels = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+
+          return (
+            <div style={{ marginTop: 14 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginBottom: 12, lineHeight: 1.6 }}>
+                指定した月（月末）までの支出・収入・振替を一括で削除します。
+                固定費・ローン設定は削除されません。
+              </div>
+
+              {/* 年・月 セレクター */}
+              <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+                {/* 年 */}
+                <select
+                  value={bulkYear}
+                  onChange={e => setBulkYear(Number(e.target.value))}
+                  style={{
+                    flex: 1,
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: 10,
+                    color: "#e2e8f0",
+                    fontSize: 14,
+                    padding: "10px 12px",
+                    fontFamily: "inherit",
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                  }}
+                >
+                  {yearOptions.map(y => (
+                    <option key={y} value={y}>{y}年</option>
+                  ))}
+                </select>
+                {/* 月 */}
+                <select
+                  value={bulkMonth}
+                  onChange={e => setBulkMonth(Number(e.target.value))}
+                  style={{
+                    flex: 1,
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: 10,
+                    color: "#e2e8f0",
+                    fontSize: 14,
+                    padding: "10px 12px",
+                    fontFamily: "inherit",
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                  }}
+                >
+                  {monthLabels.map((label, idx) => (
+                    <option key={idx} value={idx}>{label}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* 削除件数プレビュー */}
+              <div style={{
+                background: "rgba(148,163,184,0.06)",
+                borderRadius: 10,
+                padding: "10px 14px",
+                marginBottom: 12,
+                fontSize: 12,
+                color: COLOR_TEXT_SECONDARY,
+                lineHeight: 1.8,
+              }}>
+                <div>対象期間：{bulkYear}年{bulkMonth + 1}月末まで</div>
+                <div>変動支出：{txCount}件 ／ 収入：{incCount}件 ／ 振替：{trCount}件</div>
+                <div style={{ fontWeight: 700, color: totalCount > 0 ? "#f87171" : COLOR_TEXT_SECONDARY, marginTop: 2 }}>
+                  合計 {totalCount} 件が削除されます
+                </div>
+              </div>
+
+              {/* 実行ボタン（0件なら無効） */}
+              {!showBulkConfirm ? (
+                <button
+                  onClick={() => { if (totalCount > 0) setShowBulkConfirm(true); }}
+                  disabled={totalCount === 0}
+                  style={{
+                    ...STYLE_BUTTON_PRIMARY,
+                    width: "100%",
+                    background: totalCount > 0 ? COLOR_NEGATIVE : undefined,
+                    opacity: totalCount === 0 ? 0.4 : 1,
+                  }}
+                >
+                  🗑️ {totalCount}件を削除する
+                </button>
+              ) : (
+                <div>
+                  <div style={{ fontSize: 13, color: "#f87171", marginBottom: 10, textAlign: "center", fontWeight: 700 }}>
+                    本当に削除しますか？元に戻せません
+                  </div>
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <button
+                      onClick={() => setShowBulkConfirm(false)}
+                      style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}
+                    >
+                      キャンセル
+                    </button>
+                    <button
+                      onClick={() => {
+                        // cutoff 以前のデータを各配列から除外する
+                        props.setTransactions(prev => prev.filter(t => t.date > cutoffStr));
+                        props.setIncomes(prev => prev.filter(i => i.date > cutoffStr));
+                        props.setTransfers(prev => prev.filter(t => t.date > cutoffStr));
+                        setShowBulkConfirm(false);
+                        setShowBulkDelete(false);
+                      }}
+                      style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, background: COLOR_NEGATIVE }}
+                    >
+                      削除する
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
+      </div>
+
       <div style={{ ...STYLE_CARD }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 12 }}>
           カテゴリ管理
@@ -378,7 +538,7 @@ export default function SettingsView(props: SettingsViewProps) {
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>バージョン</span>
-            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.3.0</span>
+            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.4.0</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>制作</span>
