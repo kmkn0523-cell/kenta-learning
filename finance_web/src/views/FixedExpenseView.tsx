@@ -7,6 +7,7 @@ import { formatYen } from "../utils/format";
 import { COLOR_TEXT_HINT, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
 import { Input, Select } from "../components/ui";
 import FxRow from "../components/FxRow";
+import FixedExpenseCalendar from "../components/FixedExpenseCalendar";
 
 // このコンポーネントが受け取るデータの型定義
 interface FixedExpenseViewProps {
@@ -66,6 +67,9 @@ export default function FixedExpenseView({
         </div>
         <div style={{ fontSize: 12, color: COLOR_TEXT_HINT }}>{fixedExpenses.length}項目</div>
       </div>
+
+      {/* ────────── 引落カレンダー：引落日順に今月の固定費を一覧表示 ────────── */}
+      <FixedExpenseCalendar fixedExpenses={fixedExpenses}/>
 
       {/* 固定費が0件かつフォーム非表示のとき、空状態のメッセージを表示 */}
       {fixedExpenses.length === 0 && !showFx && (
