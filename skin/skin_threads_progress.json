@@ -1,5 +1,5 @@
 {
-  "daily_index": 129,
+  "daily_index": 130,
   "launch_index": 0,
   "history": [
     {
@@ -3548,6 +3548,13 @@
       "theme_id": 21,
       "variant": "A",
       "post_id": "17879274204447804"
+    },
+    {
+      "date": "2026/05/24 10:00",
+      "theme": "食事のタイミング",
+      "theme_id": 22,
+      "variant": "A",
+      "post_id": "18125975317719922"
     }
   ],
   "ab_next": "A",
@@ -3621,7 +3628,8 @@
     "18": "B",
     "19": "B",
     "20": "B",
-    "21": "B"
+    "21": "B",
+    "22": "B"
   },
   "ab_results": {
     "61": {
@@ -4033,6 +4041,12 @@
       "b_posts": 0
     },
     "21": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "22": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
