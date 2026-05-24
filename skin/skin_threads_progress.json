@@ -1,5 +1,5 @@
 {
-  "daily_index": 126,
+  "daily_index": 127,
   "launch_index": 0,
   "history": [
     {
@@ -3527,6 +3527,13 @@
       "theme_id": 18,
       "variant": "A",
       "post_id": "17943946254195018"
+    },
+    {
+      "date": "2026/05/24 04:01",
+      "theme": "カフェインと肌",
+      "theme_id": 19,
+      "variant": "A",
+      "post_id": "17897662302303581"
     }
   ],
   "ab_next": "A",
@@ -3597,7 +3604,8 @@
     "15": "B",
     "16": "B",
     "17": "B",
-    "18": "B"
+    "18": "B",
+    "19": "B"
   },
   "ab_results": {
     "61": {
@@ -3991,6 +3999,12 @@
       "b_posts": 0
     },
     "18": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "19": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
