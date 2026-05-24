@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo, useRef, lazy, Suspense } from "react";
 import { usePersist } from "./hooks/usePersist";
 import { useMonthlyData } from "./hooks/useMonthlyData";
 import { useAutoPayment } from "./hooks/useAutoPayment";
+import { useAutoIncome } from "./hooks/useAutoIncome";
 import { useDataExport } from "./hooks/useDataExport";
 import { useToast } from "./hooks/useToast";
 import { useBackup } from "./hooks/useBackup";
@@ -14,7 +15,7 @@ import { parseYenAmount, formatYen, MONTH_LABELS, EXPENSE_CATEGORIES, FIXED_EXPE
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate, BRANDS_CF, BRANDS_BL } from "./utils/loanCalc";
 import { COLOR_BACKGROUND, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_BORDER_GLOW, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "./utils/styles";
 import { migrateTransactions, migrateIncomes, migrateFixedExpenses, migrateLoans } from "./utils/dataMigration";
-import { Transfer, CategoryConfig, SavingGoal } from "./types";
+import { Transfer, CategoryConfig, SavingGoal, RecurringIncome } from "./types";
 import { makeDefaultCategoryConfig } from "./utils/defaultCategories";
 import PasswordGate from "./components/PasswordGate";
 import { Input, Select, StatLabel, ProgressBar, Toast, ConfirmDialog } from "./components/ui";
@@ -58,6 +59,8 @@ function AppInner(){
   const [categoryConfig,setCategoryConfig,categoryConfigReady]=usePersist<CategoryConfig>("kk_categories",makeDefaultCategoryConfig());
   // 貯金目標（単一目標。null＝未設定）
   const [savingGoal,setSavingGoal,savingGoalReady]=usePersist<SavingGoal | null>("kk_savingGoal",null);
+  // 定期収入の設定一覧（給与・副業など毎月自動追加する収入の設定）
+  const [recurringIncomes,setRecurringIncomes,recIncReady]=usePersist<RecurringIncome[]>("kk_rec_inc",[]);
   const [txF,setTxF]=useState({cat:"食費",amt:"",date:ts,memo:""});
   const [fxF,setFxF]=useState({name:"",cat:"家賃",amt:"",note:""});
   const [incF,setIncF]=useState({cat:"給与",amt:"",date:ts,memo:""});
@@ -69,7 +72,7 @@ function AppInner(){
   // トースト・確認ダイアログ・削除Undo をまとめた共通フック
   const { toast, dlg, setDlg, showT, ask, delItem } = useToast();
   const [accF,setAccF]=useState({name:"",balance:""}),[showAccF,setShowAccF]=useState(false),[editAccId,setEditAccId]=useState<string | null>(null);
-  const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady;
+  const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady&&recIncReady;
   // ローン・キャッシング・銀行ローンをまとめた配列（月別集計フックに渡す）
   const allL=useMemo(()=>[...loans,...cashFlow,...balance],[loans,cashFlow,balance]);
   // 月別データ集計フック：選択月のフィルタ済みリストと各合計値を取得
@@ -107,6 +110,8 @@ function AppInner(){
 
   // ──────── 自動引落の実行管理（useAutoPayment フックに移動済み） ────────
   useAutoPayment({ setLoans, setCashFlow, setBalance, ready: allOk });
+  // ──────── 定期収入の自動追加（useAutoIncome フックに移動済み） ────────
+  useAutoIncome({ recurringIncomes, setRecurringIncomes, setIncomes, ready: allOk });
 
   // ──────── CSV出力（useDataExport フックに移動済み） ────────
   const { exportMonthlyCsv, exportMonthlyIncomeCsv } = useDataExport({ monthlyTransactions, monthlyIncomes, showT });
@@ -217,6 +222,8 @@ function AppInner(){
         ask={ask}
         categoryConfig={categoryConfig}
         delItem={delItem}
+        recurringIncomes={recurringIncomes}
+        setRecurringIncomes={setRecurringIncomes}
       />}
       {tab==="fix"&&<FixedExpenseView
         totalFixedExpense={totalFixedExpense}

@@ -92,6 +92,17 @@ export interface SavingGoal {
   createdAt: string;     // 作成日 "YYYY-MM-DD"
 }
 
+// 定期収入1件の形（給与・副業など毎月一定額が入る収入を登録する）
+export interface RecurringIncome {
+  id: string;
+  name: string;           // 収入名（例: "給与", "副業"）
+  category: string;       // 収入カテゴリ
+  amount: number;         // 金額（円）
+  payDay: string;         // 振込日（"1日" 〜 "31日" または "未設定"）
+  lastAutoAdded?: string; // 最後に自動追加した月 "YYYY-MM"（重複防止に使う）
+  active?: boolean;       // false にすると自動追加を一時停止
+}
+
 // トースト通知の形
 export interface ToastData {
   msg: string;

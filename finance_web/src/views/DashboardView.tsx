@@ -169,7 +169,9 @@ export default function DashboardView({
   // 現在ペースが「速い」かどうか：経過日数比で 50% 以上消化したペースなら警告色
   const paceRatio = daysInMonth > 0 ? daysElapsed / daysInMonth : 0;
   const burdenRatio = totalIncome > 0 ? projectedTotal / totalIncome : 0;
-  const paceWarning = burdenRatio > 1; // 月末で収入を超える見込み
+  // 段階的なペース警告：80%超で注意（黄色）、100%超で危険（赤）
+  const paceYellow = burdenRatio > 0.8 && burdenRatio <= 1; // 80〜100%：注意ライン
+  const paceRed    = burdenRatio > 1;                       // 100%超：赤字見込み
 
   // ────────── 前年同月の集計（YoY比較用） ──────────
   // "2025-05" のような前年同月の年月文字列
@@ -218,7 +220,7 @@ export default function DashboardView({
 
       {/* ────────── 今月のペース予測カード（今月かつ変動支出が1件以上ある時だけ表示） ────────── */}
       {isCurMonth && totalVariableExpense > 0 && (
-        <div style={{...STYLE_CARD, borderColor: paceWarning ? `${COLOR_NEGATIVE}44` : COLOR_BORDER}}>
+        <div style={{...STYLE_CARD, borderColor: paceRed ? `${COLOR_NEGATIVE}44` : paceYellow ? "rgba(251,191,36,0.3)" : COLOR_BORDER}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
             <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>📈 今月のペース</div>
             <div style={{fontSize:10,color:COLOR_TEXT_HINT,fontFamily:"monospace"}}>{daysElapsed}日 / {daysInMonth}日 ({Math.round(paceRatio*100)}%)</div>
@@ -226,7 +228,7 @@ export default function DashboardView({
           {/* 月末予想カード本体 */}
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
             <span style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>月末の支出予想</span>
-            <span style={{fontFamily:"monospace",fontSize:18,fontWeight:700,color:paceWarning?COLOR_NEGATIVE:COLOR_TEXT_PRIMARY}}>{formatYen(projectedTotal)}</span>
+            <span style={{fontFamily:"monospace",fontSize:18,fontWeight:700,color:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_TEXT_PRIMARY}}>{formatYen(projectedTotal)}</span>
           </div>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:10}}>
             <span style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>月末の手残り予想</span>
@@ -234,12 +236,14 @@ export default function DashboardView({
           </div>
           {/* 経過バー：今月どこまで進んだかを視覚化 */}
           <div style={{height:6,background:"rgba(148,163,184,0.08)",borderRadius:3,overflow:"hidden",marginBottom:8}}>
-            <div style={{height:"100%",width:`${Math.min(100,paceRatio*100)}%`,background:paceWarning?COLOR_NEGATIVE:COLOR_ACCENT,borderRadius:3,transition:"width 0.4s ease"}}/>
+            <div style={{height:"100%",width:`${Math.min(100,paceRatio*100)}%`,background:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_ACCENT,borderRadius:3,transition:"width 0.4s ease"}}/>
           </div>
           {/* アドバイス文言：ペースに応じて表示を切り替える */}
-          <div style={{fontSize:11,color:paceWarning?COLOR_NEGATIVE:COLOR_TEXT_HINT,lineHeight:1.5}}>
-            {paceWarning
-              ? `⚠️ このペースだと月末に収入を ${formatYen(projectedTotal - totalIncome)} 超過する見込みです`
+          <div style={{fontSize:11,color:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_TEXT_HINT,lineHeight:1.5}}>
+            {paceRed
+              ? `🔴 このペースだと月末に収入を ${formatYen(projectedTotal - totalIncome)} 超過する見込みです`
+              : paceYellow
+              ? `🟡 このペースだと月末の支出が収入の ${Math.round(burdenRatio*100)}% になる見込みです`
               : `現在のペースなら月末は手残り ${formatYen(Math.max(0,projectedNet))} の見込み`}
           </div>
         </div>

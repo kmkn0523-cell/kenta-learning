@@ -3,9 +3,12 @@
 // 検索・並び替えは内部 state で管理する（App.tsx に持ち出さない）
 
 import React, { useMemo, useState, useRef } from "react";
-import { Income, CategoryConfig } from "../types";
+import { Income, RecurringIncome, CategoryConfig } from "../types";
+import { newId } from "../utils/crypto";
 import {
   MONTH_LABELS,
+  parseYenAmount,
+  formatYen,
 } from "../utils/format";
 import {
   COLOR_TEXT_PRIMARY,
@@ -62,6 +65,10 @@ interface IncomeViewProps {
   // 削除＋Undo：即削除してToastに「元に戻す」を出す
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   delItem: (id: string, setArr: (u: any) => void, label?: string) => void;
+  // 定期収入の設定一覧（毎月自動追加する収入の登録）
+  recurringIncomes: RecurringIncome[];
+  // 定期収入の設定を更新する関数
+  setRecurringIncomes: (u: RecurringIncome[] | ((prev: RecurringIncome[]) => RecurringIncome[])) => void;
 }
 
 // 収入タブ全体のUIを返すコンポーネント
@@ -79,9 +86,27 @@ export default function IncomeView({
   ask,
   categoryConfig,
   delItem,
+  recurringIncomes,
+  setRecurringIncomes,
 }: IncomeViewProps) {
   // categoryConfig.income を order 順で並べ、カテゴリ名とアイコンのマップを作る
   const incomeCategoryNames = categoryConfig.income.slice().sort((a, b) => a.order - b.order).map(c => c.name);
+
+  // ────── 定期収入セクションの state ──────
+  // 定期収入セクションを開いているかどうか
+  const [showRecSection, setShowRecSection] = useState(false);
+  // 定期収入の追加フォームを表示するかどうか
+  const [showRecForm, setShowRecForm] = useState(false);
+  // 定期収入フォームの入力値
+  const [recF, setRecF] = useState({
+    name: "",
+    cat: incomeCategoryNames[0] || "給与",
+    amt: "",
+    payDay: "未設定",
+  });
+
+  // 振込日の選択肢（1〜31日 + 未設定）
+  const PAY_DAY_OPTIONS = ["未設定", ...Array.from({length: 31}, (_, i) => `${i + 1}日`)];
   const incomeCategoryIcons: Record<string, string> = Object.fromEntries(categoryConfig.income.map(c => [c.name, c.icon]));
   // 検索・絞り込み条件をまとめた state（デフォルトは日付の新しい順）
   const [filter, setFilter] = useState<TransactionFilter>({ sortBy: "date", sortDir: "desc" });
@@ -104,6 +129,152 @@ export default function IncomeView({
 
   return (
     <div>
+      {/* ────────────────────────────────────────────────────── */}
+      {/* ── 定期収入セクション（給与・副業など自動追加設定） ── */}
+      {/* ────────────────────────────────────────────────────── */}
+      <div style={STYLE_CARD}>
+        {/* セクションヘッダー（タップで開閉） */}
+        <div
+          style={{display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer"}}
+          onClick={() => setShowRecSection(v => !v)}
+        >
+          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>
+            ⚡ 定期収入
+            {/* 登録件数バッジ */}
+            {recurringIncomes.length > 0 && (
+              <span style={{marginLeft:8,fontSize:11,color:COLOR_ACCENT,fontFamily:"monospace"}}>
+                {recurringIncomes.length}件
+              </span>
+            )}
+          </div>
+          <span style={{fontSize:12,color:COLOR_TEXT_HINT}}>{showRecSection ? "▲" : "▼"}</span>
+        </div>
+
+        {/* 開いたときだけ中身を表示 */}
+        {showRecSection && (
+          <div style={{marginTop:14}}>
+            {/* 定期収入の一覧 */}
+            {recurringIncomes.length === 0 ? (
+              <div style={{textAlign:"center",padding:"12px 0",color:COLOR_TEXT_HINT,fontSize:13}}>
+                まだ登録された定期収入はありません
+              </div>
+            ) : (
+              recurringIncomes.map(rec => (
+                <div
+                  key={rec.id}
+                  style={{display:"flex",alignItems:"center",gap:10,padding:"10px 0",borderBottom:`1px solid ${COLOR_BORDER}`}}
+                >
+                  <div style={{flex:1,minWidth:0}}>
+                    {/* 停止中はグレーで表示 */}
+                    <div style={{fontSize:13,fontWeight:600,color:rec.active===false?COLOR_TEXT_HINT:COLOR_TEXT_PRIMARY}}>
+                      {rec.active===false && "⏸ "}{rec.name}
+                    </div>
+                    <div style={{fontSize:11,color:COLOR_TEXT_SECONDARY,marginTop:2}}>
+                      {rec.category} · {rec.payDay} · {formatYen(rec.amount)}/月
+                    </div>
+                  </div>
+                  {/* 有効/停止の切り替えボタン */}
+                  <button
+                    onClick={() =>
+                      setRecurringIncomes(prev =>
+                        prev.map(r => r.id === rec.id ? {...r, active: r.active === false ? true : false} : r)
+                      )
+                    }
+                    style={{
+                      ...STYLE_BUTTON_OUTLINE,
+                      fontSize:11,
+                      padding:"4px 10px",
+                      minHeight:30,
+                      color: rec.active===false ? COLOR_TEXT_HINT : COLOR_ACCENT,
+                      borderColor: rec.active===false ? COLOR_BORDER : `${COLOR_ACCENT}44`,
+                    }}
+                  >
+                    {rec.active===false ? "再開" : "停止"}
+                  </button>
+                  {/* 削除ボタン */}
+                  <button
+                    onClick={() => delItem(rec.id, setRecurringIncomes, "定期収入を削除しました")}
+                    style={{...STYLE_BUTTON_OUTLINE,fontSize:11,padding:"4px 10px",minHeight:30}}
+                  >
+                    削除
+                  </button>
+                </div>
+              ))
+            )}
+
+            {/* 定期収入の追加フォームの開閉ボタン */}
+            <button
+              onClick={() => setShowRecForm(v => !v)}
+              style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginTop:10,fontSize:12}}
+            >
+              {showRecForm ? "閉じる" : "＋ 定期収入を追加"}
+            </button>
+
+            {/* 追加フォーム本体 */}
+            {showRecForm && (
+              <div style={{marginTop:10,display:"flex",flexDirection:"column",gap:10}}>
+                {/* 収入名 */}
+                <Input
+                  value={recF.name}
+                  onChange={e => setRecF(f => ({...f, name: e.target.value}))}
+                  placeholder="収入名（例: 給与、副業）"
+                />
+                {/* カテゴリ */}
+                <Select
+                  value={recF.cat}
+                  onChange={e => setRecF(f => ({...f, cat: e.target.value}))}
+                  options={incomeCategoryNames}
+                  icons={incomeCategoryIcons}
+                />
+                {/* 金額 */}
+                <Input
+                  money
+                  type="number"
+                  value={recF.amt}
+                  onChange={e => setRecF(f => ({...f, amt: e.target.value}))}
+                  placeholder="金額（円）"
+                />
+                {/* 振込日 */}
+                <Select
+                  value={recF.payDay}
+                  onChange={e => setRecF(f => ({...f, payDay: e.target.value}))}
+                  options={PAY_DAY_OPTIONS}
+                />
+                {/* 登録ボタン */}
+                <button
+                  onClick={() => {
+                    const a = parseYenAmount(recF.amt);
+                    if (!recF.name) { showT("収入名を入力してください", "error"); return; }
+                    if (!a || a <= 0) { showT("金額を入力してください", "error"); return; }
+                    setRecurringIncomes(prev => [
+                      ...prev,
+                      {
+                        id: newId(),
+                        name: recF.name,
+                        category: recF.cat,
+                        amount: a,
+                        payDay: recF.payDay,
+                        active: true,
+                      }
+                    ]);
+                    setRecF({name:"", cat: incomeCategoryNames[0] || "給与", amt:"", payDay:"未設定"});
+                    setShowRecForm(false);
+                    showT("定期収入を登録しました");
+                  }}
+                  style={STYLE_BUTTON_PRIMARY}
+                >
+                  登録する
+                </button>
+                {/* 注意書き */}
+                <div style={{fontSize:11,color:COLOR_TEXT_HINT,lineHeight:1.6}}>
+                  ※ 振込日が来た月から自動的に収入として追加されます。過去月は追加されません。
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* ── 収入入力フォーム ── */}
       <div style={STYLE_CARD}>
         <div
