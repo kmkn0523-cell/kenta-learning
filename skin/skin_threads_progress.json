@@ -1,5 +1,5 @@
 {
-  "daily_index": 124,
+  "daily_index": 125,
   "launch_index": 0,
   "history": [
     {
@@ -3513,6 +3513,13 @@
       "theme_id": 16,
       "variant": "A",
       "post_id": "18137902234533092"
+    },
+    {
+      "date": "2026/05/24 00:01",
+      "theme": "鉄分不足と肌",
+      "theme_id": 17,
+      "variant": "A",
+      "post_id": "17948850576168326"
     }
   ],
   "ab_next": "A",
@@ -3581,7 +3588,8 @@
     "13": "B",
     "14": "B",
     "15": "B",
-    "16": "B"
+    "16": "B",
+    "17": "B"
   },
   "ab_results": {
     "61": {
@@ -3963,6 +3971,12 @@
       "b_posts": 0
     },
     "16": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "17": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
