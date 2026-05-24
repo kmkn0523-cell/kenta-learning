@@ -15,10 +15,12 @@ interface UseAutoIncomeArgs {
   setIncomes: (u: Income[] | ((p: Income[]) => Income[])) => void;
   // 全ての usePersist が復号完了した時に true になるフラグ
   ready: boolean;
+  // 自動追加が発生した時に呼ばれるコールバック（通知などに使う）
+  onAutoAdded?: (count: number) => void;
 }
 
 export function useAutoIncome(args: UseAutoIncomeArgs) {
-  const { recurringIncomes, setRecurringIncomes, setIncomes, ready } = args;
+  const { recurringIncomes, setRecurringIncomes, setIncomes, ready, onAutoAdded } = args;
 
   // 「最後に自動追加チェックをした日付」を記憶する入れ物（YYYY-MM-DD の文字列）
   // 同じ日に何度も処理が走らないよう見張り番として使う
@@ -116,6 +118,8 @@ export function useAutoIncome(args: UseAutoIncomeArgs) {
       // 自動追加する収入を一括でincomeリストの末尾に追加
       if (toAdd.length > 0) {
         setIncomes((prev) => [...prev, ...toAdd]);
+        // 追加件数をコールバックで通知する（通知機能などで使う）
+        if (onAutoAdded) onAutoAdded(toAdd.length);
       }
 
       // 定期収入の lastAutoAdded を更新（重複追加を防ぐために必須）

@@ -3,7 +3,7 @@
 // App.tsx から切り出して、見通しを良くしている
 
 import React, { useMemo, useState, useRef } from "react";
-import { Tx, Budget, CategoryConfig } from "../types";
+import { Tx, Budget, CategoryConfig, Account } from "../types";
 import { newId } from "../utils/crypto";
 import {
   parseYenAmount,
@@ -41,9 +41,11 @@ interface ExpenseViewProps {
   // テンプレート一覧と更新関数
   tpls: Template[];
   setTpls: (u: Template[] | ((prev: Template[]) => Template[])) => void;
-  // 支出入力フォームの中身（カテゴリ・金額・日付・メモ）
-  txF: { cat: string; amt: string; date: string; memo: string };
-  setTxF: (u: ((prev: { cat: string; amt: string; date: string; memo: string }) => { cat: string; amt: string; date: string; memo: string })) => void;
+  // 支出入力フォームの中身（カテゴリ・金額・日付・メモ・口座ID）
+  txF: { cat: string; amt: string; date: string; memo: string; accountId?: string };
+  setTxF: (u: ((prev: { cat: string; amt: string; date: string; memo: string; accountId?: string }) => { cat: string; amt: string; date: string; memo: string; accountId?: string })) => void;
+  // 口座一覧（口座が登録されていれば支出に紐づける選択肢を表示する）
+  accounts?: Account[];
   // 支出追加フォームの表示フラグ
   showTxForm: boolean;
   setShowTxForm: (v: boolean) => void;
@@ -102,6 +104,7 @@ export default function ExpenseView({
   txListRef,
   categoryConfig,
   delItem,
+  accounts = [],
 }: ExpenseViewProps) {
   // categoryConfig.expense を order 順で並べ、カテゴリ名とアイコンのマップを作る
   const expenseCategoryNames = categoryConfig.expense.slice().sort((a, b) => a.order - b.order).map(c => c.name);
@@ -154,6 +157,31 @@ export default function ExpenseView({
               <Input ref={amountInputRef} money type="number" value={txF.amt} onChange={e=>setTxF(f=>({...f,amt:e.target.value}))} placeholder="金額（円）"/>
               <Input type="date" value={txF.date} onChange={e=>setTxF(f=>({...f,date:e.target.value}))}/>
               <Input value={txF.memo} onChange={e=>setTxF(f=>({...f,memo:e.target.value}))} placeholder="メモ（任意）"/>
+              {/* 口座が登録されている時だけ「どの口座から引き落とすか」を選べる */}
+              {accounts.length > 0 && (
+                <select
+                  value={txF.accountId || ""}
+                  onChange={e => setTxF(f => ({ ...f, accountId: e.target.value || undefined }))}
+                  style={{
+                    width: "100%",
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: 10,
+                    color: txF.accountId ? "#e2e8f0" : "#64748b",
+                    fontSize: 14,
+                    padding: "12px 14px",
+                    fontFamily: "inherit",
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                  }}
+                >
+                  {/* 空欄＝口座指定なし */}
+                  <option value="">🏦 口座を選択（任意）</option>
+                  {accounts.map(acc => (
+                    <option key={acc.id} value={acc.id}>{acc.name}</option>
+                  ))}
+                </select>
+              )}
             </div>
             {/* テンプレートとして保存するボタン（金額が入力済みの時だけ有効） */}
             <button onClick={()=>{

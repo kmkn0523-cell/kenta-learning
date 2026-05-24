@@ -3,7 +3,7 @@
 // 検索・並び替えは内部 state で管理する（App.tsx に持ち出さない）
 
 import React, { useMemo, useState, useRef } from "react";
-import { Income, RecurringIncome, CategoryConfig } from "../types";
+import { Income, RecurringIncome, CategoryConfig, Account } from "../types";
 import { newId } from "../utils/crypto";
 import {
   MONTH_LABELS,
@@ -29,19 +29,22 @@ import MonthNav from "../components/MonthNav";
 // このコンポーネントが受け取るデータの型定義
 // incSq/setIncSq/incFcat/setIncFcat/fInc はコンポーネント内部で管理するため削除済み
 interface IncomeViewProps {
-  // 収入入力フォームの現在の値
-  incF: { cat: string; amt: string; date: string; memo: string };
+  // 収入入力フォームの現在の値（口座IDも含む）
+  incF: { cat: string; amt: string; date: string; memo: string; accountId?: string };
   // 収入フォームの値を更新する関数
   setIncF: (
     u:
-      | { cat: string; amt: string; date: string; memo: string }
+      | { cat: string; amt: string; date: string; memo: string; accountId?: string }
       | ((prev: {
           cat: string;
           amt: string;
           date: string;
           memo: string;
-        }) => { cat: string; amt: string; date: string; memo: string })
+          accountId?: string;
+        }) => { cat: string; amt: string; date: string; memo: string; accountId?: string })
   ) => void;
+  // 口座一覧（口座が登録されていれば収入に紐づける選択肢を表示する）
+  accounts?: Account[];
   // 収入を追加するボタンを押したときの処理（成功時 true、失敗時 false を返す）
   addInc: () => boolean;
   // 現在選択中の年
@@ -75,6 +78,7 @@ interface IncomeViewProps {
 export default function IncomeView({
   incF,
   setIncF,
+  accounts = [],
   addInc,
   selectedYear,
   selectedMonth,
@@ -324,6 +328,30 @@ export default function IncomeView({
             onChange={e => setIncF(f => ({ ...f, memo: e.target.value }))}
             placeholder="メモ（任意）"
           />
+          {/* 口座選択（口座が登録されているときだけ表示） */}
+          {accounts.length > 0 && (
+            <select
+              value={incF.accountId || ""}
+              onChange={e => setIncF(f => ({ ...f, accountId: e.target.value || undefined }))}
+              style={{
+                width: "100%",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                borderRadius: 10,
+                color: incF.accountId ? "#e2e8f0" : "#64748b",
+                fontSize: 14,
+                padding: "12px 14px",
+                fontFamily: "inherit",
+                appearance: "none",
+                WebkitAppearance: "none",
+              }}
+            >
+              <option value="">🏦 口座を選択（任意）</option>
+              {accounts.map(acc => (
+                <option key={acc.id} value={acc.id}>{acc.name}</option>
+              ))}
+            </select>
+          )}
         </div>
         {/* 追加ボタン（成功時は金額入力欄に再フォーカスして連続入力できるように） */}
         <button onClick={()=>{if(addInc()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>
