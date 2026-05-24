@@ -233,6 +233,104 @@ export default function SettingsView(props: SettingsViewProps) {
         </div>
       </div>
 
+      {/* ────────── CSVエクスポートカード ────────── */}
+      {/* 支出・収入データをCSVファイルとしてダウンロードできる。Excelで開いて分析するのに使う */}
+      {(() => {
+        // CSVエクスポートを実行する関数（クリック時に呼び出す）
+        function exportCsv() {
+          // BOM（﻿）を先頭に付けると Excel が文字化けしない
+          const rows: string[] = ["﻿日付,種別,カテゴリ,金額,メモ"];
+
+          // 収入データを1行ずつ変換する
+          for (const inc of props.incomes) {
+            // カンマが含まれるフィールドは「、」に置換して CSV が壊れないようにする
+            const memo = (inc.memo || "").replace(/,/g, "、").replace(/\n/g, " ");
+            rows.push([inc.date || "", "収入", inc.category || "", String(inc.amount || 0), memo].join(","));
+          }
+
+          // 支出データを1行ずつ変換する
+          for (const tx of props.transactions) {
+            const memo = (tx.memo || "").replace(/,/g, "、").replace(/\n/g, " ");
+            rows.push([tx.date || "", "支出", tx.category || "", String(tx.amount || 0), memo].join(","));
+          }
+
+          // 日付順（昇順）に並べ替える（ヘッダー行を除く）
+          const header = rows[0];
+          const dataRows = rows.slice(1).sort((a, b) => {
+            const dateA = a.split(",")[0] || "";
+            const dateB = b.split(",")[0] || "";
+            return dateA.localeCompare(dateB);
+          });
+
+          // CSV 文字列を Blob にしてダウンロードリンクを生成する
+          const csv = [header, ...dataRows].join("\n");
+          const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          // ファイル名に今日の日付を入れる
+          a.download = `家計データ_${new Date().toISOString().slice(0, 10)}.csv`;
+          a.click();
+          // 使い終わった Blob URL を解放してメモリを節約する
+          URL.revokeObjectURL(url);
+        }
+
+        // 支出・収入のデータ件数（ボタン横に表示する）
+        const txCount = props.transactions.length;
+        const incCount = props.incomes.length;
+
+        return (
+          <div style={{ ...STYLE_CARD, marginBottom: 16 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 4 }}>
+              📊 CSVエクスポート
+            </div>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginBottom: 14, lineHeight: 1.6 }}>
+              支出・収入データをCSVファイルとして書き出します。Excel や Google スプレッドシートで開けます。
+            </div>
+            {/* データ件数のプレビュー */}
+            <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
+              <div style={{
+                flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
+                padding: "8px 12px", textAlign: "center",
+              }}>
+                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{txCount}</div>
+                <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の支出</div>
+              </div>
+              <div style={{
+                flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
+                padding: "8px 12px", textAlign: "center",
+              }}>
+                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{incCount}</div>
+                <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の収入</div>
+              </div>
+              <div style={{
+                flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
+                padding: "8px 12px", textAlign: "center",
+              }}>
+                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{txCount + incCount}</div>
+                <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件 合計</div>
+              </div>
+            </div>
+            {/* エクスポートボタン */}
+            <button
+              onClick={exportCsv}
+              disabled={txCount + incCount === 0}
+              style={{
+                ...STYLE_BUTTON_PRIMARY,
+                width: "100%",
+                opacity: txCount + incCount === 0 ? 0.4 : 1,
+                cursor: txCount + incCount === 0 ? "not-allowed" : "pointer",
+              }}
+            >
+              📥 CSVをダウンロード（全期間）
+            </button>
+            <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, marginTop: 8, lineHeight: 1.5 }}>
+              形式：日付・種別（収入/支出）・カテゴリ・金額・メモ。日付順に並んで出力されます。
+            </div>
+          </div>
+        );
+      })()}
+
       {/* ────────── 一括削除カード ────────── */}
       <div style={{ ...STYLE_CARD, marginBottom: 16 }}>
         {/* ヘッダー（タップで開閉） */}
@@ -538,7 +636,7 @@ export default function SettingsView(props: SettingsViewProps) {
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>バージョン</span>
-            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.4.0</span>
+            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.5.0</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>制作</span>

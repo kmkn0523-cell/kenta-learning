@@ -12,6 +12,8 @@ const MonthlyChart = lazy(() => import("../components/MonthlyChart"));
 const CategoryTrendChart = lazy(() => import("../components/CategoryTrendChart"));
 // 累積手残り推移グラフ（純資産の変化を折れ線で表示）
 const NetWorthChart = lazy(() => import("../components/NetWorthChart"));
+// カテゴリ別支出割合の円グラフ（今月どこに使ったかを一目でわかるドーナツグラフ）
+const CategoryPieChart = lazy(() => import("../components/CategoryPieChart"));
 import SavingGoalCard from "../components/SavingGoalCard";
 import BudgetAlertBanner from "../components/BudgetAlertBanner";
 import HealthCheckCard from "../components/HealthCheckCard";
@@ -671,6 +673,13 @@ export default function DashboardView({
 
       {/* ────────── 月次推移グラフ（recharts は重いので Suspense で遅延ロード） ────────── */}
       <Suspense fallback={<div style={{...STYLE_CARD,textAlign:"center",color:COLOR_TEXT_HINT,fontSize:12,padding:"40px 0"}}>📊 グラフを読み込み中…</div>}>
+        {/* カテゴリ別支出割合：今月どのカテゴリに何%使ったかをドーナツグラフで可視化 */}
+        <CategoryPieChart
+          tx={transactions}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          icons={EXPENSE_CATEGORY_ICONS}
+        />
         <MonthlyChart tx={transactions} inc={incomes} tFx={totalFixedExpense}/>
         <CategoryTrendChart tx={transactions} icons={EXPENSE_CATEGORY_ICONS}/>
         {/* 累積手残り推移：貯まっているかどうかをひと目で確認できる折れ線グラフ */}
