@@ -1,5 +1,5 @@
 {
-  "daily_index": 125,
+  "daily_index": 126,
   "launch_index": 0,
   "history": [
     {
@@ -3520,6 +3520,13 @@
       "theme_id": 17,
       "variant": "A",
       "post_id": "17948850576168326"
+    },
+    {
+      "date": "2026/05/24 02:00",
+      "theme": "運動と肌",
+      "theme_id": 18,
+      "variant": "A",
+      "post_id": "17943946254195018"
     }
   ],
   "ab_next": "A",
@@ -3589,7 +3596,8 @@
     "14": "B",
     "15": "B",
     "16": "B",
-    "17": "B"
+    "17": "B",
+    "18": "B"
   },
   "ab_results": {
     "61": {
@@ -3977,6 +3985,12 @@
       "b_posts": 0
     },
     "17": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "18": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
