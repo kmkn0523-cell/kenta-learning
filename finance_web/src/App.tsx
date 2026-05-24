@@ -108,6 +108,8 @@ function AppInner(){
   // 前月の年月文字列（前月比較カードで使う）
   const prevMs=useMemo(()=>{const pm=selectedMonth===0?11:selectedMonth-1,py=selectedMonth===0?selectedYear-1:selectedYear;return py+"-"+String(pm+1).padStart(2,"0");},[selectedMonth,selectedYear]);
   const prevTVar=useMemo(()=>transactions.filter(t=>t.date?.startsWith(prevMs)).reduce((s,t)=>s+Number(t.amount||0),0),[transactions,prevMs]);
+  // 前月の変動支出トランザクション配列（カテゴリ別前月比バッジで使う）
+  const prevMonthlyTransactions=useMemo(()=>transactions.filter(t=>t.date?.startsWith(prevMs)),[transactions,prevMs]);
   const prevTInc=useMemo(()=>incomes.filter(i=>i.date?.startsWith(prevMs)).reduce((s,i)=>s+Number(i.amount||0),0),[incomes,prevMs]);
   function prevM(){if(selectedMonth===0){setSelectedMonth(11);setSelectedYear(y=>y-1);}else setSelectedMonth(m=>m-1);}
   function nextM(){if(selectedMonth===11){setSelectedMonth(0);setSelectedYear(y=>y+1);}else setSelectedMonth(m=>m+1);}
@@ -365,6 +367,7 @@ function AppInner(){
         budget={budget}
         setBudget={setBudget}
         monthlyTransactions={monthlyTransactions}
+        prevMonthlyTransactions={prevMonthlyTransactions}
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
         onMonthChange={(y,m)=>{setSelectedYear(y);setSelectedMonth(m);}}

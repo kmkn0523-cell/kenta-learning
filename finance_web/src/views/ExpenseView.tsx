@@ -56,6 +56,8 @@ interface ExpenseViewProps {
   setBudget: (u: Budget | ((prev: Budget) => Budget)) => void;
   // 表示中の月の支出一覧
   monthlyTransactions: Tx[];
+  // 前月の支出一覧（カテゴリ別前月比バッジに使う）
+  prevMonthlyTransactions?: Tx[];
   // 選択中の年月
   selectedYear: number;
   selectedMonth: number;
@@ -93,6 +95,7 @@ export default function ExpenseView({
   budget,
   setBudget,
   monthlyTransactions,
+  prevMonthlyTransactions = [],
   selectedYear,
   selectedMonth,
   onMonthChange,
@@ -196,7 +199,7 @@ export default function ExpenseView({
           </div>
       }
       {/* ────────── 予算管理：カテゴリ別の月予算を設定・追跡 ────────── */}
-      <BudgetSection budget={budget} setBudget={setBudget} mTx={monthlyTransactions}/>
+      <BudgetSection budget={budget} setBudget={setBudget} mTx={monthlyTransactions} prevMTx={prevMonthlyTransactions}/>
       {/* ────────── 月ナビと合計金額 ────────── */}
       <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
         <div style={{flex:1}}>

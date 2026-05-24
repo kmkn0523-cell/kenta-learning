@@ -18,12 +18,15 @@ interface BudgetSectionProps {
   budget: Record<string, number>;
   setBudget: (b: Record<string, number>) => void;
   mTx: TxEntry[];
+  // 前月の変動支出配列（省略可。前月比バッジの計算に使う）
+  prevMTx?: TxEntry[];
 }
 
 // budget: {食費: 30000, ...} のオブジェクト
 // setBudget: budget の更新関数
 // mTx: 今月の変動支出配列（日付フィルタ済み）
-export default function BudgetSection({ budget, setBudget, mTx }: BudgetSectionProps) {
+// prevMTx: 前月の変動支出配列（前月比バッジ用）
+export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: BudgetSectionProps) {
   const [editing, setEditing] = useState(false);                  // 予算設定フォームの表示フラグ
   const [draft, setDraft] = useState<Record<string, string>>({});  // 編集中の仮の予算値（文字列として管理）
 
@@ -32,6 +35,20 @@ export default function BudgetSection({ budget, setBudget, mTx }: BudgetSectionP
   mTx.forEach(t => {
     actual[t.category] = (actual[t.category] || 0) + Number(t.amount || 0);
   });
+
+  // 前月の支出をカテゴリ別に集計する
+  const prevActual: Record<string, number> = {};
+  prevMTx.forEach(t => {
+    prevActual[t.category] = (prevActual[t.category] || 0) + Number(t.amount || 0);
+  });
+
+  // カテゴリの前月比（%）を返す。前月データが0なら null（バッジ非表示）
+  function momPct(cat: string): number | null {
+    const cur = actual[cat] || 0;
+    const prev = prevActual[cat] || 0;
+    if (prev === 0) return null; // 前月データなし → バッジ非表示
+    return ((cur - prev) / prev) * 100;
+  }
 
   // 予算か実績のどちらかがあるカテゴリだけ表示する
   const activeCats = EXPENSE_CATEGORIES.filter(c => budget[c] || actual[c]);
@@ -157,10 +174,30 @@ export default function BudgetSection({ budget, setBudget, mTx }: BudgetSectionP
             const a = Number(actual[c] || 0);
             const ratio = b > 0 ? a / b : null; // 予算が設定されていない場合は null
             const col = progressColor(ratio);
+            // 前月比バッジの計算
+            const pct = momPct(c);
+            // pctが正（出費増）→ 赤、負（出費減）→ 緑
+            const badgeColor = pct === null ? null : pct > 0 ? COLOR_NEGATIVE : COLOR_POSITIVE;
+            const badgeText = pct === null ? null : `${pct > 0 ? "+" : ""}${Math.round(pct)}%`;
             return (
               <div key={c} style={{ marginBottom:12 }}>
                 <div style={{ display:"flex", justifyContent:"space-between", fontSize:12, marginBottom:4 }}>
-                  <span>{EXPENSE_CATEGORY_ICONS[c]} {c}</span>
+                  {/* カテゴリ名＋前月比バッジ */}
+                  <span style={{ display:"flex", alignItems:"center", gap:5 }}>
+                    {EXPENSE_CATEGORY_ICONS[c]} {c}
+                    {/* 前月データがある場合だけバッジを表示 */}
+                    {badgeText !== null && (
+                      <span style={{
+                        fontSize:9, fontWeight:700, fontFamily:"monospace",
+                        background: pct > 0 ? "rgba(248,113,113,0.13)" : "rgba(74,222,128,0.13)",
+                        color: badgeColor,
+                        borderRadius:4, padding:"1px 5px",
+                        letterSpacing:"0.3px",
+                      }}>
+                        {badgeText}
+                      </span>
+                    )}
+                  </span>
                   <span style={{ fontFamily:"monospace", color:col }}>
                     {formatYen(a)}
                     {b > 0 && <span style={{ color:COLOR_TEXT_HINT }}> / {formatYen(b)}</span>}
