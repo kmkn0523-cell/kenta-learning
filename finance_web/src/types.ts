@@ -104,6 +104,18 @@ export interface RecurringIncome {
   active?: boolean;       // false にすると自動追加を一時停止
 }
 
+// 繰り返し支出1件の形（毎月一定額が出ていく変動費を自動追加するための設定）
+// 例：「月サブスク Netflix 1490円 毎月1日」
+export interface RecurringExpense {
+  id: string;
+  name: string;            // 支出名（例: "Netflix", "ジム会費"）
+  category: string;        // 変動費カテゴリ
+  amount: number;          // 金額（円）
+  payDay: string;          // 引落日（"1日" 〜 "31日" または "未設定"）
+  lastAutoAdded?: string;  // 最後に自動追加した月 "YYYY-MM"（重複防止に使う）
+  active?: boolean;        // false にすると自動追加を一時停止
+}
+
 // トースト通知の形
 export interface ToastData {
   msg: string;

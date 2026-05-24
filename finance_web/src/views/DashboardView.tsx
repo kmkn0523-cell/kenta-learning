@@ -10,6 +10,8 @@ import TransferForm from "../components/TransferForm";
 // グラフコンポーネントは画面下部にあり recharts(500KB) を引っ張ってくるので遅延ロードで分離
 const MonthlyChart = lazy(() => import("../components/MonthlyChart"));
 const CategoryTrendChart = lazy(() => import("../components/CategoryTrendChart"));
+// 累積手残り推移グラフ（純資産の変化を折れ線で表示）
+const NetWorthChart = lazy(() => import("../components/NetWorthChart"));
 import SavingGoalCard from "../components/SavingGoalCard";
 import BudgetAlertBanner from "../components/BudgetAlertBanner";
 import HealthCheckCard from "../components/HealthCheckCard";
@@ -671,6 +673,8 @@ export default function DashboardView({
       <Suspense fallback={<div style={{...STYLE_CARD,textAlign:"center",color:COLOR_TEXT_HINT,fontSize:12,padding:"40px 0"}}>📊 グラフを読み込み中…</div>}>
         <MonthlyChart tx={transactions} inc={incomes} tFx={totalFixedExpense}/>
         <CategoryTrendChart tx={transactions} icons={EXPENSE_CATEGORY_ICONS}/>
+        {/* 累積手残り推移：貯まっているかどうかをひと目で確認できる折れ線グラフ */}
+        <NetWorthChart tx={transactions} inc={incomes} tFx={totalFixedExpense}/>
       </Suspense>
 
       {/* ────────── バックアップ／復元カード ────────── */}

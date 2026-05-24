@@ -7,6 +7,7 @@ import { usePersist } from "./hooks/usePersist";
 import { useMonthlyData } from "./hooks/useMonthlyData";
 import { useAutoPayment } from "./hooks/useAutoPayment";
 import { useAutoIncome } from "./hooks/useAutoIncome";
+import { useAutoExpense } from "./hooks/useAutoExpense";
 import { useDataExport } from "./hooks/useDataExport";
 import { useToast } from "./hooks/useToast";
 import { useBackup } from "./hooks/useBackup";
@@ -15,7 +16,7 @@ import { parseYenAmount, formatYen, MONTH_LABELS, EXPENSE_CATEGORIES, FIXED_EXPE
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate, BRANDS_CF, BRANDS_BL } from "./utils/loanCalc";
 import { COLOR_BACKGROUND, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_BORDER_GLOW, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "./utils/styles";
 import { migrateTransactions, migrateIncomes, migrateFixedExpenses, migrateLoans } from "./utils/dataMigration";
-import { Transfer, CategoryConfig, SavingGoal, RecurringIncome } from "./types";
+import { Transfer, CategoryConfig, SavingGoal, RecurringIncome, RecurringExpense } from "./types";
 import { makeDefaultCategoryConfig } from "./utils/defaultCategories";
 import PasswordGate from "./components/PasswordGate";
 import { Input, Select, StatLabel, ProgressBar, Toast, ConfirmDialog } from "./components/ui";
@@ -65,6 +66,8 @@ function AppInner(){
   const [savingGoal,setSavingGoal,savingGoalReady]=usePersist<SavingGoal | null>("kk_savingGoal",null);
   // 定期収入の設定一覧（給与・副業など毎月自動追加する収入の設定）
   const [recurringIncomes,setRecurringIncomes,recIncReady]=usePersist<RecurringIncome[]>("kk_rec_inc",[]);
+  // 繰り返し支出の設定一覧（サブスク・ジム代など毎月自動追加する変動支出の設定）
+  const [recurringExpenses,setRecurringExpenses,recExpReady]=usePersist<RecurringExpense[]>("kk_rec_exp",[]);
   // 支出フォーム（accountId: 口座に紐づける任意フィールド）
   const [txF,setTxF]=useState<{cat:string;amt:string;date:string;memo:string;accountId?:string}>({cat:"食費",amt:"",date:ts,memo:""});
   const [fxF,setFxF]=useState({name:"",cat:"家賃",amt:"",note:""});
@@ -89,7 +92,7 @@ function AppInner(){
   const reportCheckedRef = useRef(false);
   // 口座フォームの入力値（name: 口座名、balance: 残高、color: カラーラベル）
   const [accF,setAccF]=useState({name:"",balance:"",color:""}),[showAccF,setShowAccF]=useState(false),[editAccId,setEditAccId]=useState<string | null>(null);
-  const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady&&recIncReady;
+  const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady&&recIncReady&&recExpReady;
   // ローン・キャッシング・銀行ローンをまとめた配列（月別集計フックに渡す）
   const allL=useMemo(()=>[...loans,...cashFlow,...balance],[loans,cashFlow,balance]);
   // 月別データ集計フック：選択月のフィルタ済みリストと各合計値を取得
@@ -134,6 +137,11 @@ function AppInner(){
     recurringIncomes, setRecurringIncomes, setIncomes, ready: allOk,
     // 自動追加が起きたらブラウザ通知を送る
     onAutoAdded: (count) => notify(`定期収入を${count}件自動追加しました`, "アプリを開いてご確認ください"),
+  });
+  // ──────── 繰り返し支出の自動追加（useAutoExpense フックに移動済み） ────────
+  useAutoExpense({
+    recurringExpenses, setRecurringExpenses, setTransactions, ready: allOk,
+    onAutoAdded: (count) => notify(`繰り返し支出を${count}件自動追加しました`, "アプリを開いてご確認ください"),
   });
 
   // ──────── 月次レポート：月が変わった最初のアクセス時に前月振り返りを表示 ────────
