@@ -512,13 +512,16 @@ export default function DashboardView({
         )}
       </div>
 
-      {/* ────────── 家計診断カード（4指標で A〜E 評価） ────────── */}
+      {/* ────────── 家計診断カード（5指標で A〜E 評価） ────────── */}
       <HealthCheckCard
         totalIncome={totalIncome}
         totalBurden={totalBurden}
         totalLoanRepayment={totalLoanRepayment}
+        totalFixedExpense={totalFixedExpense}
         net={net}
         totalSavings={totalSavings}
+        prevNet={prevTInc - prevTVar}
+        prevTotalIncome={prevTInc}
       />
 
       {/* ────────── 貯金目標カード（未設定なら CTA、設定済みなら進捗を表示） ────────── */}

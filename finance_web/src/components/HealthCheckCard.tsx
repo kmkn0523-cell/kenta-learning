@@ -21,9 +21,14 @@ interface HealthCheckCardProps {
   totalIncome: number;
   totalBurden: number;          // 支出合計（変動＋固定＋ローン返済）
   totalLoanRepayment: number;   // ローン返済額
+  totalFixedExpense: number;    // 固定費合計（固定費比率の計算に使う）
   net: number;                  // 手残り
   // 口座残高合計（緊急資金チェックに使う）
   totalSavings: number;
+  // 前月の手残り（前月比トレンド表示に使う。省略可）
+  prevNet?: number;
+  // 前月の収入（前月比貯蓄率の計算に使う。省略可）
+  prevTotalIncome?: number;
 }
 
 // 個別指標の判定結果
@@ -40,11 +45,14 @@ export default function HealthCheckCard({
   totalIncome,
   totalBurden,
   totalLoanRepayment,
+  totalFixedExpense,
   net,
   totalSavings,
+  prevNet,
+  prevTotalIncome,
 }: HealthCheckCardProps) {
 
-  // 4指標を個別に判定
+  // 5指標を個別に判定
   const metrics: Metric[] = useMemo(() => {
     const list: Metric[] = [];
 
@@ -65,7 +73,24 @@ export default function HealthCheckCard({
             : "支出が収入を上回っています",
     });
 
-    // ② 返済比率：ローン返済 ÷ 収入。25%以下が安全、35%超は危険水域（金融機関の融資審査基準）
+    // ② 固定費比率：固定費 ÷ 収入。30%以下が安全、50%超は要見直し
+    const fixedRate = totalIncome > 0 ? (totalFixedExpense / totalIncome) * 100 : 0;
+    if (totalFixedExpense > 0 || totalIncome > 0) {
+      list.push({
+        label: "固定費比率",
+        icon: "📌",
+        value: totalIncome > 0 ? `${Math.round(fixedRate)}%` : "—",
+        score: Math.max(0, Math.min(100, 100 - Math.max(0, fixedRate - 20) * 2.5)), // 20%以下で100点、60%で0点
+        level: fixedRate <= 30 ? "good" : fixedRate <= 50 ? "ok" : "bad",
+        hint: fixedRate <= 30
+          ? "固定費が収入に対して適切な水準です"
+          : fixedRate <= 50
+            ? "固定費がやや高め。解約・プラン見直しを検討"
+            : "固定費が収入の半分超。早急に削減検討を",
+      });
+    }
+
+    // ③ 返済比率：ローン返済 ÷ 収入。25%以下が安全、35%超は危険水域（金融機関の融資審査基準）
     const repayRate = totalIncome > 0 ? (totalLoanRepayment / totalIncome) * 100 : 0;
     if (totalLoanRepayment > 0) {
       list.push({
@@ -82,7 +107,7 @@ export default function HealthCheckCard({
       });
     }
 
-    // ③ 緊急資金：口座残高が月支出の何ヶ月分か。3〜6ヶ月分が推奨（FP業界の定石）
+    // ④ 緊急資金：口座残高が月支出の何ヶ月分か。3〜6ヶ月分が推奨（FP業界の定石）
     const monthsCovered = totalBurden > 0 ? totalSavings / totalBurden : 0;
     list.push({
       label: "緊急資金",
@@ -97,7 +122,7 @@ export default function HealthCheckCard({
           : "月支出3〜6ヶ月分の貯金を目標に",
     });
 
-    // ④ 収支バランス：単月の手残りがプラスかマイナスか
+    // ⑤ 収支バランス：単月の手残りがプラスかマイナスか
     list.push({
       label: "収支バランス",
       icon: "⚖️",
@@ -112,7 +137,17 @@ export default function HealthCheckCard({
     });
 
     return list;
-  }, [totalIncome, totalBurden, totalLoanRepayment, net, totalSavings]);
+  }, [totalIncome, totalBurden, totalLoanRepayment, totalFixedExpense, net, totalSavings]);
+
+  // 前月比の貯蓄率を計算（prevNet・prevTotalIncome が両方あれば表示）
+  const prevSavingRate = prevNet !== undefined && prevTotalIncome !== undefined && prevTotalIncome > 0
+    ? (prevNet / prevTotalIncome) * 100
+    : null;
+  const curSavingRate = totalIncome > 0 ? (net / totalIncome) * 100 : null;
+  // 前月比の差分（プラスなら改善、マイナスなら悪化）
+  const savingRateDelta = prevSavingRate !== null && curSavingRate !== null
+    ? curSavingRate - prevSavingRate
+    : null;
 
   // 総合スコア＝各指標の平均
   const totalScore = metrics.reduce((s, m) => s + m.score, 0) / metrics.length;
@@ -141,6 +176,13 @@ export default function HealthCheckCard({
   // データが何も無いとき（収入0かつ口座0）は非表示
   if (totalIncome === 0 && totalSavings === 0 && totalBurden === 0) return null;
 
+  // 最も低スコアの指標（改善アクション表示に使う）
+  const worstMetric = metrics.reduce((worst, m) => m.score < worst.score ? m : worst, metrics[0]);
+  // bad が2件以上あれば複数アクションを出す（最大2件）
+  const badMetrics = metrics.filter(m => m.level === "bad").slice(0, 2);
+  // bad がなければ ok の中で最低スコアを1件
+  const actionMetrics = badMetrics.length > 0 ? badMetrics : [worstMetric];
+
   return (
     <div style={{ ...STYLE_CARD, background: `linear-gradient(135deg,rgba(15,23,42,0.95) 0%,${gradeColor}10 100%)`, border: `1px solid ${gradeColor}33` }}>
       {/* ヘッダー：診断ラベル＋総合評価 */}
@@ -158,10 +200,19 @@ export default function HealthCheckCard({
           <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, fontFamily: "monospace", marginTop: 2 }}>
             {Math.round(totalScore)}/100
           </div>
+          {/* 前月比の貯蓄率トレンド（前月データがある場合のみ表示） */}
+          {savingRateDelta !== null && (
+            <div style={{
+              fontSize: 9, fontFamily: "monospace", marginTop: 4,
+              color: savingRateDelta >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE,
+            }}>
+              {savingRateDelta >= 0 ? "▲" : "▼"}{Math.abs(Math.round(savingRateDelta))}% 前月比
+            </div>
+          )}
         </div>
       </div>
 
-      {/* 4指標の一覧 */}
+      {/* 5指標の一覧 */}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {metrics.map(m => {
           const c = levelColor(m.level);
@@ -180,6 +231,42 @@ export default function HealthCheckCard({
                 <div style={{ height: "100%", width: `${m.score}%`, background: c, borderRadius: 2, transition: "width 0.4s ease" }} />
               </div>
               <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, lineHeight: 1.4 }}>{m.hint}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ────────── 改善アクション ──────────
+          最もスコアが低い指標（悪い指標が優先）に対する具体的なアクションを表示する */}
+      <div style={{
+        marginTop: 12,
+        background: "rgba(255,255,255,0.025)",
+        borderRadius: 10,
+        padding: "10px 12px",
+        border: "1px solid rgba(255,255,255,0.06)",
+      }}>
+        <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, letterSpacing: "1px", marginBottom: 8 }}>
+          🎯 改善アクション
+        </div>
+        {actionMetrics.map(m => {
+          // 各指標ごとに具体的なアクションを定義する
+          const actionMap: Record<string, string> = {
+            "貯蓄率":   "毎月の支出を1〜2品目削減し、差額を自動振替で貯蓄口座へ移動しましょう",
+            "固定費比率": "サブスク・保険・携帯プランを見直し、使っていないものを解約しましょう",
+            "返済比率":  "繰り上げ返済か借換えで月返済額を下げる検討をしましょう",
+            "緊急資金":  "まず1ヶ月分（支出額）を目標に、別口座で積立を始めましょう",
+            "収支バランス": "固定費リストを開き、すぐに見直せる項目を1つ選んで削減しましょう",
+          };
+          const action = actionMap[m.label] ?? m.hint;
+          const c = levelColor(m.level);
+          return (
+            <div key={m.label} style={{ marginBottom: actionMetrics.length > 1 ? 8 : 0 }}>
+              <div style={{ fontSize: 11, color: c, fontWeight: 600, marginBottom: 3 }}>
+                {m.icon} {m.label}
+              </div>
+              <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, lineHeight: 1.6 }}>
+                {action}
+              </div>
             </div>
           );
         })}
