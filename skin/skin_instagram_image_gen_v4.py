@@ -45,8 +45,25 @@ def draw_center_lines(draw, text, font, fill, y, gap=LINE_GAP):
 
 
 def draw_left_aligned(draw, text, font, fill, x, y, gap=LINE_GAP, max_width=None):
-    """テキストを左寄せで描く（長文用、行送りあり）"""
-    lines = text.split("\n")
+    """テキストを左寄せで描く（長文用、行送りあり）。max_width 指定時は文字単位で折り返す"""
+    raw_lines = text.split("\n")
+    if max_width is not None:
+        wrapped = []
+        for line in raw_lines:
+            # 文字単位で詰めていって幅を超えたら改行する
+            current = ""
+            for ch in line:
+                trial = current + ch
+                if text_width(draw, trial, font) <= max_width:
+                    current = trial
+                else:
+                    if current:
+                        wrapped.append(current)
+                    current = ch
+            wrapped.append(current)
+        lines = wrapped
+    else:
+        lines = raw_lines
     line_h = text_height(draw, "あ", font) + gap
     for i, line in enumerate(lines):
         draw.text((x, y + i * line_h), line, font=font, fill=fill)
@@ -114,7 +131,7 @@ def draw_hook(slide, colors, output_path):
     # 本文
     font_body = ImageFont.truetype(FONT_JP, 40)
     body = slide.get("body", "")
-    draw_left_aligned(draw, body, font_body, (28, 34, 28), x=PAD_X, y=200, gap=16)
+    draw_left_aligned(draw, body, font_body, (28, 34, 28), x=PAD_X, y=200, gap=16, max_width=W - PAD_X * 2)
 
     draw_footer_bar(draw, dark)
     img.save(output_path, "PNG")
@@ -140,12 +157,13 @@ def draw_point(slide, colors, output_path, point_number):
     # 見出し
     font_heading = ImageFont.truetype(FONT_JP, 56)
     heading      = slide.get("heading", "")
-    draw_left_aligned(draw, heading, font_heading, dark, x=badge_x + badge_size + 30, y=badge_y + 15, gap=10)
+    heading_x    = badge_x + badge_size + 30
+    draw_left_aligned(draw, heading, font_heading, dark, x=heading_x, y=badge_y + 15, gap=10, max_width=W - heading_x - PAD_X)
 
     # 本文（事実→具体例→数字→意味の4文）
     font_body = ImageFont.truetype(FONT_JP, 32)
     body      = slide.get("body", "")
-    draw_left_aligned(draw, body, font_body, (28, 34, 28), x=PAD_X, y=badge_y + badge_size + 80, gap=14)
+    draw_left_aligned(draw, body, font_body, (28, 34, 28), x=PAD_X, y=badge_y + badge_size + 80, gap=14, max_width=W - PAD_X * 2)
 
     draw_footer_bar(draw, dark)
     img.save(output_path, "PNG")
@@ -169,21 +187,21 @@ def draw_check(slide, colors, output_path, check_number):
 
     font_item = ImageFont.truetype(FONT_JP, 50)
     item_text = "□ " + slide.get("item", "")
-    draw_left_aligned(draw, item_text, font_item, dark, x=PAD_X, y=badge_y + badge_size + 40, gap=12)
+    y_cursor = draw_left_aligned(draw, item_text, font_item, dark, x=PAD_X, y=badge_y + badge_size + 40, gap=12, max_width=W - PAD_X * 2)
+    y_cursor += 90  # item 直下の余白（元レイアウトの余白に合わせる）
 
     font_label = ImageFont.truetype(FONT_JP, 24)
     font_body  = ImageFont.truetype(FONT_JP, 30)
-    y_cursor = badge_y + badge_size + 200
 
     for label, key, color in [
         ("▼ なぜダメか (事実)", "fact",   (90, 90, 90)),
         ("▼ どうなるか (影響)", "impact", (90, 90, 90)),
-        ("▼ 今夜の打ち手",      "action", accent),
+        ("▼ 今日からの打ち手",  "action", accent),
     ]:
         draw.text((PAD_X, y_cursor), label, font=font_label, fill=color)
         y_cursor += 36
         body = slide.get(key, "")
-        y_cursor = draw_left_aligned(draw, body, font_body, (28, 34, 28), x=PAD_X, y=y_cursor, gap=10)
+        y_cursor = draw_left_aligned(draw, body, font_body, (28, 34, 28), x=PAD_X, y=y_cursor, gap=10, max_width=W - PAD_X * 2)
         y_cursor += 28
 
     draw_footer_bar(draw, dark)
