@@ -60,11 +60,12 @@ export default function BudgetSection({ budget, setBudget, mTx }: BudgetSectionP
   }
 
   // 使用率に応じた色を返す（green/yellow/red）
-  function progressColor(ratio) {
+  // Dashboard の paceWarning と同じ色使いに統一する
+  function progressColor(ratio: number | null): string {
     if (ratio === null) return COLOR_TEXT_SECONDARY;
-    if (ratio > 1) return COLOR_NEGATIVE;
-    if (ratio > 0.8) return COLOR_ACCENT;
-    return COLOR_POSITIVE;
+    if (ratio > 1) return COLOR_NEGATIVE;      // 100%超：赤
+    if (ratio > 0.8) return "#fbbf24";         // 80〜100%：黄色（注意ライン）
+    return COLOR_POSITIVE;                     // 80%以下：緑（安全）
   }
 
   return (
@@ -108,6 +109,48 @@ export default function BudgetSection({ budget, setBudget, mTx }: BudgetSectionP
             }}/>
           </div>
 
+          {/* ──────── 予算アラートバナー ────────
+              80%以上使っているカテゴリがある時だけ上部に一覧表示する
+              超過（赤）と注意（黄色）を分けて見せる */}
+          {activeCats.some(c => budget[c] && (actual[c] || 0) / budget[c] > 0.8) && (
+            <div style={{
+              background: "rgba(251,191,36,0.06)",
+              border: "1px solid rgba(251,191,36,0.22)",
+              borderRadius: 10,
+              padding: "10px 14px",
+              marginBottom: 16,
+            }}>
+              {/* バナーのタイトル行 */}
+              <div style={{ fontSize: 11, color: "#fbbf24", fontWeight: 600, marginBottom: 8, letterSpacing: "0.5px" }}>
+                ⚠ 予算アラート
+              </div>
+              {/* アラート対象カテゴリを1行ずつ表示 */}
+              {activeCats
+                .filter(c => budget[c] && (actual[c] || 0) / budget[c] > 0.8)
+                .map(c => {
+                  const b = Number(budget[c]);
+                  const a = Number(actual[c] || 0);
+                  const isOver = a > b;
+                  const alertColor = isOver ? COLOR_NEGATIVE : "#fbbf24";
+                  return (
+                    <div key={c} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                      {/* カテゴリ名（超過は赤・注意は黄色） */}
+                      <span style={{ fontSize: 12, color: alertColor }}>
+                        {EXPENSE_CATEGORY_ICONS[c]} {c}
+                      </span>
+                      {/* 残り金額 or 超過金額 */}
+                      <span style={{ fontSize: 12, fontFamily: "monospace", fontWeight: 600, color: alertColor }}>
+                        {isOver
+                          ? `${formatYen(a - b)} 超過`
+                          : `残り ${formatYen(b - a)}`}
+                      </span>
+                    </div>
+                  );
+                })
+              }
+            </div>
+          )}
+
           {/* カテゴリ別の使用状況 */}
           {activeCats.map(c => {
             const b = Number(budget[c] || 0);
@@ -131,15 +174,24 @@ export default function BudgetSection({ budget, setBudget, mTx }: BudgetSectionP
                 </div>
                 {/* 予算が設定されているカテゴリだけプログレスバーを出す */}
                 {b > 0 && (
-                  <div style={{ height:4, background:"rgba(255,255,255,0.08)", borderRadius:2, overflow:"hidden" }}>
-                    <div style={{
-                      height:"100%",
-                      width: Math.min(100, ratio * 100) + "%",
-                      background: col,
-                      borderRadius:2,
-                      transition:"width 0.4s",
-                    }}/>
-                  </div>
+                  <>
+                    {/* プログレスバー */}
+                    <div style={{ height:4, background:"rgba(255,255,255,0.08)", borderRadius:2, overflow:"hidden" }}>
+                      <div style={{
+                        height:"100%",
+                        width: Math.min(100, ratio * 100) + "%",
+                        background: col,
+                        borderRadius:2,
+                        transition:"width 0.4s",
+                      }}/>
+                    </div>
+                    {/* バーの下に「残り ¥X,XXX」or「¥X,XXX 超過」を小さく表示 */}
+                    <div style={{ fontSize: 10, color: col, textAlign: "right", marginTop: 3, fontFamily: "monospace" }}>
+                      {a > b
+                        ? `${formatYen(a - b)} 超過`
+                        : `残り ${formatYen(b - a)}`}
+                    </div>
+                  </>
                 )}
               </div>
             );
