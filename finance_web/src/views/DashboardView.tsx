@@ -389,12 +389,52 @@ export default function DashboardView({
         ))}
         {/* 口座が1件以上あれば合計残高を表示 */}
         {accounts.length>0&&(
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:10}}>
-            <span style={{fontSize:11,color:COLOR_TEXT_HINT}}>合計残高</span>
-            <span style={{fontFamily:"monospace",fontSize:16,fontWeight:700,color:COLOR_POSITIVE}}>
-              {formatYen(accounts.reduce((s,a)=>s+calculateAccountBalance(a,transactions,incomes,transfers),0))}
-            </span>
-          </div>
+          <>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:10}}>
+              <span style={{fontSize:11,color:COLOR_TEXT_HINT}}>合計残高</span>
+              <span style={{fontFamily:"monospace",fontSize:16,fontWeight:700,color:COLOR_POSITIVE}}>
+                {formatYen(accounts.reduce((s,a)=>s+calculateAccountBalance(a,transactions,incomes,transfers),0))}
+              </span>
+            </div>
+            {/* ────────── 今月末の予測残高 ──────────
+                合計残高から「残り固定費」と「ローン月返済額」を引いた試算値を表示する
+                残高がマイナスになりそうなときは赤で警告する */}
+            <div style={{
+              marginTop:10,
+              paddingTop:10,
+              borderTop:`1px dashed rgba(255,255,255,0.08)`,
+            }}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                <div>
+                  <div style={{fontSize:11,color:COLOR_TEXT_HINT}}>今月末の予測残高</div>
+                  {/* 内訳：残り固定費とローン返済を小さく補足表示 */}
+                  <div style={{fontSize:9,color:COLOR_TEXT_HINT,marginTop:2}}>
+                    残り固定費 {formatYen(remainingFixed)} + 返済 {formatYen(totalLoanRepayment)} を差引
+                  </div>
+                </div>
+                <div style={{textAlign:"right"}}>
+                  <span style={{
+                    fontFamily:"monospace",
+                    fontSize:15,
+                    fontWeight:700,
+                    // 0以上は青緑、マイナスは赤
+                    color: predictedEndBalance >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE,
+                  }}>
+                    {formatYen(predictedEndBalance)}
+                  </span>
+                  {/* マイナスの場合は小さな警告ラベルを表示 */}
+                  {predictedEndBalance < 0 && (
+                    <div style={{
+                      fontSize:9, color:COLOR_NEGATIVE,
+                      background:"rgba(248,113,113,0.1)",
+                      borderRadius:4, padding:"1px 6px",
+                      marginTop:3, display:"inline-block",
+                    }}>残高不足の恐れ</div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
         )}
         {/* 口座の追加・編集フォーム */}
         {showAccF&&(
