@@ -159,7 +159,7 @@ function AppInner(){
     <TutorialModal open={showTutorial} onClose={handleCloseTutorial}/>
     <div style={{position:"sticky",top:0,zIndex:50,background:"rgba(7,11,20,0.95)",backdropFilter:"blur(24px)",borderBottom:`1px solid ${COLOR_BORDER_GLOW}`,padding:"0 16px"}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0 12px",maxWidth:520,margin:"0 auto"}}>
-        <div><div style={{fontSize:9,letterSpacing:"3px",color:COLOR_ACCENT,textTransform:"uppercase",marginBottom:3,fontWeight:600}}>Family Finance</div><div style={{fontSize:18,fontWeight:700,letterSpacing:"-0.5px"}}>家計管理</div></div>
+        <div><div style={{fontSize:9,letterSpacing:"3px",color:COLOR_ACCENT,textTransform:"uppercase",marginBottom:3,fontWeight:600}}>Before You Broke</div><div style={{fontSize:18,fontWeight:700,letterSpacing:"-0.5px"}}>BYB</div></div>
         <div style={{textAlign:"right"}}><div style={{fontSize:9,color:COLOR_TEXT_HINT,marginBottom:3,letterSpacing:"1px",textTransform:"uppercase"}}>今月の手残り</div><div style={{fontFamily:"monospace",fontSize:18,fontWeight:700,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE,letterSpacing:"-0.5px"}}>{net>=0?"+":""}{formatYen(net)}</div></div>
       </div>
     </div>

@@ -13,8 +13,8 @@ export default defineConfig({
       devOptions: { enabled: false },
       manifest: {
         // アプリの名前（ホーム画面に追加した時に表示される）
-        name: "家計管理アプリ",
-        short_name: "家計",
+        name: "BYB — Before You Broke",
+        short_name: "BYB",
         description: "収支・ローンを管理するプライベート家計アプリ",
         // テーマカラー（ブラウザのアドレスバーの色）
         theme_color: "#070b14",
