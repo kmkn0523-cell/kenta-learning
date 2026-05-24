@@ -26,6 +26,7 @@ import { filterAndSortTransactions, TransactionFilter } from "../utils/filterTra
 import { Input, Select } from "../components/ui";
 import TxRow from "../components/TxRow";
 import BudgetSection from "../components/BudgetSection";
+import WeeklyBreakdown from "../components/WeeklyBreakdown";
 import MonthNav from "../components/MonthNav";
 
 // クイックテンプレートの形（id・カテゴリ・金額・メモ）
@@ -200,6 +201,8 @@ export default function ExpenseView({
       }
       {/* ────────── 予算管理：カテゴリ別の月予算を設定・追跡 ────────── */}
       <BudgetSection budget={budget} setBudget={setBudget} mTx={monthlyTransactions} prevMTx={prevMonthlyTransactions}/>
+      {/* ────────── 週別支出内訳 ────────── */}
+      <WeeklyBreakdown mTx={monthlyTransactions} selectedYear={selectedYear} selectedMonth={selectedMonth}/>
       {/* ────────── 月ナビと合計金額 ────────── */}
       <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
         <div style={{flex:1}}>
