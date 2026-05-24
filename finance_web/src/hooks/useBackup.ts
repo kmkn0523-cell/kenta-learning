@@ -4,19 +4,23 @@
 
 import { ENC_SALT_KEY } from "../utils/crypto";
 
-// バックアップ対象の localStorage キー（家計データ9種 + 暗号化salt）
+// バックアップ対象の localStorage キー（家計データ13種 + 暗号化salt）
 // ※新しい永続化キーを増やす場合はここに追加すること
 const BACKUP_KEYS = [
-  "kk_tx",
-  "kk_fx",
-  "kk_lo",
-  "kk_cf",
-  "kk_bl",
-  "kk_inc",
-  "kk_accounts",
-  "kk_budget",
-  "kk_tpls",
-  ENC_SALT_KEY,
+  "kk_tx",          // 変動支出
+  "kk_fx",          // 固定費
+  "kk_lo",          // ローン
+  "kk_cf",          // キャッシング
+  "kk_bl",          // 銀行ローン
+  "kk_inc",         // 収入
+  "kk_accounts",    // 口座
+  "kk_budget",      // 予算
+  "kk_tpls",        // テンプレート
+  "kk_transfers",   // 口座間振替
+  "kk_categories",  // カテゴリ設定（ユーザーカスタマイズ）
+  "kk_savingGoal",  // 貯金目標
+  "kk_rec_inc",     // 定期収入設定
+  ENC_SALT_KEY,     // 暗号化用salt
 ];
 
 interface UseBackupArgs {

@@ -407,6 +407,8 @@ function AppInner(){
         setFixedExpenses={setFixedExpenses}
         onReset={()=>{}}
         onOpenTutorial={() => setShowTutorial(true)}
+        exportBackup={exportBackup}
+        importBackup={importBackup}
       />}
       </Suspense>
     </div>

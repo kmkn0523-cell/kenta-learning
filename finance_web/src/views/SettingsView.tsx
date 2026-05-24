@@ -12,6 +12,8 @@ import {
 } from "../utils/styles";
 import { makeDefaultCategoryConfig } from "../utils/defaultCategories";
 
+import { useRef } from "react";
+
 // カテゴリの種類（変動費・固定費・収入）
 type CategoryKind = "expense" | "fixedExpense" | "income";
 
@@ -27,9 +29,14 @@ interface SettingsViewProps {
   setFixedExpenses: (updater: FixedExpense[] | ((p: FixedExpense[]) => FixedExpense[])) => void;
   onReset: () => void;
   onOpenTutorial: () => void;
+  // バックアップ・リストア関数（App.tsx の useBackup フックから渡す）
+  exportBackup: () => void;
+  importBackup: (file: File) => void;
 }
 
 export default function SettingsView(props: SettingsViewProps) {
+  // バックアップ用の隠しファイル選択inputへの参照
+  const backupFileRef = useRef<HTMLInputElement | null>(null);
   // 現在選択中のカテゴリ種類
   const [kind, setKind] = useState<CategoryKind>("expense");
   // 新規追加フォームの値
@@ -161,6 +168,57 @@ export default function SettingsView(props: SettingsViewProps) {
 
   return (
     <div>
+      {/* ────────── バックアップ・リストアカード ────────── */}
+      <div style={{ ...STYLE_CARD, marginBottom: 16 }}>
+        {/* セクションタイトル */}
+        <div style={{ fontSize: 15, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 4 }}>
+          🗄️ データのバックアップ・復元
+        </div>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginBottom: 14, lineHeight: 1.6 }}>
+          全データをJSONファイルに書き出します。機種変更・ブラウザ変更の前に必ず取得してください。
+          復元時は既存データが上書きされます。
+        </div>
+
+        {/* 2つのボタンを横並びに配置 */}
+        <div style={{ display: "flex", gap: 10 }}>
+          {/* バックアップ：全データをJSONとしてダウンロード */}
+          <button
+            onClick={props.exportBackup}
+            style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, fontSize: 13 }}
+          >
+            📥 バックアップ
+          </button>
+
+          {/* リストア：JSONファイルを選んで全データを復元 */}
+          <button
+            onClick={() => backupFileRef.current?.click()}
+            style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 13 }}
+          >
+            📤 復元する
+          </button>
+          {/* ファイル選択ダイアログ用の隠しinput（直接表示はしない） */}
+          <input
+            ref={backupFileRef}
+            type="file"
+            accept=".json"
+            style={{ display: "none" }}
+            onChange={e => {
+              const file = e.target.files?.[0];
+              if (file) {
+                props.importBackup(file);
+                // 同じファイルを再選択できるようにinputの値をリセット
+                e.target.value = "";
+              }
+            }}
+          />
+        </div>
+
+        {/* 注意書き */}
+        <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, marginTop: 10, lineHeight: 1.5, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          ⚠️ バックアップファイルは暗号化済みです。同じパスワードでのみ復元できます。
+        </div>
+      </div>
+
       <div style={{ ...STYLE_CARD }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 12 }}>
           カテゴリ管理
@@ -320,7 +378,7 @@ export default function SettingsView(props: SettingsViewProps) {
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>バージョン</span>
-            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.2.2</span>
+            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.3.0</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>制作</span>
