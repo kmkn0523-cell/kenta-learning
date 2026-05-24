@@ -4,6 +4,7 @@
 
 import React, { useMemo, useState, useRef } from "react";
 import { Income, RecurringIncome, CategoryConfig, Account } from "../types";
+import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
 import { newId } from "../utils/crypto";
 import {
   MONTH_LABELS,
@@ -118,6 +119,8 @@ export default function IncomeView({
   const [showFilter, setShowFilter] = useState(false);
   // 金額入力欄への参照：連続入力時に追加成功後の再フォーカスに使う
   const amountInputRef = useRef<HTMLInputElement>(null);
+  // CSVインポートモーダルの表示フラグ
+  const [showCsvModal, setShowCsvModal] = useState(false);
 
   // フィルター・並び替えを適用した収入一覧
   const filteredIncomes = useMemo(
@@ -366,23 +369,53 @@ export default function IncomeView({
         onChange={onMonthChange}
       />
 
-      {/* ── CSV出力ボタン（データがある月だけ表示） ── */}
-      {monthlyIncomes.length > 0 && (
+      {/* ── CSV出力・インポートボタン ── */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+        {/* CSV出力：収入が1件以上あるときだけ表示 */}
+        {monthlyIncomes.length > 0 && (
+          <button
+            onClick={() =>
+              exportMonthlyIncomeCsv(
+                `${selectedYear}年${MONTH_LABELS[selectedMonth]}`
+              )
+            }
+            style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12 }}
+          >
+            📤 CSV出力
+          </button>
+        )}
+        {/* CSVインポート：常に表示 */}
         <button
-          onClick={() =>
-            exportMonthlyIncomeCsv(
-              `${selectedYear}年${MONTH_LABELS[selectedMonth]}`
-            )
-          }
-          style={{
-            ...STYLE_BUTTON_OUTLINE,
-            width: "100%",
-            marginBottom: 10,
-            fontSize: 12,
-          }}
+          onClick={() => setShowCsvModal(true)}
+          style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12 }}
         >
-          📥 CSV出力
+          📥 CSVインポート
         </button>
+      </div>
+
+      {/* CSVインポートモーダル */}
+      {showCsvModal && (
+        <CsvImportModal
+          mode="income"
+          categoryConfig={categoryConfig}
+          onImport={(rows: ImportedRow[]) => {
+            // インポートされた行を収入として一括追加する
+            setIncomes((prev: Income[]) => [
+              ...prev,
+              ...rows.map(r => ({
+                id: r.id,
+                date: r.date,
+                category: r.category,
+                amount: r.amount,
+                memo: r.memo,
+                accountId: r.accountId,
+              } as Income)),
+            ]);
+            showT(`${rows.length}件の収入をインポートしました`);
+            setShowCsvModal(false);
+          }}
+          onClose={() => setShowCsvModal(false)}
+        />
       )}
 
       {/* ── 検索バー（収入がある月だけ表示） ── */}

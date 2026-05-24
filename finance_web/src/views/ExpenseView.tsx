@@ -5,6 +5,7 @@
 import React, { useMemo, useState, useRef } from "react";
 import { Tx, Budget, CategoryConfig, Account } from "../types";
 import { newId } from "../utils/crypto";
+import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
 import {
   parseYenAmount,
   formatYen,
@@ -120,6 +121,8 @@ export default function ExpenseView({
   const [showFilter, setShowFilter] = useState(false);
   // 金額入力欄への参照：連続入力時に追加成功後の再フォーカスに使う
   const amountInputRef = useRef<HTMLInputElement>(null);
+  // CSVインポートモーダルの表示フラグ
+  const [showCsvModal, setShowCsvModal] = useState(false);
 
   // フィルター・並び替えを適用した支出一覧（monthlyTransactions が変わったらリセット）
   const filteredTransactions = useMemo(
@@ -213,8 +216,50 @@ export default function ExpenseView({
         </div>
         <span style={{fontFamily:"monospace",fontSize:14,fontWeight:700,marginLeft:4}}>{formatYen(totalVariableExpense)}</span>
       </div>
-      {/* ────────── CSV出力ボタン（支出がある月だけ表示） ────────── */}
-      {monthlyTransactions.length>0&&<button onClick={() => exportMonthlyCsv(`${selectedYear}年${MONTH_LABELS[selectedMonth]}`)} style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginBottom:10,fontSize:12}}>📥 CSV出力</button>}
+      {/* ────────── CSV出力・インポートボタン ────────── */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+        {/* CSV出力：支出が1件以上あるときだけ表示 */}
+        {monthlyTransactions.length > 0 && (
+          <button
+            onClick={() => exportMonthlyCsv(`${selectedYear}年${MONTH_LABELS[selectedMonth]}`)}
+            style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12 }}
+          >
+            📤 CSV出力
+          </button>
+        )}
+        {/* CSVインポート：常に表示（銀行CSVを一括取り込みする） */}
+        <button
+          onClick={() => setShowCsvModal(true)}
+          style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12 }}
+        >
+          📥 CSVインポート
+        </button>
+      </div>
+
+      {/* CSVインポートモーダル（showCsvModal が true のときだけ表示） */}
+      {showCsvModal && (
+        <CsvImportModal
+          mode="expense"
+          categoryConfig={categoryConfig}
+          onImport={(rows: ImportedRow[]) => {
+            // インポートされた行を変動支出として一括追加する
+            setTransactions((prev: Tx[]) => [
+              ...prev,
+              ...rows.map(r => ({
+                id: r.id,
+                date: r.date,
+                category: r.category,
+                amount: r.amount,
+                memo: r.memo,
+                accountId: r.accountId,
+              } as Tx)),
+            ]);
+            showT(`${rows.length}件の支出をインポートしました`);
+            setShowCsvModal(false);
+          }}
+          onClose={() => setShowCsvModal(false)}
+        />
+      )}
 
       {/* ────────── 検索バー ────────── */}
       {monthlyTransactions.length > 0 && (
