@@ -1,5 +1,5 @@
 {
-  "daily_index": 134,
+  "daily_index": 135,
   "launch_index": 0,
   "history": [
     {
@@ -3583,6 +3583,13 @@
       "theme_id": 26,
       "variant": "A",
       "post_id": "18138447553551013"
+    },
+    {
+      "date": "2026/05/24 21:00",
+      "theme": "腸活の始め方",
+      "theme_id": 27,
+      "variant": "A",
+      "post_id": "18357619087226067"
     }
   ],
   "ab_next": "A",
@@ -3661,7 +3668,8 @@
     "23": "B",
     "24": "B",
     "25": "B",
-    "26": "B"
+    "26": "B",
+    "27": "B"
   },
   "ab_results": {
     "61": {
@@ -4103,6 +4111,12 @@
       "b_posts": 0
     },
     "26": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "27": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
