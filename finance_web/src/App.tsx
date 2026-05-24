@@ -305,6 +305,7 @@ function AppInner(){
         prevTInc={prevTInc}
         prevTVar={prevTVar}
         allL={allL}
+        fixedExpenses={fixedExpenses}
         transactions={transactions}
         incomes={incomes}
         transfers={transfers}

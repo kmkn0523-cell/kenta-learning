@@ -3,7 +3,7 @@
 // 表示に必要なデータはすべて props（親から渡す値）で受け取る
 
 import React, { useState, useMemo, lazy, Suspense } from "react";
-import { Tx, Income, Loan, Account, Transfer, SavingGoal } from "../types";
+import { Tx, Income, Loan, Account, Transfer, SavingGoal, FixedExpense } from "../types";
 import MonthNav from "../components/MonthNav";
 import { Input, StatLabel, ProgressBar } from "../components/ui";
 import TransferForm from "../components/TransferForm";
@@ -13,6 +13,7 @@ const CategoryTrendChart = lazy(() => import("../components/CategoryTrendChart")
 import SavingGoalCard from "../components/SavingGoalCard";
 import BudgetAlertBanner from "../components/BudgetAlertBanner";
 import HealthCheckCard from "../components/HealthCheckCard";
+import YearlySummary from "../components/YearlySummary";
 import { parseYenAmount, formatYen, EXPENSE_CATEGORY_ICONS } from "../utils/format";
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate } from "../utils/loanCalc";
 import { calculateAccountBalance } from "../utils/accountBalance";
@@ -78,6 +79,8 @@ interface DashboardViewProps {
   prevTVar: number;
   // 全ローン一覧（消費者金融・銀行・住宅ローンを合わせた配列）
   allL: Loan[];
+  // 固定費一覧（年間サマリーの月支出計算に使う）
+  fixedExpenses: FixedExpense[];
   // 全変動支出一覧
   transactions: Tx[];
   // 全収入一覧
@@ -132,6 +135,7 @@ export default function DashboardView({
   prevTInc,
   prevTVar,
   allL,
+  fixedExpenses,
   transactions,
   incomes,
   transfers,
@@ -149,6 +153,10 @@ export default function DashboardView({
 }: DashboardViewProps) {
   // 振替モーダルの表示・非表示
   const [showTransfer, setShowTransfer] = useState(false);
+  // 「月次」と「年間」の表示切り替え（"monthly" or "yearly"）
+  const [viewMode, setViewMode] = useState<"monthly" | "yearly">("monthly");
+  // 年間サマリーで選択中の年（月次の selectedYear と独立して管理）
+  const [yearlyYear, setYearlyYear] = useState(new Date().getFullYear());
 
   // ────────── 今月の予算消化ペース予測 ──────────
   // 「現在のペースで使い続けると月末にいくらになるか」を可視化する
@@ -197,6 +205,51 @@ export default function DashboardView({
 
   return (
     <div>
+      {/* ────────── 月次 / 年間 切り替えトグル ────────── */}
+      <div style={{ display:"flex", gap:0, marginBottom:12, borderRadius:8, overflow:"hidden", border:`1px solid rgba(255,255,255,0.1)` }}>
+        {(["monthly","yearly"] as const).map(mode => (
+          <button
+            key={mode}
+            onClick={() => {
+              setViewMode(mode);
+              // 年間モードに切り替えるとき、現在の選択年を引き継ぐ
+              if (mode === "yearly") setYearlyYear(selectedYear);
+            }}
+            style={{
+              flex:1, padding:"9px 0", border:"none", cursor:"pointer",
+              background: viewMode === mode ? "rgba(34,211,238,0.15)" : "rgba(255,255,255,0.03)",
+              color: viewMode === mode ? "#22d3ee" : "#64748b",
+              fontWeight: viewMode === mode ? 700 : 400,
+              fontSize:13, fontFamily:"inherit",
+              transition:"all 0.15s",
+            }}
+          >
+            {mode === "monthly" ? "📅 月次" : "📆 年間"}
+          </button>
+        ))}
+      </div>
+
+      {/* ────────── 年間サマリービュー ────────── */}
+      {viewMode === "yearly" && (
+        <YearlySummary
+          selectedYear={yearlyYear}
+          onPrevYear={() => setYearlyYear(y => y - 1)}
+          onNextYear={() => setYearlyYear(y => y + 1)}
+          transactions={transactions}
+          incomes={incomes}
+          fixedExpenses={fixedExpenses}
+          loans={allL}
+          onSelectMonth={month => {
+            // 年間サマリーの月をタップ → 月次ビューに戻り、その月に移動
+            onMonthChange(yearlyYear, month);
+            setViewMode("monthly");
+          }}
+        />
+      )}
+
+      {/* ────────── 月次ビュー（年間モード時は非表示） ────────── */}
+      {viewMode === "monthly" && <>
+
       {/* ────────── 月ナビゲーション ────────── */}
       <MonthNav selectedYear={selectedYear} selectedMonth={selectedMonth} onChange={onMonthChange}/>
 
@@ -583,6 +636,7 @@ export default function DashboardView({
           style={{display:"none"}}
         />
       </div>
+      </> /* ────── 月次ビューここまで ────── */}
     </div>
   );
 }
