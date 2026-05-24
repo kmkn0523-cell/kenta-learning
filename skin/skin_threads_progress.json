@@ -1,5 +1,5 @@
 {
-  "daily_index": 128,
+  "daily_index": 129,
   "launch_index": 0,
   "history": [
     {
@@ -3541,6 +3541,13 @@
       "theme_id": 20,
       "variant": "A",
       "post_id": "18116307652772760"
+    },
+    {
+      "date": "2026/05/24 08:01",
+      "theme": "ホルモンバランスと肌",
+      "theme_id": 21,
+      "variant": "A",
+      "post_id": "17879274204447804"
     }
   ],
   "ab_next": "A",
@@ -3613,7 +3620,8 @@
     "17": "B",
     "18": "B",
     "19": "B",
-    "20": "B"
+    "20": "B",
+    "21": "B"
   },
   "ab_results": {
     "61": {
@@ -4019,6 +4027,12 @@
       "b_posts": 0
     },
     "20": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "21": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
