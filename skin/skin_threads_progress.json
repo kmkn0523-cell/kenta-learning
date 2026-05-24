@@ -1,5 +1,5 @@
 {
-  "daily_index": 131,
+  "daily_index": 132,
   "launch_index": 0,
   "history": [
     {
@@ -3562,6 +3562,13 @@
       "theme_id": 23,
       "variant": "A",
       "post_id": "18087033716573308"
+    },
+    {
+      "date": "2026/05/24 14:01",
+      "theme": "コーヒーと肌",
+      "theme_id": 24,
+      "variant": "A",
+      "post_id": "17951872833153131"
     }
   ],
   "ab_next": "A",
@@ -3637,7 +3644,8 @@
     "20": "B",
     "21": "B",
     "22": "B",
-    "23": "B"
+    "23": "B",
+    "24": "B"
   },
   "ab_results": {
     "61": {
@@ -4061,6 +4069,12 @@
       "b_posts": 0
     },
     "23": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "24": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
