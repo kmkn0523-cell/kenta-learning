@@ -172,15 +172,34 @@ export default function SavingGoalCard({
               {progress}%
             </span>
           </div>
-          <div style={{ height: 8, background: "rgba(148,163,184,0.08)", borderRadius: 4, overflow: "hidden", marginBottom: 12 }}>
+          {/* グラデーション進捗バー（達成時: 緑・期限超過: 赤・通常: シアン→パープル） */}
+          <div style={{ height: 10, background: "rgba(148,163,184,0.08)", borderRadius: 5, overflow: "hidden", marginBottom: 4 }}>
             <div style={{
               height: "100%",
               width: `${progress}%`,
-              background: achieved100 ? COLOR_POSITIVE : overdue ? COLOR_NEGATIVE : COLOR_ACCENT,
-              borderRadius: 4,
+              background: achieved100 ? COLOR_POSITIVE : overdue ? COLOR_NEGATIVE : "linear-gradient(90deg, #22d3ee, #818cf8)",
+              borderRadius: 5,
               transition: "width 0.4s ease",
             }} />
           </div>
+          {/* マイルストーンラベル：25% / 50% / 75% / 100% の目印 */}
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "rgba(148,163,184,0.4)", marginBottom: 6, paddingRight: 2 }}>
+            <span>25%</span>
+            <span>50%</span>
+            <span>75%</span>
+            <span>100%</span>
+          </div>
+          {/* ペース指標：「予定 xx% → 実績 yy%」で順調か遅れ気味かを判定して表示 */}
+          {!achieved100 && !overdue && (
+            <div style={{ fontSize: 11, marginBottom: 8, display: "flex", alignItems: "center", gap: 4 }}>
+              <span style={{ color: onTrack ? COLOR_POSITIVE : "#f59e0b" }}>
+                {onTrack ? "✅ 順調" : "⚠️ 遅れ気味"}
+              </span>
+              <span style={{ color: "rgba(148,163,184,0.5)" }}>
+                （予定 {expectedPct}% → 実績 {progress}%）
+              </span>
+            </div>
+          )}
 
           {/* 達成状況に応じてメッセージを切り替え */}
           {achieved100 ? (
