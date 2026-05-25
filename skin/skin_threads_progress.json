@@ -1,5 +1,5 @@
 {
-  "daily_index": 139,
+  "daily_index": 140,
   "launch_index": 0,
   "history": [
     {
@@ -3618,6 +3618,13 @@
       "theme_id": 31,
       "variant": "A",
       "post_id": "18183743614376076"
+    },
+    {
+      "date": "2026/05/25 07:00",
+      "theme": "マスクと肌荒れ",
+      "theme_id": 32,
+      "variant": "A",
+      "post_id": "18109644440499607"
     }
   ],
   "ab_next": "A",
@@ -3701,7 +3708,8 @@
     "28": "B",
     "29": "B",
     "30": "B",
-    "31": "B"
+    "31": "B",
+    "32": "B"
   },
   "ab_results": {
     "61": {
@@ -4173,6 +4181,12 @@
       "b_posts": 0
     },
     "31": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "32": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
