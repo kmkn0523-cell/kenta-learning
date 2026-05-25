@@ -1,5 +1,5 @@
 {
-  "daily_index": 137,
+  "daily_index": 138,
   "launch_index": 0,
   "history": [
     {
@@ -3604,6 +3604,13 @@
       "theme_id": 29,
       "variant": "A",
       "post_id": "18129819673580149"
+    },
+    {
+      "date": "2026/05/25 03:00",
+      "theme": "ターンオーバーを整える",
+      "theme_id": 30,
+      "variant": "A",
+      "post_id": "18049466144595239"
     }
   ],
   "ab_next": "A",
@@ -3685,7 +3692,8 @@
     "26": "B",
     "27": "B",
     "28": "B",
-    "29": "B"
+    "29": "B",
+    "30": "B"
   },
   "ab_results": {
     "61": {
@@ -4145,6 +4153,12 @@
       "b_posts": 0
     },
     "29": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "30": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
