@@ -1,5 +1,5 @@
 {
-  "daily_index": 141,
+  "daily_index": 142,
   "launch_index": 0,
   "history": [
     {
@@ -3632,6 +3632,13 @@
       "theme_id": 33,
       "variant": "A",
       "post_id": "18106406638758221"
+    },
+    {
+      "date": "2026/05/25 11:00",
+      "theme": "夏の肌荒れ対策",
+      "theme_id": 34,
+      "variant": "A",
+      "post_id": "17956944585133916"
     }
   ],
   "ab_next": "A",
@@ -3717,7 +3724,8 @@
     "30": "B",
     "31": "B",
     "32": "B",
-    "33": "B"
+    "33": "B",
+    "34": "B"
   },
   "ab_results": {
     "61": {
@@ -4201,6 +4209,12 @@
       "b_posts": 0
     },
     "33": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "34": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
