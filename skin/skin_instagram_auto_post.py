@@ -311,6 +311,10 @@ def wait_for_container_ready(creation_id, max_wait=120):
             status = data.get("status_code", "UNKNOWN")
             print(f"  ⏳ コンテナ状態: {status}（{waited}秒経過）")
             if status == "FINISHED":
+                # FINISHED直後でもInstagram内部処理が終わっていないことがある
+                # 30秒待ってから publish することで OAuthException 9007 を防ぐ
+                print("  ✅ FINISHED確認。30秒待機してから公開します...")
+                time.sleep(30)
                 return True   # 処理完了
             if status == "ERROR":
                 print(f"❌ コンテナ処理エラー: {data}")
@@ -529,7 +533,16 @@ def main():
             print("⏭️ InstagramのAPIブロックのためスキップ（進捗は次へ進めます）")
             print(f"📊 次回テーマ: {next_theme['id']:02d}（{next_kind}）")
             sys.exit(0)  # 正常終了（GitHub Actionsを赤くしない）
+        # その他の公開失敗（OAuthException 9007 など）でも進捗を1つ進める
+        # 進捗を進めないと次回も同じテーマが選ばれ、同一内容が2重投稿される恐れがある
+        save_progress(new_v1, new_v2, new_count)
+        next_theme, next_kind = select_next_theme(
+            themes,
+            {"v1_index": new_v1, "v2_index": new_v2, "post_count": new_count},
+        )
         print(f"❌ 投稿公開失敗: {publish_result}")
+        print("⏭️ 同一内容の重複投稿を防ぐため進捗を次へ進めました")
+        print(f"📊 次回テーマ: {next_theme['id']:02d}（{next_kind}）")
         sys.exit(1)
 
     print(f"✅ カルーセル投稿成功！投稿ID: {publish_result['id']}")

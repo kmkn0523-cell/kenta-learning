@@ -89,6 +89,11 @@ def post_to_threads(text: str):
 
     creation_id = container_data["id"]
 
+    # コンテナ作成直後に publish するとメディアIDが見つからないエラーになることがある
+    # 5秒待ってから公開することで OAuthException 4279009 を防ぐ
+    import time
+    time.sleep(5)
+
     # ステップ2: コンテナを公開する
     publish_url = f"https://graph.threads.net/{THREADS_USER_ID}/threads_publish"
     publish_params = {
