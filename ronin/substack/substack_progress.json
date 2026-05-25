@@ -1,5 +1,5 @@
 {
-  "next_day": 10,
+  "next_day": 11,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -54,6 +54,12 @@
       "day": 9,
       "post_id": 199009851,
       "title": "足るを知る — Know when enough is enough."
+    },
+    {
+      "date": "2026/05/25 20:16",
+      "day": 10,
+      "post_id": 199235915,
+      "title": "実るほど頭を垂れる稲穂かな — The richer the rice, the lower it bows."
     }
   ]
 }
