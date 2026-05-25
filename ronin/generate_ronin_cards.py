@@ -133,6 +133,114 @@ proverbs = [
     {"day": 98, "jp": "名誉",                       "roma": "Meiyo — Honor",                         "en": "You are your own judge."},
     {"day": 99, "jp": "忠義",                       "roma": "Chugi — Loyalty",                       "en": "Chosen commitment, fully kept."},
     {"day":100, "jp": "武士道百訓",                  "roma": "Bushido hyakukun",                      "en": "100 days. One truth. The Way continues."},
+
+    # ── 禅・仏教の言葉（Day101〜125）──────────────────────────────
+    {"day":101, "jp": "一切皆苦",             "roma": "Issai kaiku",              "en": "All of life involves suffering. Accept it."},
+    {"day":102, "jp": "刹那",                "roma": "Setsuna",                  "en": "This single moment is all you have."},
+    {"day":103, "jp": "無我",                "roma": "Muga",                     "en": "Release the self. You are larger than your ego."},
+    {"day":104, "jp": "空",                  "roma": "Ku",                       "en": "Form is emptiness. Emptiness is form."},
+    {"day":105, "jp": "慈悲",               "roma": "Jihi",                     "en": "Compassion for all living things."},
+    {"day":106, "jp": "無心",               "roma": "Mushin",                   "en": "An empty mind moves without resistance."},
+    {"day":107, "jp": "悟り",               "roma": "Satori",                   "en": "Awakening is not found. It is recognized."},
+    {"day":108, "jp": "平常心",              "roma": "Heijoshin",                "en": "The ordinary mind is the Way."},
+    {"day":109, "jp": "只管打坐",            "roma": "Shikantaza",               "en": "Just sit. Nothing else is needed."},
+    {"day":110, "jp": "不立文字",            "roma": "Furyu monji",              "en": "Truth cannot be captured in words."},
+    {"day":111, "jp": "生死事大",            "roma": "Shoji jidai",              "en": "Life and death — this is the great matter."},
+    {"day":112, "jp": "自灯明",              "roma": "Ji tomyo",                 "en": "Be a lamp unto yourself."},
+    {"day":113, "jp": "万物流転",            "roma": "Banbutsu ruten",           "en": "All things are in constant flow."},
+    {"day":114, "jp": "行雲流水",            "roma": "Koun ryusui",              "en": "Move like clouds. Flow like water."},
+    {"day":115, "jp": "因果応報",            "roma": "Inga oho",                 "en": "What you sow, you will reap."},
+    {"day":116, "jp": "身心一如",            "roma": "Shinshin ichinyo",         "en": "Body and mind are one."},
+    {"day":117, "jp": "大死一番",            "roma": "Daishi ichiban",           "en": "Die the great death — and truly live."},
+    {"day":118, "jp": "随所作主",            "roma": "Zuisho sa shu",            "en": "Wherever you stand, be the master."},
+    {"day":119, "jp": "喫茶去",              "roma": "Kissako",                  "en": "Have a cup of tea. Be present."},
+    {"day":120, "jp": "本来無一物",          "roma": "Honrai mu ichimotsu",      "en": "Originally, there is nothing. And that is everything."},
+    {"day":121, "jp": "花は花",              "roma": "Hana wa hana",             "en": "A flower is simply a flower."},
+    {"day":122, "jp": "此処が道場",          "roma": "Koko ga dojo",             "en": "Here, now — this is your training ground."},
+    {"day":123, "jp": "直指人心",            "roma": "Jikishi ninshin",          "en": "Point directly to the human heart."},
+    {"day":124, "jp": "不生不滅",            "roma": "Fusho fumetsu",            "en": "Neither born nor destroyed."},
+    {"day":125, "jp": "無常観",              "roma": "Mujokan",                  "en": "All things pass — and that is beautiful."},
+
+    # ── 戦略・兵法の言葉（Day126〜150）──────────────────────────────
+    {"day":126, "jp": "知彼知己",            "roma": "Chi hi chi ki",            "en": "Know your enemy. Know yourself."},
+    {"day":127, "jp": "兵は詭道なり",        "roma": "Hei wa kido nari",         "en": "All warfare is based on deception."},
+    {"day":128, "jp": "速戦即決",            "roma": "Sokusen sokketsu",         "en": "Strike fast. Decide fast."},
+    {"day":129, "jp": "機を見るに敏",        "roma": "Ki o miru ni bin",         "en": "Read the moment. Act without delay."},
+    {"day":130, "jp": "先手必勝",            "roma": "Sente hissho",             "en": "The first to move has the advantage."},
+    {"day":131, "jp": "迂直の計",            "roma": "Ucho no kei",              "en": "The indirect path is often the fastest."},
+    {"day":132, "jp": "後手必敗",            "roma": "Kote hipai",               "en": "He who only responds always loses."},
+    {"day":133, "jp": "形勢逆転",            "roma": "Keisei gyakuten",          "en": "The tide can always turn."},
+    {"day":134, "jp": "捨石",               "roma": "Sutego",                   "en": "Sacrifice a piece to win the game."},
+    {"day":135, "jp": "一網打尽",            "roma": "Ichimo dajin",             "en": "One net. One sweep. No escape."},
+    {"day":136, "jp": "天の時、地の利、人の和", "roma": "Ten no toki, chi no ri, hito no wa", "en": "Timing, terrain, unity — these three win wars."},
+    {"day":137, "jp": "死地に生を求めよ",    "roma": "Shichi ni sei o motomeyo", "en": "Seek life in the place of death."},
+    {"day":138, "jp": "呉越同舟",            "roma": "Go etsu doshu",            "en": "Even enemies must cooperate when survival demands it."},
+    {"day":139, "jp": "不戦而勝",            "roma": "Fusen ni shite katsu",     "en": "The greatest victory is one never fought."},
+    {"day":140, "jp": "軍は神速を貴ぶ",      "roma": "Gun wa shinsoku o tatttobu","en": "An army prizes swiftness above all."},
+    {"day":141, "jp": "寡をもって衆を制す",  "roma": "Ka o motte shu o seisu",   "en": "With few, master the many."},
+    {"day":142, "jp": "奇正相生",            "roma": "Ki sei sojo",              "en": "Order and surprise — each gives birth to the other."},
+    {"day":143, "jp": "後発先至",            "roma": "Kohatsu senshi",           "en": "Leave late — arrive first."},
+    {"day":144, "jp": "虚実相交",            "roma": "Kyojitsu soko",            "en": "Use both deception and truth."},
+    {"day":145, "jp": "謀深ければ行い遠し",  "roma": "Hakarigoto fukaku, okonai toshi", "en": "Deep planning enables far-reaching action."},
+    {"day":146, "jp": "兵は速きを尊ぶ",      "roma": "Hei wa hayaki o tatttobu", "en": "In war, speed is everything."},
+    {"day":147, "jp": "攻は守なり",          "roma": "Ko wa mamori nari",        "en": "The best defense is offense."},
+    {"day":148, "jp": "無為にして為さざるなし","roma": "Mui ni shite nasazaru nashi","en": "Do nothing — and nothing remains undone."},
+    {"day":149, "jp": "勝負は時の運",        "roma": "Shobu wa toki no un",      "en": "Victory and defeat both depend on timing."},
+    {"day":150, "jp": "百戦百勝",            "roma": "Hyakusen hyakusho",        "en": "Win every battle — by knowing when not to fight."},
+
+    # ── 武士語録・名言（Day151〜175）─────────────────────────────────
+    {"day":151, "jp": "我事において後悔せず",  "roma": "Wagakoto ni oite kokai sezu",  "en": "I do not regret what I have done."},
+    {"day":152, "jp": "今日の我に昨日の我を斬れ", "roma": "Kyo no ware ni kino no ware o kire", "en": "Cut down yesterday's self with today's blade."},
+    {"day":153, "jp": "剣は心なり",           "roma": "Ken wa kokoro nari",           "en": "The sword is the mind."},
+    {"day":154, "jp": "風林火山",             "roma": "Fu-rin-ka-zan",                "en": "Swift as wind. Silent as forest. Fierce as fire. Immovable as mountain."},
+    {"day":155, "jp": "死ぬ事と見つけたり",   "roma": "Shinu koto to mitsuke tari",   "en": "I have found the way — it is to die fully."},
+    {"day":156, "jp": "鋼も鍛えずば剣とならず","roma": "Hagane mo kitaezuba ken to narazu","en": "Even steel must be forged to become a sword."},
+    {"day":157, "jp": "武士は食わねど高楊枝", "roma": "Bushi wa kuwanedo takayoji",    "en": "A samurai bears hunger with dignity."},
+    {"day":158, "jp": "七生報国",             "roma": "Shichisho hokoku",             "en": "Seven lives — all devoted to what matters."},
+    {"day":159, "jp": "重荷を負うて遠き道",   "roma": "Omoni o oute toki michi",      "en": "Carry the weight. Walk the long road."},
+    {"day":160, "jp": "功は急がず",           "roma": "Ko wa isogazu",                "en": "Achievement cannot be rushed."},
+    {"day":161, "jp": "一騎当千",             "roma": "Ikki tosen",                   "en": "One warrior worth a thousand."},
+    {"day":162, "jp": "義を見てせざるは勇なきなり","roma": "Gi o mite sezaru wa yu naki nari","en": "To see what is right and not do it — that is cowardice."},
+    {"day":163, "jp": "生は重く死は軽し",     "roma": "Sei wa omoku shi wa karushi",   "en": "Life is heavy. Death is light."},
+    {"day":164, "jp": "己を磨け",             "roma": "Onore o migake",               "en": "Polish yourself."},
+    {"day":165, "jp": "身を捨ててこそ",       "roma": "Mi o sutete koso",             "en": "Only by letting go do you find what holds you."},
+    {"day":166, "jp": "天知る地知る我知る",   "roma": "Ten shiru, chi shiru, ware shiru","en": "Heaven knows. Earth knows. You know."},
+    {"day":167, "jp": "一剣に天地を截断す",   "roma": "Ikken ni tenchi o setsudan su", "en": "One sword cuts through heaven and earth."},
+    {"day":168, "jp": "信は力なり",           "roma": "Shin wa chikara nari",          "en": "Belief is power."},
+    {"day":169, "jp": "問わず語りは無用",     "roma": "Towazu gatari wa muyo",         "en": "Words unasked for are rarely needed."},
+    {"day":170, "jp": "何事も一人前になれ",   "roma": "Nani goto mo ichininmae ni nare","en": "In all things, master your craft fully."},
+    {"day":171, "jp": "生ある限り、鍛えよ",   "roma": "Sei aru kagiri, kitaeyo",       "en": "As long as there is life, forge yourself."},
+    {"day":172, "jp": "一瞬の刃",             "roma": "Isshun no yaiba",              "en": "The edge of a single moment."},
+    {"day":173, "jp": "弓矢も心の先から出でたり","roma": "Yumi ya mo kokoro no saki kara idetari","en": "Every arrow begins with the mind."},
+    {"day":174, "jp": "黙して語らず",         "roma": "Mokushite katarazu",           "en": "Silence speaks what words cannot."},
+    {"day":175, "jp": "武士道は死ぬことと見つけたり","roma": "Bushido wa shinu koto to mitsuke tari","en": "The way of the warrior is found in death."},
+
+    # ── 自然・季節の言葉（Day176〜200）───────────────────────────────
+    {"day":176, "jp": "花鳥風月",             "roma": "Kacho fugetsu",            "en": "Flower, bird, wind, moon — beauty in all things."},
+    {"day":177, "jp": "雪月花",               "roma": "Setsu getsu ka",           "en": "Snow, moon, blossom — the three beauties."},
+    {"day":178, "jp": "物の哀れ",             "roma": "Mono no aware",            "en": "The gentle sorrow of passing things."},
+    {"day":179, "jp": "侘び寂び",             "roma": "Wabi-sabi",                "en": "Beauty in imperfection. Peace in impermanence."},
+    {"day":180, "jp": "木漏れ日",             "roma": "Komorebi",                 "en": "The light that filters through leaves."},
+    {"day":181, "jp": "木枯らし",             "roma": "Kogarashi",                "en": "The first cold wind that strips the trees bare."},
+    {"day":182, "jp": "初雪",                 "roma": "Hatsuyuki",                "en": "The first snow. Everything begins again."},
+    {"day":183, "jp": "春暁",                 "roma": "Shungyo",                  "en": "Dawn in spring — the world barely awake."},
+    {"day":184, "jp": "夏の終わり",           "roma": "Natsu no owari",           "en": "The end of summer — bittersweet and vast."},
+    {"day":185, "jp": "秋の空",               "roma": "Aki no sora",              "en": "The autumn sky — endlessly, piercingly clear."},
+    {"day":186, "jp": "冬枯れ",               "roma": "Fuyugare",                 "en": "Winter bareness — the beauty of what remains."},
+    {"day":187, "jp": "朝露",                 "roma": "Asatsuyu",                 "en": "Morning dew — gone before you notice it."},
+    {"day":188, "jp": "夕焼け",               "roma": "Yuyake",                   "en": "The evening sky burns — and then it is dark."},
+    {"day":189, "jp": "山は静かなり",         "roma": "Yama wa shizuka nari",     "en": "The mountain is silent. It does not explain itself."},
+    {"day":190, "jp": "川の流れのように",     "roma": "Kawa no nagare no yo ni",  "en": "Like the flow of a river — always moving, never forced."},
+    {"day":191, "jp": "大地は語らず",         "roma": "Daichi wa katarazu",       "en": "The earth does not speak. Yet everything grows from it."},
+    {"day":192, "jp": "風は見えず",           "roma": "Kaze wa miezu",            "en": "You cannot see the wind. But you know when it has passed."},
+    {"day":193, "jp": "桜散る",               "roma": "Sakura chiru",             "en": "The cherry blossoms fall — and we love them more for it."},
+    {"day":194, "jp": "月夜に佇む",           "roma": "Tsukiyo ni tatazumu",      "en": "Standing still in the moonlight."},
+    {"day":195, "jp": "霧の中",               "roma": "Kiri no naka",             "en": "In the mist — you see only what is right before you."},
+    {"day":196, "jp": "波は繰り返す",         "roma": "Nami wa kurikaesu",        "en": "The waves return — again and again, without complaint."},
+    {"day":197, "jp": "天地自然",             "roma": "Tenchi shizen",            "en": "Heaven, earth, and nature — the great teacher."},
+    {"day":198, "jp": "一粒万倍",             "roma": "Ichiryu manbai",           "en": "One seed becomes ten thousand."},
+    {"day":199, "jp": "草木も眠る",           "roma": "Kusaki mo nemuru",         "en": "Even the grass and trees fall asleep."},
+    {"day":200, "jp": "道は続く",             "roma": "Michi wa tsuzuku",         "en": "The path continues. Keep walking."},
 ]
 
 
@@ -422,10 +530,29 @@ def generate_card(proverb, output_dir):
 
 def main():
     output_dir = "/home/kenta_kamijyo/ronin/ronin_images"
-    print(f"書道カード画像を生成します（{len(proverbs)}枚）...\n")
+
+    # 新規追加分のみ生成するかどうか（既存ファイルはスキップ）
+    skip_existing = True
+
+    # 生成が必要な格言だけを抽出する
+    targets = []
     for proverb in proverbs:
+        day = proverb["day"]
+        output_path = os.path.join(output_dir, f"day{day:02d}.png")
+        if skip_existing and os.path.exists(output_path):
+            # すでに画像がある場合はスキップ
+            pass
+        else:
+            targets.append(proverb)
+
+    if not targets:
+        print("新規生成が必要なカードはありません（すべて既存）。")
+        return
+
+    print(f"書道カード画像を生成します（{len(targets)}枚 / 全{len(proverbs)}枚中）...\n")
+    for proverb in targets:
         generate_card(proverb, output_dir)
-    print(f"\n🎉 全{len(proverbs)}枚の生成が完了しました！")
+    print(f"\n🎉 {len(targets)}枚の生成が完了しました！")
     print(f"保存先: {output_dir}/")
 
 
