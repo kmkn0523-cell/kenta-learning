@@ -1,5 +1,5 @@
 {
-  "daily_index": 143,
+  "daily_index": 144,
   "launch_index": 0,
   "history": [
     {
@@ -3646,6 +3646,13 @@
       "theme_id": 35,
       "variant": "A",
       "post_id": "18594729034046214"
+    },
+    {
+      "date": "2026/05/25 17:00",
+      "theme": "代謝と肌",
+      "theme_id": 36,
+      "variant": "A",
+      "post_id": "18128753161591456"
     }
   ],
   "ab_next": "A",
@@ -3733,7 +3740,8 @@
     "32": "B",
     "33": "B",
     "34": "B",
-    "35": "B"
+    "35": "B",
+    "36": "B"
   },
   "ab_results": {
     "61": {
@@ -4229,6 +4237,12 @@
       "b_posts": 0
     },
     "35": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "36": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
