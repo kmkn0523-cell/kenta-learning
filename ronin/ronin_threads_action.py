@@ -146,8 +146,12 @@ def load_progress():
         return json.load(f)
 
 
-def save_progress(progress):
-    """進捗をファイルに保存する"""
+def save_progress(progress, last_posted_at=None):
+    """進捗をファイルに保存する
+    last_posted_at: 投稿した日時（UTC ISO形式）。渡したときだけ progress に追記する
+    """
+    if last_posted_at is not None:
+        progress["last_posted_at"] = last_posted_at  # 投稿時刻を記録（重複防止に使う）
     with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
         json.dump(progress, f, ensure_ascii=False, indent=2)
 
@@ -205,12 +209,34 @@ def get_last_post_time():
 def check_should_skip(skip_minutes=90):
     """
     直近 skip_minutes 分以内に投稿済みなら True を返す（スキップすべき状態）
-    APIエラーのときは False を返す（念のため投稿を続行する）
+
+    ① まず progress.json の last_posted_at を確認する（APIキャッシュ遅延を回避するため）
+    ② last_posted_at がなければ Threads API で確認する（フォールバック）
 
     - 90分以内に投稿あり → スキップ（重複防止）
     - 90分以上たっている → 投稿する（自動修復）
     - API取得失敗 → 投稿する（フェイルセーフ）
     """
+    # ① progress.json から前回投稿時刻を確認する（APIより確実・遅延なし）
+    progress = load_progress()
+    last_posted_at_str = progress.get("last_posted_at")
+    if last_posted_at_str:
+        try:
+            last_dt = datetime.fromisoformat(last_posted_at_str)
+            if last_dt.tzinfo is None:
+                last_dt = last_dt.replace(tzinfo=timezone.utc)
+            now_utc = datetime.now(timezone.utc)
+            minutes_since_last = (now_utc - last_dt).total_seconds() / 60
+            print(f"📊 ヘルスチェック（ファイル参照）: 最新投稿から {minutes_since_last:.1f} 分経過")
+            if minutes_since_last < skip_minutes:
+                print(f"✅ {skip_minutes}分以内に投稿済みのためスキップします（重複防止）")
+                return True
+            print(f"📢 {skip_minutes}分以上経過しています。投稿を実行します。")
+            return False
+        except Exception as e:
+            print(f"⚠️ last_posted_at のパースに失敗しました: {e}（APIで確認します）")
+
+    # ② フォールバック: Threads API で最新投稿時刻を確認する
     last_post_time = get_last_post_time()
     if last_post_time is None:
         print("⚠️ 最新投稿が確認できませんでした。念のため投稿を続行します。")
@@ -219,7 +245,7 @@ def check_should_skip(skip_minutes=90):
     now_utc = datetime.now(timezone.utc)
     minutes_since_last = (now_utc - last_post_time).total_seconds() / 60
 
-    print(f"📊 ヘルスチェック: 最新投稿から {minutes_since_last:.1f} 分経過")
+    print(f"📊 ヘルスチェック（API参照）: 最新投稿から {minutes_since_last:.1f} 分経過")
 
     if minutes_since_last < skip_minutes:
         print(f"✅ {skip_minutes}分以内に投稿済みのためスキップします（重複防止）")
@@ -276,7 +302,8 @@ def post_sequential():
         "post_id": post_id
     })
 
-    save_progress(progress)  # 進捗を保存する
+    now_iso = datetime.now(timezone.utc).isoformat()  # 投稿した日時（UTC）を記録
+    save_progress(progress, last_posted_at=now_iso)  # 進捗と投稿時刻を保存する
     print("=== 完了 ===")
 
 
@@ -341,6 +368,11 @@ def post_optimized():
         opt_index["next_post_queue"].pop(0)
         with open("ronin_optimization_index.json", "w", encoding="utf-8") as f:
             json.dump(opt_index, f, indent=2, ensure_ascii=False)
+
+        # progress.json にも last_posted_at を記録する（重複防止の check_should_skip で参照）
+        progress = load_progress()
+        now_iso = datetime.now(timezone.utc).isoformat()  # 投稿した日時（UTC）を記録
+        save_progress(progress, last_posted_at=now_iso)   # 投稿時刻を保存する
 
         print("✅ キューを更新しました")
         print("=== 完了 ===")
