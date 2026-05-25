@@ -1,5 +1,5 @@
 {
-  "daily_index": 140,
+  "daily_index": 141,
   "launch_index": 0,
   "history": [
     {
@@ -3625,6 +3625,13 @@
       "theme_id": 32,
       "variant": "A",
       "post_id": "18109644440499607"
+    },
+    {
+      "date": "2026/05/25 09:00",
+      "theme": "冬の乾燥肌対策",
+      "theme_id": 33,
+      "variant": "A",
+      "post_id": "18106406638758221"
     }
   ],
   "ab_next": "A",
@@ -3709,7 +3716,8 @@
     "29": "B",
     "30": "B",
     "31": "B",
-    "32": "B"
+    "32": "B",
+    "33": "B"
   },
   "ab_results": {
     "61": {
@@ -4187,6 +4195,12 @@
       "b_posts": 0
     },
     "32": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "33": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
