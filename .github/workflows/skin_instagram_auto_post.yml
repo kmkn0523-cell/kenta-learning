@@ -8,10 +8,11 @@ on:
     - cron: '0 12 * * *'   # 21:00 JST
   workflow_dispatch:  # 手動実行も可能
 
-# 同時に複数のジョブが動いてgit pushがぶつかるのを防ぐ設定
+# 同時に複数のジョブが動いて重複投稿されるのを防ぐ設定
 # 同じグループ名のジョブは、前のジョブが終わるまで待ってから実行される
+# skin Instagram専用のグループ名にすることで、他ワークフローと干渉しない
 concurrency:
-  group: git-push-main
+  group: skin-instagram-post
   cancel-in-progress: false  # キャンセルせず、順番待ちにする
 
 permissions:
