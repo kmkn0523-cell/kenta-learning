@@ -9,8 +9,9 @@ on:
   workflow_dispatch:  # 手動実行も可能
 
 # 同時実行でgit pushがバッティングするのを防ぐ設定
+# ronin Instagram専用のグループ名にすることで、他ワークフローと干渉しない
 concurrency:
-  group: git-push-main
+  group: ronin-instagram-post
   cancel-in-progress: false  # キャンセルせず、順番待ちにする
 
 permissions:

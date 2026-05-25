@@ -132,16 +132,30 @@ def load_progress():
     }
 
 
-def save_progress(v1_index: int, v2_index: int, post_count: int):
-    """投稿進捗をファイルに保存する"""
+def save_progress(v1_index: int, v2_index: int, post_count: int, last_posted_at: str = None):
+    """投稿進捗をファイルに保存する
+    last_posted_at: 投稿した日時（UTC ISO形式）。Noneのときは既存ファイルの値を引き継ぐ
+    """
     try:
+        # 既存ファイルから last_posted_at を引き継ぐ（Noneのときだけ上書きしない）
+        existing_last = None
+        if os.path.exists(PROGRESS_FILE):
+            try:
+                with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+                    existing = json.load(f)
+                existing_last = existing.get("last_posted_at")
+            except Exception:
+                pass
+
+        data = {
+            "v1_index":       v1_index,
+            "v2_index":       v2_index,
+            "post_count":     post_count,
+            # 今回の値があればそれを使う、なければ既存値を引き継ぐ
+            "last_posted_at": last_posted_at if last_posted_at is not None else existing_last,
+        }
         with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
-            json.dump(
-                {"v1_index": v1_index, "v2_index": v2_index, "post_count": post_count},
-                f,
-                ensure_ascii=False,
-                indent=2,
-            )
+            json.dump(data, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"⚠️ 進捗保存エラー: {e}")
 
@@ -412,12 +426,41 @@ def get_last_post_time():
 def check_should_skip(skip_minutes=90):
     """
     直近 skip_minutes 分以内に投稿済みなら True を返す（スキップすべき状態）
-    APIエラーのときは False を返す（念のため投稿を続行する）
 
-    - 90分以内に投稿あり → スキップ（重複防止）
-    - 90分以上たっている → 投稿する（自動修復）
-    - API取得失敗 → 投稿する（フェイルセーフ）
+    【判定の優先順位】
+    1. progress.json の last_posted_at フィールド（最優先）
+       → GitHub Actions が投稿成功後にコミット・プッシュするため、
+         concurrency キューで待機中のジョブが checkout すると必ず最新値が取得できる。
+         Instagram API のキャッシュ遅延の影響を受けない。
+    2. Instagram Graph API の最新投稿時刻（フォールバック）
+       → last_posted_at が記録されていない初回や古いデータ用。
+
+    - skip_minutes 以内に投稿あり → スキップ（重複防止）
+    - skip_minutes 以上たっている → 投稿する（自動修復）
+    - どちらも取得失敗 → 投稿する（フェイルセーフ）
     """
+    # ① まず progress.json から直前の投稿時刻を確認する
+    progress = load_progress()
+    last_posted_at_str = progress.get("last_posted_at")
+    if last_posted_at_str:
+        try:
+            last_dt = datetime.fromisoformat(last_posted_at_str)
+            # タイムゾーン情報がない場合は UTC として扱う
+            if last_dt.tzinfo is None:
+                last_dt = last_dt.replace(tzinfo=timezone.utc)
+            now_utc = datetime.now(timezone.utc)
+            minutes_since_last = (now_utc - last_dt).total_seconds() / 60
+            print(f"📊 ヘルスチェック（ファイル参照）: 最新投稿から {minutes_since_last:.1f} 分経過")
+            if minutes_since_last < skip_minutes:
+                print(f"✅ {skip_minutes}分以内に投稿済みのためスキップします（重複防止）")
+                return True
+            print(f"📢 {skip_minutes}分以上経過しています。投稿を実行します。")
+            return False
+        except Exception as e:
+            print(f"⚠️ last_posted_at のパースに失敗しました: {e}（APIで確認します）")
+
+    # ② フォールバック: Instagram API で最新投稿時刻を確認する
+    # （last_posted_at が記録されていない初回・旧データ向け）
     last_post_time = get_last_post_time()
     if last_post_time is None:
         print("⚠️ 最新投稿が確認できませんでした。念のため投稿を続行します。")
@@ -425,8 +468,7 @@ def check_should_skip(skip_minutes=90):
 
     now_utc = datetime.now(timezone.utc)
     minutes_since_last = (now_utc - last_post_time).total_seconds() / 60
-
-    print(f"📊 ヘルスチェック: 最新投稿から {minutes_since_last:.1f} 分経過")
+    print(f"📊 ヘルスチェック（API参照）: 最新投稿から {minutes_since_last:.1f} 分経過")
 
     if minutes_since_last < skip_minutes:
         print(f"✅ {skip_minutes}分以内に投稿済みのためスキップします（重複防止）")
@@ -521,11 +563,15 @@ def main():
     new_v2 = progress.get("v2_index", 0) + (1 if kind == "v2" else 0)
     new_count = progress.get("post_count", 0) + 1
 
+    # 投稿完了時刻を UTC ISO 形式で記録する（重複防止の check_should_skip で使用）
+    now_iso = datetime.now(timezone.utc).isoformat()
+
     if "id" not in publish_result:
         if publish_result.get("rate_limited"):
             # APIブロック（error code 4）でも進捗を1つ進める
             # 同じ投稿を何度もリトライすると「同じ内容が続く」問題が起きるため
-            save_progress(new_v1, new_v2, new_count)
+            # last_posted_at も記録して、直後の重複実行をスキップさせる
+            save_progress(new_v1, new_v2, new_count, last_posted_at=now_iso)
             next_theme, next_kind = select_next_theme(
                 themes,
                 {"v1_index": new_v1, "v2_index": new_v2, "post_count": new_count},
@@ -535,7 +581,8 @@ def main():
             sys.exit(0)  # 正常終了（GitHub Actionsを赤くしない）
         # その他の公開失敗（OAuthException 9007 など）でも進捗を1つ進める
         # 進捗を進めないと次回も同じテーマが選ばれ、同一内容が2重投稿される恐れがある
-        save_progress(new_v1, new_v2, new_count)
+        # last_posted_at も記録して、直後の重複実行をスキップさせる
+        save_progress(new_v1, new_v2, new_count, last_posted_at=now_iso)
         next_theme, next_kind = select_next_theme(
             themes,
             {"v1_index": new_v1, "v2_index": new_v2, "post_count": new_count},
@@ -547,8 +594,8 @@ def main():
 
     print(f"✅ カルーセル投稿成功！投稿ID: {publish_result['id']}")
 
-    # 次回の進捗を保存する
-    save_progress(new_v1, new_v2, new_count)
+    # 次回の進捗を保存する（last_posted_at を記録して重複防止に使う）
+    save_progress(new_v1, new_v2, new_count, last_posted_at=now_iso)
     next_theme, next_kind = select_next_theme(
         themes,
         {"v1_index": new_v1, "v2_index": new_v2, "post_count": new_count},
