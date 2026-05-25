@@ -6,6 +6,11 @@ on:
     - cron: "0 21 * * *"
   workflow_dispatch:  # 手動実行も可能にしておく
 
+# 同時実行でgit pushが競合するのを防ぐ設定
+concurrency:
+  group: skin-instagram-data-collect
+  cancel-in-progress: false  # キャンセルせず、順番待ちにする
+
 jobs:
   collect:
     runs-on: ubuntu-latest

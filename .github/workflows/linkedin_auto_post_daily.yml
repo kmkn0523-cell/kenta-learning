@@ -12,7 +12,7 @@ permissions:
 
 # 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
 concurrency:
-  group: git-push-main
+  group: linkedin-post  # LinkedIn専用グループ（他ワークフローと競合しない）
   cancel-in-progress: false
 
 jobs:

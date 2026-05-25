@@ -12,7 +12,7 @@ on:
 
 # 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
 concurrency:
-  group: git-push-main
+  group: skin-threads-post  # skin Threads専用グループ（ronin Threadsと競合しない）
   cancel-in-progress: false  # 実行中のジョブを止めず、後から来たジョブを待たせる
 
 jobs:

@@ -7,7 +7,7 @@ on:
 
 # 同じグループ名のジョブは同時に1つだけ動く（push競合を防ぐ）
 concurrency:
-  group: git-push-main
+  group: skin-analytics  # skin分析専用グループ（投稿系と競合しない）
   cancel-in-progress: false
 
 jobs:
