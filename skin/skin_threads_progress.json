@@ -1,5 +1,5 @@
 {
-  "daily_index": 138,
+  "daily_index": 139,
   "launch_index": 0,
   "history": [
     {
@@ -3611,6 +3611,13 @@
       "theme_id": 30,
       "variant": "A",
       "post_id": "18049466144595239"
+    },
+    {
+      "date": "2026/05/25 05:00",
+      "theme": "スマホと肌",
+      "theme_id": 31,
+      "variant": "A",
+      "post_id": "18183743614376076"
     }
   ],
   "ab_next": "A",
@@ -3693,7 +3700,8 @@
     "27": "B",
     "28": "B",
     "29": "B",
-    "30": "B"
+    "30": "B",
+    "31": "B"
   },
   "ab_results": {
     "61": {
@@ -4159,6 +4167,12 @@
       "b_posts": 0
     },
     "30": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "31": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
