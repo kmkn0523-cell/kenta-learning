@@ -45,6 +45,10 @@ NOTE_PROMO_INTERVAL = 2  # 2日に1回note宣伝を投稿する
 # 宣伝対象のnote記事一覧ファイル（無料記事のみ・手動管理）
 NOTE_PROMO_FILE = "note_promo_articles.json"
 
+# ===== 有料note宣伝投稿の設定 =====
+PAID_NOTE_PROMO_INTERVAL = 7  # 7日に1回（毎週）有料note宣伝を投稿する
+PAID_NOTE_PROMO_FILE = "paid_note_promo_articles.json"  # 有料記事の一覧ファイル
+
 # note宣伝投稿のテンプレート（毎回ランダムで1つ選ぶ → 同じ文面の繰り返しを防ぐ）
 NOTE_PROMO_TEMPLATES = [
     (
@@ -90,6 +94,102 @@ NOTE_PROMO_TEMPLATES = [
         "{url}\n\n"
         "もっと深く知りたくなったら、有料noteも覗いてみてください。\n\n"
         "#スキンケア #肌荒れ #美肌 #ニキビ改善 #note"
+    ),
+]
+
+# 有料note宣伝テンプレート（悩み→部分的な解決策→有料noteで全貌を、の構成）
+PAID_NOTE_PROMO_TEMPLATES = [
+    (
+        "洗顔を変えても、化粧水を変えても、肌荒れが繰り返す。\n\n"
+        "それ、原因が「外側」じゃないからかもしれません。\n\n"
+        "腸・食事・睡眠・ストレス。\n"
+        "内側から整える順番と具体的なやり方を\n"
+        "1本のnoteにまとめました。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ #大人ニキビ #スキンケア #美肌 #note"
+    ),
+    (
+        "「何から始めればいいかわからない」\n\n"
+        "肌荒れに悩む人が一番つまずくのは、ここです。\n\n"
+        "情報は山ほどある。でも順番がわからない。\n"
+        "だから全部まとめて、1から順に実践できる形にしました。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ改善 #ニキビ改善 #美肌習慣 #note"
+    ),
+    (
+        "皮膚科に通っても治らない肌荒れ、ありませんか？\n\n"
+        "塗り薬で一時的に抑えても、やめると再発する。\n"
+        "それは体質の問題が残っているからです。\n\n"
+        "体質を変える具体的なステップを書きました。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ #大人ニキビ #腸活 #美肌 #note"
+    ),
+    (
+        "Threadsでは毎日1つずつヒントを書いていますが、\n"
+        "正直、断片的な情報だけでは変わりにくいです。\n\n"
+        "全体像を1本で理解して、今日から順番に実践できる。\n"
+        "そういうnoteを書きました。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#スキンケア #肌荒れ #美肌習慣 #note"
+    ),
+    (
+        "8年間、肌荒れと向き合ってきた記録があります。\n\n"
+        "何十万円も使って、何十種類も試して、\n"
+        "最終的に「これだけでよかった」にたどり着いた。\n\n"
+        "その全部をまとめました。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ #ニキビ改善 #美肌 #note"
+    ),
+    (
+        "肌荒れの原因は1つじゃない。\n"
+        "腸、食事、睡眠、ストレス、洗顔…全部つながっている。\n\n"
+        "だから「○○だけ変えれば治る」は嘘です。\n\n"
+        "全部を正しい順番で整える方法を書きました。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ #大人ニキビ #腸活 #スキンケア #note"
+    ),
+    (
+        "「サプリを飲んでるのに変わらない」\n"
+        "「腸活してるのに肌が治らない」\n\n"
+        "やり方が間違っているんじゃなくて、\n"
+        "順番が間違っている可能性があります。\n\n"
+        "正しい順番、ここに書きました。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ改善 #美肌習慣 #腸活 #note"
+    ),
+    (
+        "この投稿を保存してくれている人へ。\n\n"
+        "保存だけで終わらせず、本気で変えたいなら\n"
+        "体系的にまとめたnoteを読んでみてください。\n\n"
+        "読んだその日から実践できる内容です。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ #ニキビ改善 #美肌 #スキンケア #note"
+    ),
+    (
+        "無料のnoteだけでも十分役に立ちます。\n\n"
+        "でも「もう情報を探し回るのは疲れた」\n"
+        "「全部まとめて一気に変えたい」という人には\n"
+        "有料版を用意しています。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ #大人ニキビ #美肌習慣 #note"
+    ),
+    (
+        "食事、腸活、睡眠、ストレス管理、正しい洗顔。\n\n"
+        "「全部大事なのはわかった。でも具体的にどうすれば？」\n\n"
+        "その疑問に全部答えるnoteを書きました。\n"
+        "今日読んで、今日から始められます。\n\n"
+        "『{title}』（{price}）\n"
+        "{url}\n\n"
+        "#肌荒れ改善 #ニキビ改善 #腸活 #美肌 #note"
     ),
 ]
 
@@ -480,6 +580,104 @@ def main():
     print("=== 完了 ===")
 
 
+def should_post_paid_note_promo(progress):
+    """前回の有料note宣伝から7日以上経っていればTrueを返す"""
+    last_date_str = progress.get("last_paid_note_promo_date", "")
+    if not last_date_str:
+        return True
+    try:
+        last_date = datetime.strptime(last_date_str, "%Y/%m/%d").date()
+        today = datetime.now().date()
+        return (today - last_date).days >= PAID_NOTE_PROMO_INTERVAL
+    except ValueError:
+        return True
+
+
+def pick_random_paid_note(progress):
+    """有料noteの中からランダムに1つ選ぶ（直前と同じ記事は避ける）"""
+    try:
+        with open(PAID_NOTE_PROMO_FILE, "r", encoding="utf-8") as f:
+            note_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"⚠️ 有料note一覧の読み込みに失敗: {e}")
+        return None
+
+    articles = note_data.get("articles", [])
+    if not articles:
+        return None
+
+    last_promo = progress.get("last_paid_note_promo_article", "")
+    candidates = [a for a in articles if a.get("url") != last_promo]
+    if not candidates:
+        candidates = articles
+
+    return random.choice(candidates)
+
+
+def build_paid_note_promo_text(title, url, price):
+    """有料note宣伝投稿の文面をテンプレートからランダムに生成する"""
+    template = random.choice(PAID_NOTE_PROMO_TEMPLATES)
+    short_title = title if len(title) <= 60 else title[:57] + "..."
+    return template.format(title=short_title, url=url, price=price)
+
+
+def post_paid_note_promo(progress, now):
+    """有料note宣伝投稿を実行する"""
+    note = pick_random_paid_note(progress)
+    if note is None:
+        print("⚠️ 有料noteが見つからないためスキップ")
+        return False
+
+    title = note.get("title", "")
+    url = note.get("url", "")
+    price = note.get("price", "")
+    promo_text = build_paid_note_promo_text(title, url, price)
+
+    print(f"📢 有料note宣伝投稿: 『{title}』（{price}）")
+    print(f"🔗 URL: {url}")
+    print(f"📝 文字数: {len(promo_text)}")
+
+    print("\n投稿中（有料note宣伝・テキストのみ）...")
+    post_id = post_to_threads(promo_text)
+    print(f"  ✅ 有料note宣伝投稿成功！（ID: {post_id}）")
+
+    progress["last_paid_note_promo_article"] = url
+    progress["last_paid_note_promo_date"] = datetime.now().strftime("%Y/%m/%d")
+
+    if "history" not in progress:
+        progress["history"] = []
+    progress["history"].append({
+        "date": now,
+        "theme": f"有料note宣伝: {title[:30]}",
+        "theme_id": 0,
+        "variant": "paid_note_promo",
+        "post_id": post_id
+    })
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+    save_progress(progress, last_posted_at=now_iso)
+    print("=== 完了（有料note宣伝） ===")
+    return True
+
+
+def paid_note_promo_main():
+    """有料note宣伝専用のエントリポイント（別ワークフローから呼ばれる）"""
+    now = datetime.now().strftime("%Y/%m/%d %H:%M")
+    print(f"=== 有料note宣伝チェック: {now} ===")
+
+    progress = load_progress()
+
+    if not should_post_paid_note_promo(progress):
+        print("⏭️ 前回の宣伝から7日経っていないためスキップ")
+        return
+
+    print("📢 有料note宣伝投稿を開始します")
+    if post_paid_note_promo(progress, now):
+        print("=== 有料note宣伝完了 ===")
+    else:
+        print("⚠️ 有料note宣伝投稿に失敗しました（次回リトライ）")
+
+
 def note_promo_main():
     """note宣伝専用のエントリポイント（別ワークフローから呼ばれる）"""
     now = datetime.now().strftime("%Y/%m/%d %H:%M")
@@ -502,7 +700,9 @@ def note_promo_main():
 
 if __name__ == "__main__":
     import sys
-    if "--note-promo" in sys.argv:
+    if "--paid-note-promo" in sys.argv:
+        paid_note_promo_main()
+    elif "--note-promo" in sys.argv:
         note_promo_main()
     else:
         main()

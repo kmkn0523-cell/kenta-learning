@@ -1,0 +1,11 @@
+{
+  "description": "Threads自動投稿で宣伝する有料note記事の一覧",
+  "articles": [
+    {
+      "title": "内側から肌荒れを治す完全マニュアル",
+      "url": "https://note.com/neima/n/nd4ef25c9fd99",
+      "price": "2,980円",
+      "hook": "スキンケアだけでは治らない肌荒れの根本原因と、腸・食事・生活習慣からの改善法"
+    }
+  ]
+}
