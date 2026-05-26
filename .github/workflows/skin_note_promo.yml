@@ -1,0 +1,69 @@
+# skin_note_promo.yml
+# 2日に1回、20:00 JST にnote宣伝をThreadsに投稿する
+# 通常の1日4回投稿（threads_post.yml）とは別枠で動く
+
+name: skin note宣伝投稿
+
+on:
+  schedule:
+    # 毎日 11:00 UTC = 20:00 JST に実行（2日経過チェックはスクリプト側で行う）
+    - cron: '0 11 * * *'
+  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
+
+concurrency:
+  group: skin-threads-post  # 通常投稿と同じグループ（進捗ファイルの競合を防ぐ）
+  cancel-in-progress: false
+
+jobs:
+  note-promo:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    permissions:
+      contents: write
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ライブラリをインストール
+        run: pip install requests
+
+      - name: 進捗ファイルをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_threads_progress.json
+          key: skin-threads-progress-${{ github.run_id }}
+          restore-keys: |
+            skin-threads-progress-
+
+      - name: note宣伝を投稿
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: cd skin && python skin_threads_action.py --note-promo
+
+      - name: 進捗ファイルをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_threads_progress.json
+          key: skin-threads-progress-${{ github.run_id }}
+
+      - name: 進捗ファイルをGitにコミット＆プッシュ
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add skin/skin_threads_progress.json
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: skin note宣伝進捗更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
