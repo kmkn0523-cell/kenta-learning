@@ -141,7 +141,8 @@
     "vercel@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "ecc@ecc": true
+    "ecc@ecc": true,
+    "security-guidance@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "last30days-skill": {
