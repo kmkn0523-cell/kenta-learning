@@ -1,5 +1,5 @@
 {
-  "daily_index": 166,
+  "daily_index": 167,
   "launch_index": 0,
   "history": [
     {
@@ -3814,6 +3814,13 @@
       "theme_id": 58,
       "variant": "A",
       "post_id": "18138758542539187"
+    },
+    {
+      "date": "2026/05/27 18:00",
+      "theme": "洗顔料の選び方",
+      "theme_id": 59,
+      "variant": "A",
+      "post_id": "18095502019909324"
     }
   ],
   "ab_next": "A",
@@ -3924,7 +3931,8 @@
     "55": "B",
     "56": "B",
     "57": "B",
-    "58": "B"
+    "58": "B",
+    "59": "B"
   },
   "ab_results": {
     "61": {
@@ -4562,9 +4570,15 @@
       "b_score": 0.0,
       "a_posts": 1,
       "b_posts": 0
+    },
+    "59": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-27T16:01:19.943975+00:00",
+  "last_posted_at": "2026-05-27T18:01:14.261655+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
