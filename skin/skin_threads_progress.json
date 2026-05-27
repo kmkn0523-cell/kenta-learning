@@ -3800,6 +3800,13 @@
       "theme_id": 57,
       "variant": "A",
       "post_id": "18096799256522572"
+    },
+    {
+      "date": "2026/05/27 14:17",
+      "theme": "note宣伝: 16時間食べないだけで、肌荒れが治る？ファスティングと肌の意",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18123355477647497"
     }
   ],
   "ab_next": "A",
@@ -4543,5 +4550,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-27T12:42:20.674880+00:00"
+  "last_posted_at": "2026-05-27T14:17:39.239354+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
+  "last_note_promo_date": "2026/05/27"
 }
