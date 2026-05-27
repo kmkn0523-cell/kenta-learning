@@ -1,5 +1,5 @@
 {
-  "daily_index": 169,
+  "daily_index": 170,
   "launch_index": 0,
   "history": [
     {
@@ -3835,13 +3835,20 @@
       "theme_id": 61,
       "variant": "B",
       "post_id": "18016552538693053"
+    },
+    {
+      "date": "2026/05/27 23:45",
+      "theme": "肌に良いお茶",
+      "theme_id": 62,
+      "variant": "B",
+      "post_id": "18074202875672193"
     }
   ],
   "ab_next": "A",
   "ab_b_index": 6,
   "ab_index_per_theme": {
     "61": "A",
-    "62": "B",
+    "62": "A",
     "63": "B",
     "64": "B",
     "65": "B",
@@ -3960,7 +3967,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "63": {
       "a_score": 0.0,
@@ -4599,7 +4606,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-27T22:01:21.004403+00:00",
+  "last_posted_at": "2026-05-27T23:46:13.683024+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
