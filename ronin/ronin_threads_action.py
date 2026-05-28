@@ -33,6 +33,10 @@ GITHUB_RAW_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_im
 # 全投稿に自動でつける共通ハッシュタグ（英語アカウント向け）
 HASHTAGS = "\n\n#JapaneseWisdom #Bushido #Zen #Samurai #Wisdom"
 
+# Gumroad壁紙パックへの誘導文（7投稿に1回追加する）
+GUMROAD_URL = "https://kmknova8.gumroad.com/l/mowuxf"
+GUMROAD_CTA = f"\n\n🔗 Wallpaper pack → {GUMROAD_URL}"
+
 
 def get_image_url(day):
     """指定したDayの書道カード画像URLを返す（GitHub Raw URL）"""
@@ -273,10 +277,14 @@ def post_sequential():
 
     # 本文に共通ハッシュタグを追加
     # Threads APIの上限は500文字なので、超える場合は末尾を「…」でカットする
+    # 7投稿ごとにGumroad CTAも追加する（0投稿目・7投稿目・14投稿目…）
+    total_so_far = len(progress.get("history", []))
+    gumroad_suffix = GUMROAD_CTA if (total_so_far % 7 == 0) else ""
+    suffix = HASHTAGS + gumroad_suffix
     content = post["content"]
-    if len(content + HASHTAGS) > 500:
-        content = content[:500 - len(HASHTAGS) - 1] + "…"
-    full_text = content + HASHTAGS
+    if len(content + suffix) > 500:
+        content = content[:500 - len(suffix) - 1] + "…"
+    full_text = content + suffix
 
     print(f"投稿番号: {index + 1}/{len(posts)}")
     print(f"投稿タイプ: Day{post['day']:02d} {post['type']}")
@@ -350,10 +358,15 @@ def post_optimized():
         hashtag_set = opt_index.get("hashtag_optimization", {}).get(f"day_{day}", "hashtags_set_A")
 
         # 投稿本文
+        # 7投稿ごとにGumroad CTAも追加する
+        progress_check = load_progress()
+        total_so_far = len(progress_check.get("history", []))
+        gumroad_suffix = GUMROAD_CTA if (total_so_far % 7 == 0) else ""
+        suffix = HASHTAGS + gumroad_suffix
         content = target_post["content"]
-        if len(content + HASHTAGS) > 500:
-            content = content[:500 - len(HASHTAGS) - 1] + "…"
-        full_text = content + HASHTAGS
+        if len(content + suffix) > 500:
+            content = content[:500 - len(suffix) - 1] + "…"
+        full_text = content + suffix
 
         print(f"投稿タイプ: Day{day:02d} {post_type}")
         print(f"ハッシュタグセット: {hashtag_set}")
