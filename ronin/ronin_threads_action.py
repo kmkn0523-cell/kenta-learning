@@ -33,9 +33,13 @@ GITHUB_RAW_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_im
 # 全投稿に自動でつける共通ハッシュタグ（英語アカウント向け）
 HASHTAGS = "\n\n#JapaneseWisdom #Bushido #Zen #Samurai #Wisdom"
 
-# Gumroad壁紙パックへの誘導文（7投稿に1回追加する）
+# Gumroad壁紙パックへの誘導文（14投稿に1回・偶数サイクル）
 GUMROAD_URL = "https://kmknova8.gumroad.com/l/mowuxf"
 GUMROAD_CTA = f"\n\n🔗 Wallpaper pack → {GUMROAD_URL}"
+
+# Substackへの誘導文（14投稿に1回・奇数サイクル、Gumroadと交互）
+SUBSTACK_URL = "https://substack.com/@roninwords"
+SUBSTACK_CTA = f"\n\n📖 Read deeper → {SUBSTACK_URL}"
 
 
 def get_image_url(day):
@@ -277,10 +281,12 @@ def post_sequential():
 
     # 本文に共通ハッシュタグを追加
     # Threads APIの上限は500文字なので、超える場合は末尾を「…」でカットする
-    # 7投稿ごとにGumroad CTAも追加する（0投稿目・7投稿目・14投稿目…）
+    # 14投稿ごとにGumroad/Substackを交互に追加する
+    # 0,14,28…投稿目→Gumroad  7,21,35…投稿目→Substack
     total_so_far = len(progress.get("history", []))
-    gumroad_suffix = GUMROAD_CTA if (total_so_far % 7 == 0) else ""
-    suffix = HASHTAGS + gumroad_suffix
+    cycle = total_so_far % 14
+    extra_cta = GUMROAD_CTA if cycle == 0 else (SUBSTACK_CTA if cycle == 7 else "")
+    suffix = HASHTAGS + extra_cta
     content = post["content"]
     if len(content + suffix) > 500:
         content = content[:500 - len(suffix) - 1] + "…"
@@ -358,11 +364,12 @@ def post_optimized():
         hashtag_set = opt_index.get("hashtag_optimization", {}).get(f"day_{day}", "hashtags_set_A")
 
         # 投稿本文
-        # 7投稿ごとにGumroad CTAも追加する
+        # 14投稿ごとにGumroad/Substackを交互に追加する
         progress_check = load_progress()
         total_so_far = len(progress_check.get("history", []))
-        gumroad_suffix = GUMROAD_CTA if (total_so_far % 7 == 0) else ""
-        suffix = HASHTAGS + gumroad_suffix
+        cycle = total_so_far % 14
+        extra_cta = GUMROAD_CTA if cycle == 0 else (SUBSTACK_CTA if cycle == 7 else "")
+        suffix = HASHTAGS + extra_cta
         content = target_post["content"]
         if len(content + suffix) > 500:
             content = content[:500 - len(suffix) - 1] + "…"
