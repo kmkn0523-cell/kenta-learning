@@ -528,3 +528,511 @@ articles.append({
 })
 
 print(f"Days 11-20 loaded: {len(articles)} articles so far")
+
+# ── Day 21 ──────────────────────────────────────────────
+articles.append({
+    "day": 21,
+    "japanese": "聞くは一時の恥、聞かぬは一生の恥",
+    "romanji": "Kiku wa ichiji no haji, kikanu wa isshō no haji",
+    "title": "The Courage to Ask",
+    "subtitle": "To ask is a moment's embarrassment. Not to ask is a lifetime's shame. The question you are afraid to ask is the one you most need to ask.",
+    "body_html": """<h2>The Embarrassment That Protects Ignorance</h2>
+<p>There is a moment most people have experienced: sitting in a meeting, a lecture, a conversation, knowing that they do not understand what is being discussed — and not asking. Not because the question would be wrong to ask. Not because there is no one to ask. But because the asking itself feels exposing. It announces: I do not know this.</p>
+<p>So the question is not asked. The moment passes. The understanding that would have come from asking does not come. And the gap in understanding is carried forward — into the next conversation, the next meeting, the next decision — where it compounds quietly into a larger and more consequential ignorance.</p>
+<p>The proverb names this dynamic with unusual directness. <em>Kiku wa ichiji no haji, kikanu wa isshō no haji.</em> To ask is a moment's shame. Not to ask is a lifetime's. The embarrassment of the question lasts a moment. The embarrassment of permanent ignorance — of making the decision, taking the action, living the life shaped by something you did not understand — lasts as long as the consequences do.</p>
+
+<h2>Why We Choose the Lifetime Shame</h2>
+<p>It seems obvious that a moment's embarrassment is preferable to a lifetime's. And yet people consistently choose the larger shame by not asking. Why?</p>
+<p>The answer is that the moment's embarrassment is vivid and certain, while the lifetime's shame is abstract and distant. The embarrassed feeling of asking a question you "should" know is immediate and felt in the body. The accumulated cost of not knowing is diffused across time, difficult to attribute to the original non-asking, and often invisible until it is too late.</p>
+<p>The proverb is asking you to make an act of temporal imagination: to feel the lifetime's shame now, while you still have the chance to avoid it with a question. The person in this room who does not ask is making a decision with very long-term consequences for the sake of very short-term comfort.</p>
+
+<h2>The Practice of Asking</h2>
+<p>People who become genuinely wise have, almost universally, developed an unusual comfort with asking questions — including questions that reveal ignorance, including questions that others in the room already know the answer to. They have learned to prioritize understanding over appearance, and to recognize that the gap between knowing and appearing to know is where the most dangerous errors live.</p>
+<p>The question you are most afraid to ask in your current situation — about a relationship, a project, a domain you work in, a life decision — is almost certainly the question that would be most valuable to ask. The fear is the signal. The discomfort of asking marks the place where understanding is missing.</p>
+<p><em>Kiku wa ichiji no haji, kikanu wa isshō no haji.</em> Ask the question. Take the moment's discomfort. What waits on the other side of asking is almost always better than what continues to live in the dark on the other side of not asking.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 22 ──────────────────────────────────────────────
+articles.append({
+    "day": 22,
+    "japanese": "知らぬが仏",
+    "romanji": "Shiranu ga hotoke",
+    "title": "The Peace of Not Knowing",
+    "subtitle": "Not knowing is Buddha. Some forms of ignorance are a kind of bliss — and recognizing which ones protects your peace.",
+    "body_html": """<h2>Two Kinds of Ignorance</h2>
+<p>Yesterday's proverb said: ask, because not knowing is a shame. Today's says the opposite: sometimes, not knowing is Buddha — is peace, is bliss, is the absence of unnecessary suffering.</p>
+<p>These two proverbs are not in contradiction. They are a map of two different kinds of ignorance. <em>Kiku wa ichiji no haji</em> is about ignorance that, if sustained, will damage your ability to navigate the world effectively. <em>Shiranu ga hotoke</em> is about something entirely different: the knowledge that would only add suffering to your life without giving you anything useful to do with it.</p>
+<p>The Buddhist resonance in the phrase is deliberate. The image of Buddha as serene, at peace — that peace is achieved partly through the discipline of not acquiring suffering that serves no purpose. The person who knows every criticism spoken of them behind their back, every rumor, every negative opinion is not more informed. They are simply more burdened.</p>
+
+<h2>What You Do Not Need to Know</h2>
+<p>There is a category of information that, if you possessed it, would only make your life worse without making you better equipped to live it. The precise details of what your colleague says about you when you are not in the room. The exact nature of someone's lingering resentment. Every slightly unkind thought your friends have had about your choices.</p>
+<p>This information is technically true. Acquiring it would not improve your decision-making, your relationships, or your work. It would only give you new objects of anxiety to carry around. <em>Shiranu ga hotoke.</em> Not knowing this is a form of peace. The person who actively seeks to know every negative thing said or thought about them is not seeking wisdom. They are manufacturing suffering.</p>
+<p>The wisdom here is in distinguishing between knowledge that expands your capacity to act effectively and knowledge that simply adds weight. The first is worth pursuing at the cost of discomfort. The second is worth leaving in the merciful unknown.</p>
+
+<h2>The Difficult Wisdom of Enough</h2>
+<p>In the age of information abundance, this proverb becomes more important, not less. The capacity to know is now nearly unlimited. The capacity to scroll through every criticism, to track every negative signal, to monitor every data point about how you are perceived — this is technically available. And for many people, it has become a compulsion rather than a choice.</p>
+<p><em>Shiranu ga hotoke</em> is an argument for intentional informational restraint. Not laziness. Not avoidance of important truths. The deliberate decision to let some things remain unknown because knowing them would only subtract from your peace without adding to your wisdom.</p>
+<p>The Buddha in this proverb is not ignorant. The Buddha is selective. There are things worth knowing and things worth leaving in the dark. The skill of discernment — which is which — is itself a form of wisdom that cannot be arrived at without first accepting that not all knowledge serves you equally.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 23 ──────────────────────────────────────────────
+articles.append({
+    "day": 23,
+    "japanese": "三人寄れば文殊の知恵",
+    "romanji": "Sannin yoreba monju no chie",
+    "title": "The Wisdom That Emerges Between",
+    "subtitle": "Three heads together produce the wisdom of Manjushri. The intelligence of a group can exceed the intelligence of any of its members.",
+    "body_html": """<h2>Manjushri's Sword</h2>
+<p>Manjushri is the Bodhisattva of wisdom in Buddhist tradition, depicted holding a flaming sword — the sword that cuts through delusion to reach the clear truth beneath. He represents one of the highest forms of intelligence accessible to a human mind.</p>
+<p>The proverb says: three ordinary people, gathered together, can produce Manjushri's wisdom. Not three geniuses. Not three masters. Three people. The wisdom is not in any individual. It is in what happens between them.</p>
+<p>This is a startling claim. It goes against the dominant model of intelligence in most cultures, which locates wisdom in the exceptional individual. The Japanese proverb proposes a different model: wisdom as emergent, as something that comes into existence in the space between people who are thinking together, that could not be produced by any of them alone.</p>
+
+<h2>The Conditions for Collective Wisdom</h2>
+<p>Not every group of three produces Manjushri's wisdom. Anyone who has attended a bad meeting knows this. The conditions matter. What are they?</p>
+<p>First: genuine diversity of perspective. If the three people are thinking from the same assumptions, they will confirm each other's existing conclusions. The wisdom emerges when different frameworks encounter each other and produce something that neither framework could reach alone.</p>
+<p>Second: psychological safety to disagree. If one person carries more status and the others defer, you have one person's view with extra steps. Third: genuine listening — the conversation in which people are processing each other's ideas rather than waiting for their turn to speak. When this happens, an understanding is possible that none of the participants held before the conversation began.</p>
+
+<h2>Seeking Collective Intelligence</h2>
+<p>The instinct for most capable people is to think harder alone — to sit with the problem until the individual intelligence reaches an answer. This instinct misses something: some problems have structures that require more than one perspective to see clearly. Blind spots are, by definition, invisible to the person who has them. The second and third perspectives see what you cannot — not because they are more intelligent, but because they are not you.</p>
+<p><em>Sannin yoreba monju no chie.</em> Three people together can produce Manjushri's wisdom. Find your two. Not to validate what you already think. To encounter what you cannot see from where you are standing. The sharpest sword in the tradition cuts through delusion. Three ordinary people, thinking genuinely together, can wield it.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 24 ──────────────────────────────────────────────
+articles.append({
+    "day": 24,
+    "japanese": "転ばぬ先の杖",
+    "romanji": "Korobanu saki no tsue",
+    "title": "The Staff Before the Fall",
+    "subtitle": "A walking stick before you stumble. True wisdom prepares for what has not yet happened.",
+    "body_html": """<h2>The Unseen Path Ahead</h2>
+<p>A traveler sets out on a mountain path. The first section is clear — smooth stone, bright sunlight, easy footing. There is no obvious reason to carry a walking staff. But the experienced traveler carries one anyway, because they know what the first-time traveler does not: that the path ahead contains ground that cannot yet be seen, and that the time to have a staff is before you fall, not after.</p>
+<p><em>Korobanu saki no tsue</em> — a staff before you stumble — is the Japanese articulation of proactive wisdom. The preparation happens before the difficulty arrives. The experienced traveler is not pessimistic. They are simply acknowledging that the path ahead contains the unknown, and equipping themselves for it in advance.</p>
+<p>This is a different orientation from reactive problem-solving, which most people default to. Most preparation happens after the fall. Then the lesson is learned. <em>Korobanu saki no tsue</em> asks: why wait? The wisdom that prevents the fall is worth more, and costs less, than the wisdom gained from it.</p>
+
+<h2>What the Staff Represents</h2>
+<p>The walking staff is any preparation that provides stability when the ground becomes uncertain. In a professional context: the skills developed before they are urgently needed, the relationships built before you need a favor, the financial buffer maintained before the unexpected expense. In a personal context: the difficult conversation had before the resentment becomes insurmountable, the health practice maintained before the body forces the issue.</p>
+<p>These preparations have a specific character: they are taken at a time when they feel unnecessary. When the path is smooth and sunny, carrying a staff feels like extra weight. The person who has never stumbled has no felt sense of why the preparation matters. This is exactly when it matters most — because the willingness to prepare for a difficulty you cannot yet feel is what separates the traveler who makes it through difficult terrain from the one who gets stuck on it.</p>
+
+<h2>Preparing Without Anxiety</h2>
+<p>The nuance in this proverb is that preparation is not the same as worry. The anxious traveler who cannot stop thinking about all the ways the mountain might be dangerous is not carrying a staff — they are carrying fear, which is much heavier and much less useful. The staff is practical. It is specific. It is taken up before the journey and carried lightly.</p>
+<p>The distinction is between preparation as wisdom and preparation as anxiety. Wisdom prepares and then walks forward. Anxiety prepares and then cannot walk. <em>Korobanu saki no tsue.</em> The staff before the stumble. What is the walking staff you need to pick up today, before the ground becomes uncertain? The experienced traveler picks it up before the question becomes urgent.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 25 ──────────────────────────────────────────────
+articles.append({
+    "day": 25,
+    "japanese": "備えあれば憂いなし",
+    "romanji": "Sonae areba urei nashi",
+    "title": "Preparation Dissolves Fear",
+    "subtitle": "If prepared, no anxiety. The relationship between readiness and peace is direct: one produces the other.",
+    "body_html": """<h2>The Anxiety That Preparation Cures</h2>
+<p>Most anxiety is not really about the future. It is about the present — about the felt sense of being unequipped for what the future might bring. The person who has prepared for the difficult conversation is not anxious about it. The person who has saved the emergency fund is not anxious about the unexpected expense. The student who has studied thoroughly is not anxious about the exam.</p>
+<p>The anxiety is about the gap between what the event might require and what you feel you have to bring to it. Preparation closes the gap. When the gap is substantially closed, the anxiety dissolves with it.</p>
+<p><em>Sonae areba urei nashi</em> is not a promise that nothing bad will happen. It is a precise claim about the relationship between preparation and the emotional experience of uncertainty. If prepared, no anxiety. The peace comes first — not as the reward for surviving the difficulty, but as the immediate, present-tense result of being ready to face it.</p>
+
+<h2>The Peace That Readiness Creates</h2>
+<p>There is a specific quality of stillness that thoroughly prepared people carry. It is not certainty that things will go well. It is something quieter: the knowledge that whatever comes, they have given themselves the best possible tools to navigate it. That knowledge quiets the noise.</p>
+<p>The samurai tradition took this further: the highest state of readiness was one in which the warrior had prepared so thoroughly that they were genuinely indifferent to the outcome. Not because they did not care, but because the preparation was complete, and everything after that was simply meeting what arrived. This is the deepest form of <em>sonae areba urei nashi</em> — preparation so thorough that even the worst case has been faced and accepted, and can therefore be released.</p>
+
+<h2>What Preparation Actually Requires</h2>
+<p>The practical question is: what does real preparation look like in the domain that is currently generating your anxiety? Not theoretical, not imagined, but actual concrete readiness. What would need to be true — what skills developed, what conversations had, what resources gathered, what scenarios thought through — for you to genuinely feel equipped for what might arrive?</p>
+<p>Make that list specific. Then begin. Not because every item will be completed before the difficulty arrives — often it will not. But because the act of preparation itself, even partial, begins to close the gap between what is required and what you have. And as the gap closes, the anxiety diminishes.</p>
+<p><em>Sonae areba urei nashi.</em> If prepared, no anxiety. The peace is not something you have to wait for. It is the by-product of the preparation itself, available now, in proportion to the readiness you are actively building.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 26 ──────────────────────────────────────────────
+articles.append({
+    "day": 26,
+    "japanese": "後悔先に立たず",
+    "romanji": "Kōkai saki ni tatazu",
+    "title": "Regret Does Not Walk Ahead",
+    "subtitle": "Regret never comes first. It always arrives after. The only way to not carry it is to act while you still can.",
+    "body_html": """<h2>The Timing Problem of Regret</h2>
+<p>Regret has a particular cruelty: it arrives exactly when it is no longer useful. When the decision is made, the moment is past, the opportunity is closed. That is precisely when regret appears, fully formed, with complete clarity about what should have been done. The understanding comes after the deadline for acting on it.</p>
+<p><em>Kōkai saki ni tatazu</em> — regret does not walk ahead — captures this with a spatial image. Regret does not precede your actions. You will never look ahead and feel the regret of the choice you have not yet made. You feel the desire, the fear, the hesitation — but the full weight of regret comes only after.</p>
+<p>The proverb is therefore an argument for a different tool: the imagined future regret, applied in advance. Not the real feeling — you cannot feel real regret before the fact — but the thought experiment. What will I regret if I do not act now?</p>
+
+<h2>The Regret Minimization Frame</h2>
+<p>When facing an important choice, project yourself to a point in the future when the decision and its consequences are already settled, and ask which choice leaves less regret. Not which choice is safer, or more certain, or more comfortable in the present — which choice will have been the right one to have made.</p>
+<p>The insight this frame reveals is often counterintuitive. Most immediate anxiety clusters around the risks of action: what if it fails? But most long-term regret clusters around inaction: the thing not attempted, the conversation not had, the path not taken when the path was open. The pain of failure is usually finite and recoverable. The pain of never having tried tends to compound over time and has no recovery mechanism.</p>
+
+<h2>Acting Before the Door Closes</h2>
+<p>Every meaningful opportunity has a window. The person you could reconnect with while they are still alive. The project you could attempt while you still have the circumstances that make it possible. The risk you could take while you still have the resources. These windows do not stay open indefinitely.</p>
+<p>The question is not whether you will eventually understand what was at stake. You almost certainly will — that understanding is how regret works. The question is whether that understanding arrives while you can still act, or after.</p>
+<p><em>Kōkai saki ni tatazu.</em> Regret does not come first. So you must do what regret would tell you, now, before it can.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 27 ──────────────────────────────────────────────
+articles.append({
+    "day": 27,
+    "japanese": "急がば回れ",
+    "romanji": "Isogaba maware",
+    "title": "The Longer Road Is Faster",
+    "subtitle": "When in a hurry, take the detour. The path that appears slower often arrives sooner than the one that looks direct.",
+    "body_html": """<h2>The Lake at Seta</h2>
+<p>The proverb originates in a specific geography: Lake Biwa, near Kyoto, with a bridge at Seta and a ferry crossing the lake directly. The direct route — the ferry — looks faster on the map. But the ferry is subject to wind and waves. In bad weather, it capsizes. Travelers who take the longer path around the lake, using the solid bridge at Seta, arrive. Travelers who take the shortcut ferry, when the weather turns, do not arrive at all.</p>
+<p><em>Isogaba maware.</em> If you are in a hurry, take the roundabout way. The urgency is precisely when the shortcut becomes most dangerous and the longer road becomes most valuable.</p>
+
+<h2>When Speed Creates Slowness</h2>
+<p>The paradox of <em>isogaba maware</em> is that the conditions under which you most want the shortcut are often the conditions under which the shortcut is most likely to fail. When you are behind schedule and under pressure — that is when the temptation to skip the testing, cut the process, skip the review is strongest. And that is precisely when those shortcuts produce the failures that cost far more time than the steps would have taken.</p>
+<p>The codebase that was never properly refactored because it always felt faster to add features. The relationship that never had the difficult conversation because it always felt faster to smooth it over. In each case, what appeared faster revealed itself as much slower — because the shortcut eventually required a recovery that the correct path would never have needed. The lake does not care that you were in a hurry.</p>
+
+<h2>The Discipline of the Longer Road</h2>
+<p>Taking the longer road under time pressure requires the ability to tolerate the discomfort of feeling slower in the short term, in service of the knowledge that you are actually moving faster toward arrival. It requires trusting the bridge over the ferry, even when the ferry looks quicker on the map.</p>
+<p>This trust is built by experience — by having taken the shortcut in weather that turned, and having seen the result. The proverb offers the possibility of learning without drowning: trust the people who have crossed both paths, who know that in bad weather, the bridge is always faster than the ferry that does not arrive.</p>
+<p><em>Isogaba maware.</em> When you are in a hurry, take the longer road. The paradox resolves over distance. The bridge, in the end, is faster. The detour, in the end, is direct.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 28 ──────────────────────────────────────────────
+articles.append({
+    "day": 28,
+    "japanese": "能ある鷹は爪を隠す",
+    "romanji": "Nō aru taka wa tsume o kakusu",
+    "title": "The Hawk Hides Its Talons",
+    "subtitle": "The capable hawk conceals its claws. True capability does not announce itself.",
+    "body_html": """<h2>The Hawk at Rest</h2>
+<p>A hawk that is not hunting does not display its talons. The claws — the instruments of its extraordinary capability — are folded away, invisible. To the observer, the hawk at rest looks almost ordinary. It is only in the moment of action, when capability is actually needed, that the talons extend and the hawk reveals what it actually is.</p>
+<p><em>Nō aru taka wa tsume o kakusu</em> — the capable hawk hides its talons — describes a quality of character that Japanese tradition particularly admires: the restraint of genuine capability. Not performing competence. Not displaying skill. Simply having it, and letting the results speak when action is required.</p>
+<p>This is an aesthetic as much as an ethical position. The most skilled craftsperson's work has a quality of inevitability — it looks as if it could not have been made any other way — that hides the extraordinary difficulty of making it. The master's work does not shout its mastery. It simply is what it is.</p>
+
+<h2>The Insecurity That Displays</h2>
+<p>The opposite of the hawk with hidden talons is the person who needs others to know what they are capable of — who mentions credentials in contexts where they are not relevant, who corrects in public where they could correct in private. This display is usually not confidence. It is anxiety — the need for external validation of a capability that is not fully trusted from the inside.</p>
+<p>The hawk that is certain of its talons has no need to show them. When you find yourself wanting to demonstrate capability in a situation that does not require it, the proverb is a useful prompt: what is the insecurity behind the display? What is the need to be seen that is asking to be met?</p>
+
+<h2>The Power of Concealed Capability</h2>
+<p>There is also a practical dimension to hidden talons. The person who has not yet shown what they are capable of retains the element of surprise. They are not working against preconceptions. They have more freedom of movement precisely because they have not yet been fully seen.</p>
+<p>The hawk reveals its talons when the moment of action arrives — and in that moment, the revelation is decisive. The creature that seemed merely ordinary extends something extraordinary. The timing of the revelation is part of what makes it effective.</p>
+<p><em>Nō aru taka wa tsume o kakusu.</em> Be what you are, quietly and completely. Do the work with full capability. Save the display for the moment when it serves the action, rather than the image. The talons are more powerful when the moment of their extension is chosen, not reflexive.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 29 ──────────────────────────────────────────────
+articles.append({
+    "day": 29,
+    "japanese": "沈黙は金",
+    "romanji": "Chinmoku wa kin",
+    "title": "The Gold in Silence",
+    "subtitle": "Silence is gold. What is not said can be worth more than what is.",
+    "body_html": """<h2>What Silence Contains</h2>
+<p>In most modern communication contexts, silence is treated as a problem to solve — an awkward gap to fill, a failure of the conversation to continue generating content. The discomfort of silence is widely understood; its value is far less often discussed.</p>
+<p><em>Chinmoku wa kin.</em> Silence is gold. The proverb is making a comparative claim: speech has its value, but silence has a different value, and in certain moments that value exceeds the value of speech. This is not a case for never speaking. It is a case for understanding when not speaking is the wiser, more powerful, more valuable choice.</p>
+<p>What does silence contain? First: space — in which the other person can arrive at something they would not have arrived at if you had spoken. Second: information — what others do with the space is often more revealing than what they would say if prompted. Third: weight — a carefully chosen silence often communicates more precisely than words can.</p>
+
+<h2>The Japanese Relationship with Ma</h2>
+<p>Japanese aesthetics has a concept — <em>ma</em> — that encompasses the meaningful pause, the interval, the space between things. <em>Ma</em> is not emptiness. It is a presence in its own right, the way the space between musical notes is part of the music. Traditional Japanese art forms — ink painting, architecture, theater — are structured around the management of <em>ma</em>. What is left out is as deliberate as what is put in.</p>
+<p><em>Chinmoku wa kin</em> applies this aesthetic principle to speech. The pause in the conversation, the decision not to respond, the choice to let something settle rather than immediately react — these are not failures of communication. They are a form of it. The speaker who never falls silent is like the painter who fills every centimeter of the canvas. There is no room for the meaning to land.</p>
+
+<h2>Choosing Silence</h2>
+<p>The practical application is knowing when silence is the gold. In conflict: the refusal to immediately defend or explain often de-escalates more effectively than the best rebuttal. In leadership: the pause before responding signals that you have genuinely considered what was said. In negotiation: the willingness to let silence sit after a significant statement puts the next move on the other side.</p>
+<p>These uses of silence are not passive. They are active choices, exercised with full awareness of what the silence is doing. <em>Chinmoku wa kin.</em> The gold is in the choice — in the moment where you have something to say and decide that the silence is worth more. Not as an evasion. As its own form of communication.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 30 ──────────────────────────────────────────────
+articles.append({
+    "day": 30,
+    "japanese": "口は災いの元",
+    "romanji": "Kuchi wa wazawai no moto",
+    "title": "The Mouth Is the Root of Disaster",
+    "subtitle": "The mouth is the root of calamity. More disasters begin with spoken words than with any other cause.",
+    "body_html": """<h2>The Arrow That Cannot Be Recalled</h2>
+<p>There is a Japanese image: an arrow released from a bow. It cannot be recalled. The flight is complete the moment the string is released. The target may have moved. The archer may have misjudged the distance. It does not matter — the arrow is already moving, and nothing in the world can bring it back.</p>
+<p><em>Kuchi wa wazawai no moto</em> — the mouth is the root of disaster — is about the arrow of speech. The word spoken enters the world and cannot be unspoken. It lands where it lands. The speaker may later clarify, apologize, walk back — but the original word has already completed its trajectory. The apology follows the wound; it does not prevent it.</p>
+<p>The disasters that trace their origin to a mouth are not unusual. They are ordinary: relationships ended by things said in anger, careers damaged by the opinion shared with the wrong person, trust destroyed by the confidence broken in a moment of wanting to seem knowledgeable.</p>
+
+<h2>The Categories of Dangerous Speech</h2>
+<p>Not all speech is dangerous. The proverb is not an argument for permanent silence. It is a warning about specific patterns that reliably generate disaster.</p>
+<p>First: the impulse comment — the response made before considering the full implications. The sarcasm that seemed clever and landed as cruel. The correction offered in public that could have been offered in private. Second: the overshare — the information given freely that should have been held. The confidence broken because sharing it felt good in the moment. Third: the unnecessary provocation — the argument entered because winning seemed important. The word that demonstrated you were right and destroyed something in the process of doing it.</p>
+
+<h2>The Pause Before the Mouth Opens</h2>
+<p>The Japanese tradition around speech is less about the content of what is said and more about the relationship between the speaker and the moment of speaking. The custom of reading the room, of understanding the atmosphere before adding to it, of asking whether the contribution being offered will serve or damage — this is not strategic inauthenticity. It is respect for the power of words.</p>
+<p>The practical instruction is a pause — brief, internal, automatic with practice. Before the mouth opens: is this true? Is this necessary? Is this the right moment? Not all questions need a yes. But asking them regularly changes the relationship between thought and speech in a way that reduces the disasters that trace back to a mouth.</p>
+<p><em>Kuchi wa wazawai no moto.</em> The mouth is the root of disaster. Speak carefully. The arrow, once released, does not come back.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+print(f"Days 21-30 loaded: {len(articles)} articles so far")
+
+# ── Day 31 ──────────────────────────────────────────────
+articles.append({
+    "day": 31,
+    "japanese": "袖振り合うも他生の縁",
+    "romanji": "Sode furi au mo tashō no en",
+    "title": "Even a Brushed Sleeve",
+    "subtitle": "Even the briefest brush of sleeves is a bond from a past life. No encounter is accidental.",
+    "body_html": """<h2>The Stranger on the Path</h2>
+<p>You pass someone on a narrow path. Your sleeves brush — the lightest possible contact, barely registering, already forgotten. And yet, the proverb says, even this — this almost-nothing encounter — is the result of a connection formed in a previous life. You and this stranger have met before. The brushed sleeve is the echo of that prior bond.</p>
+<p><em>Sode furi au mo tashō no en.</em> Even the brushing of sleeves is a bond from a past life. The phrase does not require a literal belief in reincarnation to carry its full weight. What it is saying, in the deepest sense, is: no encounter is accidental. Every person you cross paths with has, by the simple fact of crossing paths with you, established a connection that is not nothing.</p>
+<p>This is a radical claim about the texture of ordinary life. It says that the anonymous stranger, the brief acquaintance, the person you will never see again — these are not background figures. They are nodes in a network of connection that extends further in time and significance than any single encounter reveals.</p>
+
+<h2>The Ethics of Casual Encounters</h2>
+<p>If you take the proverb seriously, it changes how you inhabit the ordinary moments of social life. The brief exchange with the person at the next table. The few minutes of conversation with someone waiting for the same train. The customer service representative, the delivery person, the colleague you barely know. These are not interruptions to your real life. They are the texture of it.</p>
+<p>Japanese culture has a word for the gratitude and care owed to connections of any scale: <em>en</em>, which means both fate/connection and bond. The same word covers the profound connection of lifelong partnership and the fleeting brush of sleeves. This is not an accident of vocabulary. It is an argument about the nature of connection — that it is not divisible into important and unimportant at the level of the encounter itself. Every <em>en</em> deserves its due.</p>
+<p>The practical implication is that how you treat people in brief encounters is not separate from your character. It is an expression of it. The person who is patient and present with the stranger they will never see again is practicing something real. The carelessness with which we often treat anonymous others is, in this view, a kind of spiritual poverty.</p>
+
+<h2>Receiving the Encounter</h2>
+<p>The proverb also changes how you receive what comes to you. The unexpected conversation that opens something. The brief encounter that turns out to carry exactly the information you needed. The person who appears in your life at a particular moment and alters its direction, not through grand gesture but through something small — a word, a question, a brushed sleeve.</p>
+<p>When you believe that encounters have weight — that the universe is not generating them at random — you pay attention differently. You are open to the possibility that this particular person, in this particular moment, may be here for a reason that the randomness hypothesis would miss. Not every encounter carries the weight the proverb implies. But the habit of openness — of treating each encounter as potentially significant — makes you available to the ones that do.</p>
+<p><em>Sode furi au mo tashō no en.</em> Even a brushed sleeve. No encounter is nothing. The stranger on the path has met you before. Be present to it.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 32 ──────────────────────────────────────────────
+articles.append({
+    "day": 32,
+    "japanese": "情けは人の為ならず",
+    "romanji": "Nasake wa hito no tame narazu",
+    "title": "Kindness Is Not for Others",
+    "subtitle": "Compassion shown to others is not for their sake alone. It returns. The world you create through kindness is the world you inhabit.",
+    "body_html": """<h2>The Misread Proverb</h2>
+<p>This proverb is one of the most frequently misread in the Japanese language. Many modern Japanese people, hearing it for the first time, interpret it as a warning against misplaced kindness: "compassion shown to others is not really for their sake — it spoils them, creates dependency, does them more harm than good." This reading is modern and incorrect.</p>
+<p>The original meaning is the opposite. <em>Nasake wa hito no tame narazu</em> means: compassion shown to others is not only for their sake. It comes back to you. The kindness you extend into the world travels in a circle. The person you helped in their moment of difficulty is, in ways you cannot predict, connected to your own future. The world you make kinder through your actions is the world you continue to live in.</p>
+<p>This is not the same as transactional kindness — the calculation that helps because it expects to be repaid. It is something subtler: the understanding that the quality of the world you inhabit is partly a function of the quality of what you put into it. The circle is not direct or immediate. But it is real.</p>
+
+<h2>The Karma of Kindness</h2>
+<p>The Buddhist concept embedded in this proverb is not naive. It does not claim that every act of kindness is immediately rewarded, or that the world is a simple machine that returns what you invest. It claims something more complex: that what you do to the social fabric of the world you live in matters, and that the effects ripple outward in ways that eventually return to their source.</p>
+<p>The person you helped when they were struggling may help someone else who helps someone else who, years later, helps you without knowing the chain. The atmosphere of trust and generosity that your consistent kindness creates may produce the specific moment of grace that you need at a time you cannot foresee. The inner quality that you develop through the practice of compassion — the capacity to see others' difficulty as real, to respond rather than pass by — is itself the return, independent of any external reward.</p>
+
+<h2>Practicing Nasake Without Keeping Score</h2>
+<p>The proverb is easiest to misapply as a justification for kindness-as-investment, where every act of compassion comes with a mental note of expected return. This misapplies the principle entirely. The circle described by <em>nasake</em> works precisely because it is not transactional — because the kindness is extended freely, without tracking, without expectation of a specific return.</p>
+<p>The practice is: extend the kindness as if it is for the other person, because in that moment it genuinely is. The return is real, but it is not the reason for the action. The reason for the action is that compassion, given freely, is what makes a good life possible — for the person receiving it, and in the deepest sense, for the person giving it.</p>
+<p><em>Nasake wa hito no tame narazu.</em> Kindness is not only for others. The world you make through your compassion is the world you live in. Give it freely. The circle is already in motion.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 33 ──────────────────────────────────────────────
+articles.append({
+    "day": 33,
+    "japanese": "人を見たら泥棒と思え",
+    "romanji": "Hito o mitara dorobō to omoe",
+    "title": "See Every Stranger as a Thief",
+    "subtitle": "Treat every stranger as a potential thief. This proverb is not cynicism — it is a meditation on the necessity of appropriate caution.",
+    "body_html": """<h2>The Uncomfortable Proverb</h2>
+<p>Of all the Japanese proverbs in this collection, this one sits most uncomfortably alongside the others. Yesterday: kindness returns to its source. Tomorrow: what passes between you is fate's design. And today: see every stranger as a thief.</p>
+<p><em>Hito o mitara dorobō to omoe.</em> When you see a person, think: thief. This is not a gentle wisdom. It is a sharp one. And it raises a question that any honest engagement with the proverb must address: is this cynicism, or something else?</p>
+<p>The answer depends on what the proverb is actually asking you to do. It is not asking you to live in fear, to treat everyone with suspicion, to close yourself off from genuine connection. It is asking you to maintain appropriate discernment — to not extend the kind of trust that only experience earns, to the person who has not yet earned it.</p>
+
+<h2>The Distinction Between Distrust and Discernment</h2>
+<p>There is a difference between distrust and discernment. Distrust is the blanket assumption that people will harm you — a defensive posture that closes off the possibility of genuine connection and eventually creates the isolation it fears. Discernment is the calibrated awareness that trust is something that is built over time through evidence, and that the absence of evidence is not the same as evidence of trustworthiness.</p>
+<p>The person who extends full trust to everyone they meet is not open-hearted. They are naive — and their naivety makes them a resource for people who are, in fact, thieves. The failure to maintain appropriate discernment is not a virtue. It is a failure of self-protection and, eventually, of the relationships that could have been genuine if they had been allowed to develop at the right pace.</p>
+<p>The proverb is most useful not as a permanent stance toward people but as a corrective to the specific error of premature trust. It says: do not assume that because someone appears before you in a friendly guise, they have earned the trust that the guise implies. That trust is built through time and consistency and demonstrated character. Extend it when the evidence supports it, not before.</p>
+
+<h2>Holding Both Proverbs at Once</h2>
+<p>The full wisdom lives in the tension between yesterday's proverb and today's. Kindness is real and its return is real — and therefore kindness should be extended freely. At the same time, the trust that makes deep relationship possible is built, not given. The warm welcome to every stranger and the careful observation of what they do with the welcome are not contradictory. They are complementary.</p>
+<p>The wise person is warm with everyone and carefully observant of who deserves access to what. The door is open. What is behind the door is guarded. This is not coldness — it is the structure of real relationships, which begin in warmth and are deepened only when the warmth is met with evidence of trustworthiness.</p>
+<p><em>Hito o mitara dorobō to omoe.</em> Not cynicism. Discernment. The kind that protects the kindness that is genuine.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 34 ──────────────────────────────────────────────
+articles.append({
+    "day": 34,
+    "japanese": "類は友を呼ぶ",
+    "romanji": "Rui wa tomo o yobu",
+    "title": "Like Calls to Like",
+    "subtitle": "Like attracts like. The people around you are a mirror. Look at who you have gathered and see yourself.",
+    "body_html": """<h2>The Mirror of Company</h2>
+<p>You choose your environment, and your environment shapes you. This cycle is well understood. What is less often examined is the diagnostic dimension of the cycle — that the people you have gathered around you are already telling you something about who you are.</p>
+<p><em>Rui wa tomo o yobu.</em> Like calls to like. The people in your life are not random. They are there because something in them resonated with something in you — because the person you are called them, and they responded. This is true of people you admire and people you do not. The cynics you have gathered and the optimists you have failed to keep. The people who challenge you and the people who only confirm you. All of them are a reflection.</p>
+<p>This is not a comfortable observation. It is a useful one. If you want to understand something about who you currently are, look at who you have drawn into proximity. The company you keep is not incidental to your character — it is evidence of it.</p>
+
+<h2>Calling Different Things</h2>
+<p>If like calls to like, then changing who you call requires changing who you are. This is the practical power of the proverb. It is not asking you to network your way to better relationships — to strategically place yourself near people you want to be more like and hope some of it rubs off. It is asking you to do the deeper work: to actually become the person who calls the kind of people you want to have around.</p>
+<p>The person who wants more honesty in their relationships must first practice being honest. The person who wants more ambitious peers must first cultivate their own ambition. The person who wants deep friendships must first develop the capacity for depth. You cannot consistently call people who are different from you and have them stay — the resonance that sustains connection is built on genuine similarity, not aspiration alone.</p>
+
+<h2>The Environment Feedback Loop</h2>
+<p>The cycle is self-reinforcing in both directions. The person who has gathered cynics around them is being pulled daily toward more cynicism. The person who has gathered people committed to growth is being pulled daily toward more growth. Neither environment is neutral. Both are actively shaping the person at the center of them.</p>
+<p>The implication is that tending your environment — thoughtfully choosing whose voices you listen to, whose company you prioritize — is not vanity or social climbing. It is a serious act of self-development. Not because you are using people as instruments, but because you understand that who you are is partly a function of who you spend time with, and that you have some responsibility for the quality of that company.</p>
+<p><em>Rui wa tomo o yobu.</em> Like calls to like. Who have you called? What does that tell you? And who do you want to call next?</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 35 ──────────────────────────────────────────────
+articles.append({
+    "day": 35,
+    "japanese": "遠くの親戚より近くの他人",
+    "romanji": "Tōku no shinseki yori chikaku no tanin",
+    "title": "The Neighbor Who Matters More",
+    "subtitle": "A near neighbor is better than a distant relative. Proximity and presence matter more than formal bonds.",
+    "body_html": """<h2>The Family That Is Not There</h2>
+<p>A crisis arrives — the sudden emergency, the unexpected need, the moment when help is required now. The family member who loves you deeply is three cities away. The neighbor you have barely spoken to is thirty meters from your door.</p>
+<p><em>Tōku no shinseki yori chikaku no tanin.</em> A nearby stranger is worth more than a distant relative. The proverb is not anti-family. It is making a precise point about the nature of practical support: help that is available has a value that help which would take hours to arrive does not have, regardless of the depth of the underlying relationship.</p>
+<p>This is a wisdom born in a time before instant communication, when the neighbor who brought food during illness or helped after a fire was not one option among many — they were often the only option. But the underlying principle survives the change in circumstances. The person who is physically, temporally, emotionally proximate to you in your daily life has a role in it that no amount of distant affection can fully replace.</p>
+
+<h2>The Investment in Nearby Relationships</h2>
+<p>Modern life encourages the neglect of nearby relationships in favor of maintaining the network of distant ones. We move for work and school, accumulating close friends scattered across cities and countries, while knowing almost nothing about the people we live next to. The technology that connects us across distance has, in many cases, reduced our investment in the people who are actually near.</p>
+<p>The proverb is a corrective to this. It says: the people who are nearby deserve your investment, your attention, your time — not despite the fact that they are strangers, but because they are in a position to matter to your life in ways that even people who love you deeply cannot matter from a distance.</p>
+<p>This investment does not require becoming best friends with every neighbor. It requires something more modest: basic reciprocity, the kind of presence that says I know you exist and I am here if you need something. That baseline, maintained consistently, creates the tissue of mutual support that makes everyday life more livable and extraordinary emergencies survivable.</p>
+
+<h2>Building the Local</h2>
+<p>There is something the proverb is pointing toward that goes beyond pragmatics: the value of rootedness, of being a known person in a particular place. The person who has invested in their nearby relationships has a different quality of life — more textured, more supported, more embedded in the particular — than the person who is theoretically connected to many people but practically alone in their neighborhood.</p>
+<p>The nearby stranger who becomes a reliable presence in your life is, in practice, a kind of family that does not require blood to function. The proverb recognizes this without romanticizing it. Proximity and mutual support are what make a neighborhood a community. They are built by the small, consistent acts of presence that take the nearby stranger and make them, over time, something more than that.</p>
+<p><em>Tōku no shinseki yori chikaku no tanin.</em> Tend what is near. The distant relative will be glad you did.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 36 ──────────────────────────────────────────────
+articles.append({
+    "day": 36,
+    "japanese": "人の振り見て我が振り直せ",
+    "romanji": "Hito no furi mite waga furi naose",
+    "title": "See Others, See Yourself",
+    "subtitle": "Watch others' behavior and correct your own. The people around you are a mirror — if you are willing to look.",
+    "body_html": """<h2>The Lesson in Someone Else's Mistake</h2>
+<p>You watch a colleague handle a difficult conversation badly. They interrupt, they defend too quickly, they cannot seem to hear what the other person is actually saying. You can see exactly what they are doing wrong. The analysis is effortless from the outside.</p>
+<p>The proverb asks: do you do this? Not in this exact conversation, not in this exact context — but the underlying pattern. The reflexive defense, the interruption, the failure to hear. The observation about someone else is most useful not as a judgment about them, but as a mirror held up to a behavior pattern that may be more familiar than you want to admit.</p>
+<p><em>Hito no furi mite waga furi naose.</em> Look at others' behavior and correct your own. The world is providing you with a continuous education in everything that can go wrong in human interaction. The only question is whether you are applying the lesson to yourself or only to them.</p>
+
+<h2>Why We See Clearly in Others What We Miss in Ourselves</h2>
+<p>The phenomenon of seeing clearly in others what we cannot see in ourselves has a structural explanation: we experience ourselves from the inside, where intentions are vivid and context feels complex and justifiable. We experience others from the outside, where behavior is simply what it is, stripped of the explanatory narrative.</p>
+<p>This asymmetry means that other people's behavior is, in a real sense, more legible to us than our own. We see the pattern without the justification. And since the same human patterns appear across different people in different contexts, what we see in others is often a version of what we do — just without the stories we tell ourselves about why ours is different.</p>
+<p>The proverb is asking you to use this legibility deliberately. Not as a source of judgment about others, but as a source of information about yourself. Every time you notice something in someone else's behavior that strikes you as ineffective or harmful or self-defeating, the useful question is: where is my version of this?</p>
+
+<h2>The Practice of Behavioral Correction</h2>
+<p>The phrase <em>naose</em> — correct, fix, adjust — implies that the observation is not enough. The point is the change. You see the behavior in someone else, you recognize its echo in yourself, and you do something about it. Not through shame or self-criticism, but through the same practical spirit with which you would fix anything that is not working well.</p>
+<p>This is one of the more actionable pathways to self-development available in everyday life, because it does not require extraordinary introspection or expensive external feedback. The people around you are providing a continuous stream of behavioral examples, some effective and some not. Treating that stream as material — as a source of both positive models and cautionary ones — turns ordinary observation into a practice of continuous improvement.</p>
+<p><em>Hito no furi mite waga furi naose.</em> Watch others. See yourself. Correct. The mirror is available every day, in every room you enter.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 37 ──────────────────────────────────────────────
+articles.append({
+    "day": 37,
+    "japanese": "出る杭は打たれる",
+    "romanji": "Deru kui wa utareru",
+    "title": "The Nail That Sticks Up",
+    "subtitle": "The nail that sticks up gets hammered down. This is Japan's most famous caution about standing out — and its most complicated wisdom.",
+    "body_html": """<h2>The Most Quoted Proverb in Japan</h2>
+<p>If you ask a Japanese person to name a proverb, there is a reasonable chance they will say this one. <em>Deru kui wa utareru.</em> The protruding nail gets hammered down. It is the most commonly cited proverb in discussions of Japanese social dynamics, conformity, and the cost of standing out.</p>
+<p>Outside Japan, it is often cited as evidence of Japanese social conformism — proof of a culture that suppresses individual expression. This reading is partial and, in important ways, misleading. It focuses on the social pressure described by the proverb while missing the wisdom it is actually offering about how to navigate environments where that pressure exists.</p>
+<p>The proverb is not saying: do not be excellent. It is not saying: suppress your distinctive capability. It is saying something more nuanced: understand the environment you are in, and understand that visibility without proper foundation will be met with resistance that full preparation could avoid.</p>
+
+<h2>The Context of the Proverb</h2>
+<p>In a floor of boards, a nail that protrudes above the surface creates a hazard. It catches feet, it creates instability, it disrupts the surface that other things are built on. The hammering is not arbitrary malice — it is the restoration of function. The problem is not the nail's existence. The problem is the nail's premature protrusion, before the structure around it is ready to incorporate it.</p>
+<p>Applied to human contexts: the person whose capability is genuine but whose manner of expressing it creates friction, disrupts the established flow, makes others feel diminished — that person is the protruding nail. The hammering they receive is not always about the capability itself. It is often about the way the capability is presented: without sufficient awareness of the social context, without the humility that genuine mastery tends to produce, without the patient building of credibility that makes others willing to accept leadership from an unfamiliar source.</p>
+
+<h2>Going Deep Before Going High</h2>
+<p>The more generative reading of this proverb is as advice about how to stand out effectively. Not: don't stand out. But: build the depth before the height. Drive the nail all the way in before it protrudes. The person who has done the invisible work — who has earned the credibility, built the relationships, demonstrated the capability consistently in smaller contexts — can stand out without being hammered, because the foundation is there.</p>
+<p>The proverb is not an argument against excellence or visibility. It is an argument against premature visibility — against the expression of ambition or capability that outpaces the foundation. Build the foundation first. Then, when the nail protrudes, it holds rather than catches.</p>
+<p><em>Deru kui wa utareru.</em> The protruding nail gets hammered. Drive it deep before you let it show. The structure will hold it then.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 38 ──────────────────────────────────────────────
+articles.append({
+    "day": 38,
+    "japanese": "魚心あれば水心",
+    "romanji": "Uogokoro areba mizugokoro",
+    "title": "If the Fish Is Willing",
+    "subtitle": "If the fish has the heart, the water has the heart too. Reciprocity begins with one party's willingness.",
+    "body_html": """<h2>Fish and Water</h2>
+<p>A fish cannot live without water. Water does not need the fish. And yet the proverb says: if the fish has the heart — if the fish shows good faith, offers something, extends toward the water — the water will respond in kind. The fish's willingness creates the water's willingness.</p>
+<p><em>Uogokoro areba mizugokoro.</em> The phrase is a compressed argument about reciprocity: that in relationships of asymmetry and interdependence, the party that has more to gain can initiate the exchange of goodwill, and that initiation is not taken advantage of — it is met. The water responds to the fish's heart with its own.</p>
+<p>The relational wisdom here is in the direction of the initiation. Most people wait for goodwill to be demonstrated before they demonstrate it. They extend trust only after trust has been extended. They offer generosity in proportion to the generosity they have already received. The proverb suggests a different model: the willingness of one party creates the conditions for the willingness of the other. Someone has to go first. The fish goes first.</p>
+
+<h2>The Generative Power of First Moves</h2>
+<p>In game theory, cooperative strategies consistently outperform competitive ones over time — but they require someone to make the cooperative first move in an environment where the default is defensive. The first mover takes a risk: their goodwill might not be reciprocated. But across the full range of human interactions, consistent first-moving goodwill produces better long-term outcomes than consistent defensive waiting.</p>
+<p>The Japanese relational tradition understood this at an intuitive level. <em>Uogokoro areba mizugokoro</em> is not naive — it does not claim that good faith always receives good faith in return. It claims that the general disposition of extending good faith first tends to create an environment in which good faith is more likely to be returned. The fish's heart creates the conditions. It does not guarantee the outcome. But without the fish's heart, the water remains neutral at best.</p>
+
+<h2>Practicing the First Move</h2>
+<p>There is a relationship in your life that is currently stuck in defensive equilibrium — where both parties are waiting for the other to demonstrate good faith before demonstrating their own. The fish and the water, both waiting for the other to move first. Neither is moving.</p>
+<p>The question the proverb asks is simple: which one are you, and can you afford to move first? The risk of the first move is real but usually smaller than the cost of the permanent stalemate. The goodwill that breaks the defensive equilibrium often produces something better than either party had access to from their defensive position.</p>
+<p><em>Uogokoro areba mizugokoro.</em> If the fish has the heart, the water has the heart. Be the fish. Move first. The water is more likely to respond than you think.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 39 ──────────────────────────────────────────────
+articles.append({
+    "day": 39,
+    "japanese": "以心伝心",
+    "romanji": "Ishin denshin",
+    "title": "Heart to Heart, Without Words",
+    "subtitle": "Mind-to-mind transmission. The communication that happens beyond language — and what it requires to become possible.",
+    "body_html": """<h2>The Transmission That Needs No Words</h2>
+<p>A teacher and a student sit together in silence. No words are spoken. And yet something passes between them — something that the student did not have before, that the teacher has given without speaking. This is <em>ishin denshin</em>: heart-to-heart transmission, the direct communication of understanding from one mind to another without the intermediate of language.</p>
+<p>The concept originates in Zen Buddhism, where it describes the transmission of understanding from master to student that cannot be put into words — not because it is mystical, but because the thing being transmitted is a kind of knowing that language, with its fixed categories and sequential structure, cannot carry. The experience of a Zen <em>kensho</em>, or enlightenment experience, is of this order. You cannot describe it without losing it. You can only transmit it to someone who is ready to receive it.</p>
+<p>In everyday use, <em>ishin denshin</em> describes the phenomenon of deep mutual understanding between people — the sense of being truly known, of not needing to explain, of the other person grasping what you mean before you have fully said it.</p>
+
+<h2>What Makes It Possible</h2>
+<p>The wordless transmission of <em>ishin denshin</em> is not a mystical gift available only to special people. It is a quality that develops in relationships that have accumulated enough shared experience, shared attention, and shared practice to build a common language beyond words. Long marriages have it. Deep friendships have it. Experienced teams have it. The teacher and student who have practiced together for years have it.</p>
+<p>What builds it is not proximity alone, but a specific quality of attention: the willingness to be fully present to the other person — to read not just their words but their silences, their gestures, the things they say and the things they cannot bring themselves to say. This kind of attention, sustained over time, creates a knowing that words are often not the most efficient carrier of.</p>
+<p>The practical implication is that the depth of communication available in a relationship is not fixed by personality or circumstance. It is built, through the accumulated quality of attention you bring to the other person over time. <em>Ishin denshin</em> is the reward of sustained, genuine presence.</p>
+
+<h2>The Silence That Communicates</h2>
+<p>There is a moment in deep relationships where the silence says more than the words have — where what is not said between two people who understand each other is a fuller communication than any sentence could be. These moments are not accidents. They are the result of the accumulated investment in the relationship.</p>
+<p>The question the proverb asks of you is: in which of your relationships is this kind of transmission possible? And in which relationships are you currently settling for the surface of language when the depth of something more direct is potentially available, if you were willing to invest the attention that makes it possible?</p>
+<p><em>Ishin denshin.</em> Heart to heart, without words. The deepest communication asks nothing of language. It asks everything of presence.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 40 ──────────────────────────────────────────────
+articles.append({
+    "day": 40,
+    "japanese": "目は口ほどに物を言う",
+    "romanji": "Me wa kuchi hodo ni mono o iu",
+    "title": "The Eyes Say as Much as the Mouth",
+    "subtitle": "Eyes speak as eloquently as the mouth. What cannot be said can be seen, if you know how to look.",
+    "body_html": """<h2>The Language Before Language</h2>
+<p>Before there was spoken language, there were eyes. Long before humans developed the capacity for complex speech, the eyes communicated: danger, desire, trust, threat. The neurological systems that read faces and eyes are older than our language centers, more fundamental, and in many ways more reliable — because they are harder to deliberately control than speech.</p>
+<p><em>Me wa kuchi hodo ni mono o iu.</em> Eyes speak as eloquently as the mouth. The proverb recognizes what science has confirmed: the information carried by eye contact, eye movement, the muscles around the eyes, is a complete communicative system in its own right. And because it is harder to consciously control than words, it is often more truthful than what is being said.</p>
+<p>In Japanese culture, with its tradition of <em>tatemae</em> and <em>honne</em> — the surface presentation and the true feeling beneath — the ability to read eyes is particularly valued. What the mouth says and what the eyes say may be different things. The person who can read both simultaneously has access to the full picture.</p>
+
+<h2>What the Eyes Reveal</h2>
+<p>The eyes carry several distinct streams of information. The direction of gaze says something about where attention and interest actually are. The quality of eye contact — too much, too little, the specific quality of fullness or guardedness — says something about the level of trust and engagement in the relationship. The micro-expressions around the eyes, which flash and disappear in fractions of a second, say something about emotional states that the person may not be conscious of themselves.</p>
+<p>Learning to read this language requires the same thing that learning to read any language requires: practice and attention. Most people are capable of far more from this channel than they typically use, because the modern habits of reading faces — glancing rather than attending, processing quickly and moving on — don't activate the full capacity. Slowing down, looking more fully, attending to what the eyes are doing alongside what the mouth is saying opens a layer of information that is almost always available and almost always underused.</p>
+
+<h2>Being Read, Not Just Reading</h2>
+<p>The proverb is also a reminder that your own eyes are communicating, constantly, information that your words may not be conveying. The boredom you are managing in your expression. The interest you are trying not to show. The discomfort that the smile above your mouth does not fully mask. The people who are paying attention can see these things, whether you intend them to or not.</p>
+<p>This is not primarily a caution against being seen — trying to control what your eyes reveal tends to produce the specific look of someone who is trying to control what their eyes reveal. It is a reminder that you are always communicating more than your words carry. And that the most genuine version of that communication is simply being honest — because when what you feel and what you say are the same thing, the eyes have nothing to betray.</p>
+<p><em>Me wa kuchi hodo ni mono o iu.</em> The eyes speak as much as the mouth. Listen with your eyes. And remember that yours are speaking too.</p>
+
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+print(f"Days 31-40 loaded: {len(articles)} articles so far")
