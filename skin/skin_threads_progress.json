@@ -1,5 +1,5 @@
 {
-  "daily_index": 170,
+  "daily_index": 171,
   "launch_index": 0,
   "history": [
     {
@@ -3842,6 +3842,13 @@
       "theme_id": 62,
       "variant": "B",
       "post_id": "18074202875672193"
+    },
+    {
+      "date": "2026/05/28 02:00",
+      "theme": "スキンケアのやりすぎ問題",
+      "theme_id": 63,
+      "variant": "B",
+      "post_id": "18118755340780611"
     }
   ],
   "ab_next": "A",
@@ -3849,7 +3856,7 @@
   "ab_index_per_theme": {
     "61": "A",
     "62": "A",
-    "63": "B",
+    "63": "A",
     "64": "B",
     "65": "B",
     "66": "B",
@@ -3973,7 +3980,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "64": {
       "a_score": 0.0,
@@ -4606,7 +4613,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-27T23:46:13.683024+00:00",
+  "last_posted_at": "2026-05-28T02:01:21.502951+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
