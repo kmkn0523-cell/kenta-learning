@@ -1,5 +1,5 @@
 {
-  "daily_index": 180,
+  "daily_index": 181,
   "launch_index": 0,
   "history": [
     {
@@ -3912,6 +3912,13 @@
       "theme_id": 72,
       "variant": "B",
       "post_id": "18107571844740163"
+    },
+    {
+      "date": "2026/05/28 22:00",
+      "theme": "タオルと肌荒れ",
+      "theme_id": 73,
+      "variant": "B",
+      "post_id": "18066084917396030"
     }
   ],
   "ab_next": "A",
@@ -3929,7 +3936,7 @@
     "70": "A",
     "71": "A",
     "72": "A",
-    "73": "B",
+    "73": "A",
     "74": "B",
     "75": "B",
     "76": "B",
@@ -4103,7 +4110,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "74": {
       "a_score": 0.0,
@@ -4676,7 +4683,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-28T20:01:12.828443+00:00",
+  "last_posted_at": "2026-05-28T22:01:14.521746+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
