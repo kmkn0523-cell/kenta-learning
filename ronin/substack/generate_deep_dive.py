@@ -1480,3 +1480,436 @@ articles.append({
 })
 
 print(f"Days 51-60 loaded: {len(articles)} articles so far")
+
+# ── Day 61 ──────────────────────────────────────────────
+articles.append({
+    "day": 61,
+    "japanese": "足るを知る",
+    "romanji": "Taru o shiru",
+    "title": "Know When Enough Is Enough",
+    "subtitle": "The one who knows 'enough' is wealthy. Contentment not as resignation, but as a deliberate form of intelligence.",
+    "body_html": """<h2>The Paradox of Enough</h2>
+<p>The culture of growth and acquisition has a specific assumption built into it: that more is always better, that the desire for more is always rational, that contentment is something you settle for when you can no longer get more. <em>Taru o shiru</em> — know that enough is enough — challenges this assumption at its root. It suggests that knowing when you have enough is not a concession to limitation but a form of wisdom that produces genuine wealth.</p>
+<p>The Tao Te Ching puts it starkly: the person who knows they have enough is rich. Not the person who has the most, but the person who knows when they have enough. The knowing is the wealth — because without it, no amount is sufficient. The person who does not know when they have enough is, by definition, always poor, always one acquisition away from the sufficiency that never quite arrives.</p>
+<p>This is not an argument against ambition or growth. It is an argument about the relationship between acquisition and satisfaction. The person who has learned to recognize the state of enough has access to a form of satisfaction that the person who has not learned this cannot reach regardless of how much they accumulate. The knowledge is the capacity. Without it, more is simply more, and the goal perpetually recedes.</p>
+<h2>What Enough Feels Like</h2>
+<p>Recognizing enough requires developing sensitivity to a specific signal that modern culture actively suppresses: the feeling of genuine sufficiency. Not resignation, not giving up, not the absence of desire — but the genuine sense that what is present is what is needed, that the situation is adequate, that you are not lacking something essential.</p>
+<p>This signal is drowned out by comparison, by advertising, by the constant display of what others have that you do not. The person who has learned <em>taru o shiru</em> has developed some immunity to this suppression — not through indifference to quality or genuine improvement, but through the ability to evaluate their situation against an internal standard of sufficiency rather than an external standard of maximal accumulation.</p>
+<h2>The Practice of Knowing Enough</h2>
+<p>The practice is not passive. It requires active examination of what you actually need versus what the culture suggests you should want. It requires periodic contact with genuine gratitude — not performed gratitude but the actual recognition of what is good in the present situation. It requires the development of an internal sense of sufficiency that is robust enough to resist the constant pressure of the more-is-better environment.</p>
+<p>The person who has developed this practice does not stop growing or improving. They simply bring a different orientation to the growth: not the anxiety of never having enough, but the stability of someone who knows what enough looks like and can recognize when they have arrived.</p>
+<p><em>Taru o shiru.</em> Know when you have enough. The knowing itself is the wealth you were looking for.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 62 ──────────────────────────────────────────────
+articles.append({
+    "day": 62,
+    "japanese": "分を知れ",
+    "romanji": "Bun o shire",
+    "title": "Know Your Place",
+    "subtitle": "Know your station, your portion, your measure. The wisdom of understanding where you actually stand.",
+    "body_html": """<h2>The Discomfort of the Phrase</h2>
+<p>"Know your place" lands badly in modern ears — it sounds like an instruction to accept hierarchy, to not reach above your station, to stay in a position someone else assigned you. And the phrase has been used that way, as a tool of social control. But the original instruction — <em>bun o shire</em>, know your portion, know your measure — is pointing at something subtler and more useful than rank-acceptance.</p>
+<p><em>Bun</em> means your portion, your share, the measure of what belongs to you and what fits your actual capacity. Knowing your <em>bun</em> is not about accepting an externally assigned status. It is about developing an accurate understanding of your actual capabilities, your actual situation, your actual resources — as opposed to your preferred self-image of these things.</p>
+<p>The person who does not know their <em>bun</em> overreaches — takes on more than they can handle, makes commitments that exceed their capacity, operates from a model of themselves that is more flattering than accurate. The result is not ambition fulfilled but commitments broken, efforts dispersed, and the specific suffering of someone who is perpetually trying to be more than they are rather than fully being what they are.</p>
+<h2>Accurate Self-Knowledge as Strength</h2>
+<p>The practice of knowing your <em>bun</em> requires the kind of honest self-assessment that is actually quite difficult — harder, in many ways, than reaching beyond yourself. It requires being genuinely interested in seeing yourself clearly, not just seeing yourself favorably. It requires the willingness to notice where your actual capability falls short of your preferred capability, without collapsing into self-deprecation.</p>
+<p>This accurate self-knowledge is not a limitation. It is a foundation. The person who knows exactly what they can do has a clear understanding of what to commit to, what to build on, what to reach toward. The person who does not know this is operating in a fog of aspiration and anxiety, consistently surprised when the gap between their self-image and their actual capacity produces its inevitable results.</p>
+<h2>Bun as a Dynamic Understanding</h2>
+<p><em>Bun</em> is not fixed. As capabilities grow, as experience accumulates, as resources change, the accurate measure of what one can do and what one's situation contains changes. Knowing your <em>bun</em> is not a static assessment — it is a practice of ongoing accurate evaluation. The person who knew their portion five years ago and has not updated that understanding is not practicing <em>bun o shire</em>. They are carrying an outdated map.</p>
+<p>The practice is: know where you actually are, right now. Not where you were, not where you would like to be. Where you actually are. Build from that.</p>
+<p><em>Bun o shire.</em> Know your measure. Accurate self-knowledge is the beginning of genuine growth.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 63 ──────────────────────────────────────────────
+articles.append({
+    "day": 63,
+    "japanese": "上には上がある",
+    "romanji": "Ue ni wa ue ga aru",
+    "title": "Above the Top, There Is a Higher Top",
+    "subtitle": "No matter how high you reach, there is always something above. The liberating realization that there is no final summit.",
+    "body_html": """<h2>The Summit That Keeps Rising</h2>
+<p>You have worked hard and gotten good. Better than most of the people around you. Perhaps you have reached the top of some local hierarchy — the best in your company, the most skilled in your community, the highest in your field as you have experienced it. And then you encounter someone who makes your achievement feel small. Someone who is to you what you are to the people below you.</p>
+<p><em>Ue ni wa ue ga aru.</em> Above the top, there is a higher top. The proverb is not a counsel of despair — it is a counsel of perspective. No matter where you have reached, there is higher. This is true in every domain, at every level. The grandmaster of chess is humbled by the grandmaster who can beat them. The virtuoso musician hears someone they cannot approach. The master craftsman encounters work that makes their best work feel like apprentice output.</p>
+<p>The question is what to do with this knowledge. The person who is threatened by it — who needs to be the best, for whom the acknowledgment of someone better is a source of shame or anxiety — will find this proverb crushing. But the person who has released the need to be at the top of a hierarchy that has no top finds it liberating. There is always more to learn. There is always a higher level. The journey does not end. This is not a threat; it is an invitation.</p>
+<h2>Humility as Access</h2>
+<p>The person who has genuinely internalized <em>ue ni wa ue ga aru</em> has a specific posture toward excellence that those who have not are blocked from. They can learn from anyone who has something to teach, regardless of whether that person is above or below them in conventional status. They can acknowledge superior skill without their identity depending on denying it. They can be impressed without being threatened.</p>
+<p>This posture is itself a kind of excellence — a meta-skill that accelerates every other skill. The person who can always find someone better and extract learning from the encounter grows faster than the person who needs to be the best and whose need for that position closes off learning from anyone who might challenge it.</p>
+<h2>The Infinite Horizon</h2>
+<p>In a craft, in a skill, in any genuine domain of mastery, the horizon never arrives. The more you know, the more clearly you can see how much there is to know. The more skilled you become, the more clearly you can perceive levels of skill above yours that were invisible to you when you were less skilled. The summit keeps rising. And this — when you have made your peace with never reaching the final top — is the best possible news. The game never ends. There is always more to reach for.</p>
+<p><em>Ue ni wa ue ga aru.</em> The top is not the top. Keep learning. Keep reaching. The horizon is always further.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 64 ──────────────────────────────────────────────
+articles.append({
+    "day": 64,
+    "japanese": "実るほど頭を垂れる稲穂かな",
+    "romanji": "Minoru hodo atama o tareru inaho kana",
+    "title": "The More It Ripens, the Lower It Bows",
+    "subtitle": "The rice stalk bows lower the heavier its grain. The counterintuitive relationship between genuine mastery and humility.",
+    "body_html": """<h2>The Ripening Stalk</h2>
+<p>In autumn, the rice fields of Japan bow. The stalks, heavy with ripe grain, bend toward the earth under the weight of what they have produced. The empty stalks stand straight. The full ones bow. The visual is the proverb: <em>minoru hodo atama o tareru inaho kana.</em> The more the rice ripens, the lower the stalk bows its head.</p>
+<p>The image is applied to human character and expertise. The person who has genuinely mastered something — who has accumulated real depth — tends toward humility rather than display. The person who has a little knowledge tends to display it. The person who has a great deal tends to understand how much they do not know, to be aware of the complexity and the uncertainty, to have genuine respect for the difficulty of the domain. The full stalk bows. The empty one stands straight.</p>
+<p>This is not a universal pattern. There are people of genuine mastery who are arrogant. But there is a consistent observation across traditions that the deepest expertise tends to produce a specific kind of humility — not false modesty, not self-deprecation, but the genuine recognition that comes from knowing a domain well enough to understand its depth and one's own position within it.</p>
+<h2>What Genuine Mastery Sees</h2>
+<p>The beginner looks at a complex domain and sees a manageable set of things to learn. The intermediate practitioner has learned enough to feel confident in their partial knowledge. The expert has gone deep enough to understand that the domain is larger than it looked, that the expertise they have accumulated represents a fraction of what is there, that the things they do not know are more significant than the things they do.</p>
+<p>This is the structure of the Dunning-Kruger effect in reverse: genuine expertise produces genuine humility, because genuine expertise involves knowing enough to know what you do not know. The rice stalk is bowing because it is full. The weight of genuine knowledge is the weight that produces the bow.</p>
+<h2>Cultivating the Bow</h2>
+<p>The practice of <em>minoru hodo atama o tareru inaho kana</em> is not forcing yourself to be humble. It is going deep enough in something that the humility arrives naturally. It is exposing yourself to people who know more than you, to the parts of the domain that you have not yet reached, to the complexity that lies beyond your current understanding. The more you genuinely know, the more you will genuinely bow.</p>
+<p>And the bowing, when it is real, is a sign of the ripening. When you encounter someone who holds deep knowledge lightly, who is quick to acknowledge what they do not know, who defers to others with genuine rather than performed humility — you are probably looking at someone very good. The stalk is heavy with grain.</p>
+<p><em>Minoru hodo atama o tareru inaho kana.</em> The bow is the sign of the ripeness. Go deep enough that the bow becomes natural.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 65 ──────────────────────────────────────────────
+articles.append({
+    "day": 65,
+    "japanese": "高慢は損気",
+    "romanji": "Kōman wa sonki",
+    "title": "Arrogance Is the Spirit of Loss",
+    "subtitle": "Pride and arrogance bring loss. Not a moral judgment — an observation about consequences.",
+    "body_html": """<h2>The Mechanics of Arrogance</h2>
+<p><em>Kōman wa sonki.</em> Arrogance is the spirit of loss. The phrase is not a moral condemnation — it is an observation about mechanics. Arrogance produces specific consequences that consistently result in loss. Understanding these mechanics is more useful than the moral instruction to not be arrogant.</p>
+<p>The first mechanic: arrogance closes off learning. The arrogant person has, at some level, decided that their current understanding is sufficient, that they already know what they need to know. This decision is invisible to them — it presents itself not as "I have stopped learning" but as "there is nothing here worth learning from." The result is that genuine information, genuine feedback, genuine opportunities to update their understanding consistently fail to register. They are walking through a world that is offering them things they cannot receive.</p>
+<p>The second mechanic: arrogance misreads others. The person who is arrogant tends to underestimate the capability and intelligence of the people around them. This underestimation produces decisions and strategies that are calibrated against a weaker field than actually exists. The surprise when the underestimated person turns out to be more capable — these are not bad luck. They are the direct output of the arrogant stance.</p>
+<h2>The Third Mechanic: Arrogance and Relationship</h2>
+<p>People recognize arrogance. They may not name it or confront it, but they feel the quality of not being seen, of being evaluated as lesser, of being present in a situation where someone has already decided they do not need what you might offer. People respond to this feeling by withdrawing — by not bringing their best, by not sharing what they know, by not offering the warning or the insight that might help. The arrogant person, over time, ends up in a world of diminished input, because they have consistently sent the signal that they do not want genuine input.</p>
+<h2>Arrogance vs. Confidence</h2>
+<p>The distinction between arrogance and confidence is not always obvious from the outside, but it is clear from the inside. Confidence is the belief that one's capabilities are genuine and adequate to a situation. Arrogance is the belief that one's capabilities are not in need of question. Confidence welcomes information; it wants to know the situation accurately so the capabilities can be applied well. Arrogance resists information; it would rather not know things that might complicate its picture of itself.</p>
+<p>The person of genuine confidence can afford humility, can afford to say they do not know, can afford to be corrected — because their sense of their own adequacy is not contingent on being right about everything. The arrogant person cannot afford any of these things, and so they lose the advantages that come from being able to do them.</p>
+<p><em>Kōman wa sonki.</em> Arrogance produces loss. Not as punishment, but as mechanism. Stay open. Keep learning. The humility is not a cost; it is the advantage.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 66 ──────────────────────────────────────────────
+articles.append({
+    "day": 66,
+    "japanese": "自慢は知恵の行き止まり",
+    "romanji": "Jiman wa chie no yukidomari",
+    "title": "Boasting Is the Dead End of Wisdom",
+    "subtitle": "Self-promotion is wisdom's dead end. When you start broadcasting what you know, you stop acquiring it.",
+    "body_html": """<h2>The Dead End</h2>
+<p>A road that ends is not a road that can take you further. The dead end of wisdom is the point where growth stops — where the orientation shifts from acquiring understanding to displaying it. <em>Jiman wa chie no yukidomari.</em> Boasting is the dead end of wisdom. Not a side road, not a detour — the end of the road. Past this point, there is no further.</p>
+<p>The observation is about what boasting does to the boaster's relationship with knowledge. The person who is in the process of learning something has a specific orientation: they are tracking what they do not yet understand, looking for the gaps in their knowledge, receptive to the places where their current model needs updating. The person who is boasting about what they know has a different orientation: they are tracking what they do know, looking for opportunities to display it, resistant to information that complicates the picture they are presenting.</p>
+<p>These two orientations are in tension. The more energy is directed toward display, the less is available for acquisition. The more one is invested in the current picture of one's knowledge being complete and impressive, the more one resists information that would complicate it. Boasting does not just reflect where learning stopped; it tends to ensure that it stops there.</p>
+<h2>The Structural Problem</h2>
+<p>There is a structural irony in boasting about wisdom specifically. Wisdom — in most traditions that have thought carefully about it — includes the recognition of how little one knows. The Socratic tradition: knowing that you know nothing. The Zen tradition: beginner's mind. The samurai tradition: the bow of the heavy rice stalk. All of these traditions converge on the insight that genuine wisdom includes the recognition of its own limits.</p>
+<p>The person who boasts about their wisdom is, by that act, demonstrating that they do not have quite enough of it — because genuine wisdom would recognize the self-undermining quality of the boast. <em>Jiman wa chie no yukidomari</em> applies precisely to itself: if you understood it deeply enough, you would not need to tell anyone.</p>
+<h2>What to Do With What You Know</h2>
+<p>This does not mean concealing knowledge or refusing to share expertise. Teaching, contributing, explaining, demonstrating — these are different from boasting. The difference is in the orientation: teaching is giving, boasting is taking. Teaching is other-directed; boasting is self-directed. Teaching is interested in whether the other person receives something useful; boasting is interested in whether the other person registers how much you know.</p>
+<p>The person who shares knowledge from an orientation of genuine generosity — who is interested in the learning, not the impression — is not at the dead end. They are still on the road. The road ends when the sharing becomes primarily about the self.</p>
+<p><em>Jiman wa chie no yukidomari.</em> The dead end is always the same: the self in the center, impressed with itself. Keep learning. Keep giving. Stay on the road.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 67 ──────────────────────────────────────────────
+articles.append({
+    "day": 67,
+    "japanese": "不足を言うな、有余を言え",
+    "romanji": "Fusoku o iu na, yūyo o ie",
+    "title": "Don't Speak of Lack, Speak of Surplus",
+    "subtitle": "Stop naming what is missing; start naming what is present. The discipline of attention in how you frame your situation.",
+    "body_html": """<h2>Two Ways to Read the Same Room</h2>
+<p>Two people walk into the same situation. One inventories what is missing: the resources they do not have, the conditions that are not right, the capabilities that are lacking, the help that is not available. The other inventories what is present: what they do have, what is working, what is available to build on. They are in the same room. They see different things. And they will do different things with what they see.</p>
+<p><em>Fusoku o iu na, yūyo o ie.</em> Do not speak of lack; speak of surplus. The instruction is not to deny reality or to pretend difficulties do not exist. It is about where you direct your attention, and about what the direction of attention produces in terms of action.</p>
+<p>The person who is focused on lack tends to generate analysis of why things cannot work. They are accurate — the lacks are real. But the analysis of lack, while accurate, is not generative. It does not produce the next step. It produces the explanation of why the next step is not possible. The person who is focused on what is present generates action — imperfect action with imperfect tools, but movement forward from what actually exists.</p>
+<h2>The Language of Abundance</h2>
+<p>The proverb specifically addresses speech — not just thought but what you say. This is significant. The language you use to describe your situation shapes how you and others understand it, which shapes what actions seem possible. The person who consistently speaks in terms of what is lacking trains their own perception and the perceptions of those around them toward the deficit frame. The person who speaks in terms of what is available trains perception toward the possibility frame.</p>
+<p>This is not positive thinking in the sense of denying difficulty. It is a discipline of selective emphasis: when you speak about your situation, emphasize what is real and present and usable, not what is missing and unavailable and blocking. Not because the missing things are not real, but because speaking of them does not move you forward.</p>
+<h2>Finding the Surplus</h2>
+<p>The practice requires active search. In genuinely difficult situations, the surplus is not obvious. It requires asking: what do I actually have? What is working? What small resource could be amplified? What unconventional approach is available given these actual constraints? The deficit speaks loudly and voluntarily. The surplus must be sought.</p>
+<p>The person who has practiced this consistently develops a kind of creative resourcefulness — the ability to find paths through constrained situations by genuinely inventorying the actual resources rather than mourning the absent ideal ones. This is not optimism. It is a practical skill.</p>
+<p><em>Fusoku o iu na, yūyo o ie.</em> Stop naming the absence. Find the presence. Speak of what is here. Build from it.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 68 ──────────────────────────────────────────────
+articles.append({
+    "day": 68,
+    "japanese": "柔よく剛を制す",
+    "romanji": "Jū yoku gō o seisu",
+    "title": "Softness Overcomes Hardness",
+    "subtitle": "Flexibility and yielding overcome rigidity and force. The principle underlying judo — and a philosophy of intelligent surrender.",
+    "body_html": """<h2>The Water and the Rock</h2>
+<p>Water does not argue with rock. It does not push back directly, does not resist the solidity of the obstacle, does not try to overpower it. It flows around, seeps through, wears at the edges — and in the end, the water wins. The rock is carved and shaped by what could not resist it directly. <em>Jū yoku gō o seisu.</em> Softness overcomes hardness. Yielding overcomes force.</p>
+<p>This principle is the foundation of judo — literally "the gentle way" — which is built on the insight that an opponent's force is not something to resist but something to receive and redirect. The judoka does not meet force with force. They meet force with acceptance and then with a slight alteration of direction, and the force that was going to destroy them instead destroys their opponent's balance. The softness does not stop the force; it uses it.</p>
+<p>The Tao Te Ching uses the water-rock image repeatedly. "The softest thing in the world overcomes the hardest." Not through direct confrontation — through persistence, flexibility, and the willingness to take the shape of whatever container you find yourself in while moving inevitably toward lower ground.</p>
+<h2>The Counterintuitive Path</h2>
+<p>The direct approach — force against force, resistance against resistance — is instinctive. When something pushes you, you push back. When something blocks you, you push harder at the block. This instinct is often wrong. It burns energy, creates escalation, hardens opposition, and often fails to achieve the goal it is pursuing.</p>
+<p>The <em>jū yoku gō o seisu</em> approach asks a different question: not "how do I overcome this resistance?" but "how do I move in a way that does not create this resistance?" Not "how do I force my way through?" but "what is the path that the situation itself is offering, if I am flexible enough to take it?" The yielding is not weakness. It is intelligence about where force is actually effective and where it is not.</p>
+<h2>Flexibility as Strength</h2>
+<p>The bamboo survives the typhoon that breaks the oak because it bends. The bending is not failure — it is the mechanism of survival. The oak's rigidity, its refusal to yield, is what makes it vulnerable. The bamboo's flexibility, which looks like weakness, is what makes it strong.</p>
+<p>The person who can adapt, who can change their approach when the current approach is not working, who can yield on what does not matter in order to hold what does — this person is practicing <em>jū yoku gō o seisu</em>. The softness is the strength. The flexibility is the path through.</p>
+<p><em>Jū yoku gō o seisu.</em> Be the water, not the rock. The yielding is not the losing. It is often the only winning available.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 69 ──────────────────────────────────────────────
+articles.append({
+    "day": 69,
+    "japanese": "小欲知足",
+    "romanji": "Shōyoku chisoku",
+    "title": "Few Desires, Know Sufficiency",
+    "subtitle": "Reduce desires and recognize sufficiency. The Buddhist path to a kind of freedom that accumulation cannot provide.",
+    "body_html": """<h2>The Structure of Wanting</h2>
+<p>There is a structure to wanting that is worth understanding. The thing desired is never exactly what was imagined. The arrival of the desired thing tends to produce not the satisfaction that was anticipated but a brief plateau followed by the emergence of a new desire — something slightly beyond what was just obtained. The mechanism does not have a natural end. The wanting continues regardless of what is obtained, because the wanting is not primarily about the things. It is a state that the things temporarily interrupt but do not resolve.</p>
+<p><em>Shōyoku chisoku.</em> Few desires, know sufficiency. The Buddhist teaching behind this phrase is not that desire is bad or that one should be indifferent to quality or beauty or genuine preference. It is that the accumulation of desires — the development of a long, active list of things one needs in order to be content — is itself a source of suffering that is structurally unresolvable by obtaining the things on the list. The list generates itself faster than the items are obtained.</p>
+<p>The practice of few desires is a practice of reducing the list — not by suppression but by examining each desire and asking whether this is something genuinely needed for a life of quality, or whether it is something the culture has suggested you need, something that comparison has generated, something that would be quickly replaced by a new desire even if obtained.</p>
+<h2>What Few Desires Produces</h2>
+<p>The person with few genuine desires has something that the person with many desires cannot have: attention. The mental energy that is consumed by the management of desires — the tracking of what is wanted, the planning to obtain it, the frustration at not yet having it, the brief satisfaction of obtaining it, the generation of the next desire — is enormous. The person with few desires has this energy available for what is actually present.</p>
+<p>This is not asceticism for its own sake. It is a practical trade: give up the perpetual mild dissatisfaction of always wanting something not yet present, and gain the ability to fully inhabit the situation that is actually here. The exchange is very favorable, once the mechanism of desire is understood clearly enough.</p>
+<h2>The Sufficient Life</h2>
+<p>A sufficient life is not an impoverished life. It is a life in which what is genuinely needed is genuinely present — and the presence of what is needed is recognized. The recognition is the practice. <em>Chisoku</em> — know sufficiency — requires the active knowing, the attention to what is here and what it is worth. Without the attention, the sufficiency is present but invisible, and the mind continues to search for what it already has.</p>
+<p><em>Shōyoku chisoku.</em> Fewer desires. More recognition of what is here. The sufficiency is already present, for those who can see it.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 70 ──────────────────────────────────────────────
+articles.append({
+    "day": 70,
+    "japanese": "無欲は大欲に勝る",
+    "romanji": "Muyoku wa taiyoku ni masaru",
+    "title": "No Desire Surpasses Great Desire",
+    "subtitle": "The state of non-desire exceeds even the greatest desire. The paradox at the heart of Buddhist and Taoist detachment.",
+    "body_html": """<h2>The Paradox at the Center</h2>
+<p>At first reading, the proverb seems to be contradicting itself. No desire surpasses great desire? What does it mean for the absence of desire to be superior to the presence of it? What is there to surpass if the desire has been released?</p>
+<p><em>Muyoku wa taiyoku ni masaru.</em> The state of non-desire exceeds even great desire. The key is in what desire is trying to obtain, and what the release of desire actually produces. Desire is trying to reach a state of satisfaction, of having enough, of being complete. It is using the mechanism of wanting and obtaining to try to reach a place of rest and fullness. The paradox is that this mechanism cannot reach the place it is looking for — because the wanting continues after the obtaining, and the satisfaction always recedes.</p>
+<p>The release of desire — the state of <em>muyoku</em> — does not reach the satisfaction that desire was looking for. It is the satisfaction that desire was looking for. Not a different way to get it; the direct recognition that it was here all along, and that the machinery of desire was the primary thing standing between the self and the recognition.</p>
+<h2>What Non-Desire Looks Like</h2>
+<p><em>Muyoku</em> is not indifference to quality or beauty or excellence. The person in a state of non-desire can still prefer a good meal to a bad one, can still bring full commitment to their work, can still care deeply about the people in their life. What they do not have is the condition that this situation be different from what it is in order for them to be at peace with it. They are at peace with it as it is, which allows them to work to improve it from a place of groundedness rather than anxiety.</p>
+<p>This is the paradox that many people never discover: the most effective engagement tends to come from a place of relative non-attachment to the outcome, not from a place of desperate need for a specific result. The athlete who is relaxed performs better than the one who is tense with need. The person who can let go of what they want to happen is often more effective at making it happen than the one who is gripping the outcome tightly.</p>
+<h2>The Greater Desire</h2>
+<p>The "great desire" the proverb refers to is not petty desire — the desire for a new object, a pleasant experience, an improved status. It is the deepest human desire: to be complete, at rest, at peace, fully alive. This is what all desires are ultimately pointing toward. And the proverb's claim is that the release of desire reaches this place — that non-desire is the fulfillment of the great desire, not its abandonment.</p>
+<p><em>Muyoku wa taiyoku ni masaru.</em> Release the wanting. The thing wanting was trying to find is right here.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+print(f"Days 61-70 loaded: {len(articles)} articles so far")
+
+# ── Day 71 ──────────────────────────────────────────────
+articles.append({
+    "day": 71,
+    "japanese": "志高く",
+    "romanji": "Kokorozashi takaku",
+    "title": "Keep Your Aspiration High",
+    "subtitle": "Set your aspiration high. The philosophy of deliberately aiming beyond what seems reachable.",
+    "body_html": """<h2>The Aspiration as Direction</h2>
+<p>An aspiration is not a goal. A goal is specific, measurable, achievable in principle — something you can arrive at and check off. An aspiration is a direction: something you move toward without necessarily expecting to reach it completely. <em>Kokorozashi takaku.</em> Keep your aspiration high. Not "set a realistic goal" — set an aspiration that is beyond realistic, that requires becoming more than you currently are in order to approach it.</p>
+<p>The Japanese word <em>kokorozashi</em> carries a weight that "aspiration" partially misses. It implies a resolution of the spirit, a direction the whole person has committed to, not merely a wish or an ambition. It is what you are oriented toward at the deepest level. <em>Kokorozashi takaku</em> is an instruction about where to aim the whole person.</p>
+<p>The case for keeping the aspiration high is not motivational — it is structural. What you aim at shapes what you do on the way there. The person aiming at something great will do different things, make different investments, develop different capacities than the person aiming at something modest. Even if neither of them reaches exactly what they aimed at, their trajectories will be different. The aim shapes the path.</p>
+<h2>The Risk of the High Aspiration</h2>
+<p>There is a real risk in keeping the aspiration high: the gap between where you are and where you are aiming can produce despair rather than direction. The person who is aiming at something great and focuses primarily on the distance still to travel can be paralyzed by the gap. The high aspiration, without a practice of working incrementally toward it, can become a source of shame about the present rather than a direction for the future.</p>
+<p>The resolution of this tension is in how the aspiration is held. Not as a destination that you must reach or have failed, but as a direction that shapes today's small choices. The aspiration determines the heading. Each day's work is a small step on that heading. The distance to the aspiration is not the measure of failure; it is the measure of how much room there is to grow.</p>
+<h2>The Aspiration as Identity</h2>
+<p>Over time, the person who has held a high aspiration and moved consistently toward it becomes different from the person who held a modest aspiration and reached it. Not because the high aspiration was reached — it may never be reached in its full form — but because the movement toward something genuinely great develops qualities that the movement toward something modest does not. The aspiration shapes the person. The high aspiration shapes the person more.</p>
+<p><em>Kokorozashi takaku.</em> Aim at something great. The direction is more important than the arrival.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 72 ──────────────────────────────────────────────
+articles.append({
+    "day": 72,
+    "japanese": "夢は大きく、行動は今",
+    "romanji": "Yume wa ōkiku, kōdō wa ima",
+    "title": "Dream Big, Act Now",
+    "subtitle": "Dream boldly, but act today. The discipline of bridging vision to immediate action.",
+    "body_html": """<h2>The Two Failure Modes</h2>
+<p>There are two ways to fail at this proverb. The first: dream big but act eventually, when conditions are right, when you are more prepared, when the timing is better. The dream stays large and beautiful; the action never quite arrives. The second: act constantly but dream small, staying busy with the immediately achievable, never lifting the eyes to what is actually possible. The action is real; the direction is insufficient.</p>
+<p><em>Yume wa ōkiku, kōdō wa ima.</em> Dream big, act now. Both parts are essential. The dream gives the action its direction and its meaning. The action gives the dream its connection to reality. Without the dream, action is just busyness. Without the action, the dream is just fantasy. The pairing is the practice.</p>
+<p>The proverb is pushing against both failure modes simultaneously. Against the dreamer who does not act: the action is now, not when conditions are perfect. Against the doer who does not dream: the dream should be large, not just the next small improvement. The combination — large vision, immediate action — is the path.</p>
+<h2>The Today That Makes the Dream Real</h2>
+<p>The <em>ima</em> — the "now" in the proverb — is doing significant work. It is not "soon" or "when ready" or "after one more preparation." It is now. Today. The dream is about the long future; the action is about the immediate present. The bridge between the two is the daily practice of taking whatever step is available toward the large direction.</p>
+<p>The person who waits until they can take a big step toward a big dream usually waits a long time, because the big step is rarely available. What is available is the small step. And the small steps, taken consistently in the direction of the large dream, cover remarkable distance over time. The dream is big. Today's step is small. Both are necessary. The small step toward the big dream, taken today, is the entire practice.</p>
+<h2>Why Both Must Be True Simultaneously</h2>
+<p>The tension between big dream and immediate action is productive. The big dream without immediate action produces procrastination — there is always a better moment to begin. The immediate action without a big dream produces activity that never accumulates into anything significant. Holding both simultaneously creates a productive pressure: the dream says "this matters, keep moving"; the action says "move today, not tomorrow." Neither alone is sufficient. Together, they are the practice of a life that goes somewhere meaningful.</p>
+<p><em>Yume wa ōkiku, kōdō wa ima.</em> Keep the vision large. Start today. The tomorrow where the dream arrives is built from the actions of today.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 73 ──────────────────────────────────────────────
+articles.append({
+    "day": 73,
+    "japanese": "熱い心、冷静な頭",
+    "romanji": "Atsui kokoro, reisei na atama",
+    "title": "Hot Heart, Cool Head",
+    "subtitle": "Burning passion paired with calm judgment. The combination that makes sustained excellence possible.",
+    "body_html": """<h2>The Two Things You Need</h2>
+<p>Neither alone is sufficient. The hot heart without the cool head produces passion that is undirected, energy that cannot be sustained through difficulty, enthusiasm that burns bright and burns out. The cool head without the hot heart produces analysis that never commits, clarity that never risks, intelligence that never steps fully into anything. The combination — burning passion held by calm judgment — is what makes sustained excellent action possible.</p>
+<p><em>Atsui kokoro, reisei na atama.</em> Hot heart, cool head. The proverb describes the internal structure of the person who can act with full commitment while maintaining the judgment to act well. The heart provides the fuel — the caring, the drive, the energy to keep going when things are difficult. The head provides the direction — the clear assessment of the situation, the judgment about what action is actually likely to work, the ability to update the approach when the current one is not working.</p>
+<p>The relationship between the two is not a balance in the sense of each moderating the other into tepidness. It is more like the relationship between fire and architecture: the fire provides the heat and light, but the architecture directs where the fire burns and prevents it from consuming everything. The cool head does not cool the heart. It focuses it.</p>
+<h2>When the Combination Breaks Down</h2>
+<p>The combination breaks down in two characteristic ways. The first: the passion overwhelms the judgment. The person is so invested in the outcome, so identified with a particular approach, so driven by their desire to succeed that they cannot clearly see evidence that the approach is not working. They push harder at what is failing because admitting failure would mean confronting the gap between what they wanted and what is actually happening. The hot heart has consumed the cool head.</p>
+<p>The second: the judgment suppresses the passion. The person is so concerned with being rational, so committed to not being swept away by feeling, so protective of their analysis that they cannot commit fully to anything. They see every risk clearly, which means they see every reason to hold back. The cool head has frozen the hot heart.</p>
+<h2>Cultivating the Combination</h2>
+<p>The hot heart is cultivated by connecting to what genuinely matters — finding the work or direction that produces real caring, real investment, real drive. This is not manufactured. It is discovered by moving toward what actually matters and noticing the quality of engagement that results.</p>
+<p>The cool head is cultivated by the practice of honest assessment — the willingness to look at evidence that challenges the preferred conclusion, to update the approach when the current one is not working, to separate caring about the outcome from believing the current approach is correct.</p>
+<p><em>Atsui kokoro, reisei na atama.</em> Feel it deeply. Think it clearly. The combination is rare and powerful.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 74 ──────────────────────────────────────────────
+articles.append({
+    "day": 74,
+    "japanese": "百折不撓",
+    "romanji": "Hyakusetsu futō",
+    "title": "A Hundred Breaks, Unbowed",
+    "subtitle": "Break a hundred times but never give up. The philosophy of the spirit that adversity cannot bend.",
+    "body_html": """<h2>The Unbowed Spirit</h2>
+<p>One hundred breaks. Not one, not three, not a manageable number of setbacks — one hundred. And after all of them: unbowed, unbroken in spirit. <em>Hyakusetsu futō.</em> One hundred bends, not yielding. The phrase comes from Chinese classical writing and describes a quality of spirit that remains intact regardless of the severity or frequency of the reversals it encounters.</p>
+<p>The breaks are real. The proverb does not deny the setbacks. It does not say the hundred things didn't happen, that the defeats were not real, that the pain was not genuine. It says: after all of that, something in the spirit was not bent. The external losses were absorbed. The internal orientation remained intact.</p>
+<p>This is different from resilience in the popular sense — the ability to bounce back after setbacks. Resilience implies returning to the previous state after a disruption. <em>Hyakusetsu futō</em> implies something that does not require bouncing back because it was not knocked down. Not that it was unaffected — the hundred breaks are acknowledged — but that the core orientation, the fundamental direction, was not deflected.</p>
+<h2>What Cannot Be Bent</h2>
+<p>The spirit that <em>hyakusetsu futō</em> describes is not invulnerable to pain or loss. It is invulnerable to the loss of direction. The person who has this quality can be hurt, can fail, can lose things that matter — and their fundamental orientation toward what they care about remains intact. The defeat does not become the final word. The reversal does not become a reason to abandon the direction. The hundred breaks do not accumulate into the conclusion that the direction is not worth pursuing.</p>
+<p>What makes this possible, when it is genuine, is usually a deep enough connection to the direction itself — to the <em>kokorozashi</em>, the aspiration — that temporary losses are experienced as temporary. The setback is real; the response to it is: still moving. The defeat is real; the response to it is: what is the next step from here?</p>
+<h2>Building This Quality</h2>
+<p>The <em>hyakusetsu futō</em> quality is built, not given. It is built through the accumulation of recoveries — through experiencing setbacks and moving through them, which builds the experiential knowledge that setbacks can be moved through. It is also built through the clarity and depth of the commitment to the direction. The person who is only mildly committed to a direction will be deflected by moderate adversity. The person who is deeply committed experiences adversity as something to move through rather than around.</p>
+<p><em>Hyakusetsu futō.</em> A hundred breaks, and still pointing in the same direction. This quality is available to anyone who cares enough about where they are going.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 75 ──────────────────────────────────────────────
+articles.append({
+    "day": 75,
+    "japanese": "初志貫徹",
+    "romanji": "Shoshi kantetsu",
+    "title": "See the First Intention Through",
+    "subtitle": "Carry your original intention all the way through. The discipline of completing what you began.",
+    "body_html": """<h2>The First Intention</h2>
+<p>There is something that happens at the beginning of a significant commitment that rarely happens later: clarity. The moment of the first intention — the decision to begin, the vision of what you are trying to create, the reason you said yes to this particular thing — has a clarity that is difficult to recover once the work has begun and the difficulties have accumulated and the original vision has been obscured by the complexity of the middle.</p>
+<p><em>Shoshi kantetsu.</em> See the first intention through to completion. The phrase is about the relationship between the beginning and the end — about carrying what was alive at the start all the way through to the finish, rather than losing it to the compromises and distractions and discouragements that the middle always contains.</p>
+<p>The proverb is not simply "finish what you start." It is more specific: carry the spirit of what you started through to the end. The person who finishes a project that has become entirely different from what they intended has not practiced <em>shoshi kantetsu</em>. The person who carries the original vision through all the complications, who finishes what they started and finishes it in the spirit they started with, has.</p>
+<h2>Why the Middle Erodes the First Intention</h2>
+<p>The middle of any significant project is where the original vision is most at risk. The problems are real and specific; the original intention is abstract and distant. The temptation to modify the scope, to lower the standard, to take the easier path that diverges from the original direction — these temptations are strongest in the middle, when the difficulty is highest and the end is not yet in sight.</p>
+<p>The practice of <em>shoshi kantetsu</em> requires returning periodically to the original intention — asking what you were trying to do when you started, whether the current direction is still moving toward that, what you have let slip from the original vision that should be recovered. The first intention is a compass. When the middle has spun the needle, the practice is to find north again.</p>
+<h2>The Completion as Integrity</h2>
+<p>Finishing what you started, in the spirit you started it, is a form of integrity — alignment between what you committed to and what you actually do. The person who consistently abandons their first intentions when the work gets hard is developing a relationship with their own commitments that erodes their ability to trust themselves. The person who consistently carries the first intention through to completion is building something: the knowledge that their commitments mean something, that the beginning of a thing is also the beginning of its end.</p>
+<p><em>Shoshi kantetsu.</em> Remember what you started for. Carry it through. The beginning and the end should recognize each other.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 76 ──────────────────────────────────────────────
+articles.append({
+    "day": 76,
+    "japanese": "好きこそものの上手なれ",
+    "romanji": "Suki koso mono no jōzu nare",
+    "title": "What You Love, You Master",
+    "subtitle": "You become skilled at what you love. The relationship between genuine interest and genuine excellence.",
+    "body_html": """<h2>The Mechanism of Love and Mastery</h2>
+<p>The proverb makes a causal claim, not just an observation. It is not "people who love things tend to be good at them." It is "because you love it, you become good at it." The love is the mechanism, not just a correlate. <em>Suki koso mono no jōzu nare.</em> Because it is liked, the thing is mastered. The liking — the genuine interest, the intrinsic caring — is what drives the mastery.</p>
+<p>The mechanism is not mysterious. The person who genuinely loves something notices more about it — the subtle variations, the edge cases, the fine distinctions that the person who merely tolerated it would not see. They think about it when they are not formally working at it. They seek out more of it, better versions of it, harder examples of it. They persist through difficulty because the difficulty is interesting rather than just effortful. Over time, this quality of attention and persistence produces mastery that the purely disciplined approach — the person who does the work without the love — rarely achieves.</p>
+<p>This is consistent with what is known about deep expertise. The people who reach the highest levels in any complex domain are almost invariably people who are genuinely fascinated by it — who find the problems interesting, not merely important. The intrinsic motivation sustains the level of engagement that elite performance requires.</p>
+<h2>The Problem of Loving the Wrong Things</h2>
+<p>The proverb does not say that you should only do what you love, or that all love produces mastery. It says that genuine mastery is found along the path of genuine love. The implication is that if you want to become genuinely excellent at something, one of the most important questions is whether you genuinely love it — whether your interest in it is real, rather than performed or wished for.</p>
+<p>Many people pursue mastery in areas where they think they should be interested, or where they are interested in the outcomes rather than the work itself. This path is harder and often leads somewhere different from genuine mastery — to a level of competence that reflects the effort invested, not the extraordinary level of engagement that love produces.</p>
+<h2>Finding and Cultivating the Love</h2>
+<p>Genuine interest is not always immediately visible — it can be obscured by the initial difficulty of a domain, or by not yet having found the aspect of it that actually engages you. The practice of discovering what you love requires exposure and exploration, and then paying careful attention to what actually lights up your engagement rather than what should theoretically interest you.</p>
+<p><em>Suki koso mono no jōzu nare.</em> What you love, you master. Find what genuinely interests you. Then go deep.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 77 ──────────────────────────────────────────────
+articles.append({
+    "day": 77,
+    "japanese": "一芸は身を助ける",
+    "romanji": "Ichigei wa mi o tasukeru",
+    "title": "One Skill Will Save You",
+    "subtitle": "One mastered art will sustain you. The case for deep specialization in a world that rewards breadth.",
+    "body_html": """<h2>The Art That Saves</h2>
+<p>The world tends to reward breadth — the person who can do many things, who is flexible and adaptable, who has a wide portfolio of skills. <em>Ichigei wa mi o tasukeru</em> pushes against this with a specific counter-claim: one mastered art will sustain you. Not ten good skills. One excellent one.</p>
+<p>The historical context is instructive. In traditional Japan, a person who had mastered a craft — who was genuinely excellent at a specific thing — could always find work, always find a place in a community, always contribute something of value. The art was a form of portable self-sufficiency. In difficult circumstances, the person with a mastered skill had something to offer that others genuinely needed. The skill was a form of security that could not be taken away.</p>
+<p>The modern version of this insight is related to what has been called "the long tail" — the discovery that in a connected world, there is a market for genuine expertise in almost any specific domain, and that genuine mastery of one thing often provides more economic and social value than moderate competence in many. The person who is truly excellent at a specific thing has something that is much harder to replace than the person who is competent at several.</p>
+<h2>What "One Art" Actually Means</h2>
+<p>The one art does not mean the one skill on a resume. It means the area in which you have developed enough depth that you are genuinely excellent — where your level of mastery is qualitatively different from the competent practitioners, where you bring something that cannot be easily substituted. This level of mastery requires the years of genuine investment that only come from the combination of interest and effort that the previous proverb described.</p>
+<p>The "one" is important: it implies the willingness to go deep rather than broad, to invest in genuine mastery rather than in appearing generally capable. This is a specific choice with specific tradeoffs. The breadth provides optionality; the depth provides excellence. The proverb is arguing for the depth, for the investment in genuine mastery of one thing rather than the spread of effort across many things.</p>
+<h2>The Art and the Identity</h2>
+<p>The art that saves is not separate from the person who masters it. It shapes them. The discipline required to reach genuine mastery changes the person who undergoes it. The patience, the attention, the willingness to return to difficulty repeatedly, the capacity to see one's own limitations clearly — these develop through the pursuit of the one art and become part of the person who has pursued it.</p>
+<p><em>Ichigei wa mi o tasukeru.</em> Find the one thing worth mastering. Go deep. The art and the person it makes are both forms of the sustaining it provides.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 78 ──────────────────────────────────────────────
+articles.append({
+    "day": 78,
+    "japanese": "大志を抱け",
+    "romanji": "Taishi o idake",
+    "title": "Embrace Great Ambition",
+    "subtitle": "Boys, be ambitious. The famous words of William Clark — and why they became a Japanese proverb.",
+    "body_html": """<h2>The American Who Became a Japanese Proverb</h2>
+<p>In 1877, William Smith Clark — the American educator who helped establish the Sapporo Agricultural College in Hokkaido — departed Japan after his brief but intense period of teaching. His farewell words, delivered to his students, became one of the most quoted phrases in Japanese history: "Boys, be ambitious!" The phrase was adopted, translated, and transformed into the Japanese cultural consciousness as <em>taishi o idake</em> — embrace great ambition, hold the great aspiration.</p>
+<p>The fact that this phrase from a 19th-century American found such resonance in Japan is itself instructive. It connected to something that was already valued in the Japanese tradition — the idea of <em>kokorozashi</em>, the high aspiration of the whole person — and gave it a new form in the context of Japan's rapid modernization and the possibilities that were opening before young people in a transforming society.</p>
+<p><em>Taishi o idake.</em> Embrace the great ambition. Not the comfortable ambition, not the safe ambition, not the ambition that is calibrated to what seems likely — the great one, the one that requires becoming more than you currently are to even approach.</p>
+<h2>What Great Ambition Requires</h2>
+<p>The great ambition is not merely a wish for great outcomes. It is a commitment to the level of effort and development that great outcomes require. The person who embraces great ambition and then looks for the easy path to it has not truly embraced it — they have embraced the outcomes while resisting the work. The genuine embrace of great ambition includes the embrace of what that ambition demands.</p>
+<p>This is why the phrase is directed at young people — not because great ambition belongs only to the young, but because youth is the moment when the direction is being set and when the long investment in a great ambition can begin. The great ambition embraced at twenty becomes visible at forty. The ambition embraced (or not) in youth shapes the entire trajectory.</p>
+<h2>The Compass Function</h2>
+<p>The great ambition functions as a compass. It provides orientation — a direction against which daily choices can be evaluated. Am I moving toward this, or away from it? Is this opportunity consistent with the direction, or does it pull me elsewhere? The great ambition does not have to be reached; it has to be pointed toward. Its value is directional, not as a destination.</p>
+<p>The person who has embraced a great ambition and uses it as a compass makes different daily choices than the person who is responding to whatever is immediately in front of them. Over a lifetime, the accumulated difference in these daily choices produces remarkable divergence in outcomes.</p>
+<p><em>Taishi o idake.</em> Embrace the great ambition. Use it as a compass. Let it shape the daily choices. The long direction is everything.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 79 ──────────────────────────────────────────────
+articles.append({
+    "day": 79,
+    "japanese": "魂を込めて作れ",
+    "romanji": "Tamashii o komete tsukure",
+    "title": "Make It With Your Soul",
+    "subtitle": "Pour your soul into what you make. The difference between producing and creating.",
+    "body_html": """<h2>The Thing That Has Soul</h2>
+<p>There is a quality that some made things have and others do not that is difficult to articulate but immediately recognizable. A piece of music that was performed by someone who was fully present is different from one that was technically executed. A meal prepared by someone who cared is different from one that was processed. A product made by someone who poured themselves into it is different from one that was manufactured to spec. The difference is not always visible in the technical quality. It is felt in something harder to name.</p>
+<p><em>Tamashii o komete tsukure.</em> Make it with your soul poured in. The instruction is not to try harder or to be more technically precise. It is to bring the whole self — the caring, the genuine investment, the presence — to the act of making. To let what is made be an expression of actual attention rather than a product of applied technique.</p>
+<p>This connects to the Japanese concept of <em>shokunin kishitsu</em> — the craftsman's spirit — which runs through Japanese culture's relationship with making. The shokunin does not merely execute a task. They bring themselves to the task fully, caring about the outcome in a way that is personal, treating the making as something that reflects on who they are. The <em>tamashii</em> — the soul — goes into the work.</p>
+<h2>What Blocks the Soul</h2>
+<p>The soul does not flow automatically into work. Several things block it. The most common is distraction — the divided attention that processes the task while thinking about something else. The task gets done, but the presence was not there. Nothing of the person went into the making. The result is technically acceptable and inwardly empty.</p>
+<p>Another blocker is the relationship to the outcome — the anxiety about whether the thing will be received well, which shifts the orientation from "what does this need?" to "what will people think?" The soul flows when the orientation is toward the work itself; it is blocked when the orientation is primarily toward the reception of the work.</p>
+<h2>The Practice of Full Presence in Making</h2>
+<p>The practice is presence in the moment of making — the deliberate return of attention to the work itself, the thing in the hands, the problem being addressed right now. Not the next thing, not the evaluation of the audience, not the comparison to other makers — this thing, this moment, this act of making. Full presence in the making is what allows the soul to go into the work.</p>
+<p>The things made with this quality carry it forward. They become, in some sense, more than the sum of their technical components — because something of the person who made them is genuinely in them.</p>
+<p><em>Tamashii o komete tsukure.</em> Make it with your whole self. The soul in the work is what makes the work worth making.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 80 ──────────────────────────────────────────────
+articles.append({
+    "day": 80,
+    "japanese": "道を極めるには終わりがない",
+    "romanji": "Michi o kiwameru ni wa owari ga nai",
+    "title": "There Is No End to Mastering a Path",
+    "subtitle": "Mastering a way has no end. The infinite depth of any genuine path of practice.",
+    "body_html": """<h2>The Path Without an End</h2>
+<p>The master of calligraphy who has practiced for fifty years will tell you: there is still more to learn. The martial arts teacher who has trained for forty years will tell you: the deeper I go, the more there is. The musician, the chef, the garden designer, the poet — anyone who has committed to a genuine path of practice and gone deep in it will say the same thing. The <em>michi</em> — the way, the path — has no end.</p>
+<p><em>Michi o kiwameru ni wa owari ga nai.</em> There is no end to mastering a path. This is not discouraging. It is liberating. The person who understood, early in their practice, that there is no endpoint to reach — no state of "I have arrived, the work is complete" — is free from the specific suffering of being dissatisfied with where they are. They are always on the path. The path is the point. The practice is the destination.</p>
+<p>The Japanese concept of <em>dō</em> — the Way — is central to this understanding. Judō, kendō, sadō (the Way of tea), shodō (the Way of calligraphy) — the suffix <em>dō</em> transforms a skill into a path of practice. The implication is that the practice is not primarily about achieving a level of skill. It is about the ongoing transformation of the person through the practice. The skill is the vehicle; the transformation is the destination. And transformation, like the path, has no end.</p>
+<h2>Beginner's Mind in Advanced Practice</h2>
+<p>The Zen concept of <em>shoshin</em> — beginner's mind — is related to this. The master who has maintained beginner's mind approaches each practice session as an opportunity to learn, not as a demonstration of accumulated mastery. They are not tired of the practice; they are perpetually open to what the practice has to offer. This openness is what allows the continued growth that the advanced practitioner's accumulated expertise would otherwise close off.</p>
+<p>The person who has reached an advanced level and decided they have learned most of what there is to learn has stopped the path. The path continues; they have stopped walking it. The person who maintains beginner's mind at an advanced level continues to deepen in ways that are invisible to the person who has decided they have arrived.</p>
+<h2>The Joy of the Infinite Path</h2>
+<p>The realization that the path has no end, once fully accepted, transforms the relationship to practice. There is no longer a destination to be anxious about reaching or disappointed about not reaching. There is only the practice, and the quality of presence brought to it today. The infinite path is also an infinite source of meaning: there is always more, always deeper, always something to bring full attention to. The practice never runs dry.</p>
+<p><em>Michi o kiwameru ni wa owari ga nai.</em> The path has no end. This is the best possible news. Keep walking.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+print(f"Days 71-80 loaded: {len(articles)} articles so far")
