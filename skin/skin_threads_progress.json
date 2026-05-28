@@ -1,5 +1,5 @@
 {
-  "daily_index": 176,
+  "daily_index": 177,
   "launch_index": 0,
   "history": [
     {
@@ -3884,6 +3884,13 @@
       "theme_id": 68,
       "variant": "B",
       "post_id": "17867355957683574"
+    },
+    {
+      "date": "2026/05/28 14:00",
+      "theme": "肌荒れと自律神経",
+      "theme_id": 69,
+      "variant": "B",
+      "post_id": "17991520589974206"
     }
   ],
   "ab_next": "A",
@@ -3897,7 +3904,7 @@
     "66": "A",
     "67": "A",
     "68": "A",
-    "69": "B",
+    "69": "A",
     "70": "B",
     "71": "B",
     "72": "B",
@@ -4051,7 +4058,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "70": {
       "a_score": 0.0,
@@ -4648,7 +4655,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-28T12:01:18.322848+00:00",
+  "last_posted_at": "2026-05-28T14:01:21.401507+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
