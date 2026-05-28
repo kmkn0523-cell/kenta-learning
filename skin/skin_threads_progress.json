@@ -1,5 +1,5 @@
 {
-  "daily_index": 174,
+  "daily_index": 175,
   "launch_index": 0,
   "history": [
     {
@@ -3870,6 +3870,13 @@
       "theme_id": 66,
       "variant": "B",
       "post_id": "18135365368486597"
+    },
+    {
+      "date": "2026/05/28 10:00",
+      "theme": "タンパク質不足と肌",
+      "theme_id": 67,
+      "variant": "B",
+      "post_id": "18164811193436257"
     }
   ],
   "ab_next": "A",
@@ -3881,7 +3888,7 @@
     "64": "A",
     "65": "A",
     "66": "A",
-    "67": "B",
+    "67": "A",
     "68": "B",
     "69": "B",
     "70": "B",
@@ -4025,7 +4032,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "68": {
       "a_score": 0.0,
@@ -4634,7 +4641,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-28T08:01:19.301176+00:00",
+  "last_posted_at": "2026-05-28T10:01:19.276864+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
