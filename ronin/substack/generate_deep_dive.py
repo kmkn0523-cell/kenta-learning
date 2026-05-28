@@ -1036,3 +1036,447 @@ articles.append({
 })
 
 print(f"Days 31-40 loaded: {len(articles)} articles so far")
+
+# ── Day 41 ──────────────────────────────────────────────
+articles.append({
+    "day": 41,
+    "japanese": "花鳥風月",
+    "romanji": "Kachō fūgetsu",
+    "title": "Flowers, Birds, Wind, Moon",
+    "subtitle": "The aesthetic ideal of nature's beauty. To live with flower, bird, wind, and moon is to live a full life.",
+    "body_html": """<h2>The Four Beauties</h2>
+<p>Four images: a flower, a bird, the wind, the moon. These are not chosen arbitrarily. They represent the full range of natural beauty available to human perception — the delicate and transient (the flower), the alive and free (the bird), the invisible made perceptible (the wind), the luminous and cyclical (the moon). Together they stand for the practice of aesthetic attention to the natural world.</p>
+<p><em>Kachō fūgetsu.</em> To appreciate the beauties of nature. To make this appreciation a central practice of a life well-lived. The phrase is used as a shorthand for the Japanese aesthetic tradition at its deepest level: the cultivation of sensitivity to the natural world as a moral and spiritual discipline, not merely a leisure activity.</p>
+<p>The Heian court poets who first systematized this aesthetic were not simply enjoining people to look at pretty things. They were describing a form of attention — careful, patient, non-possessive — that they believed produced a particular quality of humanity. The person who truly sees the cherry blossom in full bloom is practicing something that the person who looks and keeps walking is not.</p>
+<h2>Attention as Practice</h2>
+<p>What separates the aesthetic appreciation of <em>kachō fūgetsu</em> from simply looking at nature is the quality of attention it requires and cultivates. The moon viewed while thinking about tomorrow's meeting is not the moon of <em>kachō fūgetsu</em>. The cherry blossoms photographed for Instagram without the pause to simply be present with them is not the cherry blossom of this tradition. The quality being called for is sustained, receptive presence — the willingness to let the thing you are attending to be fully itself, without immediately translating it into something else.</p>
+<p>This quality of attention is trainable. The person who begins to practice noticing — who starts to actually stop and look at the quality of light in autumn, to stay a moment longer with the sound of rain, to watch the movement of a bird with genuine curiosity — develops a capacity that extends beyond these moments. The attention that can truly receive a flower can also truly receive a person, a problem, a moment of beauty in an unexpected place.</p>
+<h2>The Restoration That Beauty Provides</h2>
+<p>There is mounting evidence from psychology that contact with natural beauty reliably reduces cortisol, lowers heart rate, and restores attentional capacity depleted by directed effort. The Japanese aesthetic tradition knew this not through scientific measurement but through centuries of observation: the person who regularly sits with flower, bird, wind, moon is less brittle, more resilient, more capable of sustained engagement with difficulty.</p>
+<p>The practice does not require a garden or a forest. A single flower on a desk. The moon through a city window. The wind in the trees audible for a moment if you pause from what you are doing. These are available almost everywhere, almost always. <em>Kachō fūgetsu</em> is not an escape from ordinary life into nature. It is the practice of letting the natural world enter ordinary life — and allowing it to do what it does to whoever is present enough to receive it.</p>
+<p><em>Kachō fūgetsu.</em> Flower, bird, wind, moon. What do you see today, if you stop to look?</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 42 ──────────────────────────────────────────────
+articles.append({
+    "day": 42,
+    "japanese": "物の哀れ",
+    "romanji": "Mono no aware",
+    "title": "The Pathos of Things",
+    "subtitle": "The bittersweet awareness that all things pass. The sadness is not a problem to solve — it is the source of beauty.",
+    "body_html": """<h2>The Feeling That Has No English Translation</h2>
+<p>The cherry blossoms are at peak. They are extraordinary — white-pink clouds against blue sky, the kind of beauty that makes people stop in the middle of their day and stand and look. And already, as you look, the petals are beginning to fall. In a week they will be gone. The beauty and the ending are inseparable.</p>
+<p><em>Mono no aware.</em> The phrase is usually translated as "the pathos of things" or "a sensitivity to ephemera." Neither quite captures it. The character <em>mono</em> means "things" in the broadest sense — objects, beings, phenomena. The character <em>aware</em> (pronounced a-wa-reh, not the English "aware") means a kind of pathos, a poignant emotional response to transience. Together they name the complex feeling of beauty tinged with sadness that arises from the perception that all things pass.</p>
+<p>The literary scholar Motoori Norinaga, who systematized the concept in the 18th century, saw <em>mono no aware</em> as the central aesthetic experience of Japanese literature, the feeling that the best writing evokes and the feeling that constitutes the fullest response to existence. Not happiness, not suffering — this complex, bittersweet awareness that the beautiful is also transient, that the transient is also beautiful.</p>
+<h2>What the Sadness Is For</h2>
+<p>The Western philosophical tradition has generally treated sadness as something to be resolved — a problem with a solution, a state to be moved through and out of. <em>Mono no aware</em> suggests a different relationship to a particular kind of sadness: that the feeling of poignant awareness in the presence of transient beauty is not a failure of happiness but an achievement of depth. The person who watches the falling cherry blossoms and feels only aesthetic pleasure — untroubled by their transience — is not feeling more. They are feeling less.</p>
+<p>The sadness of <em>mono no aware</em> is the recognition of reality. Things end. The beautiful thing you are looking at will not always be here. The person you love is mortal. The moment you are in is already passing. The sadness is the appropriate response to this reality, and the appropriate response is also, in this tradition, the beautiful one.</p>
+<p>This is the paradox at the heart of the concept: that the capacity for this particular kind of sadness — for being moved by transience — is what makes a full aesthetic and emotional life possible. The person who cannot be moved by the falling of the blossoms cannot be fully moved by anything.</p>
+<h2>Living With Aware</h2>
+<p>The practical invitation of <em>mono no aware</em> is to stop trying to resolve the bittersweet. The last day of a project that went well. The final chapter of a book that has been a companion. The passing of a season. The moment when a child is no longer quite a child. These transitions carry their own quality of feeling — not pure grief, not pure happiness, but something that holds both — and the tradition says: stay with this. Don't rush past the awareness. The feeling is not a sign that something is wrong. It is a sign that you are paying attention to what is real.</p>
+<p><em>Mono no aware.</em> The pathos of things. Let it move you. The ability to be moved by the ending of the beautiful thing is itself a form of beauty.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 43 ──────────────────────────────────────────────
+articles.append({
+    "day": 43,
+    "japanese": "諸行無常",
+    "romanji": "Shogyō mujō",
+    "title": "All Things Are Impermanent",
+    "subtitle": "Nothing lasts. This is not pessimism — it is the first principle of a life that does not resist reality.",
+    "body_html": """<h2>The Opening of the Tale of Heike</h2>
+<p>The sound of the bell of Gion Shōja echoes the impermanence of all things. The color of the flowers of the teak tree declares that they who flourish must be brought low. Yea, the proud ones are but for a moment, like an evening dream in springtime.</p>
+<p>This is the opening of the <em>Heike Monogatari</em>, the 13th-century epic of the Taira clan's rise and fall, one of the most beloved works in Japanese literature. The line that opens it — invoking the sound of the bell and the impermanence it declares — announces the fundamental theme. <em>Shogyō mujō.</em> All conditioned things are impermanent. What rises will fall. What flourishes will decline. This is not a specific prediction about the Taira. It is a universal law.</p>
+<p>The concept comes from the first of the Three Marks of Existence in Buddhism: <em>anicca</em> (impermanence). Everything that has a beginning has an end. Every state that is reached will eventually be left. Every attachment to permanence will eventually meet the reality of change. The question is not whether things will change — they will — but how you will meet the change.</p>
+<h2>The Liberation in Impermanence</h2>
+<p>The common response to impermanence is grief: the loss of what was good, the resistance to what is ending, the desperate attempt to hold what cannot be held. Buddhism does not dismiss this response as weak. It acknowledges that it is the natural response of a mind that has formed attachments. But it also points to what is on the other side of fully accepting impermanence: freedom.</p>
+<p>When you deeply accept that nothing lasts — not the good, not the bad, not the pleasant, not the painful — you are no longer held hostage by either the fear of losing what you have or the hope of permanently escaping what is difficult. The good moment is more fully savored because you know it is passing. The bad moment is more fully endured because you know it too will pass. The equanimity that comes from genuine acceptance of impermanence is not indifference. It is the stable ground from which full engagement with the present becomes possible.</p>
+<h2>Impermanence and Action</h2>
+<p>One might think that impermanence implies passivity: if nothing lasts, why build anything? The tradition suggests the opposite. Because nothing lasts, this moment of building matters. Because the window will close, act while it is open. Because the people in your life are mortal, be present with them now. Impermanence does not argue against action — it argues for action taken without the illusion that the results will be permanent, and therefore for action taken with full presence rather than one eye on the imagined future in which things are finally stable.</p>
+<p>The person who has truly absorbed <em>shogyō mujō</em> is neither attached to outcomes nor indifferent to them. They act fully, care genuinely, and hold lightly — because they know that holding tightly to what must change does not keep it. It only makes the change more painful when it comes.</p>
+<p><em>Shogyō mujō.</em> All things pass. This moment included. Be here for it.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 44 ──────────────────────────────────────────────
+articles.append({
+    "day": 44,
+    "japanese": "形あるものはいつか壊れる",
+    "romanji": "Katachi aru mono wa itsuka kowareru",
+    "title": "Everything That Has Form Will Break",
+    "subtitle": "All things with shape will someday break. This is not a threat — it is an invitation to appreciate them before they do.",
+    "body_html": """<h2>The Cup in Your Hand</h2>
+<p>There is a cup you use every morning. It is ordinary — not particularly valuable — but it has become the cup, the one your hand reaches for without thinking, the one whose weight and warmth are part of how the morning begins. One day it will break. The fall from the counter, the miscalculated grip, the moment of inattention. It will break and it will be ordinary, something that happens to all cups. But it will also be a small loss.</p>
+<p><em>Katachi aru mono wa itsuka kowareru.</em> Everything that has form will someday break. The cup, the body, the relationship, the company, the dynasty. Whatever has a shape that can be named and pointed to has a duration, and that duration will end. The breaking is not a flaw in the thing. It is the nature of things that have form.</p>
+<p>The proverb is a close cousin of yesterday's <em>shogyō mujō</em> and carries a complementary emphasis: where <em>shogyō mujō</em> is a philosophical principle about impermanence, this proverb is immediate and physical. Not "all conditions are impermanent" but "the specific thing in your hand will break." The abstraction made concrete. The principle made personal.</p>
+<h2>What Knowing the Breaking Does</h2>
+<p>There is a Japanese ceramic tradition of repairing broken pottery with gold — <em>kintsugi</em>. The cracks are not hidden. They are highlighted. The broken and repaired object is considered more beautiful than the unbroken one — because the history of breaking and being repaired is part of what it is. The form was temporary. The breaking was real. The repair holds. And the new form is richer than the original.</p>
+<p>Knowing that the cup will break changes how you use it. Not in the direction of excessive care — hovering anxiously over what must eventually be lost — but in the direction of genuine appreciation. The cup that you know will not be here forever is the cup you actually pick up and hold. The relationship that you know is mortal is the one you actually show up for. The body that you know will fail is the one you actually inhabit.</p>
+<p>The ignorance of impermanence does not protect us from loss. It only keeps us from using what we have while we have it.</p>
+<h2>The Acceptance That Opens</h2>
+<p>The tradition is not asking you to live in constant awareness of every possible loss. That would be exhausting and distorting. It is asking for a background acceptance — a settled knowing that things break, held lightly, that colors how you are with what is currently whole. This background acceptance does not generate anxiety. It generates presence.</p>
+<p>The person who has accepted that the cup will break holds it more fully. They wash it with a little more care. They notice its weight and warmth a little more clearly in the morning. Not because they are performing appreciation — but because the simple fact of impermanence, once accepted, makes the present thing more vivid.</p>
+<p><em>Katachi aru mono wa itsuka kowareru.</em> The form will break. Pick it up while it's whole. Use it. Be glad it's here.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 45 ──────────────────────────────────────────────
+articles.append({
+    "day": 45,
+    "japanese": "春夏秋冬、それぞれに美しい",
+    "romanji": "Shunkashūtō, sorezore ni utsukushii",
+    "title": "Each Season Has Its Own Beauty",
+    "subtitle": "Spring, summer, autumn, winter — each is beautiful in its own way. The practice of finding the beauty in every season.",
+    "body_html": """<h2>The Season You Are In</h2>
+<p>There is a tendency, in every season, to wish for a different one. The heat of summer makes people long for autumn's coolness. The grey of winter makes people long for spring's brightness. The fleeting intensity of spring makes people anxious about its ending. There is almost always another season that would be better.</p>
+<p><em>Shunkashūtō, sorezore ni utsukushii.</em> Spring, summer, autumn, winter — each one has its own beauty. This is not a claim that all seasons are equally pleasant, or that there is no good reason to prefer one over another. It is a claim about where the work of appreciation must be done: in the season you are actually in, not in the one you are waiting for.</p>
+<p>Japanese culture has developed this practice to a degree that can seem astonishing from the outside. The seasonal aesthetics are not incidental decorations — they are a serious engagement with the particular quality of each part of the year. The specific light of autumn. The texture of the first cold morning. The particular silence of deep snow. The raucous exuberance of summer festivals. Each season has a vocabulary of beauty that belongs to it and only to it. The practice of <em>shunkashūtō</em> is learning to recognize and inhabit that vocabulary, in season.</p>
+<h2>The Seasons of a Life</h2>
+<p>The seasonal metaphor extends naturally to the larger rhythms of life. The vigorous years of early adulthood. The deepening of middle age. The particular clarity and quiet that can come in old age. Each stage has what it has, what the earlier and later stages do not. The young person who wishes only to be older, the older person who wishes only to be young — both are missing what is actually available to them in the season they are in.</p>
+<p>The proverb asks: what is beautiful about this particular stage that will not be available later? The energy and openness of beginning. The depth of knowledge that comes with long practice. The unselfconsciousness of not yet knowing how hard things will become. The hard-won equanimity of having survived what was hard. These are not consolations — they are real goods, available in specific seasons and not in others.</p>
+<h2>The Practice of In-Season Appreciation</h2>
+<p>The practical dimension of this philosophy is straightforward and demanding: find the beauty in the season you are actually in, not the season you prefer. Not as a spiritual exercise in resignation — as a genuine act of attention. The winter morning that is not beautiful if you look at it from the angle of wanting summer, but is genuinely beautiful if you are willing to look at it on its own terms: the stark contrast of bare branches against grey sky, the quality of the cold air, the particular silence that heavy cloud cover creates.</p>
+<p>This practice scales. The difficult period at work has qualities that the comfortable period does not. The stage of life you are navigating, however unwanted, contains something. The question is not whether the season is your favorite. The question is whether you are willing to receive what it has.</p>
+<p><em>Shunkashūtō, sorezore ni utsukushii.</em> Every season has its beauty. The season you are in most of all, because it is the only one you can actually be in.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 46 ──────────────────────────────────────────────
+articles.append({
+    "day": 46,
+    "japanese": "水は低きに流れる",
+    "romanji": "Mizu wa hikuki ni nagareru",
+    "title": "Water Flows to the Low Places",
+    "subtitle": "Water flows where it is lowest. The philosophy of humility: true strength moves without resistance toward what is open.",
+    "body_html": """<h2>The Water Argument</h2>
+<p>Water does not insist on its direction. It does not push against walls or demand that the landscape conform to its preferences. It finds the lowest place and flows there. It goes where it can go. And it shapes mountains — not by force, but by patient, persistent presence in the direction that is open to it.</p>
+<p><em>Mizu wa hikuki ni nagareru.</em> Water flows to the low places. The observation is meteorological and also deeply philosophical — it is the core image of Taoist thought, developed extensively in the <em>Tao Te Ching</em> and absorbed into Japanese thought through Buddhism and centuries of practice. The highest good is like water, Laozi says. It benefits all things without contention. It dwells in the low places that all others disdain. This is why it is close to the Tao.</p>
+<p>The paradox at the heart of this image: water, which flows downward, which takes the humble path, which yields to every obstacle — is the most powerful shaping force on earth. Canyons, coastlines, mountains — all are shaped by water's patient flowing. The softness that always moves lower has moved the hardest things.</p>
+<h2>Humility as Strength</h2>
+<p>The philosophy derived from this image is not passivity. It is strategic humility — the understanding that the force that insists on its preferred direction, that pushes against what blocks it, uses its energy fighting resistance rather than moving. The force that flows to where it can go covers ground and shapes things while the resistant force is stalled.</p>
+<p>In human terms: the person who is willing to take the lower position — to do the work that others don't want to do, to listen more than they speak, to be less concerned with credit and more concerned with movement — tends to accumulate capability and influence in a way that the person insisting on the path of prestige does not. Not because humility is morally superior, but because it encounters less resistance and therefore moves more effectively.</p>
+<h2>Finding the Low Place</h2>
+<p>The practical application is a question: in any situation, where is the low place? The opening that others are ignoring because it is not the prestigious path. The connection that is available if you are willing to be less important in it. The approach that works because it works with the natural tendency of things rather than against it.</p>
+<p>This is not the same as always choosing the easiest path. Sometimes the low place requires significant effort. But the effort is productive because it is not fighting the fundamental shape of things. Water carries enormous energy. The question is where that energy is directed — against the wall, or around it.</p>
+<p><em>Mizu wa hikuki ni nagareru.</em> Go where you can go. The low place is not beneath you. It is where the movement is.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 47 ──────────────────────────────────────────────
+articles.append({
+    "day": 47,
+    "japanese": "桜散る、されど根は残る",
+    "romanji": "Sakura chiru, saredo ne wa nokoru",
+    "title": "The Blossoms Fall, but the Roots Remain",
+    "subtitle": "The cherry blossoms scatter, but the roots hold. What is visible passes; what is deep endures.",
+    "body_html": """<h2>Two Things at Once</h2>
+<p>The cherry blossom is the most celebrated image in Japanese aesthetics, and its power comes from what it holds simultaneously: peak beauty and imminent ending. The blossom is most beautiful at the moment it is about to fall. The viewing parties are held at peak bloom, knowing that by next week the petals will be on the ground.</p>
+<p><em>Sakura chiru, saredo ne wa nokoru.</em> The blossoms scatter — but the roots remain. This is a proverb that holds the two realities at once without resolving the tension between them. Yes, the beautiful thing passes. And also: the source of the beautiful thing persists. The roots that generated this year's blossoms will generate next year's blossoms. The visible ending is not the whole story.</p>
+<p>The image distinguishes between what is visible and what is sustaining. The blossoms are the visible expression. The roots are the invisible source. The blossoms must fall — they are the transient expression of something that is not transient. The roots do not require the blossoms to be permanent in order to be productive. They wait in the earth and send up new blossoms when the season returns.</p>
+<h2>What Are Your Roots?</h2>
+<p>The question the proverb asks is: what are the roots — the invisible, sustaining source — from which your visible expressions emerge? The values that generate your actions. The relationships that sustain your work. The capacity built over years that produces each new thing you make. The character that was formed in difficulty and that continues to be the ground of everything you do in the world.</p>
+<p>These roots are not glamorous. They are not the blossoms that people admire. They are the part that stays in the earth through winter, that holds when the visible expression has fallen. The person who has strong roots — who has done the invisible work of building genuine capacity, genuine character, genuine relationship — survives the falling of the blossoms. They know that the roots are still there. They know the season will return.</p>
+<h2>After the Blossoms Fall</h2>
+<p>There are moments in a life when the blossoms fall. The project that was going so well suddenly fails. The relationship that seemed so full suddenly ends. The moment of confidence that felt so solid suddenly isn't there. The visible expression of something good passes, and what remains is the question: are the roots still there?</p>
+<p>The person who has invested in roots — who has built the invisible infrastructure of capability and connection and character — can answer yes. The blossoms can fall. They will come again. Not necessarily the same blossoms, not necessarily on the same schedule. But the roots that generate beautiful things do not require any particular expression to be permanent in order to keep generating.</p>
+<p><em>Sakura chiru, saredo ne wa nokoru.</em> The blossoms scatter. Tend your roots. They are still there.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 48 ──────────────────────────────────────────────
+articles.append({
+    "day": 48,
+    "japanese": "一葉落ちて天下の秋を知る",
+    "romanji": "Ichiyō ochite tenka no aki o shiru",
+    "title": "One Falling Leaf Tells the World's Autumn",
+    "subtitle": "From one leaf falling, you can know that autumn has come to the whole world. The skill of reading the signal in the small.",
+    "body_html": """<h2>The Leaf That Carries Information</h2>
+<p>A single leaf detaches from its branch and falls. It is one leaf among billions. And yet, if you know how to read it, it carries information about the whole world: autumn has come. Not just to this tree, not just to this forest — to everything. The single leaf is a signal about the universal condition.</p>
+<p><em>Ichiyō ochite tenka no aki o shiru.</em> From one falling leaf, know the autumn of the whole world. The proverb is describing a cognitive skill: the ability to read large-scale patterns from small-scale signals. Not the leaf as interesting in itself, but the leaf as evidence of something larger that would otherwise be invisible.</p>
+<p>This is a form of intelligence that cuts across domains. The investor who reads a minor consumer behavior shift and understands what it means for the broader market. The doctor who reads a subtle symptom and understands what system it reflects. The leader who reads a small change in team dynamics and understands what it signals about the larger organizational health. All of these are practicing the skill named in the proverb: reading the world through its small signals.</p>
+<h2>What Enables This Reading</h2>
+<p>The ability to read the autumn in a single leaf requires two things: a deep knowledge of what leaves do in what conditions, and the attentiveness to notice the single leaf at all. Both are necessary. The person with great knowledge but poor attention misses the leaf. The person with excellent attention but shallow knowledge sees the leaf and does not know what it means.</p>
+<p>This is why the proverb has a learning implication: to develop this skill, you need both depth of knowledge in your domain and the cultivation of genuine attentiveness to the small things that your domain produces. The signals are usually there. The question is whether you are present enough and knowledgeable enough to read them when they appear.</p>
+<h2>Catching Things Early</h2>
+<p>The practical value of this skill is catching things early — before the problem has become obvious, before the opportunity has passed, before the situation has become urgent. The single falling leaf appears before the full autumn foliage. The person who reads it has time to respond. The person who waits until the leaves are everywhere has less room to move.</p>
+<p>This is one of the most consistently high-value skills available in any domain: the ability to read early signals accurately and act on them before they become late signals. It requires accepting uncertainty — the single leaf might not mean what you think it means — and it requires the willingness to act on incomplete information. But the cost of acting early on a correct early reading is almost always lower than the cost of acting late on an obvious late reading.</p>
+<p><em>Ichiyō ochite tenka no aki o shiru.</em> One leaf tells the whole autumn. Learn to read the small things. Autumn does not announce itself loudly.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 49 ──────────────────────────────────────────────
+articles.append({
+    "day": 49,
+    "japanese": "天網恢恢、疎にして漏らさず",
+    "romanji": "Tenmō kaikaku, so ni shite morasa zu",
+    "title": "Heaven's Net Is Wide and Fine",
+    "subtitle": "The net of heaven is vast, its mesh wide — yet nothing slips through. Actions have consequences that are always real.",
+    "body_html": """<h2>The Net That Catches Everything</h2>
+<p>There is a net stretched across the whole of existence. It appears to have large gaps — many things seem to pass through it unpunished, unremarked, uncaught. But this appearance is wrong. The net is vast, and its mesh is fine enough that in the end, nothing passes through. What is done is done, and what is done has consequences, even when those consequences are not immediately visible.</p>
+<p><em>Tenmō kaikaku, so ni shite morasa zu.</em> The net of heaven is vast; its mesh is coarse, yet nothing escapes. The line comes from the Tao Te Ching and was absorbed into Japanese moral philosophy. It describes a universe in which moral causation is real and total — not in the sense of a supernatural punisher who tallies wrongs, but in the sense that actions have consequences that cannot be ultimately avoided, even when they appear to have escaped.</p>
+<p>The proverb is a philosophical claim about the nature of consequences: that they are not limited to the immediate, the visible, the socially enforced. They include the character formed by the action, the relationships changed by it, the opportunities foreclosed, the inner life altered. In this broader accounting, very little actually escapes.</p>
+<h2>The Long Reckoning</h2>
+<p>The net is described as both vast and fine. Vast: the scale of its operation is larger than any individual life or any immediate social context. Fine: despite its apparent coarseness, the mesh is ultimately too fine for anything to pass through. This combination describes a universe that does not operate on a human timescale, but does operate — consistently, eventually, completely.</p>
+<p>History is full of examples that seem to contradict this: the person who acted wrongly and prospered. But the full accounting is rarely visible from outside, and rarely complete within a single lifetime. The habit of deception that prospers in a specific context but erodes the capacity for genuine trust. The exploitation that produces short-term gain but creates enemies, structural weakness, and eventual collapse. The net catches late, but it catches.</p>
+<h2>Acting Under the Net</h2>
+<p>The practical implication is not primarily a warning about punishment. It is an invitation to coherence: to act as if your actions have full consequences even when the immediate social environment would not catch them. Not because someone is watching — but because the net is real, and because acting with integrity when no one can see is the only way to actually have integrity rather than merely performing it.</p>
+<p>The person who behaves differently when they believe they are unobserved is not a person of integrity. They are a person of compliance. The person who behaves consistently because they understand that the net of consequences is always present — that nothing is truly unobserved by reality, even if it is unobserved by people — that person has something more durable than reputation. They have character.</p>
+<p><em>Tenmō kaikaku, so ni shite morasa zu.</em> The net is vast and fine. Act accordingly. Not because it will catch you, but because you know it will.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 50 ──────────────────────────────────────────────
+articles.append({
+    "day": 50,
+    "japanese": "月に叢雲、花に風",
+    "romanji": "Tsuki ni murakumo, hana ni kaze",
+    "title": "Clouds Over the Moon, Wind Through the Blossoms",
+    "subtitle": "Clouds dim the moon; wind scatters the blossoms. Beauty and interference arrive together.",
+    "body_html": """<h2>The Moon and Its Clouds</h2>
+<p>You have been looking forward to the full moon. You are outside, the night is clear, and the moon rises — and then the clouds come. They drift across, dimming it, obscuring it, finally covering it entirely. The moon is still there. But you cannot see it now.</p>
+<p>You are at the cherry blossom viewing. The petals are at peak, the trees are magnificent, and then the wind picks up. Petals fill the air. The blossoms that took the whole spring to open are scattered in minutes. The viewing is over before it fully began.</p>
+<p><em>Tsuki ni murakumo, hana ni kaze.</em> Clouds over the moon, wind through the blossoms. The proverb names the pattern: beauty and the thing that interferes with it tend to arrive together. This is not coincidence and not a complaint. It is an observation about the structure of experience — that the beautiful thing and the thing that complicates it are often not separable.</p>
+<h2>The Interference That Belongs</h2>
+<p>The Japanese aesthetic tradition does not see the clouds over the moon as a failure of the evening. The moon glimpsed through moving clouds — appearing, disappearing, appearing again — has a quality that the unobstructed moon does not have. The petals scattered by the wind create a visual experience — a snowfall of pink-white against the blue sky — that the static tree could not create. The interference is not external to the beauty. In some cases, it is part of what makes the beauty what it is.</p>
+<p>This is a difficult position to hold in the moment when the interference arrives. The person whose moon-viewing is disrupted by clouds does not immediately feel grateful for the aesthetic complexity the clouds provide. They feel frustrated. And yet the tradition asks: is the frustrated response accurate? Or is it missing something that a different quality of attention would reveal?</p>
+<h2>Perfect Conditions and the Life You Actually Have</h2>
+<p>The proverb has implications far beyond moon-viewing. It describes the fundamental condition of every good thing: it arrives with clouds. The relationship that is genuine is also complicated. The work that matters is also difficult. The project that has meaning also has friction. The moments of connection also have awkwardness. The beautiful thing and the thing that makes it imperfect arrive together.</p>
+<p>The person waiting for perfect conditions — for the clear night and the full moon with no clouds — will wait a very long time. And the clear night, when it finally comes, will have something of its own. There will be wind. There will always be something. The skill is not eliminating the interference. It is learning to see the moon through the clouds — and understanding that the moon through clouds is not the moon minus the clouds. It is its own thing. Worth seeing.</p>
+<p><em>Tsuki ni murakumo, hana ni kaze.</em> Clouds come with moons. Wind comes with blossoms. Look through the clouds. The moon is still there.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+print(f"Days 41-50 loaded: {len(articles)} articles so far")
+
+# ── Day 51 ──────────────────────────────────────────────
+articles.append({
+    "day": 51,
+    "japanese": "背水の陣",
+    "romanji": "Haisui no jin",
+    "title": "Formation With Your Back to the Water",
+    "subtitle": "Deploy with your back to the river — no retreat possible. The counterintuitive power of burning your escape routes.",
+    "body_html": """<h2>The General's Gamble</h2>
+<p>In 204 BCE, the Han general Han Xin faced a superior force. He deployed his troops with their backs to a river — a clear violation of standard military doctrine, which held that you should always keep a retreat route open. His officers were alarmed. His troops were trapped. And then they fought with a ferocity that routed a much larger army, because they had no choice but to win.</p>
+<p><em>Haisui no jin.</em> The river-back formation. The phrase has entered Japanese and Chinese cultures as a description of the decision to enter a situation from which there is no retreat — to deliberately eliminate the option of withdrawal and use the constraint of that elimination as a source of extraordinary effort and focus.</p>
+<p>The paradox of the strategy: by removing safety, you create strength. By eliminating the option of retreat, you eliminate the mental energy that is spent calculating whether to retreat. All of that energy becomes available for the fight in front of you. The trapped soldier fights harder than the one who is thinking about the exit.</p>
+<h2>When No-Retreat Is the Right Move</h2>
+<p>The strategy is not always appropriate. Many situations benefit from flexibility, from maintaining optionality, from keeping the possibility of a graceful withdrawal. The <em>haisui no jin</em> logic applies in specific conditions: when the level of commitment required to succeed is higher than you can reliably generate without constraint, and when the cost of failure is survivable.</p>
+<p>The person who burns bridges to ensure they cannot return to their old career is making a <em>haisui no jin</em> move. So is the person who makes a public commitment they cannot walk back. So is the person who invests resources in a direction that forecloses other directions. These moves are powerful when the commitment they enforce produces effort and focus that would not otherwise be available. They are dangerous when made in the wrong situations, with insufficient analysis of what success requires.</p>
+<h2>The Psychology of Constraint</h2>
+<p>There is a consistent finding in behavioral psychology: people perform better under constraints that are appropriately challenging. The absence of any constraint — total freedom, infinite optionality — tends to produce paralysis and diluted effort. Some form of commitment, some narrowing of the options, tends to produce clarity and focus.</p>
+<p><em>Haisui no jin</em> takes this principle to its extreme: total commitment, no retreat. For the right situation, in the right hands, it is devastatingly effective. The question to ask before making this move is not "am I willing to commit?" but "is this the situation where total commitment is the right strategy, and do I have a clear picture of what winning requires?"</p>
+<p><em>Haisui no jin.</em> Back to the water. When you are certain, burn the boats. The energy that floods in is extraordinary.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 52 ──────────────────────────────────────────────
+articles.append({
+    "day": 52,
+    "japanese": "虎穴に入らずんば虎子を得ず",
+    "romanji": "Koketsu ni irazunba koji o ezu",
+    "title": "Enter the Tiger's Den",
+    "subtitle": "If you do not enter the tiger's cave, you cannot catch its cubs. Nothing worth having is obtained without risk.",
+    "body_html": """<h2>The Den and What Is In It</h2>
+<p>The tiger's cave is dangerous. The tiger is inside. And yet the cubs are also inside — the thing of value, the thing worth having. You cannot reach the cubs without entering the cave. You cannot obtain what is valuable without accepting proximity to what is dangerous. The risk and the reward are in the same location.</p>
+<p><em>Koketsu ni irazunba koji o ezu.</em> If you do not enter the tiger's den, you cannot get the tiger's cubs. The proverb is a direct statement about the structure of risk and reward: the valuable things are typically found in the dangerous places. The person who only operates in safe territory will consistently miss what the dangerous territory contains.</p>
+<p>This is not a celebration of recklessness. The proverb does not say "enter every tiger's den." It says: the specific tiger's den that contains what you need — enter that one. The target is the cubs, not the danger. The danger is accepted because the cubs are worth it, and because the cubs are only there.</p>
+<h2>What Keeps People Out of the Den</h2>
+<p>The most common reason people do not enter the tiger's den is not that they have done the calculation and decided the cubs are not worth the risk. It is that they have not done the calculation at all — that the presence of danger has short-circuited the analysis and produced automatic avoidance. The den is dangerous, therefore I will not enter. The possibility of the cubs is not seriously considered because the possibility of the tiger has already produced the conclusion.</p>
+<p>The proverb is asking you to separate the evaluation of the risk from the automatic response to the presence of danger. To actually ask: what is in this den? What do I lose by not entering? What do I risk by entering? Is this a tiger's den where the cubs are worth the tiger, or one where they are not?</p>
+<h2>Entering With Preparation</h2>
+<p>The general who coined this phrase — Ban Chao, in the 1st century CE — was not advocating entering tiger's dens unprepared. He was advocating entering them when the strategic analysis demanded it. The preparation matters: you want to know where the tiger is, you want a plan for moving through the den, you want to know where the cubs are and how to extract them quickly. This is not reckless entry — it is calculated entry into acknowledged danger.</p>
+<p>The person who enters the difficult conversation, the competitive market, the challenging relationship, the high-stakes project — enters with preparation. They know the danger. They have thought about how to navigate it. And they enter anyway, because the cubs are there, and the cubs are worth it.</p>
+<p><em>Koketsu ni irazunba koji o ezu.</em> The cubs are in the den. Prepare well. Then enter.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 53 ──────────────────────────────────────────────
+articles.append({
+    "day": 53,
+    "japanese": "当たって砕けろ",
+    "romanji": "Atatte kudakero",
+    "title": "Crash Into It and Shatter",
+    "subtitle": "Go at it and break apart if you must. The philosophy of full commitment over cautious preservation.",
+    "body_html": """<h2>The Instruction to Shatter</h2>
+<p>The phrase is striking in its physical imagery. <em>Atatte kudakero.</em> Crash into it and shatter. Not "approach carefully" or "try your best" or "give it a shot." Crash in. And if you shatter, shatter. The instruction is not just to try — it is to try without reservation, without the protective holding-back that keeps the attempt from being total.</p>
+<p>The proverb is often used in the context of approaching someone with a difficult request, a romantic overture, a bold professional proposition — any situation where there is a high risk of rejection and the temptation is to approach cautiously, to protect yourself from the full force of a possible no. <em>Atatte kudakero</em> says: don't. Crash in fully. Accept the possibility of shattering. A total effort that results in rejection is better than a half-effort that avoids it.</p>
+<p>There is a specific kind of failure that the proverb is targeting: the failure by insufficient commitment. The attempt that is held back because of the fear of full rejection, and which therefore produces the result of neither full success nor the dignity of complete effort. The guarded half-attempt that does not get the yes and does not get the catharsis of a genuine no. <em>Atatte kudakero</em> refuses this middle outcome.</p>
+<h2>The Psychology of Full Commitment</h2>
+<p>There is consistent evidence that people regret inaction more than action — that in the long run, the things that haunt us are not the attempts that failed but the attempts we did not make. The person who crashed in and shattered knows what happened. The person who held back lives with the uncertainty of what might have happened, which the mind tends to resolve in the direction of "it would have worked, if only I had tried."</p>
+<p>Full commitment resolves uncertainty. It provides the information that the cautious approach withholds. And it has a quality of integrity — of alignment between what you want and what you do — that the cautious approach lacks. <em>Atatte kudakero</em> is, among other things, a call to act in accordance with what you actually want, rather than in accordance with what is safe.</p>
+<h2>After the Shattering</h2>
+<p>The instruction includes the shattering. This is important. The proverb does not say "crash in and succeed." It says "crash in and shatter if necessary." The acceptance of shattering is what makes the full crash possible — because you are not trying to preserve yourself from damage, you can commit fully to the attempt. The pieces can be gathered. The broken thing can be rebuilt. The shattered state after a genuine full effort is not a shameful outcome. It is proof that you crashed in, that you gave it everything, that the attempt was real.</p>
+<p><em>Atatte kudakero.</em> Crash in. Shatter if you must. The half-attempt is the one that haunts you.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 54 ──────────────────────────────────────────────
+articles.append({
+    "day": 54,
+    "japanese": "一か八か",
+    "romanji": "Ichi ka bachi ka",
+    "title": "One or Eight: The All-or-Nothing Bet",
+    "subtitle": "All or nothing. The moment when calculation ends and commitment must simply begin.",
+    "body_html": """<h2>The Dice and the Decision</h2>
+<p>The phrase comes from gambling, from the dice game where the outcome is either one (the worst) or eight (the best) — nothing in between. <em>Ichi ka bachi ka.</em> One or eight. All or nothing. Win completely or lose completely. The phrase has become an idiom for any situation where the stakes are binary — where the middle ground has been eliminated and the only question is whether to bet.</p>
+<p>There is a specific kind of decision the proverb describes: the one where you have reached the end of what analysis and preparation can do. You have thought about it, you have prepared as well as you can, you have assessed the odds as honestly as you are able — and now the decision is simply whether to bet. The dice are in your hand. The analysis phase is over. What remains is the commitment.</p>
+<p>This is the moment that separates the people who act from the people who prepare indefinitely. The analysis can always be extended. There is always more to consider, another risk to assess, one more way the situation could go wrong. The commitment to act — to throw the dice — requires accepting that certainty is not available and that the cost of continued preparation is the loss of the moment itself.</p>
+<h2>When This Moment Arrives</h2>
+<p>The <em>ichi ka bachi ka</em> moment is recognizable by a specific quality: you have done all the analysis you honestly needed to do, and what remains is fear of the outcome, not genuine uncertainty about the decision. You are not preparing anymore — you are stalling. The preparation has become a way of avoiding the commitment rather than a way of improving its chances.</p>
+<p>The tradition asks you to recognize this moment and act on it. Not to eliminate fear — fear is appropriate when the stakes are real. But to act despite the fear, because the analysis has been done and what remains is the throwing. The dice do not improve from being held longer.</p>
+<h2>The Discipline of the Bet</h2>
+<p>The full commitment implicit in <em>ichi ka bachi ka</em> has a downstream effect: once the bet is made, you stop calculating whether to have bet. The energy that was spent on the decision is now available for the execution. The person who makes the bet and then continues to wonder whether they should have bet is wasting both the bet and the wondering. The bet is made. Now execute.</p>
+<p>This is the discipline that follows the commitment: full presence in the attempt, without continuing to second-guess the decision to attempt. The dice are in the air. Your job now is to be ready for either the one or the eight — and to act on whatever comes up.</p>
+<p><em>Ichi ka bachi ka.</em> The analysis is done. Throw the dice. Be ready for the result.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 55 ──────────────────────────────────────────────
+articles.append({
+    "day": 55,
+    "japanese": "男子の一言、金鉄の如し",
+    "romanji": "Danshi no ichigon, kintetsu no gotoshi",
+    "title": "A Man's Word Is Like Gold and Iron",
+    "subtitle": "A person of honor's word is like gold and iron — unchangeable, unbreakable. The commitment to being someone whose word means something.",
+    "body_html": """<h2>The Weight of a Word</h2>
+<p>When someone whose word means something says they will do a thing, the thing is as good as done. There is no need to draft a contract, establish penalties, or follow up repeatedly. The word was given. The word is gold. The word is iron. It will hold.</p>
+<p><em>Danshi no ichigon, kintetsu no gotoshi.</em> A man's word is like gold and iron. The proverb is about the quality of a person whose commitments can be trusted absolutely — not because they are legally enforced but because they come from a character that does not distinguish between the commitment and its fulfillment. The word given is the beginning of the thing done.</p>
+<p>The proverb uses the language of samurai culture — <em>danshi</em>, a man of honor — but the principle extends to anyone who has built their character around this quality. The person whose word is like gold and iron is not merely reliable. They are predictable in the most valuable sense: you know that what they say they will do, they will do. This predictability is the foundation on which real trust is built, and real trust is the foundation on which everything worthwhile in human collaboration is built.</p>
+<h2>Building This Character</h2>
+<p>The word-like-gold-and-iron quality is not innate. It is built through the consistent practice of one specific discipline: only committing to what you will actually do, and then doing it. The discipline has two halves, and both are necessary.</p>
+<p>The first half — only committing to what you will actually do — requires the courage to say no to requests you cannot fulfill, the honesty to assess your actual capacity rather than your desired capacity, and the willingness to disappoint people in the moment rather than in the follow-through. The person who over-commits in order to seem capable or cooperative is, in fact, training themselves to be unreliable. Every broken commitment erodes the gold.</p>
+<p>The second half — doing what you commit to — requires treating your word to others with the same seriousness you treat your word to yourself. The commitment made in a meeting is as binding as the internal decision made in private. It requires no external enforcement. It simply is what it is: your word, which is like gold.</p>
+<h2>The Return on This Investment</h2>
+<p>The person whose word is gold has access to forms of collaboration and trust that are unavailable to those whose reliability is uncertain. They are the person who gets the important project. They are the one called when something actually needs to be done. The reputation for iron reliability is one of the most consistently valuable professional assets available — and one of the least recognized, because it is built quietly, through consistent follow-through rather than dramatic display.</p>
+<p><em>Danshi no ichigon, kintetsu no gotoshi.</em> Your word is gold. Only give it when you mean it. Then make it iron.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 56 ──────────────────────────────────────────────
+articles.append({
+    "day": 56,
+    "japanese": "死して不朽の名を残せ",
+    "romanji": "Shishite fukyū no na o nokose",
+    "title": "Leave an Immortal Name",
+    "subtitle": "When you die, leave behind an immortal name. The philosophy of living for something larger than the self.",
+    "body_html": """<h2>The Samurai and Legacy</h2>
+<p>The Japanese warrior tradition had a particular relationship with death that shaped its entire approach to life. The samurai was expected to be constantly aware of his mortality — not as a source of despair, but as a clarifying lens. The awareness that life was finite focused attention on what would remain after it ended: the name, the deed, the example. <em>Shishite fukyū no na o nokose.</em> When you die, leave an immortal name.</p>
+<p>The phrase is not primarily about fame in the modern sense — the number of followers, the cultural celebrity, the recognition of millions. It is about living in such a way that the life means something. That it stands for something. That the people who knew you, or who know what you did, are somehow better for it. The immortal name is not a celebrity status. It is the record of a life lived with genuine purpose and genuine quality.</p>
+<p>The tradition connects directly to <em>mono no aware</em> — the awareness of impermanence — but draws a different practical conclusion. If life is short and things pass, then the question becomes: what should endure? The answer the warrior tradition gives is: the name that stands for something real. Not the wealth, not the comfort, not the pleasure — these pass. But the character demonstrated through action, the example set for those who come after — these can outlast the person.</p>
+<h2>What Makes a Name Immortal</h2>
+<p>The immortal name is not built through grandiose gesture. It is built through the accumulation of choices made consistently in the direction of something that matters. The craftsman who poured genuine care into every object they made for forty years. The teacher whose students carry something real from the time spent together. The parent whose children understand what it means to live with integrity. These are immortal names in the only sense that actually matters: they persist in the lives they shaped, in the understanding they created, in the character they helped build.</p>
+<p>The question the proverb asks is not "will you be famous?" It is "will your life have meant something? And are the decisions you are making today in the direction of that meaning, or away from it?"</p>
+<h2>Living Toward the Name</h2>
+<p>The useful application of this proverb is not a grand strategy for posthumous legacy. It is a daily decision-making tool: when facing a choice between the expedient and the principled, between what serves the self and what serves something larger, between the action that is forgettable and the action that expresses what you actually stand for — ask which one contributes to the name you want to leave.</p>
+<p>The immortal name is built or not built in the daily choices. The grand moment of commitment that will define everything is almost never available. What is available is the consistent direction of the small choices — and those, accumulated over a life, are what the name is made of.</p>
+<p><em>Shishite fukyū no na o nokose.</em> Leave a name worth leaving. Today's choices are the beginning of it.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 57 ──────────────────────────────────────────────
+articles.append({
+    "day": 57,
+    "japanese": "事に臨んでは死を思え",
+    "romanji": "Koto ni nozonde wa shi o omoe",
+    "title": "When Facing Action, Think of Death",
+    "subtitle": "When confronting a challenge, contemplate your death. Memento mori as a clarifying practice — not a morbid one.",
+    "body_html": """<h2>The Clarifying Thought</h2>
+<p>You are about to enter the difficult meeting. You are facing the decision that has been weighing on you. You are at the threshold of the action you have been avoiding. And the practice says: think of death. Not as a preparation for failure, not as a dark premonition — as a clarifying question. If this were your last act, what would you do?</p>
+<p><em>Koto ni nozonde wa shi o omoe.</em> When facing a significant event, think of death. The practice comes from the samurai tradition, where the proximity of actual death in battle required a real relationship with mortality rather than a theoretical one. But its application extends far beyond the battlefield. The contemplation of death clarifies what matters when nothing else can.</p>
+<p>The philosopher Seneca, writing in Rome at roughly the same time this tradition was developing in Japan, arrived at the same insight: <em>memento mori</em>, remember that you will die. Not as a counsel of despair but as a counsel of presence. The awareness of mortality cuts through the noise of social performance, the anxiety about appearances, the small calculations of self-interest — and reveals the core question: what actually matters here?</p>
+<h2>What Death-Thinking Does</h2>
+<p>When you genuinely contemplate your death — not abstractly but vividly, as a real future event — several things tend to happen. The fear of judgment becomes smaller: you will be dead soon enough, what does the opinion of this person matter in the scale of things? The petty concern becomes obviously petty: the small advantage, the face-saving maneuver, the comfortable choice that avoids the harder right thing — these lose their pull when set against the question of what you want to have done with the time you had.</p>
+<p>What remains, after the noise clears, is usually something simple: do the right thing, as fully as you can, while you are here. The contemplation of death does not produce paralysis or nihilism in a healthy mind. It produces clarity about what deserves energy and what does not.</p>
+<h2>The Daily Practice</h2>
+<p>The Stoics had a morning practice: contemplate the death that might come today. The samurai had a related practice: enter each significant action having made peace with the possibility of dying. These are not morbid practices. They are clarifying ones — ways of ensuring that the action undertaken is undertaken fully, without the reserve that comes from treating the outcome as permanently available to be deferred.</p>
+<p>The action you keep putting off because you will do it later — what if later does not come? The thing you are not saying because you are protecting something — what if you run out of time to say it? The life you are planning to begin living once conditions are right — what if the conditions are already right, and what is not right is your willingness to begin?</p>
+<p><em>Koto ni nozonde wa shi o omoe.</em> Think of death. Then act as if the action matters, because it does, and because time is shorter than it feels.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 58 ──────────────────────────────────────────────
+articles.append({
+    "day": 58,
+    "japanese": "武士は食わねど高楊枝",
+    "romanji": "Bushi wa kuwanedo takayōji",
+    "title": "The Samurai Who Has Not Eaten Still Uses a Toothpick",
+    "subtitle": "Even when hungry, the samurai uses a toothpick as if he has eaten. Dignity is independent of circumstances.",
+    "body_html": """<h2>The Performance of Dignity</h2>
+<p>The samurai has not eaten. He is hungry — genuinely, perhaps seriously hungry. And yet he walks among people using a toothpick, as if he has just finished a meal. The gesture of the toothpick declares: I have eaten. I am not in need. I am not diminished by my circumstances.</p>
+<p><em>Bushi wa kuwanedo takayōji.</em> The samurai, even without having eaten, uses the toothpick. The proverb describes a form of dignity that is independent of material circumstances — the refusal to let external conditions determine your internal posture. Not as deception, but as a discipline of identity: I am a person of a certain quality, and that quality is not contingent on whether I have eaten today.</p>
+<p>The Japanese aesthetic concept of <em>iki</em> — a kind of understated elegance and cool dignity — is related to this. The person of <em>iki</em> does not complain, does not reveal their difficulties unnecessarily, does not let the world see their needs in a way that diminishes them. This is not dishonesty. It is a form of self-respect, a decision that one's dignity belongs to oneself and is not available to be taken by circumstance.</p>
+<h2>What This Is Not</h2>
+<p>This proverb can be misread as an endorsement of suppression — of never acknowledging difficulty, of performing fine when one is not. That reading misses the point. The samurai using the toothpick is not denying his hunger to himself. He knows he is hungry. The discipline is in how he presents himself to the world, not in what he knows about his own condition.</p>
+<p>The wisdom is not "never acknowledge difficulty" but "maintain the posture of a person who is not defeated by difficulty." There is a difference between the performed dignity of the toothpick and the denial of genuine problems. The former is a discipline of self-presentation that preserves agency and self-respect. The latter is self-deception that prevents addressing actual needs.</p>
+<h2>Dignity as Character</h2>
+<p>The deeper claim of the proverb is about what dignity is. It is not what circumstances have given you. It is what you bring to circumstances. The person who carries themselves with dignity when things are good is not demonstrating dignity — they are simply reflecting their circumstances. The person who carries themselves with dignity when things are genuinely difficult is demonstrating something real: a quality of character that is genuinely theirs, that does not depend on being supported by favorable conditions.</p>
+<p>This quality is available to anyone, in any circumstances. It requires only the decision to maintain your posture, to use the toothpick, to refuse to let the external condition define the internal stance. The samurai is hungry. The samurai is still the samurai.</p>
+<p><em>Bushi wa kuwanedo takayōji.</em> Even when the circumstances diminish, the posture holds. Use the toothpick. You are still who you are.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 59 ──────────────────────────────────────────────
+articles.append({
+    "day": 59,
+    "japanese": "覚悟を決めた者は強い",
+    "romanji": "Kakugo o kimeta mono wa tsuyoi",
+    "title": "The One Who Has Resolved Is Strong",
+    "subtitle": "The person who has made their resolution is powerful. Kakugo — settled readiness — is its own form of strength.",
+    "body_html": """<h2>The Resolution That Changes Everything</h2>
+<p>There is a specific quality that some people carry in difficult situations that is palpable even from the outside. A steadiness, a lack of internal conflict, a presence that is not bracing against what might happen but is settled with it. This quality is <em>kakugo</em>: a resolved readiness, an acceptance that things may go badly and a decision that this does not change what must be done.</p>
+<p><em>Kakugo o kimeta mono wa tsuyoi.</em> The one who has made their resolution is strong. The strength described here is not physical and not primarily the result of capability. It is the strength of someone who has already resolved the internal conflict that most people are still fighting when they are in the middle of the external one. The person who has not made their resolution is fighting on two fronts simultaneously — against the external situation and against their own internal resistance to it. The person who has made their resolution is fighting on one front only.</p>
+<p><em>Kakugo</em> is a Japanese concept that combines readiness, resolve, and acceptance. It implies that you have looked clearly at what you are facing — including the worst possibilities — and have settled your relationship with it. You are not pretending the difficulty away. You are not hoping the worst won't happen. You are ready for it, if it comes. This readiness is paradoxically what allows you to perform most effectively in the situation.</p>
+<h2>How Resolution Is Made</h2>
+<p>The resolution of <em>kakugo</em> is not made by force of will — not by gritting your teeth and deciding to not be afraid. It is made through a genuine confrontation with the possible outcomes. What is the worst that can happen? Can you survive it? Can you accept it if it comes? The person who has honestly answered these questions, who has genuinely sat with the worst possibility and found that they can face it, has found <em>kakugo</em>.</p>
+<p>This is why the samurai tradition's relationship with death produced such effective fighters — not because they were indifferent to death, but because they had genuinely resolved their relationship with it. The fear was not eliminated. The resolution was complete. And the complete resolution left them free to act without the internal friction of unresolved fear.</p>
+<h2>Bringing Kakugo to Ordinary Challenges</h2>
+<p>The concept is not only for warriors facing death. It applies to every difficult thing: the conversation you are afraid to have, the project you are afraid to start, the decision you are afraid to make. In each case, the question is: what is the worst that can happen, and have you genuinely resolved your relationship with that possibility?</p>
+<p>The person who has done this work — who has faced the worst and made their resolution — enters the difficult situation differently than the person who has not. They are stronger not because they are more capable but because they are less divided. The resolution frees the capability.</p>
+<p><em>Kakugo o kimeta mono wa tsuyoi.</em> Resolve first. Then act. The strength that follows the resolution is real.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+# ── Day 60 ──────────────────────────────────────────────
+articles.append({
+    "day": 60,
+    "japanese": "刀折れ矢尽きるまで戦え",
+    "romanji": "Katana ore ya tsukiru made tatakae",
+    "title": "Fight Until the Sword Breaks and the Arrows Run Out",
+    "subtitle": "Fight until your sword is broken and your arrows are gone. The commitment to exhausting every resource before conceding defeat.",
+    "body_html": """<h2>The Complete Effort</h2>
+<p>The sword is broken. The quiver is empty. Every weapon, every resource, every ounce of capacity — exhausted. Only then is the battle over. <em>Katana ore ya tsukiru made tatakae.</em> Fight until the sword is broken and the arrows run out. Not until it looks bad. Not until the odds are against you. Not until the comfortable option is to stop. Until the sword breaks and the quiver empties.</p>
+<p>This is a standard of effort that most people never approach, because the signals to stop come long before the weapons are actually exhausted. The difficulty feels insurmountable. The outcome looks unlikely. The cost of continuing seems high. These are not the same as the sword being broken. They are the feeling of the sword being heavy — which is different.</p>
+<p>The proverb is pointing at the gap between the effort people think is total and the effort that actually is. The genuine exhaustion of all resources is rarer than it feels, because the feeling of having tried hard arrives before the reality of having tried everything. The person who stops when it feels like everything has been tried has often stopped well before the quiver is empty.</p>
+<h2>What This Requires</h2>
+<p>Fighting until the sword breaks requires an honest accounting of what resources remain. Not just the obvious ones — the primary strategy, the main approach, the standard tools — but the unconventional ones, the things you have not tried because they seemed unlikely to work, the questions you have not asked because they seemed embarrassing, the helps you have not sought because accepting help felt like weakness.</p>
+<p>The quiver includes all of these. The sword includes the adaptations you have not made, the pivots you have considered but not executed, the fundamentally different approach that you have been reluctant to take because it would mean acknowledging that the original approach was insufficient. All of this is in the quiver. It is not empty until these are exhausted too.</p>
+<h2>The Dignity of Complete Effort</h2>
+<p>There is a specific quality of peace available to the person who has fought until the sword breaks and the quiver empties — that is not available to the person who stopped earlier. The outcome may be the same: defeat, failure, the thing not working. But the person who exhausted everything has a different relationship with the outcome. They did not leave anything behind. The effort was complete. What was possible was done.</p>
+<p>This quality of completeness — the knowledge that nothing was withheld, that the full resource was brought to the full effort — is its own reward, independent of the outcome. And it is also, in the long run, the approach most likely to produce the occasional outcome that incomplete effort would never reach.</p>
+<p><em>Katana ore ya tsukiru made tatakae.</em> Fight until the sword breaks. The quiver is probably not empty yet. Check again.</p>
+<hr>
+<p><em>Enjoyed this? Paid subscribers go deeper every week — into the Japanese philosophies that change how you work, speak, and think. <a href='#'>Subscribe to read →</a></em></p>"""
+})
+
+print(f"Days 51-60 loaded: {len(articles)} articles so far")
