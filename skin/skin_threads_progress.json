@@ -1,5 +1,5 @@
 {
-  "daily_index": 182,
+  "daily_index": 183,
   "launch_index": 0,
   "history": [
     {
@@ -3926,6 +3926,13 @@
       "theme_id": 74,
       "variant": "B",
       "post_id": "17905192731427681"
+    },
+    {
+      "date": "2026/05/29 02:00",
+      "theme": "ダイエットと肌荒れ",
+      "theme_id": 75,
+      "variant": "B",
+      "post_id": "18101651873042175"
     }
   ],
   "ab_next": "A",
@@ -3945,7 +3952,7 @@
     "72": "A",
     "73": "A",
     "74": "A",
-    "75": "B",
+    "75": "A",
     "76": "B",
     "77": "B",
     "78": "B",
@@ -4129,7 +4136,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "76": {
       "a_score": 0.0,
@@ -4690,7 +4697,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-28T23:51:29.557371+00:00",
+  "last_posted_at": "2026-05-29T02:01:09.832115+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
