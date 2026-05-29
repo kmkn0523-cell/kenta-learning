@@ -1,5 +1,5 @@
 {
-  "next_day": 13,
+  "next_day": 14,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -72,6 +72,12 @@
       "day": 12,
       "post_id": 199530325,
       "title": "急がば回れ — The long way is often the shortest."
+    },
+    {
+      "date": "2026/05/29 01:18",
+      "day": 13,
+      "post_id": 199679711,
+      "title": "沈黙は金 — Silence is gold."
     }
   ]
 }
