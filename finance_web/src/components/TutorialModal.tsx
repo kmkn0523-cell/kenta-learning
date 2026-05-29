@@ -2,7 +2,7 @@
 // 初回起動時に6ページのスライドでアプリの使い方を案内するモーダル
 // open=false の時は何も描画しない
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { STYLE_BUTTON_PRIMARY } from "../utils/styles";
 
 // 各ページの内容（アイコン・タイトル・説明文）
@@ -49,10 +49,11 @@ export default function TutorialModal({ open, onClose }: TutorialModalProps) {
   // 現在表示中のページ番号（0〜5）
   const [page, setPage] = useState(0);
 
-  // open が true になるたびに最初のページに戻す
-  useEffect(() => {
-    if (open) setPage(0);
-  }, [open]);
+  // 閉じる時にページを0に戻す（useEffect不要のパターン）
+  function handleClose() {
+    setPage(0);
+    onClose();
+  }
 
   // open=false の時は何も描画しない
   if (!open) return null;
@@ -87,7 +88,7 @@ export default function TutorialModal({ open, onClose }: TutorialModalProps) {
         {/* ✕ 閉じるボタン（右上） */}
         <button
           aria-label="閉じる"
-          onClick={onClose}
+          onClick={handleClose}
           style={{
             position: "absolute",
             top: 14,
@@ -156,7 +157,7 @@ export default function TutorialModal({ open, onClose }: TutorialModalProps) {
         <button
           onClick={() => {
             if (isLast) {
-              onClose();
+              handleClose();
             } else {
               setPage(p => p + 1);
             }
