@@ -1,7 +1,9 @@
 // ──────── 月次サマリー書き出しユーティリティ ────────
 // 月次サマリー画面の「計算」と「書き出し（CSV・画像）」をまとめたファイル
 
+import html2canvas from "html2canvas";
 import type { SummaryStats } from "../types";
+import { downloadFile } from "./dataExport";
 
 // 貯蓄率を計算する純粋関数
 // net（手残り）を income（収入合計）で割って百分率にする
@@ -59,4 +61,48 @@ export function buildSummaryCsv(
 
   // 各行を改行でつなぎ、末尾にも改行を付ける
   return lines.join("\n") + "\n";
+}
+
+// 月次サマリーをCSVファイルとして保存する
+// buildSummaryCsv で本文を組み立て、downloadFile でブラウザにダウンロードさせる
+export function exportSummaryCsv(
+  monthLabel: string,
+  current: SummaryStats,
+  previous: SummaryStats | null,
+  categoryBreakdown: { category: string; amount: number }[],
+): void {
+  const csv = buildSummaryCsv(monthLabel, current, previous, categoryBreakdown);
+  // ファイル名は「サマリー_2026年5月.csv」のような形にする
+  const fileName = `サマリー_${monthLabel}.csv`;
+  // 文字コード（utf-8）を明示してExcelでも文字化けしにくくする
+  downloadFile(fileName, csv, "text/csv;charset=utf-8");
+}
+
+// 月次サマリーの表示エリア（DOM）をPNG画像にして保存する
+// html2canvas で画面の見た目を画像化し、Blob 経由でダウンロードさせる
+export async function exportSummaryImage(node: HTMLElement, fileName: string): Promise<void> {
+  // node（サマリーカードのまとまり）をそのまま画像化する
+  // backgroundColor はアプリの背景色に合わせる。scale:2 で高解像度にする
+  const canvas = await html2canvas(node, { backgroundColor: "#0a0a0c", scale: 2 });
+
+  // canvas を Blob（画像データのかたまり）に変換する。コールバックをPromiseで包む
+  const blob = await new Promise<Blob | null>((resolve) => {
+    canvas.toBlob((result) => resolve(result), "image/png");
+  });
+
+  // Blob が作れなかった場合はエラーにして呼び出し側で気づけるようにする
+  if (!blob) {
+    throw new Error("画像の生成に失敗しました");
+  }
+
+  // Blob から一時的なURLを作り、リンクをクリックしてダウンロードさせる
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  // 使い終わった一時URLは解放してメモリを無駄にしない
+  URL.revokeObjectURL(url);
 }
