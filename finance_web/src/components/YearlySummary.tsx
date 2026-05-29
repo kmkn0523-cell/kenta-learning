@@ -104,7 +104,7 @@ export default function YearlySummary({
     <div style={STYLE_CARD}>
       {/* ────── ヘッダー：タイトル＋年切り替えボタン ────── */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>
           年間サマリー
         </div>
         {/* 前年・翌年の切り替えボタン */}
@@ -125,10 +125,10 @@ export default function YearlySummary({
         borderBottom:`1px solid ${COLOR_BORDER}`,
         marginBottom:4,
       }}>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT }}>月</div>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, textAlign:"right" }}>収入</div>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, textAlign:"right" }}>支出</div>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, textAlign:"right" }}>手残り</div>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT }}>月</div>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT, textAlign:"right" }}>収入</div>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT, textAlign:"right" }}>支出</div>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT, textAlign:"right" }}>手残り</div>
       </div>
 
       {/* ────── 月ごとの行 ────── */}
@@ -200,7 +200,7 @@ export default function YearlySummary({
         borderTop:`1px solid ${COLOR_BORDER}`,
         marginTop:4,
       }}>
-        <div style={{ fontSize:11, fontWeight:700, color:COLOR_TEXT_SECONDARY }}>年計</div>
+        <div style={{ fontSize:12, fontWeight:700, color:COLOR_TEXT_SECONDARY }}>年計</div>
         <div style={{ fontFamily:"monospace", fontSize:12, fontWeight:700, textAlign:"right", color:COLOR_POSITIVE }}>
           {formatYen(yearTotal.incTotal)}
         </div>
@@ -212,7 +212,7 @@ export default function YearlySummary({
         </div>
       </div>
       {/* タップで月次ビューに飛べるヒント */}
-      <div style={{ fontSize:10, color:COLOR_TEXT_HINT, marginTop:10, textAlign:"center" }}>
+      <div style={{ fontSize:12, color:COLOR_TEXT_HINT, marginTop:10, textAlign:"center" }}>
         月をタップすると月次ビューに切り替わります
       </div>
     </div>

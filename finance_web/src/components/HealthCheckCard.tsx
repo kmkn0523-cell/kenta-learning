@@ -188,7 +188,7 @@ export default function HealthCheckCard({
       {/* ヘッダー：診断ラベル＋総合評価 */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
         <div>
-          <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 4 }}>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 4 }}>
             🩺 家計診断
           </div>
           <div style={{ fontSize: 13, color: COLOR_TEXT_SECONDARY, lineHeight: 1.5 }}>{gradeMessage}</div>
@@ -197,13 +197,13 @@ export default function HealthCheckCard({
           <div style={{ fontFamily: "monospace", fontSize: 48, fontWeight: 700, color: gradeColor, lineHeight: 1, letterSpacing: "-2px" }}>
             {grade}
           </div>
-          <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, fontFamily: "monospace", marginTop: 2 }}>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: "monospace", marginTop: 2 }}>
             {Math.round(totalScore)}/100
           </div>
           {/* 前月比の貯蓄率トレンド（前月データがある場合のみ表示） */}
           {savingRateDelta !== null && (
             <div style={{
-              fontSize: 9, fontFamily: "monospace", marginTop: 4,
+              fontSize: 12, fontFamily: "monospace", marginTop: 4,
               color: savingRateDelta >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE,
             }}>
               {savingRateDelta >= 0 ? "▲" : "▼"}{Math.abs(Math.round(savingRateDelta))}% 前月比
@@ -230,7 +230,7 @@ export default function HealthCheckCard({
               <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden", marginBottom: 4 }}>
                 <div style={{ height: "100%", width: `${m.score}%`, background: c, borderRadius: 2, transition: "width 0.4s ease" }} />
               </div>
-              <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, lineHeight: 1.4 }}>{m.hint}</div>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, lineHeight: 1.4 }}>{m.hint}</div>
             </div>
           );
         })}
@@ -245,7 +245,7 @@ export default function HealthCheckCard({
         padding: "10px 12px",
         border: "1px solid rgba(255,255,255,0.06)",
       }}>
-        <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, letterSpacing: "1px", marginBottom: 8 }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", marginBottom: 8 }}>
           🎯 改善アクション
         </div>
         {actionMetrics.map(m => {
@@ -261,10 +261,10 @@ export default function HealthCheckCard({
           const c = levelColor(m.level);
           return (
             <div key={m.label} style={{ marginBottom: actionMetrics.length > 1 ? 8 : 0 }}>
-              <div style={{ fontSize: 11, color: c, fontWeight: 600, marginBottom: 3 }}>
+              <div style={{ fontSize: 12, color: c, fontWeight: 600, marginBottom: 3 }}>
                 {m.icon} {m.label}
               </div>
-              <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, lineHeight: 1.6 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, lineHeight: 1.6 }}>
                 {action}
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function HealthCheckCard({
       </div>
 
       {/* 説明書き */}
-      <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginTop: 10, lineHeight: 1.5 }}>
+      <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 10, lineHeight: 1.5 }}>
         ※ 一般的な家計の目安に基づく簡易診断です。家族構成・地域により異なる場合があります。
       </div>
     </div>

@@ -283,12 +283,12 @@ export default function DashboardView({
 
       {/* ────────── 収入サマリーカード ────────── */}
       <div style={{...STYLE_CARD,background:"linear-gradient(135deg,rgba(15,23,42,0.95) 0%,rgba(34,211,238,0.07) 100%)",border:`1px solid rgba(34,211,238,0.18)`}}>
-        <div style={{fontSize:9,color:COLOR_ACCENT,textTransform:"uppercase",letterSpacing:"2px",marginBottom:8,fontWeight:600}}>今月の収入</div>
+        <div style={{fontSize:12,color:COLOR_ACCENT,textTransform:"uppercase",letterSpacing:"2px",marginBottom:8,fontWeight:600}}>今月の収入</div>
         <div style={{fontFamily:"monospace",fontSize:34,fontWeight:700,marginBottom:12,letterSpacing:"-1px"}}>{formatYen(totalIncome)}</div>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
           <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>
             支出合計 <span style={{fontFamily:"monospace",color:COLOR_TEXT_PRIMARY}}>{formatYen(totalBurden)}</span>
-            {totalIncome>0&&<span style={{marginLeft:8,fontSize:11,color:totalBurden>totalIncome?COLOR_NEGATIVE:COLOR_TEXT_HINT}}>({Math.round(totalBurden/totalIncome*100)}%)</span>}
+            {totalIncome>0&&<span style={{marginLeft:8,fontSize:12,color:totalBurden>totalIncome?COLOR_NEGATIVE:COLOR_TEXT_HINT}}>({Math.round(totalBurden/totalIncome*100)}%)</span>}
           </div>
           <div style={{fontSize:13,fontWeight:700,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE}}>
             手残り <span style={{fontFamily:"monospace"}}>{net>=0?"+":""}{formatYen(net)}</span>
@@ -300,8 +300,8 @@ export default function DashboardView({
       {isCurMonth && totalVariableExpense > 0 && (
         <div style={{...STYLE_CARD, borderColor: paceRed ? `${COLOR_NEGATIVE}44` : paceYellow ? "rgba(251,191,36,0.3)" : COLOR_BORDER}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
-            <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>📈 今月のペース</div>
-            <div style={{fontSize:10,color:COLOR_TEXT_HINT,fontFamily:"monospace"}}>{daysElapsed}日 / {daysInMonth}日 ({Math.round(paceRatio*100)}%)</div>
+            <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>📈 今月のペース</div>
+            <div style={{fontSize:12,color:COLOR_TEXT_HINT,fontFamily:"monospace"}}>{daysElapsed}日 / {daysInMonth}日 ({Math.round(paceRatio*100)}%)</div>
           </div>
           {/* 月末予想カード本体 */}
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
@@ -317,7 +317,7 @@ export default function DashboardView({
             <div style={{height:"100%",width:`${Math.min(100,paceRatio*100)}%`,background:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_ACCENT,borderRadius:3,transition:"width 0.4s ease"}}/>
           </div>
           {/* アドバイス文言：ペースに応じて表示を切り替える */}
-          <div style={{fontSize:11,color:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_TEXT_HINT,lineHeight:1.5}}>
+          <div style={{fontSize:12,color:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_TEXT_HINT,lineHeight:1.5}}>
             {paceRed
               ? `🔴 このペースだと月末に収入を ${formatYen(projectedTotal - totalIncome)} 超過する見込みです`
               : paceYellow
@@ -330,7 +330,7 @@ export default function DashboardView({
       {/* ────────── 口座残高カード ────────── */}
       <div style={STYLE_CARD}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>口座残高</div>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>口座残高</div>
           <div style={{display:"flex",gap:8}}>
             {/* 振替ボタン：口座が2件以上あるときだけ表示 */}
             {accounts.length >= 2 && (
@@ -369,7 +369,7 @@ export default function DashboardView({
             <div style={{flex:1,minWidth:0}}>
               <div style={{fontSize:13,fontWeight:600}}>{acc.name}</div>
               {/* updatedAt（更新日）があれば表示する */}
-              {acc.updatedAt&&<div style={{fontSize:10,color:COLOR_TEXT_HINT,marginTop:2}}>{acc.updatedAt} 更新</div>}
+              {acc.updatedAt&&<div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>{acc.updatedAt} 更新</div>}
             </div>
             {/* calculateAccountBalance で入出金・振替を反映した実際の残高を表示 */}
             <div style={{fontFamily:"monospace",fontSize:15,fontWeight:700,color:COLOR_POSITIVE}}>
@@ -395,7 +395,7 @@ export default function DashboardView({
         {accounts.length>0&&(
           <>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:10}}>
-              <span style={{fontSize:11,color:COLOR_TEXT_HINT}}>合計残高</span>
+              <span style={{fontSize:12,color:COLOR_TEXT_HINT}}>合計残高</span>
               <span style={{fontFamily:"monospace",fontSize:16,fontWeight:700,color:COLOR_POSITIVE}}>
                 {formatYen(accounts.reduce((s,a)=>s+calculateAccountBalance(a,transactions,incomes,transfers),0))}
               </span>
@@ -410,9 +410,9 @@ export default function DashboardView({
             }}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
                 <div>
-                  <div style={{fontSize:11,color:COLOR_TEXT_HINT}}>今月末の予測残高</div>
+                  <div style={{fontSize:12,color:COLOR_TEXT_HINT}}>今月末の予測残高</div>
                   {/* 内訳：残り固定費とローン返済を小さく補足表示 */}
-                  <div style={{fontSize:9,color:COLOR_TEXT_HINT,marginTop:2}}>
+                  <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>
                     残り固定費 {formatYen(remainingFixed)} + 返済 {formatYen(totalLoanRepayment)} を差引
                   </div>
                 </div>
@@ -429,7 +429,7 @@ export default function DashboardView({
                   {/* マイナスの場合は小さな警告ラベルを表示 */}
                   {predictedEndBalance < 0 && (
                     <div style={{
-                      fontSize:9, color:COLOR_NEGATIVE,
+                      fontSize:12, color:COLOR_NEGATIVE,
                       background:"rgba(248,113,113,0.1)",
                       borderRadius:4, padding:"1px 6px",
                       marginTop:3, display:"inline-block",
@@ -448,7 +448,7 @@ export default function DashboardView({
               <Input money type="number" value={accF.balance} onChange={e=>setAccF(f=>({...f,balance:e.target.value}))} placeholder="現在の残高（円）"/>
               {/* ────── カラーラベル選択（プリセットスウォッチ） ────── */}
               <div>
-                <div style={{fontSize:11,color:COLOR_TEXT_HINT,marginBottom:6}}>カラーラベル（任意）</div>
+                <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:6}}>カラーラベル（任意）</div>
                 <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                   {/* 「なし」ボタン：カラーをクリアする */}
                   <button
@@ -458,7 +458,7 @@ export default function DashboardView({
                       background:"rgba(255,255,255,0.06)",
                       border:`2px solid ${accF.color===""?"rgba(34,211,238,0.7)":"rgba(255,255,255,0.15)"}`,
                       cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
-                      fontSize:11, color:COLOR_TEXT_HINT, padding:0,
+                      fontSize:12, color:COLOR_TEXT_HINT, padding:0,
                     }}
                     title="なし"
                   >✕</button>
@@ -550,7 +550,7 @@ export default function DashboardView({
 
       {/* ────────── 月次収支バランスのプログレスバー ────────── */}
       <div style={STYLE_CARD}>
-        <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>月次収支バランス</div>
+        <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>月次収支バランス</div>
         <ProgressBar label="収入" value={totalIncome} max={Math.max(totalIncome,totalBurden)||1} color={COLOR_POSITIVE}/>
         <ProgressBar label="変動支出" value={totalVariableExpense} max={Math.max(totalIncome,totalBurden)||1} color={COLOR_TEXT_SECONDARY}/>
         <ProgressBar label="固定費" value={totalFixedExpense} max={Math.max(totalIncome,totalBurden)||1} color={COLOR_TEXT_SECONDARY}/>
@@ -560,7 +560,7 @@ export default function DashboardView({
       {/* ────────── 変動支出カテゴリ別内訳（データがある時だけ表示） ────────── */}
       {expByCat.length>0&&(
         <div style={STYLE_CARD}>
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>変動支出 内訳</div>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>変動支出 内訳</div>
           {expByCat.map(([cat,amt])=>(
             <ProgressBar key={cat} label={cat} value={amt} max={expByCat[0][1]||1} color={COLOR_TEXT_SECONDARY} icon={EXPENSE_CATEGORY_ICONS[cat]}/>
           ))}
@@ -570,7 +570,7 @@ export default function DashboardView({
       {/* ────────── 前月比較カード（前月データがある時だけ表示） ────────── */}
       {(prevTInc>0||prevTVar>0)&&(
         <div style={STYLE_CARD}>
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>前月との比較</div>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>前月との比較</div>
           {(([
             {label:"収入",cur:totalIncome,prev:prevTInc,inv:false},
             {label:"変動支出",cur:totalVariableExpense,prev:prevTVar,inv:true},
@@ -583,7 +583,7 @@ export default function DashboardView({
                 <span style={{fontSize:13,color:COLOR_TEXT_SECONDARY}}>{label}</span>
                 <div style={{textAlign:"right"}}>
                   <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700}}>{formatYen(cur)}</div>
-                  <div style={{fontSize:11,color:good===null?COLOR_TEXT_HINT:good?COLOR_POSITIVE:COLOR_NEGATIVE}}>
+                  <div style={{fontSize:12,color:good===null?COLOR_TEXT_HINT:good?COLOR_POSITIVE:COLOR_NEGATIVE}}>
                     {diff>=0?"+":""}{formatYen(diff)}
                   </div>
                 </div>
@@ -596,7 +596,7 @@ export default function DashboardView({
       {/* ────────── 前年同月比カード（去年データがあるときだけ表示） ────────── */}
       {hasYoyData && (
         <div style={STYLE_CARD}>
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14}}>
             前年同月との比較（{selectedYear - 1}年{selectedMonth + 1}月）
           </div>
           {(([
@@ -612,7 +612,7 @@ export default function DashboardView({
                 <span style={{fontSize:13,color:COLOR_TEXT_SECONDARY}}>{label}</span>
                 <div style={{textAlign:"right"}}>
                   <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700}}>{formatYen(cur)}</div>
-                  <div style={{fontSize:11,color:good===null?COLOR_TEXT_HINT:good?COLOR_POSITIVE:COLOR_NEGATIVE}}>
+                  <div style={{fontSize:12,color:good===null?COLOR_TEXT_HINT:good?COLOR_POSITIVE:COLOR_NEGATIVE}}>
                     {diff>=0?"+":""}{formatYen(diff)}
                     {pct !== null && <span style={{marginLeft:6,fontFamily:"monospace"}}>({pct>=0?"+":""}{pct}%)</span>}
                   </div>
@@ -625,7 +625,7 @@ export default function DashboardView({
 
       {/* ────────── ローン残債一覧カード ────────── */}
       <div style={STYLE_CARD}>
-        <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14,display:"flex",justifyContent:"space-between"}}>
+        <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14,display:"flex",justifyContent:"space-between"}}>
           <span>ローン残債一覧</span><span>{allL.length}件</span>
         </div>
         {allL.map(l=>{
@@ -639,13 +639,13 @@ export default function DashboardView({
                 <span style={{fontSize:13,fontWeight:600}}>{l.name}</span>
                 <span style={{fontFamily:"monospace",fontSize:14,fontWeight:700}}>{formatYen(l.remaining)}</span>
               </div>
-              <div style={{display:"flex",gap:12,fontSize:11,color:COLOR_TEXT_HINT,flexWrap:"wrap",marginBottom:4}}>
+              <div style={{display:"flex",gap:12,fontSize:12,color:COLOR_TEXT_HINT,flexWrap:"wrap",marginBottom:4}}>
                 <span>月返済 <span style={{fontFamily:"monospace",color:COLOR_TEXT_SECONDARY}}>{formatYen(l.monthly)}</span></span>
                 <span>月利息 <span style={{fontFamily:"monospace",color:COLOR_NEGATIVE}}>{formatYen(mi)}</span></span>
                 <span style={{fontFamily:"monospace"}}>{l.rate}%</span>
               </div>
               {comp&&(
-                <div style={{fontSize:11,color:COLOR_TEXT_HINT}}>
+                <div style={{fontSize:12,color:COLOR_TEXT_HINT}}>
                   完済予定 <span style={{fontFamily:"monospace",color:COLOR_TEXT_PRIMARY,fontWeight:700}}>{comp.y}年{comp.m}月</span>
                   {ti&&<span style={{marginLeft:8}}>総利息 <span style={{fontFamily:"monospace",color:COLOR_NEGATIVE,fontWeight:700}}>{formatYen(ti.interest)}</span></span>}
                 </div>
@@ -688,7 +688,7 @@ export default function DashboardView({
 
       {/* ────────── バックアップ／復元カード ────────── */}
       <div style={STYLE_CARD}>
-        <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:10}}>データのバックアップ</div>
+        <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:10}}>データのバックアップ</div>
         <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,lineHeight:1.7,marginBottom:14}}>
           家計データをJSONファイルとして保存／復元できます。<br/>
           別端末でも<span style={{color:COLOR_TEXT_PRIMARY,fontWeight:700}}>同じパスワード</span>で復元できます。

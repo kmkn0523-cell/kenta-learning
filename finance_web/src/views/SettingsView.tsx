@@ -228,7 +228,7 @@ export default function SettingsView(props: SettingsViewProps) {
         </div>
 
         {/* 注意書き */}
-        <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, marginTop: 10, lineHeight: 1.5, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 10, lineHeight: 1.5, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           ⚠️ バックアップファイルは暗号化済みです。同じパスワードでのみ復元できます。
         </div>
       </div>
@@ -294,21 +294,21 @@ export default function SettingsView(props: SettingsViewProps) {
                 padding: "8px 12px", textAlign: "center",
               }}>
                 <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{txCount}</div>
-                <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の支出</div>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の支出</div>
               </div>
               <div style={{
                 flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
                 padding: "8px 12px", textAlign: "center",
               }}>
                 <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{incCount}</div>
-                <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の収入</div>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の収入</div>
               </div>
               <div style={{
                 flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
                 padding: "8px 12px", textAlign: "center",
               }}>
                 <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{txCount + incCount}</div>
-                <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件 合計</div>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件 合計</div>
               </div>
             </div>
             {/* エクスポートボタン */}
@@ -324,7 +324,7 @@ export default function SettingsView(props: SettingsViewProps) {
             >
               📥 CSVをダウンロード（全期間）
             </button>
-            <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, marginTop: 8, lineHeight: 1.5 }}>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 8, lineHeight: 1.5 }}>
               形式：日付・種別（収入/支出）・カテゴリ・金額・メモ。日付順に並んで出力されます。
             </div>
           </div>
@@ -626,7 +626,7 @@ export default function SettingsView(props: SettingsViewProps) {
 
       {/* ────────── アプリ情報カード（バージョン・制作者・著作権） ────────── */}
       <div style={{ ...STYLE_CARD, marginTop: 16 }}>
-        <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 10 }}>
           アプリ情報
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 12, color: COLOR_TEXT_SECONDARY }}>
@@ -642,7 +642,7 @@ export default function SettingsView(props: SettingsViewProps) {
             <span>制作</span>
             <span style={{ color: COLOR_TEXT_PRIMARY }}>kmkn0523</span>
           </div>
-          <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, marginTop: 6, paddingTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 6, paddingTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
             © 2026 kmkn0523. All Rights Reserved.
           </div>
         </div>

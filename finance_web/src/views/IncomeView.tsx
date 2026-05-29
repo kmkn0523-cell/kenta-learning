@@ -145,11 +145,11 @@ export default function IncomeView({
           style={{display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer"}}
           onClick={() => setShowRecSection(v => !v)}
         >
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>
             ⚡ 定期収入
             {/* 登録件数バッジ */}
             {recurringIncomes.length > 0 && (
-              <span style={{marginLeft:8,fontSize:11,color:COLOR_ACCENT,fontFamily:"monospace"}}>
+              <span style={{marginLeft:8,fontSize:12,color:COLOR_ACCENT,fontFamily:"monospace"}}>
                 {recurringIncomes.length}件
               </span>
             )}
@@ -176,7 +176,7 @@ export default function IncomeView({
                     <div style={{fontSize:13,fontWeight:600,color:rec.active===false?COLOR_TEXT_HINT:COLOR_TEXT_PRIMARY}}>
                       {rec.active===false && "⏸ "}{rec.name}
                     </div>
-                    <div style={{fontSize:11,color:COLOR_TEXT_SECONDARY,marginTop:2}}>
+                    <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,marginTop:2}}>
                       {rec.category} · {rec.payDay} · {formatYen(rec.amount)}/月
                     </div>
                   </div>
@@ -189,7 +189,7 @@ export default function IncomeView({
                     }
                     style={{
                       ...STYLE_BUTTON_OUTLINE,
-                      fontSize:11,
+                      fontSize:12,
                       padding:"4px 10px",
                       minHeight:30,
                       color: rec.active===false ? COLOR_TEXT_HINT : COLOR_ACCENT,
@@ -201,7 +201,7 @@ export default function IncomeView({
                   {/* 削除ボタン */}
                   <button
                     onClick={() => delItem(rec.id, setRecurringIncomes, "定期収入を削除しました")}
-                    style={{...STYLE_BUTTON_OUTLINE,fontSize:11,padding:"4px 10px",minHeight:30}}
+                    style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"4px 10px",minHeight:30}}
                   >
                     削除
                   </button>
@@ -273,7 +273,7 @@ export default function IncomeView({
                   登録する
                 </button>
                 {/* 注意書き */}
-                <div style={{fontSize:11,color:COLOR_TEXT_HINT,lineHeight:1.6}}>
+                <div style={{fontSize:12,color:COLOR_TEXT_HINT,lineHeight:1.6}}>
                   ※ 振込日が来た月から自動的に収入として追加されます。過去月は追加されません。
                 </div>
               </div>
@@ -286,7 +286,7 @@ export default function IncomeView({
       <div style={STYLE_CARD}>
         <div
           style={{
-            fontSize: 10,
+            fontSize: 12,
             color: COLOR_TEXT_HINT,
             textTransform: "uppercase",
             letterSpacing: "1.5px",

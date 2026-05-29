@@ -72,7 +72,7 @@ export default function MonthlyReportModal({
         {/* ── ヘッダー：カレンダーアイコン＋タイトル ── */}
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <div style={{ fontSize: 38, marginBottom: 8 }}>📅</div>
-          <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>
             Monthly Report
           </div>
           <div style={{ fontSize: 20, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
@@ -93,21 +93,21 @@ export default function MonthlyReportModal({
         }}>
           {/* 収入 */}
           <div>
-            <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>収入</div>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>収入</div>
             <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: COLOR_POSITIVE, lineHeight: 1.3 }}>
               {formatYen(income)}
             </div>
           </div>
           {/* 支出 */}
           <div>
-            <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>支出</div>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>支出</div>
             <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: COLOR_NEGATIVE, lineHeight: 1.3 }}>
               {formatYen(expense)}
             </div>
           </div>
           {/* 手残り */}
           <div>
-            <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>手残り</div>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>手残り</div>
             <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: isBlack ? COLOR_POSITIVE : COLOR_NEGATIVE, lineHeight: 1.3 }}>
               {net >= 0 ? "+" : ""}{formatYen(net)}
             </div>
@@ -135,7 +135,7 @@ export default function MonthlyReportModal({
         {/* ── 変動支出 TOP3 ── */}
         {topCats.length > 0 && (
           <div style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 10 }}>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 10 }}>
               変動支出 TOP {topCats.length}
             </div>
             {topCats.map(([cat, amt], i) => (
@@ -175,7 +175,7 @@ export default function MonthlyReportModal({
             marginBottom: 20,
           }}>
             {/* バナータイトル */}
-            <div style={{ fontSize: 11, color: COLOR_NEGATIVE, fontWeight: 600, marginBottom: 8, letterSpacing: "0.5px" }}>
+            <div style={{ fontSize: 12, color: COLOR_NEGATIVE, fontWeight: 600, marginBottom: 8, letterSpacing: "0.5px" }}>
               🚨 先月の予算超過カテゴリ
             </div>
             {/* 超過カテゴリ一覧 */}

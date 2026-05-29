@@ -107,7 +107,7 @@ export default function SavingGoalCard({
   if (!goal && !editing) {
     return (
       <div style={STYLE_CARD}>
-        <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 10 }}>
           🎯 貯金目標
         </div>
         <div style={{ fontSize: 13, color: COLOR_TEXT_SECONDARY, marginBottom: 12, lineHeight: 1.6 }}>
@@ -151,15 +151,15 @@ export default function SavingGoalCard({
         <div style={{ ...STYLE_CARD, borderColor: achieved100 ? `${COLOR_POSITIVE}44` : overdue ? `${COLOR_NEGATIVE}44` : COLOR_BORDER }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
             <div>
-              <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 4 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 4 }}>
                 🎯 貯金目標
               </div>
               <div style={{ fontSize: 14, fontWeight: 700 }}>{goal.name}</div>
-              <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginTop: 2 }}>期限 {goal.deadline}</div>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 2 }}>期限 {goal.deadline}</div>
             </div>
             <div style={{ display: "flex", gap: 6 }}>
-              <button onClick={openEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 11, padding: "4px 10px", minHeight: 28 }}>編集</button>
-              <button onClick={remove} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 11, padding: "4px 10px", minHeight: 28 }}>削除</button>
+              <button onClick={openEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 12, padding: "4px 10px", minHeight: 28 }}>編集</button>
+              <button onClick={remove} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 12, padding: "4px 10px", minHeight: 28 }}>削除</button>
             </div>
           </div>
 
@@ -183,7 +183,7 @@ export default function SavingGoalCard({
             }} />
           </div>
           {/* マイルストーンラベル：25% / 50% / 75% / 100% の目印 */}
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "rgba(148,163,184,0.4)", marginBottom: 6, paddingRight: 2 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "rgba(148,163,184,0.4)", marginBottom: 6, paddingRight: 2 }}>
             <span>25%</span>
             <span>50%</span>
             <span>75%</span>
@@ -191,7 +191,7 @@ export default function SavingGoalCard({
           </div>
           {/* ペース指標：「予定 xx% → 実績 yy%」で順調か遅れ気味かを判定して表示 */}
           {!achieved100 && !overdue && (
-            <div style={{ fontSize: 11, marginBottom: 8, display: "flex", alignItems: "center", gap: 4 }}>
+            <div style={{ fontSize: 12, marginBottom: 8, display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ color: onTrack ? COLOR_POSITIVE : "#f59e0b" }}>
                 {onTrack ? "✅ 順調" : "⚠️ 遅れ気味"}
               </span>
@@ -209,11 +209,11 @@ export default function SavingGoalCard({
           ) : (
             <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
               <div style={{ flex: 1, background: "rgba(148,163,184,0.05)", borderRadius: 10, padding: "10px 12px" }}>
-                <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>残り</div>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>残り</div>
                 <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>{formatYen(remaining)}</div>
               </div>
               <div style={{ flex: 1, background: "rgba(148,163,184,0.05)", borderRadius: 10, padding: "10px 12px" }}>
-                <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>
                   {overdue ? "期限超過" : `あと${monthsLeft}ヶ月`}
                 </div>
                 <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: overdue ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY }}>
@@ -237,7 +237,7 @@ export default function SavingGoalCard({
             </div>
             {/* 新規設定時のみ：現在貯金額がベースラインになる旨を表示 */}
             {!goal && (
-              <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginBottom: 14, lineHeight: 1.5 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 14, lineHeight: 1.5 }}>
                 現在の貯金額（口座残高合計 {formatYen(currentSaving)}）をスタート地点として、ここからの増加分を進捗としてカウントします。
               </div>
             )}

@@ -85,7 +85,7 @@ export default function WeeklyBreakdown({ mTx, selectedYear, selectedMonth }: We
   return (
     <div style={STYLE_CARD}>
       {/* ヘッダー */}
-      <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 14 }}>
+      <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 14 }}>
         週別支出
       </div>
 
@@ -117,7 +117,7 @@ export default function WeeklyBreakdown({ mTx, selectedYear, selectedMonth }: We
                     borderRadius: 3, padding: "1px 4px", fontWeight: 700,
                   }}>今週</span>
                 )}
-                <span style={{ fontSize: 10, color: COLOR_TEXT_HINT }}>{w.rangeLabel}</span>
+                <span style={{ fontSize: 12, color: COLOR_TEXT_HINT }}>{w.rangeLabel}</span>
               </div>
               {/* 右側：金額 */}
               <span style={{ fontFamily: "monospace", fontWeight: 700, color: isMax ? COLOR_NEGATIVE : COLOR_TEXT_SECONDARY }}>

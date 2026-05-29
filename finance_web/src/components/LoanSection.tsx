@@ -142,7 +142,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
         <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:12}}>
           {/* ブランドプリセット選択（branches が渡された時だけ表示） */}
           {brandOpts && <div>
-            <div style={{fontSize:10,color:COLOR_TEXT_HINT,marginBottom:6,letterSpacing:"0.5px",display:"flex",alignItems:"center",gap:6}}>
+            <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:6,letterSpacing:"0.5px",display:"flex",alignItems:"center",gap:6}}>
               <span>ブランドを選ぶと、借入額に応じた金利を自動で入れます</span>
               <button type="button" onClick={()=>setShowDisc(true)} style={{background:"none",border:"none",color:COLOR_ACCENT,cursor:"pointer",padding:0,fontSize:13,lineHeight:1}} aria-label="金利の注意">ⓘ</button>
             </div>

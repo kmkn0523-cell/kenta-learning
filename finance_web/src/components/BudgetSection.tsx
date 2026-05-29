@@ -89,7 +89,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
     <div style={STYLE_CARD}>
       {/* ヘッダー：タイトルと設定ボタン */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>予算管理</div>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>予算管理</div>
         {!editing && (
           <button onClick={startEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize:12, padding:"5px 12px", minHeight:32 }}>
             予算を設定
@@ -138,7 +138,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
               marginBottom: 16,
             }}>
               {/* バナーのタイトル行 */}
-              <div style={{ fontSize: 11, color: "#fbbf24", fontWeight: 600, marginBottom: 8, letterSpacing: "0.5px" }}>
+              <div style={{ fontSize: 12, color: "#fbbf24", fontWeight: 600, marginBottom: 8, letterSpacing: "0.5px" }}>
                 ⚠ 予算アラート
               </div>
               {/* アラート対象カテゴリを1行ずつ表示 */}
@@ -188,7 +188,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
                     {/* 前月データがある場合だけバッジを表示 */}
                     {badgeText !== null && (
                       <span style={{
-                        fontSize:9, fontWeight:700, fontFamily:"monospace",
+                        fontSize:12, fontWeight:700, fontFamily:"monospace",
                         background: pct > 0 ? "rgba(248,113,113,0.13)" : "rgba(74,222,128,0.13)",
                         color: badgeColor,
                         borderRadius:4, padding:"1px 5px",
@@ -203,7 +203,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
                     {b > 0 && <span style={{ color:COLOR_TEXT_HINT }}> / {formatYen(b)}</span>}
                     {/* 超過した時は「超過」バッジを表示 */}
                     {ratio !== null && ratio > 1 && (
-                      <span style={{ marginLeft:6, fontSize:10, background:"rgba(248,113,113,0.15)", color:COLOR_NEGATIVE, borderRadius:4, padding:"1px 5px" }}>
+                      <span style={{ marginLeft:6, fontSize:12, background:"rgba(248,113,113,0.15)", color:COLOR_NEGATIVE, borderRadius:4, padding:"1px 5px" }}>
                         超過
                       </span>
                     )}
@@ -223,7 +223,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
                       }}/>
                     </div>
                     {/* バーの下に「残り ¥X,XXX」or「¥X,XXX 超過」を小さく表示 */}
-                    <div style={{ fontSize: 10, color: col, textAlign: "right", marginTop: 3, fontFamily: "monospace" }}>
+                    <div style={{ fontSize: 12, color: col, textAlign: "right", marginTop: 3, fontFamily: "monospace" }}>
                       {a > b
                         ? `${formatYen(a - b)} 超過`
                         : `残り ${formatYen(b - a)}`}

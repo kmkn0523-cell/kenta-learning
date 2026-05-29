@@ -52,9 +52,9 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
         <div style={{width:40,height:40,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,background:"rgba(255,255,255,0.06)",color:COLOR_TEXT_SECONDARY,flexShrink:0}}>{FIXED_EXPENSE_CATEGORY_ICONS[item.category]||"📌"}</div>
         <div style={{flex:1,minWidth:0}}>
           <div style={{fontSize:13,fontWeight:600}}>{item.name}</div>
-          <div style={{fontSize:11,color:COLOR_TEXT_SECONDARY}}>{item.category}</div>
+          <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>{item.category}</div>
         </div>
-        <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,flexShrink:0}}>{formatYen(item.amount)}<span style={{fontSize:10,color:COLOR_TEXT_HINT}}>/月</span></div>
+        <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,flexShrink:0}}>{formatYen(item.amount)}<span style={{fontSize:12,color:COLOR_TEXT_HINT}}>/月</span></div>
       </div>
       <div style={{display:"flex",gap:8}}>
         {/* 編集ボタン：クリックで編集フォームを開く */}
@@ -77,7 +77,7 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
             border: `1px solid ${item.autoTrack ? "rgba(34,211,238,0.5)" : "rgba(148,163,184,0.2)"}`,
             background: item.autoTrack ? "rgba(34,211,238,0.08)" : "rgba(148,163,184,0.04)",
             color: item.autoTrack ? "#22d3ee" : COLOR_TEXT_HINT,
-            fontSize: 11,
+            fontSize: 12,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",

@@ -135,7 +135,7 @@ export const StatLabel = ({label, value, color}: StatLabelProps) =>
     textAlign:"center",                     // テキストを中央揃え
     boxShadow:"0 2px 12px rgba(0,0,0,0.2)", // 影：カードに奥行きを出す
   }}>
-    <div style={{fontSize:9,color:COLOR_TEXT_HINT,marginBottom:6,letterSpacing:"1px",textTransform:"uppercase"}}>{label}</div>
+    <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:6,letterSpacing:"1px",textTransform:"uppercase"}}>{label}</div>
     <div style={{fontSize:14,fontWeight:700,fontFamily:"monospace",color:color||COLOR_TEXT_PRIMARY,letterSpacing:"-0.5px"}}>{value}</div>
   </div>;
 
@@ -149,7 +149,7 @@ interface ProgressBarProps {
 }
 export const ProgressBar = ({label, value, max, color, icon}: ProgressBarProps) =>
   <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:11}}>
-    <div style={{fontSize:11,color:COLOR_TEXT_SECONDARY,width:80,display:"flex",alignItems:"center",gap:4,overflow:"hidden",flexShrink:0}}>
+    <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,width:80,display:"flex",alignItems:"center",gap:4,overflow:"hidden",flexShrink:0}}>
       {icon&&<span>{icon}</span>}
       <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{label}</span>
     </div>
@@ -162,7 +162,7 @@ export const ProgressBar = ({label, value, max, color, icon}: ProgressBarProps) 
         transition:"width 0.4s ease",                            // 幅が変わるとき0.4秒でアニメーション
       }}/>
     </div>
-    <div style={{fontSize:11,color:COLOR_TEXT_SECONDARY,width:82,textAlign:"right",fontFamily:"monospace",flexShrink:0}}>{formatYen(value)}</div>
+    <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,width:82,textAlign:"right",fontFamily:"monospace",flexShrink:0}}>{formatYen(value)}</div>
   </div>;
 
 // 一時的な通知バナー（保存・エラーなどのメッセージを画面上部に一瞬表示する）

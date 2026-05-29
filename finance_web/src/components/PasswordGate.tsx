@@ -149,7 +149,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
         {/* ヒーロー */}
         <div style={{textAlign:"center",marginBottom:36,paddingTop:20}}>
           <div style={{fontSize:60,marginBottom:14,filter:"drop-shadow(0 0 24px rgba(129,140,248,0.5))"}}>💰</div>
-          <div style={{fontSize:10,letterSpacing:"3px",color:"#818cf8",textTransform:"uppercase",fontWeight:600,marginBottom:8}}>Family Finance</div>
+          <div style={{fontSize:12,letterSpacing:"3px",color:"#818cf8",textTransform:"uppercase",fontWeight:600,marginBottom:8}}>Family Finance</div>
           <h1 style={{fontSize:28,fontWeight:700,marginBottom:10,letterSpacing:"-1px",lineHeight:1.3,margin:"0 0 10px"}}>
             家計を、見える化。<br/>暗号化で、安心。
           </h1>
@@ -178,7 +178,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
 
         {/* セキュリティアピール */}
         <div style={{background:"rgba(52,211,153,0.06)",border:"1px solid rgba(52,211,153,0.25)",borderRadius:14,padding:"14px 16px",marginBottom:32}}>
-          <div style={{fontSize:11,fontWeight:700,color:"#34d399",letterSpacing:"1px",textTransform:"uppercase",marginBottom:8}}>🛡 プライバシーへのこだわり</div>
+          <div style={{fontSize:12,fontWeight:700,color:"#34d399",letterSpacing:"1px",textTransform:"uppercase",marginBottom:8}}>🛡 プライバシーへのこだわり</div>
           <ul style={{fontSize:12,color:"#9a9aa3",lineHeight:1.7,paddingLeft:18,margin:0}}>
             <li>AES-GCM 暗号化（パスワード派生鍵・PBKDF2）</li>
             <li>サーバには何も保存しない（端末内のみ）</li>
@@ -190,7 +190,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
         <div style={{background:"rgba(129,140,248,0.06)",border:"1px solid rgba(129,140,248,0.3)",borderRadius:16,padding:"20px 18px",textAlign:"center"}}>
           <div style={{fontSize:22,marginBottom:6}}>🔑</div>
           <div style={{fontSize:16,fontWeight:700,marginBottom:6}}>パスワードを決めて、はじめよう</div>
-          <div style={{fontSize:11,color:"#9a9aa3",marginBottom:16,lineHeight:1.6}}>
+          <div style={{fontSize:12,color:"#9a9aa3",marginBottom:16,lineHeight:1.6}}>
             このアプリで使うパスワードを設定します（8文字以上）<br/>
             ※ 紛失すると復元できません。安全な場所にメモしてください
           </div>
@@ -201,7 +201,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
         </div>
 
         {/* フッター */}
-        <div style={{textAlign:"center",fontSize:10,color:"#5a5a63",marginTop:32,lineHeight:1.6}}>
+        <div style={{textAlign:"center",fontSize:12,color:"#5a5a63",marginTop:32,lineHeight:1.6}}>
           v1.2.2 / © 2026 kmkn0523<br/>
           PWA対応{" — "}ホーム画面に追加してアプリのように使えます
         </div>

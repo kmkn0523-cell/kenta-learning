@@ -55,8 +55,8 @@ export default function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps)
       {/* カテゴリ絵文字（収入は緑背景・支出は赤背景の丸） */}
       <div style={{width:40,height:40,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,background:bg,color:col,flexShrink:0}}>{ico[item.category]||"●"}</div>
       <div style={{flex:1,minWidth:0}}>
-        <div style={{fontSize:13,fontWeight:600}}>{item.category} <span style={{fontSize:11,color:COLOR_TEXT_HINT}}>{item.memo}</span></div>
-        <div style={{fontSize:11,color:COLOR_TEXT_HINT,marginTop:2}}>{item.date}</div>
+        <div style={{fontSize:13,fontWeight:600}}>{item.category} <span style={{fontSize:12,color:COLOR_TEXT_HINT}}>{item.memo}</span></div>
+        <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>{item.date}</div>
       </div>
       {/* 収入は「+」、支出は「-」を頭につけて金額を表示 */}
       <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,color:col}}>{isInc?"+":"-"}{formatYen(item.amount)}</div>

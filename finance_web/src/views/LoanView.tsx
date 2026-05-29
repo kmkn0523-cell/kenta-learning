@@ -58,13 +58,13 @@ function AffiliateBanner({ tag, title, desc, cta, href }: {
         <div style={{ flex: 1, minWidth: 0 }}>
           {/* 広告タグ + カテゴリラベル */}
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-            <span style={{ fontSize: 9, background: "rgba(34,211,238,0.15)", color: COLOR_ACCENT, borderRadius: 4, padding: "1px 6px", letterSpacing: "0.5px" }}>PR</span>
-            <span style={{ fontSize: 10, color: COLOR_TEXT_HINT }}>{tag}</span>
+            <span style={{ fontSize: 12, background: "rgba(34,211,238,0.15)", color: COLOR_ACCENT, borderRadius: 4, padding: "1px 6px", letterSpacing: "0.5px" }}>PR</span>
+            <span style={{ fontSize: 12, color: COLOR_TEXT_HINT }}>{tag}</span>
           </div>
           {/* サービス名 */}
           <div style={{ fontSize: 13, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</div>
           {/* 説明文 */}
-          <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY }}>{desc}</div>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY }}>{desc}</div>
         </div>
         {/* 右：CTAボタン */}
         <div style={{
@@ -73,7 +73,7 @@ function AffiliateBanner({ tag, title, desc, cta, href }: {
           color: "#070b14",
           borderRadius: 10,
           padding: "8px 12px",
-          fontSize: 11,
+          fontSize: 12,
           fontWeight: 700,
           whiteSpace: "nowrap",
         }}>{cta}</div>
@@ -87,7 +87,7 @@ function AffiliateSection({ tab }: { tab: "cf" | "bl" | "lo" }) {
   return (
     <div style={{ marginTop: 16, marginBottom: 4 }}>
       {/* 区切りラベル */}
-      <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "2px", marginBottom: 10 }}>
+      <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "2px", marginBottom: 10 }}>
         💳 おすすめ金融サービス
       </div>
 
@@ -239,7 +239,7 @@ export default function LoanView({
       {/* ────────── 完済カウントダウンカード（借金返済フォーカス） ────────── */}
       {totalRemaining > 0 && longestMonths > 0 && (
         <div style={{ ...STYLE_CARD, background: "linear-gradient(135deg,rgba(15,23,42,0.95) 0%,rgba(52,211,153,0.06) 100%)", border: "1px solid rgba(52,211,153,0.25)" }}>
-          <div style={{ fontSize: 10, color: COLOR_POSITIVE, letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>
+          <div style={{ fontSize: 12, color: COLOR_POSITIVE, letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>
             🏁 借金ゼロまで
           </div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
@@ -248,7 +248,7 @@ export default function LoanView({
             </span>
             <span style={{ fontSize: 14, color: COLOR_TEXT_SECONDARY }}>ヶ月</span>
             {finalCompletion && (
-              <span style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginLeft: "auto" }}>
+              <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginLeft: "auto" }}>
                 {finalCompletion.y}年{finalCompletion.m}月完済予定
               </span>
             )}
@@ -256,14 +256,14 @@ export default function LoanView({
           {/* 元本の返済進捗バー（principal データがあるローン分のみ反映） */}
           {totalPrincipal > totalRemaining && (
             <>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: COLOR_TEXT_HINT, marginBottom: 4 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>
                 <span>元本の返済進捗</span>
                 <span style={{ fontFamily: "monospace", color: COLOR_POSITIVE, fontWeight: 700 }}>{totalProgressPct.toFixed(1)}%</span>
               </div>
               <div style={{ height: 8, background: "rgba(255,255,255,0.06)", borderRadius: 4, overflow: "hidden", marginBottom: 6 }}>
                 <div style={{ height: "100%", width: `${totalProgressPct}%`, background: COLOR_POSITIVE, borderRadius: 4, transition: "width 0.4s ease" }} />
               </div>
-              <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, fontFamily: "monospace" }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: "monospace" }}>
                 {formatYen(totalPaid)} 返済済 / 元本 {formatYen(totalPrincipal)}
               </div>
             </>
@@ -273,12 +273,12 @@ export default function LoanView({
 
       {/* 全ローン合計カード：総残債・月次返済・今月の利息・支払総利息を表示 */}
       <div style={STYLE_CARD}>
-        <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "2px", marginBottom: 12, display: "flex", justifyContent: "space-between" }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "2px", marginBottom: 12, display: "flex", justifyContent: "space-between" }}>
           <span>全ローン合計</span>
           <span>{allL.length}件</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
-          <span style={{ fontSize: 9, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase" }}>総残債</span>
+          <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase" }}>総残債</span>
           <span style={{ fontFamily: "monospace", fontSize: 28, fontWeight: 700, letterSpacing: "-0.5px" }}>
             {formatYen(totalRemaining)}
           </span>
@@ -305,7 +305,7 @@ export default function LoanView({
         const snowball = [...active].sort((a, b) => a.remaining - b.remaining);
         return (
           <div style={{ ...STYLE_CARD, background: "rgba(129,140,248,0.05)", border: "1px solid rgba(129,140,248,0.25)", marginBottom: 12 }}>
-            <div style={{ fontSize: 11, color: COLOR_ACCENT, fontWeight: 700, marginBottom: 10 }}>
+            <div style={{ fontSize: 12, color: COLOR_ACCENT, fontWeight: 700, marginBottom: 10 }}>
               💡 返済戦略アドバイス（複数借入の優先順）
             </div>
             {/* 雪崩方式 */}
@@ -313,12 +313,12 @@ export default function LoanView({
               <div style={{ fontSize: 12, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 4 }}>
                 ⛰ 雪崩方式（利息を最小化）
               </div>
-              <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginBottom: 6, lineHeight: 1.5 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, lineHeight: 1.5 }}>
                 金利の高い順に集中して返す。数学的に最もお得。
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                 {avalanche.map((l, i) => (
-                  <span key={l.id} style={{ fontSize: 11, padding: "3px 8px", borderRadius: 999, background: i === 0 ? `${COLOR_ACCENT}33` : "rgba(255,255,255,0.04)", border: `1px solid ${i === 0 ? COLOR_ACCENT : COLOR_BORDER}`, color: i === 0 ? COLOR_ACCENT : COLOR_TEXT_SECONDARY, fontWeight: i === 0 ? 700 : 400 }}>
+                  <span key={l.id} style={{ fontSize: 12, padding: "3px 8px", borderRadius: 999, background: i === 0 ? `${COLOR_ACCENT}33` : "rgba(255,255,255,0.04)", border: `1px solid ${i === 0 ? COLOR_ACCENT : COLOR_BORDER}`, color: i === 0 ? COLOR_ACCENT : COLOR_TEXT_SECONDARY, fontWeight: i === 0 ? 700 : 400 }}>
                     {i + 1}. {l.name} <span style={{ fontFamily: "monospace" }}>({l.rate}%)</span>
                   </span>
                 ))}
@@ -329,12 +329,12 @@ export default function LoanView({
               <div style={{ fontSize: 12, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 4 }}>
                 ⛄ 雪だるま方式（達成感重視）
               </div>
-              <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginBottom: 6, lineHeight: 1.5 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, lineHeight: 1.5 }}>
                 残債の少ない順に集中して返す。早く1件完済できてモチベが上がる。
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                 {snowball.map((l, i) => (
-                  <span key={l.id} style={{ fontSize: 11, padding: "3px 8px", borderRadius: 999, background: i === 0 ? `${COLOR_POSITIVE}22` : "rgba(255,255,255,0.04)", border: `1px solid ${i === 0 ? COLOR_POSITIVE : COLOR_BORDER}`, color: i === 0 ? COLOR_POSITIVE : COLOR_TEXT_SECONDARY, fontWeight: i === 0 ? 700 : 400 }}>
+                  <span key={l.id} style={{ fontSize: 12, padding: "3px 8px", borderRadius: 999, background: i === 0 ? `${COLOR_POSITIVE}22` : "rgba(255,255,255,0.04)", border: `1px solid ${i === 0 ? COLOR_POSITIVE : COLOR_BORDER}`, color: i === 0 ? COLOR_POSITIVE : COLOR_TEXT_SECONDARY, fontWeight: i === 0 ? 700 : 400 }}>
                     {i + 1}. {l.name} <span style={{ fontFamily: "monospace" }}>({formatYen(l.remaining)})</span>
                   </span>
                 ))}

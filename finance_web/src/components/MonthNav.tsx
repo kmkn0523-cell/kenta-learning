@@ -33,7 +33,7 @@ export default function MonthNav({ selectedYear, selectedMonth, onChange }: Mont
       <span style={{flex:1,textAlign:"center",fontSize:15,fontWeight:600}}>{selectedYear}年 {MONTH_LABELS[selectedMonth]}</span>
       <button onClick={next} style={{...STYLE_BUTTON_OUTLINE,width:44,height:44,padding:0,borderRadius:"50%",fontSize:20,display:"flex",alignItems:"center",justifyContent:"center"}}>›</button>
       {/* 今月以外を見ている時だけ「今月」ボタンを表示する */}
-      {!isCur && <button onClick={()=>onChange(today.getFullYear(),today.getMonth())} style={{...STYLE_BUTTON_OUTLINE,fontSize:11,padding:"6px 12px",minHeight:30}}>今月</button>}
+      {!isCur && <button onClick={()=>onChange(today.getFullYear(),today.getMonth())} style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"6px 12px",minHeight:30}}>今月</button>}
     </div>
   );
 }

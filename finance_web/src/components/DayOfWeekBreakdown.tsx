@@ -88,12 +88,12 @@ export default function DayOfWeekBreakdown({ mTx }: DayOfWeekBreakdownProps) {
     <div style={STYLE_CARD}>
       {/* ヘッダー */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
-        <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px" }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px" }}>
           曜日別支出
         </div>
         {/* 1曜日平均を右に小さく表示 */}
         <div style={{ textAlign: "right" }}>
-          <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, marginBottom: 1 }}>使った曜日の平均</div>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 1 }}>使った曜日の平均</div>
           <div style={{ fontFamily: "monospace", fontSize: 12, color: COLOR_TEXT_SECONDARY }}>
             {formatYen(avgPerActiveDay)}
           </div>
@@ -129,7 +129,7 @@ export default function DayOfWeekBreakdown({ mTx }: DayOfWeekBreakdownProps) {
                 flexShrink: 0,
               }}>
                 <span style={{
-                  fontSize: 11,
+                  fontSize: 12,
                   fontWeight: 700,
                   color: r.total > 0 ? labelColor : COLOR_TEXT_HINT,
                 }}>
@@ -162,7 +162,7 @@ export default function DayOfWeekBreakdown({ mTx }: DayOfWeekBreakdownProps) {
                       {formatYen(r.total)}
                     </span>
                     {/* 件数を小さく右端に */}
-                    <span style={{ fontSize: 9, color: COLOR_TEXT_HINT, marginLeft: 4 }}>
+                    <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginLeft: 4 }}>
                       {r.count}件
                     </span>
                   </>

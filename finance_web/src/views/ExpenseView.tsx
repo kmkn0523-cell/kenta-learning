@@ -169,11 +169,11 @@ export default function ExpenseView({
           style={{display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer"}}
           onClick={() => setShowRecSection(v => !v)}
         >
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>
             ⚡ 定期支出
             {/* 登録件数バッジ */}
             {recurringExpenses.length > 0 && (
-              <span style={{marginLeft:8,fontSize:11,color:COLOR_ACCENT,fontFamily:"monospace"}}>
+              <span style={{marginLeft:8,fontSize:12,color:COLOR_ACCENT,fontFamily:"monospace"}}>
                 {recurringExpenses.length}件
               </span>
             )}
@@ -200,7 +200,7 @@ export default function ExpenseView({
                     <div style={{fontSize:13,fontWeight:600,color:rec.active===false?COLOR_TEXT_HINT:COLOR_TEXT_PRIMARY}}>
                       {rec.active===false && "⏸ "}{rec.name}
                     </div>
-                    <div style={{fontSize:11,color:COLOR_TEXT_SECONDARY,marginTop:2}}>
+                    <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,marginTop:2}}>
                       {expenseCategoryIcons[rec.category]} {rec.category} · {rec.payDay} · {formatYen(rec.amount)}/月
                     </div>
                   </div>
@@ -213,7 +213,7 @@ export default function ExpenseView({
                     }
                     style={{
                       ...STYLE_BUTTON_OUTLINE,
-                      fontSize:11,
+                      fontSize:12,
                       padding:"4px 10px",
                       minHeight:30,
                       color: rec.active===false ? COLOR_TEXT_HINT : COLOR_ACCENT,
@@ -225,7 +225,7 @@ export default function ExpenseView({
                   {/* 削除ボタン */}
                   <button
                     onClick={() => delItem(rec.id, setRecurringExpenses, "定期支出を削除しました")}
-                    style={{...STYLE_BUTTON_OUTLINE,fontSize:11,padding:"4px 10px",minHeight:30}}
+                    style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"4px 10px",minHeight:30}}
                   >
                     削除
                   </button>
@@ -298,7 +298,7 @@ export default function ExpenseView({
                   登録する
                 </button>
                 {/* 注意書き */}
-                <div style={{fontSize:11,color:COLOR_TEXT_HINT,lineHeight:1.6}}>
+                <div style={{fontSize:12,color:COLOR_TEXT_HINT,lineHeight:1.6}}>
                   ※ 引落日が来た月から自動的に変動支出として追加されます。
                 </div>
               </div>
@@ -309,13 +309,13 @@ export default function ExpenseView({
 
       {/* ────────── クイックテンプレート一覧 ────────── */}
       {tpls.length>0&&<div style={{marginBottom:12}}>
-        <div style={{fontSize:10,color:COLOR_TEXT_HINT,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:8}}>よく使う支出</div>
+        <div style={{fontSize:12,color:COLOR_TEXT_HINT,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:8}}>よく使う支出</div>
         <div style={{display:"flex",gap:8,overflowX:"auto",paddingBottom:4,WebkitOverflowScrolling:"touch" as any}}>
           {tpls.map(tp=>(
             <div key={tp.id} onClick={()=>{setTxF(f=>({...f,cat:tp.cat,amt:String(tp.amount),memo:tp.note}));setShowTxForm(true);}} style={{flexShrink:0,background:"rgba(148,163,184,0.06)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:"10px 30px 10px 14px",cursor:"pointer",position:"relative",minWidth:100}}>
               <div style={{fontSize:12,fontWeight:600,color:COLOR_TEXT_SECONDARY}}>{expenseCategoryIcons[tp.cat]} {tp.cat}</div>
               <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,marginTop:2}}>{formatYen(tp.amount)}</div>
-              {tp.note&&<div style={{fontSize:10,color:COLOR_TEXT_HINT,marginTop:2,maxWidth:80,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{tp.note}</div>}
+              {tp.note&&<div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2,maxWidth:80,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{tp.note}</div>}
               <button onClick={e=>{e.stopPropagation();delItem(tp.id,setTpls,"テンプレートを削除しました");}} style={{position:"absolute",top:6,right:8,background:"none",border:"none",color:COLOR_TEXT_HINT,cursor:"pointer",fontSize:13,padding:2,lineHeight:1}}>✕</button>
             </div>
           ))}
@@ -326,7 +326,7 @@ export default function ExpenseView({
         ? <button onClick={()=>setShowTxForm(true)} style={{...STYLE_BUTTON_PRIMARY,marginBottom:12}}>＋ 支出を追加</button>
         : <div style={STYLE_CARD}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-              <div style={{fontSize:10,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>変動支出を入力</div>
+              <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>変動支出を入力</div>
               <button onClick={()=>setShowTxForm(false)} style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"4px 10px",minHeight:30}}>✕ 閉じる</button>
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:12}}>

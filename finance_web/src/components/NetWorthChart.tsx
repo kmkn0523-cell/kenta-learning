@@ -106,7 +106,7 @@ export default function NetWorthChart({ tx, inc, tFx }: NetWorthChartProps) {
     <div style={STYLE_CARD}>
       {/* セクションタイトル */}
       <div style={{
-        fontSize: 10,
+        fontSize: 12,
         color: COLOR_TEXT_HINT,
         textTransform: "uppercase",
         letterSpacing: "1.5px",
@@ -127,14 +127,14 @@ export default function NetWorthChart({ tx, inc, tFx }: NetWorthChartProps) {
           {/* X軸：月ラベル */}
           <XAxis
             dataKey="label"
-            tick={{ fontSize: 10, fill: COLOR_TEXT_HINT }}
+            tick={{ fontSize: 12, fill: COLOR_TEXT_HINT }}
             axisLine={false}
             tickLine={false}
           />
           {/* Y軸：金額（万円単位で短縮表示） */}
           <YAxis
             tickFormatter={v => `${(v / 10000).toFixed(0)}万`}
-            tick={{ fontSize: 10, fill: COLOR_TEXT_HINT }}
+            tick={{ fontSize: 12, fill: COLOR_TEXT_HINT }}
             axisLine={false}
             tickLine={false}
             width={36}

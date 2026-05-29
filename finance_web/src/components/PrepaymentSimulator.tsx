@@ -79,11 +79,11 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
         {/* ヘッダー */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
           <div>
-            <div style={{ fontSize: 10, color: COLOR_ACCENT, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>
+            <div style={{ fontSize: 12, color: COLOR_ACCENT, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>
               💪 繰り上げ返済シミュレーター
             </div>
             <div style={{ fontSize: 15, fontWeight: 700 }}>{loan.name}</div>
-            <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginTop: 2 }}>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 2 }}>
               金利 {loan.rate}% / 残債 {formatYen(loan.remaining)} / 月額 {formatYen(loan.monthly)}
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
           background: "rgba(34,211,238,0.05)", border: `1px solid ${COLOR_ACCENT}44`,
           borderRadius: 14, padding: 14, marginBottom: 12,
         }}>
-          <div style={{ fontSize: 10, color: COLOR_ACCENT, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 700, marginBottom: 10 }}>
+          <div style={{ fontSize: 12, color: COLOR_ACCENT, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 700, marginBottom: 10 }}>
             📊 試算結果
           </div>
 
@@ -168,13 +168,13 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {/* 現状 */}
             <div style={{ borderBottom: `1px solid ${COLOR_BORDER}`, paddingBottom: 10 }}>
-              <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginBottom: 4 }}>現状のまま</div>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>現状のまま</div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <span style={{ fontSize: 13 }}>
                   完済: <span style={{ fontFamily: "monospace", fontWeight: 700 }}>
                     {baseCompletion ? `${baseCompletion.y}年${baseCompletion.m}月` : "—"}
                   </span>
-                  <span style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginLeft: 6 }}>
+                  <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginLeft: 6 }}>
                     ({baseline?.months || 0}ヶ月)
                   </span>
                 </span>
@@ -186,13 +186,13 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
 
             {/* 繰り上げ後 */}
             <div>
-              <div style={{ fontSize: 10, color: COLOR_POSITIVE, fontWeight: 700, marginBottom: 4 }}>繰り上げ後</div>
+              <div style={{ fontSize: 12, color: COLOR_POSITIVE, fontWeight: 700, marginBottom: 4 }}>繰り上げ後</div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <span style={{ fontSize: 13 }}>
                   完済: <span style={{ fontFamily: "monospace", fontWeight: 700, color: COLOR_POSITIVE }}>
                     {improved && improved.months === 0 ? "今月" : (newCompletion ? `${newCompletion.y}年${newCompletion.m}月` : "—")}
                   </span>
-                  <span style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginLeft: 6 }}>
+                  <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginLeft: 6 }}>
                     ({improved?.months || 0}ヶ月)
                   </span>
                 </span>
@@ -210,18 +210,18 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
             background: "rgba(52,211,153,0.08)", border: `1px solid ${COLOR_POSITIVE}55`,
             borderRadius: 14, padding: 14, marginBottom: 12,
           }}>
-            <div style={{ fontSize: 11, color: COLOR_POSITIVE, fontWeight: 700, marginBottom: 8 }}>
+            <div style={{ fontSize: 12, color: COLOR_POSITIVE, fontWeight: 700, marginBottom: 8 }}>
               ✨ あなたの節約効果
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               <div>
-                <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, marginBottom: 4 }}>完済が早まる</div>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>完済が早まる</div>
                 <div style={{ fontFamily: "monospace", fontSize: 18, fontWeight: 700, color: COLOR_POSITIVE }}>
                   {monthsSaved}ヶ月
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, marginBottom: 4 }}>利息を節約</div>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>利息を節約</div>
                 <div style={{ fontFamily: "monospace", fontSize: 18, fontWeight: 700, color: COLOR_POSITIVE }}>
                   {formatYen(interestSaved)}
                 </div>
@@ -231,7 +231,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
         )}
 
         {/* 注記 */}
-        <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, lineHeight: 1.5, marginBottom: 12 }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, lineHeight: 1.5, marginBottom: 12 }}>
           ※ 元利均等返済方式での試算。実際の金融機関の計算と数百円ずれる場合があります。
         </div>
 

@@ -52,9 +52,9 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
       {/* ヘッダー：ローン名・金利・編集/削除ボタン */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
         <div style={{flex:1,minWidth:0}}>
-          {paid && <div style={{fontSize:10,fontWeight:700,color:COLOR_POSITIVE,background:"rgba(52,211,153,0.1)",borderRadius:5,padding:"2px 8px",display:"inline-block",marginBottom:4}}>✓ 完済</div>}
+          {paid && <div style={{fontSize:12,fontWeight:700,color:COLOR_POSITIVE,background:"rgba(52,211,153,0.1)",borderRadius:5,padding:"2px 8px",display:"inline-block",marginBottom:4}}>✓ 完済</div>}
           <div style={{fontSize:15,fontWeight:700}}>{loan.name}</div>
-          <div style={{fontSize:11,color:COLOR_TEXT_HINT,marginTop:2}}>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>
             金利 <span style={{fontFamily:"monospace",color:COLOR_TEXT_PRIMARY,fontWeight:700}}>{loan.rate}%</span>
             {hasPayDay && <span style={{marginLeft:8}}>毎月<span style={{fontFamily:"monospace",color:COLOR_TEXT_SECONDARY,fontWeight:600}}>{loan.payDay}</span>引落</span>}
           </div>
@@ -85,9 +85,9 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
       {/* 完済予定日 */}
       {!paid && comp && <div style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:"12px 14px",marginBottom:10,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
         <div>
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,marginBottom:3}}>完済予定</div>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:3}}>完済予定</div>
           <span style={{fontFamily:"monospace",fontSize:20,fontWeight:700}}>{comp.y}年{comp.m}月</span>
-          <span style={{fontSize:11,color:COLOR_TEXT_SECONDARY,marginLeft:8}}>あと{ti.months}ヶ月</span>
+          <span style={{fontSize:12,color:COLOR_TEXT_SECONDARY,marginLeft:8}}>あと{ti.months}ヶ月</span>
         </div>
         <span style={{fontSize:26}}>🏁</span>
       </div>}
@@ -105,7 +105,7 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
 
       {/* 手動モードの時だけ「今月の返済額を反映」フォームを出す */}
       {!paid && !isAuto && <div style={{background:"rgba(255,255,255,0.03)",borderRadius:10,padding:10}}>
-        <div style={{fontSize:11,color:COLOR_TEXT_HINT,marginBottom:8}}>今月の返済額を反映</div>
+        <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:8}}>今月の返済額を反映</div>
         <div style={{display:"flex",gap:8}}>
           <Input money type="number" value={payVal} onChange={e=>onPayChange(e.target.value)} placeholder={formatAmount(loan.monthly||"")} style={{textAlign:"right"}}/>
           <button onClick={onPaySubmit} style={{...STYLE_BUTTON_PRIMARY,width:"auto",padding:"11px 16px",whiteSpace:"nowrap"}}>反映</button>
@@ -119,13 +119,13 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
       {!paid && progressPct !== null && (
         <div style={{marginTop:12}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
-            <span style={{fontSize:10,color:COLOR_TEXT_HINT,letterSpacing:"1px",textTransform:"uppercase"}}>元本の返済進捗</span>
+            <span style={{fontSize:12,color:COLOR_TEXT_HINT,letterSpacing:"1px",textTransform:"uppercase"}}>元本の返済進捗</span>
             <span style={{fontFamily:"monospace",fontSize:13,fontWeight:700,color:COLOR_POSITIVE}}>{progressPct.toFixed(1)}%</span>
           </div>
           <div style={{height:6,background:"rgba(255,255,255,0.06)",borderRadius:3,overflow:"hidden"}}>
             <div style={{height:"100%",width:`${progressPct}%`,background:COLOR_POSITIVE,borderRadius:3,transition:"width 0.4s ease"}}/>
           </div>
-          <div style={{fontSize:10,color:COLOR_TEXT_HINT,marginTop:4,fontFamily:"monospace"}}>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:4,fontFamily:"monospace"}}>
             {formatYen(principalNum - loan.remaining)} 返済済 / 元本 {formatYen(principalNum)}
           </div>
         </div>

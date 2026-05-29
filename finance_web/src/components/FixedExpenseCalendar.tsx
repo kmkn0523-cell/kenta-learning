@@ -57,12 +57,12 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
     <div style={STYLE_CARD}>
       {/* ヘッダー */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
-        <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px" }}>
+        <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px" }}>
           引落カレンダー
         </div>
         {/* 残り引落額 */}
         <div style={{ textAlign: "right" }}>
-          <div style={{ fontSize: 9, color: COLOR_TEXT_HINT, marginBottom: 2 }}>今月残り</div>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 2 }}>今月残り</div>
           <div style={{ fontFamily: "monospace", fontSize: 14, fontWeight: 700, color: remaining > 0 ? COLOR_NEGATIVE : COLOR_TEXT_HINT }}>
             {formatYen(remaining)}
           </div>
@@ -125,7 +125,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
               }}>
                 {isPast && "✓ "}{f.name}
               </div>
-              <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginTop: 1 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 1 }}>
                 {f.category}
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
             {/* 今日バッジ */}
             {isToday && (
               <span style={{
-                fontSize: 9, background: "rgba(251,191,36,0.2)", color: "#fbbf24",
+                fontSize: 12, background: "rgba(251,191,36,0.2)", color: "#fbbf24",
                 borderRadius: 4, padding: "2px 6px", fontWeight: 700, flexShrink: 0,
               }}>今日</span>
             )}
@@ -155,7 +155,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
       {/* 引落日未設定の固定費（まとめて表示） */}
       {noDay.length > 0 && (
         <div style={{ marginTop: 10 }}>
-          <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginBottom: 6 }}>引落日未設定</div>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6 }}>引落日未設定</div>
           {noDay.map(f => (
             <div key={f.id} style={{
               display: "flex", justifyContent: "space-between",

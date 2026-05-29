@@ -66,7 +66,7 @@ export default function BudgetAlertBanner({ budget, expByCat, isCurrentMonth }: 
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
         <span style={{ fontSize: 14 }}>{overallDanger ? "⚠️" : "📊"}</span>
-        <span style={{ fontSize: 11, fontWeight: 700, color: accent, letterSpacing: "1px", textTransform: "uppercase" }}>
+        <span style={{ fontSize: 12, fontWeight: 700, color: accent, letterSpacing: "1px", textTransform: "uppercase" }}>
           {overallDanger ? "予算超過アラート" : "予算消化注意"}
         </span>
       </div>
@@ -92,7 +92,7 @@ export default function BudgetAlertBanner({ budget, expByCat, isCurrentMonth }: 
                 transition: "width 0.4s ease",
               }}/>
             </div>
-            <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: "monospace" }}>
               {formatYen(actual)} / {formatYen(b)}
               {ratio > 1 && (
                 <span style={{ marginLeft: 6, color: COLOR_NEGATIVE }}>
@@ -103,7 +103,7 @@ export default function BudgetAlertBanner({ budget, expByCat, isCurrentMonth }: 
           </div>
         );
       })}
-      <div style={{ fontSize: 10, color: COLOR_TEXT_SECONDARY, marginTop: 4, lineHeight: 1.5 }}>
+      <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 4, lineHeight: 1.5 }}>
         {overallDanger
           ? "支出タブで該当カテゴリを見直しましょう"
           : "残りの日数に注意して使い方を調整しましょう"}

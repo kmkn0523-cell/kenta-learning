@@ -96,7 +96,7 @@ export default function CategoryPieChart({ tx, selectedYear, selectedMonth, icon
     <div style={STYLE_CARD}>
       {/* タイトル：何月のグラフかわかるように月を表示 */}
       <div style={{
-        fontSize: 10,
+        fontSize: 12,
         color: COLOR_TEXT_HINT,
         textTransform: "uppercase",
         letterSpacing: "1.5px",
@@ -128,7 +128,7 @@ export default function CategoryPieChart({ tx, selectedYear, selectedMonth, icon
           <Legend
             iconType="circle"
             iconSize={8}
-            wrapperStyle={{ fontSize: 11, color: COLOR_TEXT_HINT, paddingTop: 8 }}
+            wrapperStyle={{ fontSize: 12, color: COLOR_TEXT_HINT, paddingTop: 8 }}
             formatter={(v: string) => `${icons?.[v] || ""} ${v}`}
           />
         </PieChart>
@@ -162,7 +162,7 @@ export default function CategoryPieChart({ tx, selectedYear, selectedMonth, icon
             {/* 金額 + パーセント */}
             <span>
               <span style={{ fontFamily: "monospace", fontWeight: 700 }}>{formatYen(d.value)}</span>
-              <span style={{ color: COLOR_TEXT_HINT, fontSize: 10, marginLeft: 5 }}>({d.pct}%)</span>
+              <span style={{ color: COLOR_TEXT_HINT, fontSize: 12, marginLeft: 5 }}>({d.pct}%)</span>
             </span>
           </div>
         ))}

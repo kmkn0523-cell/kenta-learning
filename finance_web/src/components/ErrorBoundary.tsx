@@ -102,7 +102,7 @@ export default class ErrorBoundary extends Component<Props, State> {
           {/* エラー詳細（折りたたみ） */}
           {this.state.error && (
             <details style={{ marginTop: 20, textAlign: "left" }}>
-              <summary style={{ fontSize: 11, color: "#5a5a63", cursor: "pointer" }}>
+              <summary style={{ fontSize: 12, color: "#5a5a63", cursor: "pointer" }}>
                 エラー詳細（開発者向け）
               </summary>
               <pre style={{
@@ -110,7 +110,7 @@ export default class ErrorBoundary extends Component<Props, State> {
                 padding: 10,
                 background: "rgba(255,255,255,0.04)",
                 borderRadius: 8,
-                fontSize: 10,
+                fontSize: 12,
                 color: "#f87171",
                 overflowX: "auto",
                 whiteSpace: "pre-wrap",

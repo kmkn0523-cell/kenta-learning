@@ -313,7 +313,7 @@ export default function CsvImportModal({
         {/* ヘッダー */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <div>
-            <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, letterSpacing: "1.5px", marginBottom: 3 }}>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1.5px", marginBottom: 3 }}>
               {mode === "expense" ? "📥 変動支出" : "📥 収入"} CSVインポート
             </div>
             <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY }}>
@@ -368,7 +368,7 @@ export default function CsvImportModal({
 
             {/* 対応フォーマットの説明 */}
             <div style={{ ...STYLE_CARD, background: "rgba(255,255,255,0.02)", marginBottom: 16, padding: 12 }}>
-              <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginBottom: 8 }}>対応フォーマット</div>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 8 }}>対応フォーマット</div>
               {[
                 "ヘッダー行（列名）＋データ行があるCSV",
                 "カンマ区切り（.csv）",
@@ -376,7 +376,7 @@ export default function CsvImportModal({
                 "日付形式: YYYY/MM/DD、YYYY-MM-DD、YYYY年M月D日",
                 "金額の全角数字・カンマ区切りに対応",
               ].map(t => (
-                <div key={t} style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, lineHeight: 1.8 }}>✓ {t}</div>
+                <div key={t} style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, lineHeight: 1.8 }}>✓ {t}</div>
               ))}
             </div>
 
@@ -401,7 +401,7 @@ export default function CsvImportModal({
               ] as { label: string; key: keyof ColumnMap; required: boolean }[]
             ).map(({ label, key, required }) => (
               <div key={key} style={{ marginBottom: 12 }}>
-                <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginBottom: 5 }}>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 5 }}>
                   {label}{required && <span style={{ color: COLOR_NEGATIVE }}> *</span>}
                 </div>
                 <select
@@ -419,8 +419,8 @@ export default function CsvImportModal({
 
             {/* 先頭5行のプレビュー */}
             <div style={{ marginTop: 16, marginBottom: 4 }}>
-              <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, marginBottom: 6 }}>CSVの先頭3行（参考）</div>
-              <div style={{ overflowX: "auto", fontSize: 10, color: COLOR_TEXT_HINT }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6 }}>CSVの先頭3行（参考）</div>
+              <div style={{ overflowX: "auto", fontSize: 12, color: COLOR_TEXT_HINT }}>
                 <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 280 }}>
                   <thead>
                     <tr>
@@ -475,7 +475,7 @@ export default function CsvImportModal({
           <div>
             {/* カテゴリ一括設定 */}
             <div style={{ marginBottom: 12 }}>
-              <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, marginBottom: 5 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 5 }}>
                 全行のカテゴリ（一括変更）
               </div>
               <select
@@ -495,7 +495,7 @@ export default function CsvImportModal({
                   previewRows.forEach(r => { s[r.rowIndex] = true; });
                   setSelected(s);
                 }}
-                style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 11, minHeight: 32, padding: "6px 8px" }}
+                style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12, minHeight: 32, padding: "6px 8px" }}
               >
                 全選択
               </button>
@@ -505,7 +505,7 @@ export default function CsvImportModal({
                   previewRows.forEach(r => { s[r.rowIndex] = false; });
                   setSelected(s);
                 }}
-                style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 11, minHeight: 32, padding: "6px 8px" }}
+                style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12, minHeight: 32, padding: "6px 8px" }}
               >
                 全解除
               </button>
@@ -542,12 +542,12 @@ export default function CsvImportModal({
                     </div>
 
                     {/* 日付 */}
-                    <div style={{ fontSize: 11, color: r.date ? COLOR_TEXT_SECONDARY : COLOR_NEGATIVE, minWidth: 72, fontFamily: "monospace" }}>
+                    <div style={{ fontSize: 12, color: r.date ? COLOR_TEXT_SECONDARY : COLOR_NEGATIVE, minWidth: 72, fontFamily: "monospace" }}>
                       {r.date || "日付NG"}
                     </div>
 
                     {/* メモ */}
-                    <div style={{ flex: 1, fontSize: 11, color: COLOR_TEXT_HINT, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <div style={{ flex: 1, fontSize: 12, color: COLOR_TEXT_HINT, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                       {r.memo || `行${idx + 1}`}
                     </div>
 
@@ -559,7 +559,7 @@ export default function CsvImportModal({
                 );
               })}
               {previewRows.length > 100 && (
-                <div style={{ fontSize: 11, color: COLOR_TEXT_HINT, textAlign: "center", padding: 8 }}>
+                <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textAlign: "center", padding: 8 }}>
                   ※ 先頭100件を表示（全{previewRows.length}件）
                 </div>
               )}

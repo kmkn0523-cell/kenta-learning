@@ -105,16 +105,16 @@ export default function CategoryTrendChart({ tx, icons }: CategoryTrendChartProp
 
   return (
     <div style={STYLE_CARD}>
-      <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 14 }}>
+      <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 14 }}>
         カテゴリ別 月次推移（過去6ヶ月）
       </div>
       <ResponsiveContainer width="100%" height={220}>
         <BarChart data={data} barCategoryGap="25%">
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-          <XAxis dataKey="label" tick={{ fill: COLOR_TEXT_HINT, fontSize: 11 }} axisLine={false} tickLine={false} />
+          <XAxis dataKey="label" tick={{ fill: COLOR_TEXT_HINT, fontSize: 12 }} axisLine={false} tickLine={false} />
           <YAxis
             tickFormatter={v => v >= 10000 ? (v / 10000).toFixed(0) + "万" : String(v)}
-            tick={{ fill: COLOR_TEXT_HINT, fontSize: 10 }}
+            tick={{ fill: COLOR_TEXT_HINT, fontSize: 12 }}
             axisLine={false}
             tickLine={false}
             width={36}
@@ -123,7 +123,7 @@ export default function CategoryTrendChart({ tx, icons }: CategoryTrendChartProp
           <Legend
             iconType="circle"
             iconSize={8}
-            wrapperStyle={{ fontSize: 11, color: COLOR_TEXT_HINT, paddingTop: 8 }}
+            wrapperStyle={{ fontSize: 12, color: COLOR_TEXT_HINT, paddingTop: 8 }}
             formatter={(v: string) => `${icons?.[v] || ""} ${v}`}
           />
           {/* 上位カテゴリ＋その他を積み上げで表示。stackId を揃えると recharts が同じ柱に積む */}

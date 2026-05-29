@@ -92,7 +92,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
     <div style={STYLE_CARD}>
       {/* ── ヘッダー：タイトル＋期間切り替えボタン ── */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14 }}>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>
           月次推移
         </div>
         {/* 3ヶ月・6ヶ月・12ヶ月のトグルボタン */}
@@ -106,7 +106,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
                 border: `1px solid ${range === r ? "rgba(34,211,238,0.4)" : "rgba(255,255,255,0.1)"}`,
                 borderRadius: 6,
                 color: range === r ? "#22d3ee" : COLOR_TEXT_HINT,
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: range === r ? 700 : 400,
                 padding: "3px 9px",
                 cursor: "pointer",
@@ -134,7 +134,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
           {/* Y軸：万円単位で短縮表示 */}
           <YAxis
             tickFormatter={v => v >= 10000 ? (v / 10000).toFixed(0) + "万" : String(v)}
-            tick={{ fill:COLOR_TEXT_HINT, fontSize:10 }}
+            tick={{ fill:COLOR_TEXT_HINT, fontSize:12 }}
             axisLine={false}
             tickLine={false}
             width={36}
@@ -143,7 +143,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
           <Legend
             iconType="circle"
             iconSize={8}
-            wrapperStyle={{ fontSize:11, color:COLOR_TEXT_HINT, paddingTop:8 }}
+            wrapperStyle={{ fontSize:12, color:COLOR_TEXT_HINT, paddingTop:8 }}
           />
           {/* 収入バー（緑） */}
           <Bar dataKey="income" name="収入" fill={COLOR_POSITIVE} radius={[3, 3, 0, 0]}/>
@@ -154,7 +154,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
 
       {/* 各月の手残りを一覧で表示（棒グラフだけでは分かりにくいため補足） */}
       <div style={{ marginTop:14, borderTop:`1px solid rgba(255,255,255,0.06)`, paddingTop:12 }}>
-        <div style={{ fontSize:10, color:COLOR_TEXT_HINT, marginBottom:8, letterSpacing:"0.5px" }}>手残り推移</div>
+        <div style={{ fontSize:12, color:COLOR_TEXT_HINT, marginBottom:8, letterSpacing:"0.5px" }}>手残り推移</div>
         {data.map(d => (
           <div
             key={d.label}
