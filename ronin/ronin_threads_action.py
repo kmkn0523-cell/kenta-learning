@@ -5,6 +5,7 @@
 
 import json                    # JSONファイルを扱う道具
 import os                      # 環境変数を読み込む道具
+import re                      # 文字列パターン検索に使う道具
 import time                    # 待機処理に使う道具
 import requests                # インターネットにリクエストを送る道具
 from datetime import datetime, timezone  # 今の日時とタイムゾーンを扱う道具
@@ -178,6 +179,168 @@ def should_use_optimization():
     except:
         # ファイルがなければ False（Day1-20モード）
         return False
+
+
+# =============================
+# Deep-dive スレッド投稿機能
+# =============================
+
+def load_cards_by_day():
+    """generate_ronin_cards.pyを解析してday番号→日本語諺の辞書を返す"""
+    with open("generate_ronin_cards.py", "r", encoding="utf-8") as f:
+        content = f.read()
+    # {"day": 1, "jp": "一期一会"} という形式のパターンを全部見つける
+    pattern = re.compile(r'\{"day":\s*(\d+),\s*"jp":\s*"([^"]+)"')
+    return {int(m.group(1)): m.group(2).strip() for m in pattern.finditer(content)}
+
+
+def load_deep_dives_by_jp():
+    """substack_deep_dive.jsonを読んで「日本語諺→記事データ」の辞書を返す"""
+    with open("substack/substack_deep_dive.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+    # japanese フィールドをキーにする（日本語でカードデータと突き合わせる）
+    return {a["japanese"]: a for a in data["articles"]}
+
+
+def split_html_to_chunks(body_html, max_len=480):
+    """body_htmlをH2セクションごとに分割し、480文字以内のテキストチャンクのリストを返す"""
+    # <h2>タグで分割する: ['前置き', '見出し1', '本文1', '見出し2', '本文2', ...]
+    parts = re.split(r'<h2>(.*?)</h2>', body_html)
+
+    chunks = []
+    i = 1  # parts[0]はH2より前の前置き（空が多い）なのでスキップして1から始める
+    while i + 1 < len(parts):
+        heading = re.sub(r'<[^>]+>', '', parts[i]).strip()  # HTMLタグを除去して見出し文字列を取得
+        body_section = parts[i + 1]
+
+        # <p>タグで段落を取り出してHTMLタグを除去する
+        paragraphs = re.findall(r'<p>(.*?)</p>', body_section, re.DOTALL)
+        paragraphs = [re.sub(r'<[^>]+>', '', p).strip() for p in paragraphs]
+        paragraphs = [p for p in paragraphs if p]  # 空の段落は除外する
+
+        # 見出し＋段落を480文字以内にまとめる（入りきらない分は新しいチャンクに移す）
+        current = heading
+        for para in paragraphs:
+            candidate = current + "\n\n" + para if current else para
+            if len(candidate) <= max_len:
+                current = candidate  # まだ入る→続けて追加する
+            else:
+                if current:
+                    chunks.append(current)  # 今のチャンクを確定する
+                # この段落だけでも長すぎる場合は文単位でさらに分割する
+                if len(para) <= max_len:
+                    current = para
+                else:
+                    sentences = re.split(r'(?<=[.!?]) +', para)  # 文末（.!?）で分割する
+                    current = ""
+                    for sent in sentences:
+                        trial = (current + " " + sent).strip() if current else sent
+                        if len(trial) <= max_len:
+                            current = trial
+                        else:
+                            if current:
+                                chunks.append(current)
+                            current = sent
+        if current:
+            chunks.append(current)  # 最後のチャンクを追加する
+
+        i += 2  # 見出し（奇数）と本文（偶数）で2つ進む
+
+    return chunks
+
+
+def post_reply(text, reply_to_id):
+    """既存の投稿へのリプライをThreads APIで投稿する（2段階APIコール）"""
+    # ステップ1: リプライコンテナを作成する
+    container_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads"
+    container_params = {
+        "media_type": "TEXT",
+        "text": text,
+        "reply_to_id": reply_to_id,          # リプライ先の投稿ID
+        "access_token": THREADS_ACCESS_TOKEN
+    }
+    response = requests.post(container_url, params=container_params)
+    data = response.json()
+    if "id" not in data:
+        raise Exception(f"リプライコンテナ作成失敗: {data}")
+
+    creation_id = data["id"]
+    print("    コンテナ作成完了。30秒待機中...")
+    time.sleep(30)  # Threads APIの仕様: コンテナ作成から30秒待ってから公開する
+
+    # ステップ2: コンテナを公開してリプライを実際に投稿する
+    publish_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads_publish"
+    publish_params = {
+        "creation_id": creation_id,
+        "access_token": THREADS_ACCESS_TOKEN
+    }
+    publish_response = requests.post(publish_url, params=publish_params)
+    publish_data = publish_response.json()
+    if "id" not in publish_data:
+        raise Exception(f"リプライ公開失敗: {publish_data}")
+
+    return publish_data["id"]  # 投稿されたリプライのIDを返す
+
+
+def post_deep_dive_thread(card_post_id, day):
+    """朝カード投稿のリプライとしてdeep-diveをスレッド形式で投稿する"""
+    # 進捗ファイルを読んで同じDayを重複投稿しないかチェックする
+    progress = load_progress()
+    dd_threads = progress.setdefault("deep_dive_threads", {})  # フィールドがなければ空辞書で初期化する
+    if str(day) in dd_threads:
+        print(f"  Day{day}のdeep-diveスレッドはすでに投稿済みです。スキップ。")
+        return
+
+    # カードの日本語諺とdeep-dive記事データを読み込む
+    try:
+        cards = load_cards_by_day()
+        dd_by_jp = load_deep_dives_by_jp()
+    except Exception as e:
+        print(f"  ⚠️ データ読み込みに失敗しました: {e}")
+        return
+
+    if day not in cards:
+        print(f"  Day{day}のカードデータが見つかりません。スキップ。")
+        return
+
+    japanese = cards[day]  # 今日の諺の日本語テキスト（例: "一期一会"）
+    if japanese not in dd_by_jp:
+        print(f"  Day{day}（{japanese}）のdeep-dive記事はありません。スキップ。")
+        return
+
+    article = dd_by_jp[japanese]
+    chunks = split_html_to_chunks(article["body_html"])  # body_htmlを480文字以内のチャンクに分割する
+    if not chunks:
+        print(f"  Day{day}のdeep-diveのチャンク分割結果が空です。スキップ。")
+        return
+
+    # 最後のチャンクにSubstack誘導リンクを付ける
+    cta = f"\n\n📖 Full read → {SUBSTACK_URL}"
+    if len(chunks[-1] + cta) <= 500:
+        chunks[-1] = chunks[-1] + cta  # 最後のチャンクに追記できるなら追記する
+    else:
+        chunks.append(cta.strip())  # 入らない場合は独立したチャンクとして追加する
+
+    print(f"  Deep-diveスレッド投稿開始: 「{article['title']}」（{len(chunks)}チャンク）")
+
+    # カード投稿へのリプライから始めてチェーン状にスレッドを組む
+    reply_to_id = card_post_id  # 最初のリプライはカード投稿に対して行う
+    first_reply_id = None
+    for i, chunk in enumerate(chunks):
+        print(f"  リプライ {i + 1}/{len(chunks)} 投稿中...")
+        reply_id = post_reply(chunk, reply_to_id)
+        if i == 0:
+            first_reply_id = reply_id  # 最初のリプライIDを記録しておく
+        reply_to_id = reply_id  # 次のリプライは直前のリプライに対して行う（チェーン）
+
+    # 投稿済みとして記録して保存する（次回の重複防止）
+    dd_threads[str(day)] = {
+        "posted_at": datetime.now(timezone.utc).isoformat(),
+        "first_reply_id": first_reply_id,
+        "title": article["title"]
+    }
+    save_progress(progress)  # deep_dive_threads フィールドを進捗ファイルに保存する
+    print(f"  ✅ Deep-diveスレッド完了！（{len(chunks)}件）")
 
 
 def get_last_post_time():
