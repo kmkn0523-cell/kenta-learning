@@ -111,7 +111,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
                 padding: "3px 9px",
                 cursor: "pointer",
                 fontFamily: "inherit",
-                transition: "all 0.15s",
+                transition: "background 0.15s, border-color 0.15s, color 0.15s, font-weight 0.15s",
               }}
             >
               {r}ヶ月

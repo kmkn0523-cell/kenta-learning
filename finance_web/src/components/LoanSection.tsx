@@ -1,7 +1,7 @@
 // ────────── ローンタブ全体コンポーネント ──────────
 // 消費者金融・銀行ローン・個人ローン3タブで共通して使われるローン管理セクション
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { parseYenAmount, formatYen } from "../utils/format";
 import { findRate, FREE, calculateMonthlyInterest, calculateTotalInterest } from "../utils/loanCalc";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_NEGATIVE } from "../utils/styles";
@@ -48,7 +48,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
   const initF = () => ({name:"",prin:"",rem:"",rate:"",mo:"",brand:brandOpts?FREE:""});
 
   const [showF, setShowF] = useState(false);                     // フォーム表示フラグ
-  const [edId, setEdId]   = useState<string | null>(null);       // 編集中のローンID（新規時は null）
+  const edId              = useRef<string | null>(null);          // 編集中のローンID（新規時は null・JSXで使わないためref）
   const [f, setF]         = useState<{name:string;prin:string;rem:string;rate:string;mo:string;brand:string;payDay?:string}>(initF);   // フォームの入力値
 
   // 金利の注意書きポップアップ：初回のブランド選択時に自動で出す。一度見たら再表示しない
@@ -84,9 +84,9 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
     const rem = parseYenAmount(f.rem);
     if (!f.name || isNaN(rem)) { showT("名称と残債を入力","error"); return; }
     const d = {name:f.name,rate:parseYenAmount(f.rate),remaining:rem,monthly:parseYenAmount(f.mo),principal:parseYenAmount(f.prin||0),payDay:f.payDay||"未設定"};
-    if (edId) setArr(p => p.map(l => l.id===edId ? {...d,id:edId,lastAutoPaid:l.lastAutoPaid} : l));
-    else      setArr(p => [...p, {...d, id:newId()}]);
-    setEdId(null); setShowF(false); setF(initF()); showT("保存しました");
+    if (edId.current) setArr(p => p.map(l => l.id===edId.current ? {...d,id:edId.current!,lastAutoPaid:l.lastAutoPaid} : l));
+    else              setArr(p => [...p, {...d, id:newId()}]);
+    edId.current = null; setShowF(false); setF(initF()); showT("保存しました");
   }
 
   // 手動返済を残債に反映する
@@ -124,7 +124,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
             // 編集開始：フォームに既存値をセット
             const isPreset = brands && brands.includes(loan.name);
             setF({name:loan.name,prin:String(loan.principal||""),rem:String(loan.remaining),rate:String(loan.rate),mo:String(loan.monthly),payDay:loan.payDay||"未設定",brand:isPreset?loan.name:(brandOpts?FREE:"")});
-            setEdId(loan.id); setShowF(true);
+            edId.current = loan.id; setShowF(true);
           }}
           onDelete={() => onDelete(loan.id, setArr)}
           payVal={pays[pfx+loan.id] || String(loan.monthly||"")}
@@ -135,7 +135,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
       )}
 
       {/* 追加ボタン：フォームが閉じている時だけ表示 */}
-      {!showF && <button onClick={()=>{setShowF(true);setEdId(null);setF(initF());}} style={{...STYLE_BUTTON_PRIMARY,marginTop:4}}>＋ 追加</button>}
+      {!showF && <button onClick={()=>{setShowF(true);edId.current=null;setF(initF());}} style={{...STYLE_BUTTON_PRIMARY,marginTop:4}}>＋ 追加</button>}
 
       {/* 入力フォーム */}
       {showF && <div style={STYLE_CARD}>
@@ -159,7 +159,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
         </div>
         <div style={{display:"flex",gap:10}}>
           <button onClick={save} style={STYLE_BUTTON_PRIMARY}>保存</button>
-          <button onClick={()=>{setShowF(false);setEdId(null);}} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
+          <button onClick={()=>{setShowF(false);edId.current=null;}} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
         </div>
       </div>}
 

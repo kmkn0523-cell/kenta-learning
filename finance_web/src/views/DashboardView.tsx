@@ -246,7 +246,7 @@ export default function DashboardView({
               color: viewMode === mode ? "#22d3ee" : "#64748b",
               fontWeight: viewMode === mode ? 700 : 400,
               fontSize:13, fontFamily:"inherit",
-              transition:"all 0.15s",
+              transition:"background 0.15s, color 0.15s, font-weight 0.15s",
             }}
           >
             {mode === "monthly" ? "📅 月次" : "📆 年間"}

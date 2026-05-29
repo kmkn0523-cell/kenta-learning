@@ -2,7 +2,7 @@
 // 全タブの状態管理・画面切替・CSV出力・バックアップ機能をまとめた中心ファイル
 // UI部品・ユーティリティ・フックはすべて外部ファイルから読み込む
 
-import { useState, useEffect, useMemo, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback, lazy, Suspense } from "react";
 import { usePersist } from "./hooks/usePersist";
 import { useMonthlyData } from "./hooks/useMonthlyData";
 import { useAutoPayment } from "./hooks/useAutoPayment";

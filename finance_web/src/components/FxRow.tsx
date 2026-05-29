@@ -83,7 +83,7 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
             alignItems: "center",
             justifyContent: "center",
             gap: 6,
-            transition: "all 0.2s",
+            transition: "background 0.2s, color 0.2s, opacity 0.2s",
           }}
         >
           <span style={{fontSize:13}}>🔁</span>

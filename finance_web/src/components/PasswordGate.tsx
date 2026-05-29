@@ -3,7 +3,7 @@
 // 初回：パスワード設定画面 → 設定済み：ログイン画面
 // ログイン成功後は CryptoKeyContext に AES-GCM 鍵をセットして children（本体）を描画する
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import CryptoKeyContext from "../contexts/CryptoKeyContext";
 import {
   simpleHash, makeNewHash, verifyNewHash, isLegacyHash,
@@ -28,8 +28,8 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
   // ブルートフォース対策：失敗回数とロック解除時刻（エポックms）をsessionStorageで管理
   // sessionStorageなのでブラウザを閉じればリセットされる（厳しすぎないユーザー体験）
-  const [failCount, setFailCount] = useState(() => Number(sessionStorage.getItem("ff_fail") || "0"));
-  const [lockUntil, setLockUntil] = useState(() => Number(sessionStorage.getItem("ff_lock") || "0"));
+  const failCount = useRef<number>(Number(sessionStorage.getItem("ff_fail") || "0")); // JSXで使わないのでrefで管理
+  const lockUntil = useRef<number>(Number(sessionStorage.getItem("ff_lock") || "0")); // 同上
 
   function showErr(msg){ setErr(msg); setTimeout(()=>setErr(""),2000); }
 
@@ -42,8 +42,8 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
     if (busy) return; // すでに処理中なら何もしない
     // ロック中チェック：5回連続失敗後は30秒間ログイン試行を拒否する
     const now = Date.now();
-    if (now < lockUntil) {
-      const remaining = Math.ceil((lockUntil - now) / 1000);
+    if (now < lockUntil.current) {
+      const remaining = Math.ceil((lockUntil.current - now) / 1000);
       showErr(`${remaining}秒後に再試行できます`);
       return;
     }
@@ -71,8 +71,8 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
       }
       if (success) {
         // ログイン成功 → 失敗カウントをリセット
-        setFailCount(0);
-        setLockUntil(0);
+        failCount.current = 0;
+        lockUntil.current = 0;
         sessionStorage.removeItem("ff_fail");
         sessionStorage.removeItem("ff_lock");
         // パスワードからAES-GCM鍵を派生してメモリにだけ持つ（鍵の保存はしない）
@@ -87,12 +87,12 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
         setOk(true);
       } else {
         // ログイン失敗 → カウントを増やし、5回目でロックをかける
-        const newCount = failCount + 1;
-        setFailCount(newCount);
+        const newCount = failCount.current + 1;
+        failCount.current = newCount;
         sessionStorage.setItem("ff_fail", String(newCount));
         if (newCount >= 5) {
           const until = Date.now() + 30 * 1000; // 30秒ロック
-          setLockUntil(until);
+          lockUntil.current = until;
           sessionStorage.setItem("ff_lock", String(until));
           setPw("");
           showErr("30秒間ロックされました");
@@ -203,7 +203,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
         {/* フッター */}
         <div style={{textAlign:"center",fontSize:10,color:"#5a5a63",marginTop:32,lineHeight:1.6}}>
           v1.2.2 / © 2026 kmkn0523<br/>
-          PWA対応 — ホーム画面に追加してアプリのように使えます
+          PWA対応{" — "}ホーム画面に追加してアプリのように使えます
         </div>
       </div>
     </div>

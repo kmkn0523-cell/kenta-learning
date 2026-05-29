@@ -17,14 +17,14 @@ export function simpleHash(str: string): string {
 }
 
 // バイト列（数値の列）を base64（文字列）に変える
-export function bytesToB64(bytes: Uint8Array): string {
+function bytesToB64(bytes: Uint8Array): string {
   let s = "";
   for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
   return btoa(s);
 }
 
 // base64（文字列）をバイト列（数値の列）に戻す
-export function b64ToBytes(b64: string): Uint8Array<ArrayBuffer> {
+function b64ToBytes(b64: string): Uint8Array<ArrayBuffer> {
   const s = atob(b64);
   const bytes = new Uint8Array(s.length);
   for (let i = 0; i < s.length; i++) bytes[i] = s.charCodeAt(i);
@@ -32,7 +32,7 @@ export function b64ToBytes(b64: string): Uint8Array<ArrayBuffer> {
 }
 
 // パスワードとsalt（毎回違うランダムな値）からPBKDF2で256ビットのハッシュを作る
-export async function derivePwHash(password: string, saltBytes: Uint8Array<ArrayBuffer>): Promise<Uint8Array<ArrayBuffer>> {
+async function derivePwHash(password: string, saltBytes: Uint8Array<ArrayBuffer>): Promise<Uint8Array<ArrayBuffer>> {
   const enc = new TextEncoder();
   // パスワード文字列をWeb Cryptoが扱える形（CryptoKey）に変換する
   const baseKey = await crypto.subtle.importKey(

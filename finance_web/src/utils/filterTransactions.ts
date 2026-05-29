@@ -46,7 +46,7 @@ export function filterAndSortItems<T extends { date: string; category: string; a
   // 並び替え処理
   if (filter.sortBy) {
     const dir = filter.sortDir === "asc" ? 1 : -1;
-    result = [...result].sort((a, b) => {
+    result = result.toSorted((a, b) => {
       if (filter.sortBy === "date") return dir * a.date.localeCompare(b.date);
       if (filter.sortBy === "amount") return dir * (a.amount - b.amount);
       return 0;

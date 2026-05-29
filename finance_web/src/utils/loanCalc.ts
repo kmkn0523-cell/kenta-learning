@@ -32,7 +32,7 @@ export function calculateCompletionDate(months: number | null | undefined): { y:
 // 各ブランドの「借入額帯ごとの上限金利(%)」をまとめたもの
 // [上限金額(円), 金利%] を金額の小さい順に並べる
 // ※あくまで各社公表の最高金利の目安。実際の契約金利は審査で決まるため上書きOK
-export const RATE_TABLES: Record<string, [number, number][]> = {
+const RATE_TABLES: Record<string, [number, number][]> = {
   // 大手消費者金融
   "アコム":         [[1000000,18.0],[3000000,15.0],[5000000,12.0],[8000000,9.0],[Infinity,7.7]],
   "プロミス":        [[1000000,17.8],[3000000,15.0],[5000000,12.0],[Infinity,6.3]],
