@@ -41,20 +41,26 @@ jobs:
       - name: ライブラリをインストール
         run: pip install curl_cffi python-dotenv
 
-      # Step 4: Substack に自動投稿する
+      # Step 4: Substack に自動投稿する（書道カード記事）
       # progress.json は actions/checkout で取得したgitの最新状態をそのまま使う
       # （キャッシュは廃止：古いキャッシュがgitの正しい状態を上書きして重複投稿が起きるため）
-      - name: Substack に投稿
+      - name: Substack にカード記事を投稿
         env:
           SUBSTACK_SID: ${{ secrets.SUBSTACK_SID }}
         run: cd ronin && python substack_auto_post.py
 
-      # Step 5: 進捗ファイルを Git にコミットして保存する
+      # Step 5: Substack に自動投稿する（deep-dive 長文記事・カード記事と同じ Day 番号）
+      - name: Substack に deep-dive 記事を投稿
+        env:
+          SUBSTACK_SID: ${{ secrets.SUBSTACK_SID }}
+        run: cd ronin && python substack_deep_dive_auto_post.py
+
+      # Step 6: 進捗ファイルを Git にコミットして保存する
       - name: 進捗ファイルをコミット＆プッシュ
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add ronin/substack/substack_progress.json
+          git add ronin/substack/substack_progress.json ronin/substack/deep_dive_progress.json
           if ! git diff --staged --quiet; then
             git commit -m "自動同期: Substack進捗更新"
             for i in 1 2 3; do
