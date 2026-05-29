@@ -3968,6 +3968,13 @@
       "theme_id": 80,
       "variant": "B",
       "post_id": "18092376193997434"
+    },
+    {
+      "date": "2026/05/29 13:52",
+      "theme": "note宣伝: 肌荒れの原因、夜にあった。睡眠と肌の深い関係",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18089527931382190"
     }
   ],
   "ab_next": "A",
@@ -4732,7 +4739,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-29T12:01:20.985892+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
-  "last_note_promo_date": "2026/05/27"
+  "last_posted_at": "2026-05-29T13:53:17.051035+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
+  "last_note_promo_date": "2026/05/29"
 }
