@@ -30,6 +30,21 @@ interface TooltipProps {
   label?: string;
 }
 
+// モジュールスコープに定義（コンポーネント内に置くと毎レンダーで再生成されてしまう）
+function CustomTooltip({ active, payload, label }: TooltipProps) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div style={{ background:"#18181f", border:`1px solid ${COLOR_BORDER}`, borderRadius:10, padding:"10px 14px", fontSize:12 }}>
+      <div style={{ color:COLOR_TEXT_PRIMARY, fontWeight:700, marginBottom:6 }}>{label}</div>
+      {payload.map(p => (
+        <div key={p.dataKey} style={{ color:p.color, fontFamily:"monospace" }}>
+          {p.name}: {formatYen(p.value)}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // 表示期間の選択肢（ヶ月）
 const RANGE_OPTIONS = [3, 6, 12] as const;
 type RangeOption = typeof RANGE_OPTIONS[number];
@@ -72,21 +87,6 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
     }
     return months;
   }, [tx, inc, tFx, range]);
-
-  // カスタムツールチップ：ホバー時に円単位で金額を表示する
-  const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
-    if (!active || !payload?.length) return null;
-    return (
-      <div style={{ background:"#18181f", border:`1px solid ${COLOR_BORDER}`, borderRadius:10, padding:"10px 14px", fontSize:12 }}>
-        <div style={{ color:COLOR_TEXT_PRIMARY, fontWeight:700, marginBottom:6 }}>{label}</div>
-        {payload.map(p => (
-          <div key={p.dataKey} style={{ color:p.color, fontFamily:"monospace" }}>
-            {p.name}: {formatYen(p.value)}
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
     <div style={STYLE_CARD}>

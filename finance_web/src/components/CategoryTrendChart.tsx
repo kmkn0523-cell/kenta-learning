@@ -32,6 +32,26 @@ interface TooltipProps {
   active?: boolean;
   payload?: { dataKey: string; name: string; value: number; color: string }[];
   label?: string;
+  icons?: Record<string, string>;
+}
+
+// モジュールスコープに定義（コンポーネント内に置くと毎レンダーで再生成されてしまう）
+function CustomTooltip({ active, payload, label, icons }: TooltipProps) {
+  if (!active || !payload?.length) return null;
+  const total = payload.reduce((s, p) => s + (Number(p.value) || 0), 0);
+  return (
+    <div style={{ background: "#18181f", border: `1px solid ${COLOR_BORDER}`, borderRadius: 10, padding: "10px 14px", fontSize: 12 }}>
+      <div style={{ color: COLOR_TEXT_PRIMARY, fontWeight: 700, marginBottom: 6 }}>{label}（計 {formatYen(total)}）</div>
+      {payload
+        .filter(p => Number(p.value) > 0)
+        .sort((a, b) => Number(b.value) - Number(a.value))
+        .map(p => (
+          <div key={p.dataKey} style={{ color: p.color, fontFamily: "monospace" }}>
+            {icons?.[p.name] || ""} {p.name}: {formatYen(Number(p.value))}
+          </div>
+        ))}
+    </div>
+  );
 }
 
 export default function CategoryTrendChart({ tx, icons }: CategoryTrendChartProps) {
@@ -83,25 +103,6 @@ export default function CategoryTrendChart({ tx, icons }: CategoryTrendChartProp
   const hasData = categories.length > 0 && data.some(d => categories.some(c => Number(d[c] || 0) > 0));
   if (!hasData) return null;
 
-  // ホバー時に各カテゴリの金額を表示（金額0のカテゴリは省略）
-  const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
-    if (!active || !payload?.length) return null;
-    const total = payload.reduce((s, p) => s + (Number(p.value) || 0), 0);
-    return (
-      <div style={{ background: "#18181f", border: `1px solid ${COLOR_BORDER}`, borderRadius: 10, padding: "10px 14px", fontSize: 12 }}>
-        <div style={{ color: COLOR_TEXT_PRIMARY, fontWeight: 700, marginBottom: 6 }}>{label}（計 {formatYen(total)}）</div>
-        {payload
-          .filter(p => Number(p.value) > 0)
-          .sort((a, b) => Number(b.value) - Number(a.value))
-          .map(p => (
-            <div key={p.dataKey} style={{ color: p.color, fontFamily: "monospace" }}>
-              {icons?.[p.name] || ""} {p.name}: {formatYen(Number(p.value))}
-            </div>
-          ))}
-      </div>
-    );
-  };
-
   return (
     <div style={STYLE_CARD}>
       <div style={{ fontSize: 10, color: COLOR_TEXT_HINT, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 14 }}>
@@ -118,7 +119,7 @@ export default function CategoryTrendChart({ tx, icons }: CategoryTrendChartProp
             tickLine={false}
             width={36}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(255,255,255,0.03)" }} />
+          <Tooltip content={<CustomTooltip icons={icons} />} cursor={{ fill: "rgba(255,255,255,0.03)" }} />
           <Legend
             iconType="circle"
             iconSize={8}

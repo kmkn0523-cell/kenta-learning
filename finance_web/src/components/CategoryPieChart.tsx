@@ -36,6 +36,30 @@ interface CategoryPieChartProps {
 interface TooltipProps {
   active?: boolean;
   payload?: { name: string; value: number; payload: { name: string; value: number; pct: number } }[];
+  icons?: Record<string, string>;
+}
+
+// モジュールスコープに定義（コンポーネント内に置くと毎レンダーで再生成されてしまう）
+function CustomTooltip({ active, payload, icons }: TooltipProps) {
+  if (!active || !payload?.length) return null;
+  const d = payload[0].payload;
+  return (
+    <div style={{
+      background: "#18181f",
+      border: `1px solid ${COLOR_BORDER}`,
+      borderRadius: 10,
+      padding: "10px 14px",
+      fontSize: 12,
+    }}>
+      <div style={{ color: COLOR_TEXT_PRIMARY, fontWeight: 700, marginBottom: 4 }}>
+        {icons?.[d.name] || ""} {d.name}
+      </div>
+      <div style={{ fontFamily: "monospace", color: "#22d3ee" }}>
+        {formatYen(d.value)}
+        <span style={{ color: COLOR_TEXT_HINT, marginLeft: 6 }}>({d.pct}%)</span>
+      </div>
+    </div>
+  );
 }
 
 export default function CategoryPieChart({ tx, selectedYear, selectedMonth, icons }: CategoryPieChartProps) {
@@ -68,29 +92,6 @@ export default function CategoryPieChart({ tx, selectedYear, selectedMonth, icon
   // データがなければ何も表示しない（支出が0件の月）
   if (data.length === 0) return null;
 
-  // ホバー時のカスタムツールチップ：金額と割合を表示
-  const CustomTooltip = ({ active, payload }: TooltipProps) => {
-    if (!active || !payload?.length) return null;
-    const d = payload[0].payload;
-    return (
-      <div style={{
-        background: "#18181f",
-        border: `1px solid ${COLOR_BORDER}`,
-        borderRadius: 10,
-        padding: "10px 14px",
-        fontSize: 12,
-      }}>
-        <div style={{ color: COLOR_TEXT_PRIMARY, fontWeight: 700, marginBottom: 4 }}>
-          {icons?.[d.name] || ""} {d.name}
-        </div>
-        <div style={{ fontFamily: "monospace", color: "#22d3ee" }}>
-          {formatYen(d.value)}
-          <span style={{ color: COLOR_TEXT_HINT, marginLeft: 6 }}>({d.pct}%)</span>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div style={STYLE_CARD}>
       {/* タイトル：何月のグラフかわかるように月を表示 */}
@@ -122,7 +123,7 @@ export default function CategoryPieChart({ tx, selectedYear, selectedMonth, icon
             ))}
           </Pie>
           {/* ホバーツールチップ */}
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip icons={icons} />} />
           {/* 凡例（絵文字アイコン付き） */}
           <Legend
             iconType="circle"
