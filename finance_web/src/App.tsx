@@ -288,6 +288,7 @@ function AppInner(){
         }}>
           <span style={{color:COLOR_TEXT_SECONDARY}}>🔔 予算超過などをブラウザ通知で受け取れます</span>
           <button
+            type="button"
             onClick={requestPermission}
             style={{
               background:"rgba(34,211,238,0.15)", border:"1px solid rgba(34,211,238,0.4)",
@@ -434,7 +435,7 @@ function AppInner(){
     </div>
     <nav style={{position:"fixed",bottom:0,left:0,right:0,background:"rgba(7,11,20,0.96)",backdropFilter:"blur(24px)",borderTop:`1px solid ${COLOR_BORDER}`,display:"flex",zIndex:100,paddingBottom:"env(safe-area-inset-bottom)"}}>
       {[["dash","📊","概要"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["set","⚙️","設定"]].map(([key,icon,label])=>(
-        <button key={key} onClick={()=>setTab(key)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"12px 4px 14px",cursor:"pointer",border:"none",background:"none",color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT,fontSize:10,gap:3,fontFamily:"inherit",minHeight:60,position:"relative",WebkitTapHighlightColor:"transparent"}}>
+        <button type="button" key={key} onClick={()=>setTab(key)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"12px 4px 14px",cursor:"pointer",border:"none",background:"none",color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT,fontSize:10,gap:3,fontFamily:"inherit",minHeight:60,position:"relative",WebkitTapHighlightColor:"transparent"}}>
           {tab===key&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:30,height:2,background:COLOR_ACCENT,borderRadius:1,boxShadow:`0 0 8px ${COLOR_ACCENT},0 0 16px rgba(34,211,238,0.4)`}}/>}
           <span style={{fontSize:22,lineHeight:1,transform:tab===key?"scale(1.12)":"scale(1)",transition:"transform 0.15s ease"}}>{icon}</span>
           <span style={{fontWeight:tab===key?700:400,letterSpacing:tab===key?"0.5px":"0"}}>{label}</span>

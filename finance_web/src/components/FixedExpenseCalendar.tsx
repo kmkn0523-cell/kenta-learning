@@ -110,7 +110,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
               }}>
                 {f.day}
               </span>
-              <span style={{ fontSize: 8, color: COLOR_TEXT_HINT, lineHeight: 1, marginTop: 1 }}>日</span>
+              <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, lineHeight: 1, marginTop: 1 }}>日</span>
             </div>
 
             {/* 名前・カテゴリ */}
