@@ -1,6 +1,6 @@
 // ────────── 振替フォーム ──────────
 // 口座間の振替を入力するモーダル（背景タップで閉じる）
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { Transfer, Account } from "../types";
 import { Input } from "./ui";
 import {
@@ -13,6 +13,16 @@ import {
   COLOR_BACKGROUND,
 } from "../utils/styles";
 import { parseYenAmount } from "../utils/format";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 振替フォームモーダルの背景オーバーレイ
+const STYLE_TF_OVERLAY: CSSProperties = {
+  position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)", zIndex: 200,
+  display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
+};
+
+// ─────────────────────────────────────────────────────────
 
 // このコンポーネントが受け取る props の型
 interface TransferFormProps {
@@ -65,16 +75,7 @@ export default function TransferForm({ accounts, onSubmit, onCancel }: TransferF
     // 背景（半透明の黒）をタップすると閉じる
     <div
       onClick={onCancel}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.72)",
-        zIndex: 200,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
-      }}
+      style={STYLE_TF_OVERLAY}
     >
       {/* カード本体はタップしても閉じない（stopPropagation） */}
       <div onClick={e => e.stopPropagation()} style={{ ...STYLE_CARD, width: "100%", maxWidth: 360 }}>

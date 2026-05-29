@@ -3,7 +3,7 @@
 // 現在の貯金額は口座残高の合計を使う（calculateAccountBalance）
 // 目標未設定なら CTA ボタンを、設定済みなら進捗カードを表示する
 
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { SavingGoal, Account, Tx, Income, Transfer } from "../types";
 import { parseYenAmount, formatYen } from "../utils/format";
 import { newId } from "../utils/crypto";
@@ -21,6 +21,16 @@ import {
   STYLE_BUTTON_OUTLINE,
 } from "../utils/styles";
 import { Input } from "./ui";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 編集モーダルの背景オーバーレイ
+const STYLE_SGC_OVERLAY: CSSProperties = {
+  position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)", zIndex: 200,
+  display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
+};
+
+// ─────────────────────────────────────────────────────────
 
 interface SavingGoalCardProps {
   goal: SavingGoal | null;
@@ -227,7 +237,7 @@ export default function SavingGoalCard({
 
       {/* 編集モーダル */}
       {editing && (
-        <div onClick={() => setEditing(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+        <div onClick={() => setEditing(false)} style={STYLE_SGC_OVERLAY}>
           <div onClick={e => e.stopPropagation()} style={{ background: "rgba(15,23,42,0.98)", border: `1px solid ${COLOR_BORDER}`, borderRadius: 22, padding: 24, width: "100%", maxWidth: 360, backdropFilter: "blur(20px)" }}>
             <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>{goal ? "目標を編集" : "貯金目標を設定"}</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>

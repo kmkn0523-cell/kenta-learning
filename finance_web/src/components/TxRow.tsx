@@ -1,10 +1,21 @@
 // ────────── 収支1行コンポーネント ──────────
 // 変動支出・収入リストの1件分。通常表示 ↔ 編集フォームを切り替える
 
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { parseYenAmount, formatYen } from "../utils/format";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_HINT, COLOR_POSITIVE, COLOR_NEGATIVE } from "../utils/styles";
 import { Input, Select } from "./ui";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// カテゴリアイコン丸の静的スタイル（background・color は種別で動的切り替え）
+const STYLE_TR_ICON_BASE: CSSProperties = {
+  width: 40, height: 40, borderRadius: "50%",
+  display: "flex", alignItems: "center", justifyContent: "center",
+  fontSize: 16, flexShrink: 0,
+};
+
+// ─────────────────────────────────────────────────────────
 
 // 収支1件分のデータ型（memo は任意）
 interface TxItem {
@@ -53,7 +64,7 @@ export default function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps)
   return (
     <div style={{display:"flex",alignItems:"center",gap:12,...STYLE_CARD}}>
       {/* カテゴリ絵文字（収入は緑背景・支出は赤背景の丸） */}
-      <div style={{width:40,height:40,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,background:bg,color:col,flexShrink:0}}>{ico[item.category]||"●"}</div>
+      <div style={{ ...STYLE_TR_ICON_BASE, background: bg, color: col }}>{ico[item.category]||"●"}</div>
       <div style={{flex:1,minWidth:0}}>
         <div style={{fontSize:13,fontWeight:600}}>{item.category} <span style={{fontSize:12,color:COLOR_TEXT_HINT}}>{item.memo}</span></div>
         <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>{item.date}</div>
