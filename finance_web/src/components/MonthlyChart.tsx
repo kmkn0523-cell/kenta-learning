@@ -98,7 +98,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
         {/* 3ヶ月・6ヶ月・12ヶ月のトグルボタン */}
         <div style={{ display:"flex", gap:4 }}>
           {RANGE_OPTIONS.map(r => (
-            <button
+            <button type="button"
               key={r}
               onClick={() => setRange(r)}
               style={{

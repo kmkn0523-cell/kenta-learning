@@ -43,8 +43,8 @@ export default function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps)
         <Input value={d.memo||""} onChange={e=>setD(x=>({...x,memo:e.target.value}))} placeholder="メモ（任意）"/>
       </div>
       <div style={{display:"flex",gap:10}}>
-        <button onClick={()=>{const a=parseYenAmount(d.amt);if(!a)return;onSave({...item,category:d.cat,amount:a,date:d.date,memo:d.memo||""});setEd(false);}} style={STYLE_BUTTON_PRIMARY}>保存</button>
-        <button onClick={()=>setEd(false)} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
+        <button type="button" onClick={()=>{const a=parseYenAmount(d.amt);if(!a)return;onSave({...item,category:d.cat,amount:a,date:d.date,memo:d.memo||""});setEd(false);}} style={STYLE_BUTTON_PRIMARY}>保存</button>
+        <button type="button" onClick={()=>setEd(false)} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
       </div>
     </div>
   );
@@ -60,8 +60,8 @@ export default function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps)
       </div>
       {/* 収入は「+」、支出は「-」を頭につけて金額を表示 */}
       <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,color:col}}>{isInc?"+":"-"}{formatYen(item.amount)}</div>
-      <button onClick={()=>{setD({cat:item.category,amt:String(item.amount),date:item.date,memo:item.memo||""});setEd(true);}} style={STYLE_BUTTON_OUTLINE}>編集</button>
-      <button onClick={onDelete} style={STYLE_BUTTON_OUTLINE}>削除</button>
+      <button type="button" onClick={()=>{setD({cat:item.category,amt:String(item.amount),date:item.date,memo:item.memo||""});setEd(true);}} style={STYLE_BUTTON_OUTLINE}>編集</button>
+      <button type="button" onClick={onDelete} style={STYLE_BUTTON_OUTLINE}>削除</button>
     </div>
   );
 }

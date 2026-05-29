@@ -113,7 +113,7 @@ export default function SavingGoalCard({
         <div style={{ fontSize: 13, color: COLOR_TEXT_SECONDARY, marginBottom: 12, lineHeight: 1.6 }}>
           目標を設定して、毎月いくら貯めれば達成できるかを可視化しましょう
         </div>
-        <button onClick={openEdit} style={STYLE_BUTTON_PRIMARY}>＋ 目標を設定する</button>
+        <button type="button" onClick={openEdit} style={STYLE_BUTTON_PRIMARY}>＋ 目標を設定する</button>
       </div>
     );
   }
@@ -158,8 +158,8 @@ export default function SavingGoalCard({
               <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 2 }}>期限 {goal.deadline}</div>
             </div>
             <div style={{ display: "flex", gap: 6 }}>
-              <button onClick={openEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 12, padding: "4px 10px", minHeight: 28 }}>編集</button>
-              <button onClick={remove} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 12, padding: "4px 10px", minHeight: 28 }}>削除</button>
+              <button type="button" onClick={openEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 12, padding: "4px 10px", minHeight: 28 }}>編集</button>
+              <button type="button" onClick={remove} style={{ ...STYLE_BUTTON_OUTLINE, fontSize: 12, padding: "4px 10px", minHeight: 28 }}>削除</button>
             </div>
           </div>
 
@@ -242,8 +242,8 @@ export default function SavingGoalCard({
               </div>
             )}
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={() => setEditing(false)} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, minHeight: 44, padding: 12 }}>キャンセル</button>
-              <button onClick={save} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1 }}>保存</button>
+              <button type="button" onClick={() => setEditing(false)} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, minHeight: 44, padding: 12 }}>キャンセル</button>
+              <button type="button" onClick={save} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1 }}>保存</button>
             </div>
           </div>
         </div>

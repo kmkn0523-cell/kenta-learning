@@ -86,7 +86,7 @@ export default function TutorialModal({ open, onClose }: TutorialModalProps) {
         textAlign: "center",
       }}>
         {/* ✕ 閉じるボタン（右上） */}
-        <button
+        <button type="button"
           aria-label="閉じる"
           onClick={handleClose}
           style={{
@@ -154,7 +154,7 @@ export default function TutorialModal({ open, onClose }: TutorialModalProps) {
         </div>
 
         {/* 次へ / はじめる ボタン */}
-        <button
+        <button type="button"
           onClick={() => {
             if (isLast) {
               handleClose();

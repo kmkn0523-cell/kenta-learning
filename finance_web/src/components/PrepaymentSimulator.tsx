@@ -87,7 +87,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
               金利 {loan.rate}% / 残債 {formatYen(loan.remaining)} / 月額 {formatYen(loan.monthly)}
             </div>
           </div>
-          <button onClick={onClose} style={{ ...STYLE_BUTTON_OUTLINE, padding: "4px 10px", minHeight: 28, fontSize: 12 }}>✕</button>
+          <button type="button" onClick={onClose} style={{ ...STYLE_BUTTON_OUTLINE, padding: "4px 10px", minHeight: 28, fontSize: 12 }}>✕</button>
         </div>
 
         {/* 月額を増やすスライダー */}
@@ -101,7 +101,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
           {/* ボタンで段階的に選べる UI（スライダーよりタップしやすい） */}
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {EXTRA_STEPS.map(amt => (
-              <button
+              <button type="button"
                 key={amt}
                 onClick={() => setExtra(amt)}
                 style={{
@@ -133,7 +133,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {[0, 50000, 100000, 200000, 500000].map(amt => (
-              <button
+              <button type="button"
                 key={amt}
                 onClick={() => setLumpSum(Math.min(amt, loan.remaining))}
                 style={{
@@ -235,7 +235,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
           ※ 元利均等返済方式での試算。実際の金融機関の計算と数百円ずれる場合があります。
         </div>
 
-        <button onClick={onClose} style={STYLE_BUTTON_PRIMARY}>閉じる</button>
+        <button type="button" onClick={onClose} style={STYLE_BUTTON_PRIMARY}>閉じる</button>
       </div>
     </div>
   );

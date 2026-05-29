@@ -205,7 +205,7 @@ export default function ExpenseView({
                     </div>
                   </div>
                   {/* 有効/停止の切り替えボタン */}
-                  <button
+                  <button type="button"
                     onClick={() =>
                       setRecurringExpenses(prev =>
                         prev.map(r => r.id === rec.id ? {...r, active: r.active === false ? true : false} : r)
@@ -223,7 +223,7 @@ export default function ExpenseView({
                     {rec.active===false ? "再開" : "停止"}
                   </button>
                   {/* 削除ボタン */}
-                  <button
+                  <button type="button"
                     onClick={() => delItem(rec.id, setRecurringExpenses, "定期支出を削除しました")}
                     style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"4px 10px",minHeight:30}}
                   >
@@ -234,7 +234,7 @@ export default function ExpenseView({
             )}
 
             {/* 定期支出の追加フォームの開閉ボタン */}
-            <button
+            <button type="button"
               onClick={() => setShowRecForm(v => !v)}
               style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginTop:10,fontSize:12}}
             >
@@ -272,7 +272,7 @@ export default function ExpenseView({
                   options={PAY_DAY_OPTIONS}
                 />
                 {/* 登録ボタン */}
-                <button
+                <button type="button"
                   onClick={() => {
                     const a = parseYenAmount(recExpF.amt);
                     if (!recExpF.name) { showT("支出名を入力してください", "error"); return; }
@@ -316,18 +316,18 @@ export default function ExpenseView({
               <div style={{fontSize:12,fontWeight:600,color:COLOR_TEXT_SECONDARY}}>{expenseCategoryIcons[tp.cat]} {tp.cat}</div>
               <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,marginTop:2}}>{formatYen(tp.amount)}</div>
               {tp.note&&<div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2,maxWidth:80,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{tp.note}</div>}
-              <button onClick={e=>{e.stopPropagation();delItem(tp.id,setTpls,"テンプレートを削除しました");}} style={{position:"absolute",top:6,right:8,background:"none",border:"none",color:COLOR_TEXT_HINT,cursor:"pointer",fontSize:13,padding:2,lineHeight:1}}>✕</button>
+              <button type="button" onClick={e=>{e.stopPropagation();delItem(tp.id,setTpls,"テンプレートを削除しました");}} style={{position:"absolute",top:6,right:8,background:"none",border:"none",color:COLOR_TEXT_HINT,cursor:"pointer",fontSize:13,padding:2,lineHeight:1}}>✕</button>
             </div>
           ))}
         </div>
       </div>}
       {/* ────────── 支出追加ボタン or 入力フォーム ────────── */}
       {!showTxForm
-        ? <button onClick={()=>setShowTxForm(true)} style={{...STYLE_BUTTON_PRIMARY,marginBottom:12}}>＋ 支出を追加</button>
+        ? <button type="button" onClick={()=>setShowTxForm(true)} style={{...STYLE_BUTTON_PRIMARY,marginBottom:12}}>＋ 支出を追加</button>
         : <div style={STYLE_CARD}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
               <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>変動支出を入力</div>
-              <button onClick={()=>setShowTxForm(false)} style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"4px 10px",minHeight:30}}>✕ 閉じる</button>
+              <button type="button" onClick={()=>setShowTxForm(false)} style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"4px 10px",minHeight:30}}>✕ 閉じる</button>
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:12}}>
               <Select value={txF.cat} onChange={e=>setTxF(f=>({...f,cat:e.target.value}))} options={expenseCategoryNames} icons={expenseCategoryIcons}/>
@@ -361,7 +361,7 @@ export default function ExpenseView({
               )}
             </div>
             {/* テンプレートとして保存するボタン（金額が入力済みの時だけ有効） */}
-            <button onClick={()=>{
+            <button type="button" onClick={()=>{
               const a=parseYenAmount(txF.amt);
               if(!a||a<=0){showT("金額を入力してから保存","error");return;}
               if(tpls.some(t=>t.cat===txF.cat&&Number(t.amount)===a&&t.note===(txF.memo||""))){showT("同じパターンが既に保存されています");return;}
@@ -369,7 +369,7 @@ export default function ExpenseView({
               showT("テンプレートに保存しました");
             }} style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginBottom:10,fontSize:12}}>⭐ テンプレートとして保存</button>
             {/* 追加後は金額入力欄に再フォーカスして連続入力をスムーズにする */}
-            <button onClick={()=>{if(addTx()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>追加</button>
+            <button type="button" onClick={()=>{if(addTx()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>追加</button>
           </div>
       }
       {/* ────────── 予算管理：カテゴリ別の月予算を設定・追跡 ────────── */}
@@ -389,7 +389,7 @@ export default function ExpenseView({
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
         {/* CSV出力：支出が1件以上あるときだけ表示 */}
         {monthlyTransactions.length > 0 && (
-          <button
+          <button type="button"
             onClick={() => exportMonthlyCsv(`${selectedYear}年${MONTH_LABELS[selectedMonth]}`)}
             style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12 }}
           >
@@ -397,7 +397,7 @@ export default function ExpenseView({
           </button>
         )}
         {/* CSVインポート：常に表示（銀行CSVを一括取り込みする） */}
-        <button
+        <button type="button"
           onClick={() => setShowCsvModal(true)}
           style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12 }}
         >
@@ -440,7 +440,7 @@ export default function ExpenseView({
               onChange={e => setFilter(f => ({ ...f, text: e.target.value || undefined }))}
               placeholder="キーワード検索（メモ・カテゴリ）"
             />
-            <button
+            <button type="button"
               onClick={() => setShowFilter(f => !f)}
               style={{
                 ...STYLE_BUTTON_OUTLINE,
@@ -463,7 +463,7 @@ export default function ExpenseView({
                 {categories.map(cat => {
                   const checked = (filter.categories || []).includes(cat);
                   return (
-                    <button
+                    <button type="button"
                       key={cat}
                       onClick={() => setFilter(f => {
                         const prev = f.categories || [];
@@ -532,7 +532,7 @@ export default function ExpenseView({
                       : (dir === "desc" ? "金額 高い順" : "金額 低い順");
                     const active = filter.sortBy === by && filter.sortDir === dir;
                     return (
-                      <button
+                      <button type="button"
                         key={`${by}-${dir}`}
                         onClick={() => setFilter(f => ({ ...f, sortBy: by, sortDir: dir }))}
                         style={{
@@ -552,7 +552,7 @@ export default function ExpenseView({
                 ))}
                 {/* ソートのリセットボタン（ソートが設定されているときだけ表示） */}
                 {filter.sortBy && (
-                  <button
+                  <button type="button"
                     onClick={() => setFilter(f => ({ ...f, sortBy: undefined, sortDir: undefined }))}
                     style={{
                       padding: "4px 10px",

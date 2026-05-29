@@ -131,14 +131,14 @@ export default function FixedExpenseView({
           </div>
           {/* 追加・連続追加・キャンセルボタン（連続追加はフォームを閉じずに次の入力ができる） */}
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <button onClick={() => addFx()} style={{ ...STYLE_BUTTON_PRIMARY, flex: "1 1 120px" }}>追加</button>
-            <button onClick={() => addFx(true)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight: 44, padding: "11px 14px", flex: "1 1 120px" }}>追加して続ける</button>
-            <button onClick={() => setShowFx(false)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight: 44, padding: "11px 14px" }}>キャンセル</button>
+            <button type="button" onClick={() => addFx()} style={{ ...STYLE_BUTTON_PRIMARY, flex: "1 1 120px" }}>追加</button>
+            <button type="button" onClick={() => addFx(true)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight: 44, padding: "11px 14px", flex: "1 1 120px" }}>追加して続ける</button>
+            <button type="button" onClick={() => setShowFx(false)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight: 44, padding: "11px 14px" }}>キャンセル</button>
           </div>
         </div>
       ) : (
         // フォームが閉じているときは「追加」ボタンを表示
-        <button onClick={() => setShowFx(true)} style={{ ...STYLE_BUTTON_PRIMARY, marginTop: 8 }}>＋ 固定費を追加</button>
+        <button type="button" onClick={() => setShowFx(true)} style={{ ...STYLE_BUTTON_PRIMARY, marginTop: 8 }}>＋ 固定費を追加</button>
       )}
     </div>
   );

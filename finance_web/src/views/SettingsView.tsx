@@ -196,7 +196,7 @@ export default function SettingsView(props: SettingsViewProps) {
         {/* 2つのボタンを横並びに配置 */}
         <div style={{ display: "flex", gap: 10 }}>
           {/* バックアップ：全データをJSONとしてダウンロード */}
-          <button
+          <button type="button"
             onClick={props.exportBackup}
             style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, fontSize: 13 }}
           >
@@ -204,7 +204,7 @@ export default function SettingsView(props: SettingsViewProps) {
           </button>
 
           {/* リストア：JSONファイルを選んで全データを復元 */}
-          <button
+          <button type="button"
             onClick={() => backupFileRef.current?.click()}
             style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 13 }}
           >
@@ -312,7 +312,7 @@ export default function SettingsView(props: SettingsViewProps) {
               </div>
             </div>
             {/* エクスポートボタン */}
-            <button
+            <button type="button"
               onClick={exportCsv}
               disabled={txCount + incCount === 0}
               style={{
@@ -432,7 +432,7 @@ export default function SettingsView(props: SettingsViewProps) {
 
               {/* 実行ボタン（0件なら無効） */}
               {!showBulkConfirm ? (
-                <button
+                <button type="button"
                   onClick={() => { if (totalCount > 0) setShowBulkConfirm(true); }}
                   disabled={totalCount === 0}
                   style={{
@@ -450,13 +450,13 @@ export default function SettingsView(props: SettingsViewProps) {
                     本当に削除しますか？元に戻せません
                   </div>
                   <div style={{ display: "flex", gap: 10 }}>
-                    <button
+                    <button type="button"
                       onClick={() => setShowBulkConfirm(false)}
                       style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}
                     >
                       キャンセル
                     </button>
-                    <button
+                    <button type="button"
                       onClick={() => {
                         // cutoff 以前のデータを各配列から除外する
                         props.setTransactions(prev => prev.filter(t => t.date > cutoffStr));
@@ -485,7 +485,7 @@ export default function SettingsView(props: SettingsViewProps) {
         {/* タブ切替（変動費 / 固定費 / 収入） */}
         <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
           {(["expense", "fixedExpense", "income"] as CategoryKind[]).map(k => (
-            <button
+            <button type="button"
               key={k}
               onClick={() => setKind(k)}
               style={{
@@ -508,7 +508,7 @@ export default function SettingsView(props: SettingsViewProps) {
             style={{ width: 50, fontSize: 18, textAlign: "center", background: "transparent", border: "1px solid rgba(148,163,184,0.2)", borderRadius: 8, color: COLOR_TEXT_PRIMARY }}
           />
           <Input value={newName} onChange={e => setNewName(e.target.value)} placeholder="新しいカテゴリ名" />
-          <button onClick={addCategory} style={{ ...STYLE_BUTTON_PRIMARY, width: 80 }}>追加</button>
+          <button type="button" onClick={addCategory} style={{ ...STYLE_BUTTON_PRIMARY, width: 80 }}>追加</button>
         </div>
 
         {/* カテゴリ一覧 */}
@@ -532,35 +532,35 @@ export default function SettingsView(props: SettingsViewProps) {
                   style={{ width: 36, fontSize: 18, background: "transparent", border: "1px solid rgba(148,163,184,0.2)", borderRadius: 6, color: COLOR_TEXT_PRIMARY }}
                 />
                 <Input value={editName} onChange={e => setEditName(e.target.value)} />
-                <button onClick={() => saveEdit(item)} style={{ ...STYLE_BUTTON_PRIMARY, width: 60 }}>保存</button>
-                <button onClick={() => setEditingId(null)} style={{ ...STYLE_BUTTON_OUTLINE, width: 60 }}>取消</button>
+                <button type="button" onClick={() => saveEdit(item)} style={{ ...STYLE_BUTTON_PRIMARY, width: 60 }}>保存</button>
+                <button type="button" onClick={() => setEditingId(null)} style={{ ...STYLE_BUTTON_OUTLINE, width: 60 }}>取消</button>
               </>
             ) : (
               // 表示モード
               <>
                 <span style={{ fontSize: 20 }}>{item.icon}</span>
                 <span style={{ flex: 1, color: COLOR_TEXT_PRIMARY }}>{item.name}</span>
-                <button
+                <button type="button"
                   onClick={() => moveUp(item)}
                   title="上へ"
                   style={{ background: "none", border: "none", color: COLOR_TEXT_SECONDARY, cursor: "pointer" }}
                 >
                   ↑
                 </button>
-                <button
+                <button type="button"
                   onClick={() => moveDown(item)}
                   title="下へ"
                   style={{ background: "none", border: "none", color: COLOR_TEXT_SECONDARY, cursor: "pointer" }}
                 >
                   ↓
                 </button>
-                <button
+                <button type="button"
                   onClick={() => { setEditingId(item.id); setEditName(item.name); setEditIcon(item.icon); }}
                   style={{ background: "none", border: "none", color: COLOR_TEXT_SECONDARY, cursor: "pointer" }}
                 >
                   ✏️
                 </button>
-                <button
+                <button type="button"
                   onClick={() => attemptDelete(item)}
                   style={{ background: "none", border: "none", color: COLOR_NEGATIVE, cursor: "pointer" }}
                 >
@@ -572,7 +572,7 @@ export default function SettingsView(props: SettingsViewProps) {
         ))}
 
         {/* デフォルトに戻すボタン */}
-        <button
+        <button type="button"
           onClick={() => setShowResetConfirm(true)}
           style={{ ...STYLE_BUTTON_OUTLINE, marginTop: 20, color: COLOR_NEGATIVE }}
         >
@@ -603,10 +603,10 @@ export default function SettingsView(props: SettingsViewProps) {
               カスタマイズが全て削除されデフォルトに戻ります。既存の取引データは保持されます。
             </div>
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={() => setShowResetConfirm(false)} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}>
+              <button type="button" onClick={() => setShowResetConfirm(false)} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}>
                 キャンセル
               </button>
-              <button onClick={resetAll} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, background: COLOR_NEGATIVE }}>
+              <button type="button" onClick={resetAll} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, background: COLOR_NEGATIVE }}>
                 リセット
               </button>
             </div>
@@ -616,7 +616,7 @@ export default function SettingsView(props: SettingsViewProps) {
 
       {/* ────────── 使い方カード ────────── */}
       <div style={{ ...STYLE_CARD, marginTop: 16 }}>
-        <button
+        <button type="button"
           onClick={props.onOpenTutorial}
           style={{ ...STYLE_BUTTON_OUTLINE, width: "100%" }}
         >
@@ -671,10 +671,10 @@ export default function SettingsView(props: SettingsViewProps) {
               「{deleteTarget.name}」を削除します。よろしいですか？
             </div>
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={() => setDeleteTarget(null)} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}>
+              <button type="button" onClick={() => setDeleteTarget(null)} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}>
                 キャンセル
               </button>
-              <button onClick={confirmDelete} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, background: COLOR_NEGATIVE }}>
+              <button type="button" onClick={confirmDelete} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, background: COLOR_NEGATIVE }}>
                 削除
               </button>
             </div>

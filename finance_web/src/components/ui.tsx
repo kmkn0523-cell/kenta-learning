@@ -80,7 +80,7 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
         </div>
       )}
       {/* 👁️ボタン：クリックするたびに表示/非表示が切り替わる */}
-      <button onClick={() => setShow(s => !s)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
+      <button type="button" onClick={() => setShow(s => !s)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
         {show ? "👁️" : "🙈"}
       </button>
     </div>
@@ -182,7 +182,7 @@ export function Toast({data}: { data: ToastData | null }) {
     <div style={{position:"fixed",top:16,left:"50%",transform:"translateX(-50%)",zIndex:999,padding:"10px 20px",borderRadius:24,fontSize:13,fontWeight:600,whiteSpace:"nowrap",pointerEvents:pe as any,color:cl,background:"rgba(7,11,20,0.95)",border:`1px solid ${cl}55`,backdropFilter:"blur(12px)",boxShadow:`0 4px 24px ${cl}22`,display:"flex",alignItems:"center",gap:10}}>
       <span>{data.msg}</span>
       {data.action && (
-        <button
+        <button type="button"
           onClick={data.action.onClick}
           style={{background:"rgba(255,255,255,0.08)",border:`1px solid ${cl}66`,color:cl,fontSize:12,fontWeight:700,padding:"4px 10px",borderRadius:14,cursor:"pointer",fontFamily:"inherit"}}
         >
@@ -208,8 +208,8 @@ export function ConfirmDialog({data, onOk, onCancel}: { data: ConfirmDialogData 
         <div style={{fontSize:15,fontWeight:600,marginBottom:8}}>{data.title}</div>
         <div style={{fontSize:13,color:COLOR_TEXT_SECONDARY,marginBottom:20}}>{data.msg||"この操作は元に戻せません。"}</div>
         <div style={{display:"flex",gap:10}}>
-          <button onClick={onCancel} style={{...STYLE_BUTTON_OUTLINE,flex:1,minHeight:44,padding:12}}>キャンセル</button>
-          <button onClick={onOk} style={{...STYLE_BUTTON_PRIMARY,flex:1,background:COLOR_NEGATIVE}}>削除する</button>
+          <button type="button" onClick={onCancel} style={{...STYLE_BUTTON_OUTLINE,flex:1,minHeight:44,padding:12}}>キャンセル</button>
+          <button type="button" onClick={onOk} style={{...STYLE_BUTTON_PRIMARY,flex:1,background:COLOR_NEGATIVE}}>削除する</button>
         </div>
       </div>
     </div>

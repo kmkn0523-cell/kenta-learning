@@ -122,10 +122,10 @@ export default function TransferForm({ accounts, onSubmit, onCancel }: TransferF
         {err && <div style={{ color: "#f87171", fontSize: 13, marginTop: 10 }}>{err}</div>}
 
         <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-          <button onClick={onCancel} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}>
+          <button type="button" onClick={onCancel} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }}>
             キャンセル
           </button>
-          <button onClick={handleSubmit} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1 }}>
+          <button type="button" onClick={handleSubmit} style={{ ...STYLE_BUTTON_PRIMARY, flex: 1 }}>
             振替する
           </button>
         </div>

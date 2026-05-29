@@ -191,7 +191,7 @@ export default function MonthlyReportModal({
         )}
 
         {/* ── 閉じるボタン ── */}
-        <button onClick={onClose} style={{ ...STYLE_BUTTON_PRIMARY, width: "100%" }}>
+        <button type="button" onClick={onClose} style={{ ...STYLE_BUTTON_PRIMARY, width: "100%" }}>
           今月もがんばろう 💪
         </button>
       </div>

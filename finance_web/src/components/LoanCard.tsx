@@ -60,8 +60,8 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
           </div>
         </div>
         <div style={{display:"flex",gap:8,flexShrink:0}}>
-          <button onClick={onEdit} style={STYLE_BUTTON_OUTLINE}>編集</button>
-          <button onClick={onDelete} style={STYLE_BUTTON_OUTLINE}>削除</button>
+          <button type="button" onClick={onEdit} style={STYLE_BUTTON_OUTLINE}>編集</button>
+          <button type="button" onClick={onDelete} style={STYLE_BUTTON_OUTLINE}>削除</button>
         </div>
       </div>
 
@@ -108,7 +108,7 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
         <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:8}}>今月の返済額を反映</div>
         <div style={{display:"flex",gap:8}}>
           <Input money type="number" value={payVal} onChange={e=>onPayChange(e.target.value)} placeholder={formatAmount(loan.monthly||"")} style={{textAlign:"right"}}/>
-          <button onClick={onPaySubmit} style={{...STYLE_BUTTON_PRIMARY,width:"auto",padding:"11px 16px",whiteSpace:"nowrap"}}>反映</button>
+          <button type="button" onClick={onPaySubmit} style={{...STYLE_BUTTON_PRIMARY,width:"auto",padding:"11px 16px",whiteSpace:"nowrap"}}>反映</button>
         </div>
       </div>}
 
@@ -133,7 +133,7 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
 
       {/* 繰り上げ返済シミュレーターボタン（完済済みは出さない） */}
       {!paid && (
-        <button
+        <button type="button"
           onClick={()=>setSimOpen(true)}
           style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginTop:12,fontSize:12,color:COLOR_ACCENT,borderColor:`${COLOR_ACCENT}55`}}
         >

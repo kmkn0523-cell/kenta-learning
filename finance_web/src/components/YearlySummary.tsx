@@ -109,11 +109,11 @@ export default function YearlySummary({
         </div>
         {/* 前年・翌年の切り替えボタン */}
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <button onClick={onPrevYear} style={{...STYLE_BUTTON_OUTLINE, padding:"4px 10px", fontSize:13, minHeight:28}}>◀</button>
+          <button type="button" onClick={onPrevYear} style={{...STYLE_BUTTON_OUTLINE, padding:"4px 10px", fontSize:13, minHeight:28}}>◀</button>
           <span style={{ fontSize:14, fontWeight:700, color:COLOR_TEXT_PRIMARY, minWidth:40, textAlign:"center" }}>
             {selectedYear}
           </span>
-          <button onClick={onNextYear} style={{...STYLE_BUTTON_OUTLINE, padding:"4px 10px", fontSize:13, minHeight:28}}>▶</button>
+          <button type="button" onClick={onNextYear} style={{...STYLE_BUTTON_OUTLINE, padding:"4px 10px", fontSize:13, minHeight:28}}>▶</button>
         </div>
       </div>
 

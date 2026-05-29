@@ -197,7 +197,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
           <PasswordInput value={pw}  onChange={setPw}  placeholder="パスワード（8文字以上）" err={!!err}/>
           <PasswordInput value={pw2} onChange={setPw2} onEnter={setup} placeholder="もう一度入力" err={!!err}/>
           {err && <div style={{color:"#f87171",fontSize:13,marginBottom:10}}>{err}</div>}
-          <button onClick={setup} disabled={busy} style={btnStyle}>{busy ? "処理中..." : "✓ 設定してはじめる"}</button>
+          <button type="button" onClick={setup} disabled={busy} style={btnStyle}>{busy ? "処理中..." : "✓ 設定してはじめる"}</button>
         </div>
 
         {/* フッター */}
@@ -217,9 +217,9 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
       <div style={{fontSize:13,color:"#9a9aa3",marginBottom:28}}>パスワードを入力してください</div>
       <PasswordInput value={pw} onChange={setPw} onEnter={login} placeholder="パスワード" err={!!err}/>
       {err && <div style={{color:"#f87171",fontSize:13,marginBottom:10}}>{err}</div>}
-      <button onClick={login} disabled={busy} style={btnStyle}>{busy ? "確認中..." : "ログイン"}</button>
+      <button type="button" onClick={login} disabled={busy} style={btnStyle}>{busy ? "確認中..." : "ログイン"}</button>
       {/* パスワードを忘れた場合のリンク */}
-      <button onClick={()=>setShowReset(true)} style={{background:"none",border:"none",color:"#5a5a63",fontSize:12,cursor:"pointer",marginTop:20,fontFamily:"inherit",textDecoration:"underline"}}>パスワードを忘れた場合</button>
+      <button type="button" onClick={()=>setShowReset(true)} style={{background:"none",border:"none",color:"#5a5a63",fontSize:12,cursor:"pointer",marginTop:20,fontFamily:"inherit",textDecoration:"underline"}}>パスワードを忘れた場合</button>
       {/* リセット確認ダイアログ */}
       {showReset&&<div onClick={()=>setShowReset(false)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.72)",zIndex:200,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
         <div onClick={e=>e.stopPropagation()} style={{background:"#18181f",border:"1px solid rgba(255,255,255,0.08)",borderRadius:20,padding:24,width:"100%",maxWidth:320,textAlign:"left" as const}}>
@@ -227,8 +227,8 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
           <div style={{fontSize:13,color:"#9a9aa3",marginBottom:4,lineHeight:1.7}}>パスワードをリセットして、新しく設定し直します。</div>
           <div style={{fontSize:13,color:"#f87171",marginBottom:20,lineHeight:1.7}}>⚠ 新しいパスワードでは既存の家計データを読み込めなくなります。事前にバックアップを取ってください。</div>
           <div style={{display:"flex",gap:10}}>
-            <button onClick={()=>setShowReset(false)} style={{flex:1,background:"transparent",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 0",cursor:"pointer",fontSize:13,color:"#9a9aa3",fontFamily:"inherit",minHeight:44}}>キャンセル</button>
-            <button onClick={resetPw} style={{flex:1,border:"none",borderRadius:10,padding:"12px 0",cursor:"pointer",fontSize:13,fontWeight:700,background:"#f87171",color:"#0a0a0c",fontFamily:"inherit",minHeight:44}}>リセットする</button>
+            <button type="button" onClick={()=>setShowReset(false)} style={{flex:1,background:"transparent",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 0",cursor:"pointer",fontSize:13,color:"#9a9aa3",fontFamily:"inherit",minHeight:44}}>キャンセル</button>
+            <button type="button" onClick={resetPw} style={{flex:1,border:"none",borderRadius:10,padding:"12px 0",cursor:"pointer",fontSize:13,fontWeight:700,background:"#f87171",color:"#0a0a0c",fontFamily:"inherit",minHeight:44}}>リセットする</button>
           </div>
         </div>
       </div>}

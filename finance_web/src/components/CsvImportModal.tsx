@@ -381,7 +381,7 @@ export default function CsvImportModal({
             </div>
 
             {error && <div style={{ color: COLOR_NEGATIVE, fontSize: 12, marginBottom: 10 }}>⚠ {error}</div>}
-            <button onClick={onClose} style={{ ...STYLE_BUTTON_OUTLINE, width: "100%", minHeight: 44, padding: "11px 18px" }}>キャンセル</button>
+            <button type="button" onClick={onClose} style={{ ...STYLE_BUTTON_OUTLINE, width: "100%", minHeight: 44, padding: "11px 18px" }}>キャンセル</button>
           </div>
         )}
 
@@ -460,10 +460,10 @@ export default function CsvImportModal({
             {error && <div style={{ color: COLOR_NEGATIVE, fontSize: 12, marginBottom: 10 }}>⚠ {error}</div>}
 
             <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
-              <button onClick={() => { setStep(1); setError(""); }} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, minHeight: 44, padding: "11px 18px" }}>
+              <button type="button" onClick={() => { setStep(1); setError(""); }} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, minHeight: 44, padding: "11px 18px" }}>
                 ← 戻る
               </button>
-              <button onClick={validateAndGoPreview} style={{ ...STYLE_BUTTON_PRIMARY, flex: 2 }}>
+              <button type="button" onClick={validateAndGoPreview} style={{ ...STYLE_BUTTON_PRIMARY, flex: 2 }}>
                 プレビューへ →
               </button>
             </div>
@@ -489,7 +489,7 @@ export default function CsvImportModal({
 
             {/* 全選択・全解除 */}
             <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-              <button
+              <button type="button"
                 onClick={() => {
                   const s: Record<number, boolean> = {};
                   previewRows.forEach(r => { s[r.rowIndex] = true; });
@@ -499,7 +499,7 @@ export default function CsvImportModal({
               >
                 全選択
               </button>
-              <button
+              <button type="button"
                 onClick={() => {
                   const s: Record<number, boolean> = {};
                   previewRows.forEach(r => { s[r.rowIndex] = false; });
@@ -582,10 +582,10 @@ export default function CsvImportModal({
             {error && <div style={{ color: COLOR_NEGATIVE, fontSize: 12, marginBottom: 10 }}>⚠ {error}</div>}
 
             <div style={{ display: "flex", gap: 8 }}>
-              <button onClick={() => { setStep(2); setError(""); }} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, minHeight: 44, padding: "11px 18px" }}>
+              <button type="button" onClick={() => { setStep(2); setError(""); }} style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, minHeight: 44, padding: "11px 18px" }}>
                 ← 戻る
               </button>
-              <button onClick={handleImport} style={{ ...STYLE_BUTTON_PRIMARY, flex: 2 }}>
+              <button type="button" onClick={handleImport} style={{ ...STYLE_BUTTON_PRIMARY, flex: 2 }}>
                 📥 インポート実行
               </button>
             </div>

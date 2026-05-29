@@ -135,7 +135,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
       )}
 
       {/* 追加ボタン：フォームが閉じている時だけ表示 */}
-      {!showF && <button onClick={()=>{setShowF(true);edId.current=null;setF(initF());}} style={{...STYLE_BUTTON_PRIMARY,marginTop:4}}>＋ 追加</button>}
+      {!showF && <button type="button" onClick={()=>{setShowF(true);edId.current=null;setF(initF());}} style={{...STYLE_BUTTON_PRIMARY,marginTop:4}}>＋ 追加</button>}
 
       {/* 入力フォーム */}
       {showF && <div style={STYLE_CARD}>
@@ -158,8 +158,8 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
           <Select value={f.payDay||"未設定"} onChange={e=>setF(x=>({...x,payDay:e.target.value}))} options={["未設定",...Array.from({length:31},(_,i)=>String(i+1)+"日")]}/>
         </div>
         <div style={{display:"flex",gap:10}}>
-          <button onClick={save} style={STYLE_BUTTON_PRIMARY}>保存</button>
-          <button onClick={()=>{setShowF(false);edId.current=null;}} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
+          <button type="button" onClick={save} style={STYLE_BUTTON_PRIMARY}>保存</button>
+          <button type="button" onClick={()=>{setShowF(false);edId.current=null;}} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
         </div>
       </div>}
 
@@ -169,7 +169,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
           <div style={{fontSize:28,marginBottom:8,textAlign:"center"}}>⚠️</div>
           <div style={{fontSize:15,fontWeight:700,marginBottom:10,textAlign:"center"}}>金利の自動入力について</div>
           <div style={{fontSize:13,color:COLOR_TEXT_SECONDARY,lineHeight:1.7,marginBottom:20}}>金利テーブルの値は<span style={{color:COLOR_TEXT_PRIMARY,fontWeight:700}}>各社の公表する最高金利の目安</span>です。実際の契約金利は審査結果で変わるため、契約書の金利と違う場合は<span style={{color:COLOR_TEXT_PRIMARY,fontWeight:700}}>金利欄を手で書き換えて</span>ください。</div>
-          <button onClick={closeDisc} style={STYLE_BUTTON_PRIMARY}>わかった</button>
+          <button type="button" onClick={closeDisc} style={STYLE_BUTTON_PRIMARY}>わかった</button>
         </div>
       </div>}
     </div>

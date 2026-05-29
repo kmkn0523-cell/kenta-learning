@@ -38,8 +38,8 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
         <Input money type="number" value={d.amt} onChange={e=>setD(x=>({...x,amt:e.target.value}))} placeholder="月額（円）"/>
       </div>
       <div style={{display:"flex",gap:10}}>
-        <button onClick={()=>{const a=parseYenAmount(d.amt);if(!d.name||!a)return;onSave({...item,name:d.name,category:d.cat,amount:a});setEd(false);}} style={STYLE_BUTTON_PRIMARY}>保存</button>
-        <button onClick={()=>setEd(false)} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
+        <button type="button" onClick={()=>{const a=parseYenAmount(d.amt);if(!d.name||!a)return;onSave({...item,name:d.name,category:d.cat,amount:a});setEd(false);}} style={STYLE_BUTTON_PRIMARY}>保存</button>
+        <button type="button" onClick={()=>setEd(false)} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>キャンセル</button>
       </div>
     </div>
   );
@@ -58,15 +58,15 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
       </div>
       <div style={{display:"flex",gap:8}}>
         {/* 編集ボタン：クリックで編集フォームを開く */}
-        <button onClick={()=>{setD({name:item.name,cat:item.category,amt:String(item.amount)});setEd(true);}} style={{...STYLE_BUTTON_OUTLINE,flex:1,textAlign:"center"}}>編集</button>
-        <button onClick={onDelete} style={{...STYLE_BUTTON_OUTLINE,flex:1,textAlign:"center"}}>削除</button>
+        <button type="button" onClick={()=>{setD({name:item.name,cat:item.category,amt:String(item.amount)});setEd(true);}} style={{...STYLE_BUTTON_OUTLINE,flex:1,textAlign:"center"}}>編集</button>
+        <button type="button" onClick={onDelete} style={{...STYLE_BUTTON_OUTLINE,flex:1,textAlign:"center"}}>削除</button>
         {/* 上下移動ボタン：渡されていない時は無効表示 */}
-        <button onClick={onMoveUp} disabled={!onMoveUp} style={{...STYLE_BUTTON_OUTLINE,opacity:onMoveUp?1:0.35,padding:"8px 16px"}}>↑</button>
-        <button onClick={onMoveDown} disabled={!onMoveDown} style={{...STYLE_BUTTON_OUTLINE,opacity:onMoveDown?1:0.35,padding:"8px 16px"}}>↓</button>
+        <button type="button" onClick={onMoveUp} disabled={!onMoveUp} style={{...STYLE_BUTTON_OUTLINE,opacity:onMoveUp?1:0.35,padding:"8px 16px"}}>↑</button>
+        <button type="button" onClick={onMoveDown} disabled={!onMoveDown} style={{...STYLE_BUTTON_OUTLINE,opacity:onMoveDown?1:0.35,padding:"8px 16px"}}>↓</button>
       </div>
       {/* 毎月自動追加トグル：onToggleAutoTrack が渡されているときだけ表示 */}
       {onToggleAutoTrack && (
-        <button
+        <button type="button"
           onClick={onToggleAutoTrack}
           style={{
             marginTop: 8,

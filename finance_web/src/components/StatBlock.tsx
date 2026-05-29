@@ -15,7 +15,7 @@ export default function StatBlock({ tabs, v, on }: StatBlockProps) {
   return (
     <div style={{display:"flex",background:"rgba(255,255,255,0.04)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:4,marginBottom:16}}>
       {tabs.map(([k, l]) => (
-        <button
+        <button type="button"
           key={k}
           onClick={() => on(k)}
           style={{flex:1,border:"none",borderRadius:9,padding:"9px 4px",cursor:"pointer",fontSize:12,fontWeight:500,fontFamily:"inherit",background:v===k?"rgba(255,255,255,0.1)":"none",color:v===k?"#fff":COLOR_TEXT_HINT}}

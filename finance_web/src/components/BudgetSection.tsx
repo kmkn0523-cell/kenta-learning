@@ -91,7 +91,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
         <div style={{ fontSize:12, color:COLOR_TEXT_HINT, textTransform:"uppercase", letterSpacing:"1.5px" }}>予算管理</div>
         {!editing && (
-          <button onClick={startEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize:12, padding:"5px 12px", minHeight:32 }}>
+          <button type="button" onClick={startEdit} style={{ ...STYLE_BUTTON_OUTLINE, fontSize:12, padding:"5px 12px", minHeight:32 }}>
             予算を設定
           </button>
         )}
@@ -261,8 +261,8 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
             ))}
           </div>
           <div style={{ display:"flex", gap:10 }}>
-            <button onClick={save} style={STYLE_BUTTON_PRIMARY}>保存</button>
-            <button onClick={() => setEditing(false)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight:44, padding:"11px 18px" }}>
+            <button type="button" onClick={save} style={STYLE_BUTTON_PRIMARY}>保存</button>
+            <button type="button" onClick={() => setEditing(false)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight:44, padding:"11px 18px" }}>
               キャンセル
             </button>
           </div>

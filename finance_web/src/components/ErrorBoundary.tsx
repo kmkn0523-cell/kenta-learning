@@ -81,7 +81,7 @@ export default class ErrorBoundary extends Component<Props, State> {
           </div>
 
           {/* 再読み込みボタン */}
-          <button
+          <button type="button"
             onClick={this.handleReload}
             style={{
               width: "100%",

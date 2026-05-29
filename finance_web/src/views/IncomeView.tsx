@@ -181,7 +181,7 @@ export default function IncomeView({
                     </div>
                   </div>
                   {/* 有効/停止の切り替えボタン */}
-                  <button
+                  <button type="button"
                     onClick={() =>
                       setRecurringIncomes(prev =>
                         prev.map(r => r.id === rec.id ? {...r, active: r.active === false ? true : false} : r)
@@ -199,7 +199,7 @@ export default function IncomeView({
                     {rec.active===false ? "再開" : "停止"}
                   </button>
                   {/* 削除ボタン */}
-                  <button
+                  <button type="button"
                     onClick={() => delItem(rec.id, setRecurringIncomes, "定期収入を削除しました")}
                     style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"4px 10px",minHeight:30}}
                   >
@@ -210,7 +210,7 @@ export default function IncomeView({
             )}
 
             {/* 定期収入の追加フォームの開閉ボタン */}
-            <button
+            <button type="button"
               onClick={() => setShowRecForm(v => !v)}
               style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginTop:10,fontSize:12}}
             >
@@ -248,7 +248,7 @@ export default function IncomeView({
                   options={PAY_DAY_OPTIONS}
                 />
                 {/* 登録ボタン */}
-                <button
+                <button type="button"
                   onClick={() => {
                     const a = parseYenAmount(recF.amt);
                     if (!recF.name) { showT("収入名を入力してください", "error"); return; }
@@ -357,7 +357,7 @@ export default function IncomeView({
           )}
         </div>
         {/* 追加ボタン（成功時は金額入力欄に再フォーカスして連続入力できるように） */}
-        <button onClick={()=>{if(addInc()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>
+        <button type="button" onClick={()=>{if(addInc()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>
           追加
         </button>
       </div>
@@ -373,7 +373,7 @@ export default function IncomeView({
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
         {/* CSV出力：収入が1件以上あるときだけ表示 */}
         {monthlyIncomes.length > 0 && (
-          <button
+          <button type="button"
             onClick={() =>
               exportMonthlyIncomeCsv(
                 `${selectedYear}年${MONTH_LABELS[selectedMonth]}`
@@ -385,7 +385,7 @@ export default function IncomeView({
           </button>
         )}
         {/* CSVインポート：常に表示 */}
-        <button
+        <button type="button"
           onClick={() => setShowCsvModal(true)}
           style={{ ...STYLE_BUTTON_OUTLINE, flex: 1, fontSize: 12 }}
         >
@@ -431,7 +431,7 @@ export default function IncomeView({
               placeholder="キーワード検索（メモ・カテゴリ）"
             />
             {/* 絞り込みパネルを開くボタン（アクティブ時は色が変わる） */}
-            <button
+            <button type="button"
               onClick={() => setShowFilter(f => !f)}
               style={{
                 ...STYLE_BUTTON_OUTLINE,
@@ -477,7 +477,7 @@ export default function IncomeView({
                   // このカテゴリが選択中かどうか確認
                   const checked = (filter.categories || []).includes(cat);
                   return (
-                    <button
+                    <button type="button"
                       key={cat}
                       onClick={() =>
                         setFilter(f => {
@@ -627,7 +627,7 @@ export default function IncomeView({
                     const active =
                       filter.sortBy === by && filter.sortDir === dir;
                     return (
-                      <button
+                      <button type="button"
                         key={`${by}-${dir}`}
                         onClick={() =>
                           setFilter(f => ({ ...f, sortBy: by, sortDir: dir }))
@@ -649,7 +649,7 @@ export default function IncomeView({
                 )}
                 {/* ソートをリセットするボタン（sortByが設定済みのときだけ表示） */}
                 {filter.sortBy && (
-                  <button
+                  <button type="button"
                     onClick={() =>
                       setFilter(f => ({
                         ...f,

@@ -233,7 +233,7 @@ export default function DashboardView({
       {/* ────────── 月次 / 年間 切り替えトグル ────────── */}
       <div style={{ display:"flex", gap:0, marginBottom:12, borderRadius:8, overflow:"hidden", border:`1px solid rgba(255,255,255,0.1)` }}>
         {(["monthly","yearly"] as const).map(mode => (
-          <button
+          <button type="button"
             key={mode}
             onClick={() => {
               setViewMode(mode);
@@ -334,7 +334,7 @@ export default function DashboardView({
           <div style={{display:"flex",gap:8}}>
             {/* 振替ボタン：口座が2件以上あるときだけ表示 */}
             {accounts.length >= 2 && (
-              <button
+              <button type="button"
                 onClick={() => setShowTransfer(true)}
                 style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"5px 12px",minHeight:32}}
               >
@@ -342,7 +342,7 @@ export default function DashboardView({
               </button>
             )}
             {/* 追加ボタン：フォームの表示・非表示を切り替える */}
-            <button
+            <button type="button"
               onClick={()=>{setAccF({name:"",balance:"",color:""});setEditAccId(null);setShowAccF(v=>!v);}}
               style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"5px 12px",minHeight:32}}
             >
@@ -376,14 +376,14 @@ export default function DashboardView({
               {formatYen(calculateAccountBalance(acc, transactions, incomes, transfers))}
             </div>
             {/* 編集ボタン：フォームに既存の値（color も含む）をセットして開く */}
-            <button
+            <button type="button"
               onClick={()=>{setAccF({name:acc.name,balance:String(acc.balance),color:acc.color||""});setEditAccId(acc.id);setShowAccF(true);}}
               style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"5px 10px",minHeight:32}}
             >
               編集
             </button>
             {/* 削除ボタン：確認ダイアログを出してから削除 */}
-            <button
+            <button type="button"
               onClick={()=>delItem(acc.id,setAccounts,"口座を削除しました")}
               style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"5px 10px",minHeight:32}}
             >
@@ -451,7 +451,7 @@ export default function DashboardView({
                 <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:6}}>カラーラベル（任意）</div>
                 <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                   {/* 「なし」ボタン：カラーをクリアする */}
-                  <button
+                  <button type="button"
                     onClick={()=>setAccF(f=>({...f,color:""}))}
                     style={{
                       width:26, height:26, borderRadius:"50%",
@@ -471,7 +471,7 @@ export default function DashboardView({
                     {c:"#a78bfa", label:"バイオレット"},
                     {c:"#fb923c", label:"オレンジ"},
                   ].map(({c,label})=>(
-                    <button
+                    <button type="button"
                       key={c}
                       onClick={()=>setAccF(f=>({...f,color:c}))}
                       style={{
@@ -490,7 +490,7 @@ export default function DashboardView({
             </div>
             <div style={{display:"flex",gap:10}}>
               {/* 保存ボタン：新規追加 or 編集を判定して処理 */}
-              <button
+              <button type="button"
                 onClick={()=>{
                   const b=parseYenAmount(accF.balance);
                   if(!accF.name||isNaN(b)){showT("口座名と残高を入力","error");return;}
@@ -508,7 +508,7 @@ export default function DashboardView({
               >
                 保存
               </button>
-              <button onClick={()=>{setShowAccF(false);setEditAccId(null);}} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>
+              <button type="button" onClick={()=>{setShowAccF(false);setEditAccId(null);}} style={{...STYLE_BUTTON_OUTLINE,minHeight:44,padding:"11px 18px"}}>
                 キャンセル
               </button>
             </div>
@@ -695,9 +695,9 @@ export default function DashboardView({
         </div>
         <div style={{display:"flex",gap:10}}>
           {/* バックアップ：暗号化済みのlocalStorageを丸ごと書き出す */}
-          <button onClick={exportBackup} style={{...STYLE_BUTTON_PRIMARY,flex:1}}>📥 バックアップ</button>
+          <button type="button" onClick={exportBackup} style={{...STYLE_BUTTON_PRIMARY,flex:1}}>📥 バックアップ</button>
           {/* 復元：隠しinputを開いてファイル選択ダイアログを表示 */}
-          <button
+          <button type="button"
             onClick={()=>fileInputRef.current?.click()}
             style={{...STYLE_BUTTON_OUTLINE,flex:1,minHeight:44,padding:"11px 18px",textAlign:"center"}}
           >
