@@ -17,7 +17,8 @@ import { parseYenAmount, formatYen, MONTH_LABELS, EXPENSE_CATEGORIES, FIXED_EXPE
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate, BRANDS_CF, BRANDS_BL } from "./utils/loanCalc";
 import { COLOR_BACKGROUND, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_BORDER_GLOW, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "./utils/styles";
 import { migrateTransactions, migrateIncomes, migrateFixedExpenses, migrateLoans } from "./utils/dataMigration";
-import { Transfer, CategoryConfig, SavingGoal, RecurringIncome, RecurringExpense } from "./types";
+import { Transfer, CategoryConfig, SavingGoal, RecurringIncome, RecurringExpense, SummaryStats } from "./types";
+import { computeSavingRate } from "./utils/summaryExport";
 import { makeDefaultCategoryConfig } from "./utils/defaultCategories";
 import { CSSProperties } from "react";
 import PasswordGate from "./components/PasswordGate";
@@ -83,6 +84,7 @@ const FixedExpenseView = lazy(() => import("./views/FixedExpenseView"));
 const ExpenseView = lazy(() => import("./views/ExpenseView"));
 const LoanView = lazy(() => import("./views/LoanView"));
 const SettingsView = lazy(() => import("./views/SettingsView"));
+const SummaryView = lazy(() => import("./views/SummaryView"));
 
 // 初期値：何もデータが無い時の空配列（usePersist の第2引数に渡す）
 const INIT_FX = [];
@@ -159,6 +161,33 @@ function AppInner(){
   // 前月の変動支出トランザクション配列（カテゴリ別前月比バッジで使う）
   const prevMonthlyTransactions=useMemo(()=>transactions.filter(t=>t.date?.startsWith(prevMs)),[transactions,prevMs]);
   const prevTInc=useMemo(()=>incomes.filter(i=>i.date?.startsWith(prevMs)).reduce((s,i)=>s+Number(i.amount||0),0),[incomes,prevMs]);
+  // ── 月次サマリータブ用の集計 ──────────────────────────
+  // 前月の年月（前月比サマリーで使う。1月の前は前年12月になるように分岐）
+  const prevSummaryMonth = selectedMonth === 0 ? 11 : selectedMonth - 1;        // 前月の月番号（0〜11）
+  const prevSummaryYear = selectedMonth === 0 ? selectedYear - 1 : selectedYear; // 前月の年（1月なら前年）
+  // 前月分の集計（固定費・ローン返済も含めた支出合計を正しく出すためフックを前月の年月で呼び直す）
+  const prevMonthData = useMonthlyData({ transactions, incomes, fixedExpenses, loans: allL, selectedYear: prevSummaryYear, selectedMonth: prevSummaryMonth });
+  // 当月の集計値（収入・支出・手残り・貯蓄率）を1つにまとめる
+  const currentSummary: SummaryStats = useMemo(() => ({
+    income: totalIncome,                              // 収入合計
+    expense: totalBurden,                             // 支出合計（変動＋固定＋ローン返済）
+    net,                                              // 手残り（収入 − 支出）
+    savingRate: computeSavingRate(net, totalIncome),  // 貯蓄率（％・小数第1位まで）
+  }), [totalIncome, totalBurden, net]);
+  // 前月の集計値。収入も支出も両方0なら「前月データなし」とみなして null にする
+  const previousSummary: SummaryStats | null = useMemo(() => {
+    if (prevMonthData.totalIncome === 0 && prevMonthData.totalBurden === 0) return null;
+    return {
+      income: prevMonthData.totalIncome,
+      expense: prevMonthData.totalBurden,
+      net: prevMonthData.net,
+      savingRate: computeSavingRate(prevMonthData.net, prevMonthData.totalIncome),
+    };
+  }, [prevMonthData.totalIncome, prevMonthData.totalBurden, prevMonthData.net]);
+  // カテゴリ内訳を SummaryView が受け取る形（{category, amount}の配列）に変換する。expByCat は降順済み
+  const categoryBreakdown = useMemo(() => expByCat.map(([category, amount]) => ({ category, amount })), [expByCat]);
+  // サマリーに表示する月ラベル（例:「2026年5月」）
+  const summaryMonthLabel = `${selectedYear}年${selectedMonth + 1}月`;
   function prevM(){if(selectedMonth===0){setSelectedMonth(11);setSelectedYear(y=>y-1);}else setSelectedMonth(m=>m-1);}
   function nextM(){if(selectedMonth===11){setSelectedMonth(0);setSelectedYear(y=>y+1);}else setSelectedMonth(m=>m+1);}
   const isCur=selectedMonth===today.getMonth()&&selectedYear===today.getFullYear();
@@ -374,6 +403,13 @@ function AppInner(){
         setSavingGoal={setSavingGoal}
         budget={budget}
       />}
+      {tab==="sum"&&<SummaryView
+        monthLabel={summaryMonthLabel}
+        current={currentSummary}
+        previous={previousSummary}
+        categoryBreakdown={categoryBreakdown}
+        showT={showT}
+      />}
       {tab==="inc"&&<IncomeView
         incF={incF}
         setIncF={setIncF}
@@ -468,7 +504,7 @@ function AppInner(){
       </Suspense>
     </div>
     <nav style={STYLE_BOTTOM_NAV}>
-      {[["dash","📊","概要"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["set","⚙️","設定"]].map(([key,icon,label])=>(
+      {[["dash","📊","概要"],["sum","🧾","サマリー"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["set","⚙️","設定"]].map(([key,icon,label])=>(
         <button type="button" key={key} onClick={()=>setTab(key)} style={{...STYLE_NAV_BTN_BASE,color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT}}>
           {tab===key&&<div style={STYLE_NAV_INDICATOR}/>}
           <span style={{fontSize:22,lineHeight:1,transform:tab===key?"scale(1.12)":"scale(1)",transition:"transform 0.15s ease"}}>{icon}</span>

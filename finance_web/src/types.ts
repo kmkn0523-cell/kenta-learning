@@ -130,3 +130,11 @@ export interface DlgData {
   msg?: string;
   onOk: () => void;
 }
+
+// 月次サマリー1画面分の集計値の形
+export interface SummaryStats {
+  income: number;     // 収入合計（円）
+  expense: number;    // 支出合計（変動＋固定＋ローン返済。ダッシュボードの totalBurden と同じ定義）
+  net: number;        // 手残り（収入合計 − 支出合計）
+  savingRate: number; // 貯蓄率（%。小数第1位まで）
+}
