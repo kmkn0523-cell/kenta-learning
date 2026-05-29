@@ -1,5 +1,5 @@
 {
-  "daily_index": 183,
+  "daily_index": 184,
   "launch_index": 0,
   "history": [
     {
@@ -3933,6 +3933,13 @@
       "theme_id": 75,
       "variant": "B",
       "post_id": "18101651873042175"
+    },
+    {
+      "date": "2026/05/29 04:00",
+      "theme": "頭皮と肌の関係",
+      "theme_id": 76,
+      "variant": "B",
+      "post_id": "17918572725363619"
     }
   ],
   "ab_next": "A",
@@ -3953,7 +3960,7 @@
     "73": "A",
     "74": "A",
     "75": "A",
-    "76": "B",
+    "76": "A",
     "77": "B",
     "78": "B",
     "79": "B",
@@ -4142,7 +4149,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "77": {
       "a_score": 0.0,
@@ -4697,7 +4704,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-29T02:01:09.832115+00:00",
+  "last_posted_at": "2026-05-29T04:01:12.535160+00:00",
   "last_note_promo_article": "https://note.com/neima/n/ndc6a2082eae1",
   "last_note_promo_date": "2026/05/27"
 }
