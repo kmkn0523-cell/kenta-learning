@@ -6,6 +6,7 @@
 
 import os                                # パソコンの環境変数を読み込む道具
 import re                                # 文字列のパターン検索をする道具
+import base64                            # 画像をBase64形式に変換する道具
 import json                              # JSONファイルを読み書きする道具
 from html.parser import HTMLParser       # HTMLを解析する標準ライブラリ
 from urllib.parse import unquote         # URLエンコードを元に戻す道具
@@ -26,6 +27,7 @@ DEEP_DIVE_JSON    = os.path.join(SCRIPT_DIR, "substack", "substack_deep_dive.jso
 PROGRESS_FILE     = os.path.join(SCRIPT_DIR, "substack", "deep_dive_progress.json")
 CARD_PROGRESS     = os.path.join(SCRIPT_DIR, "substack", "substack_progress.json")
 CARDS_FILE        = os.path.join(SCRIPT_DIR, "generate_ronin_cards.py")
+IMAGES_DIR        = os.path.join(SCRIPT_DIR, "ronin_images")  # 書道カード画像フォルダ
 MAX_DAY           = 100                                  # カード投稿の総日数
 
 
@@ -75,6 +77,39 @@ def save_progress(progress):
     """deep-dive 進捗ファイルを更新する"""
     with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
         json.dump(progress, f, ensure_ascii=False, indent=2)
+
+
+# =============================
+# 書道カード画像のアップロード
+# =============================
+def upload_image_to_substack(session, image_path):
+    """ローカル画像をBase64でSubstack CDNにアップロードしてCDN URLを返す"""
+    print(f"  画像をSubstack CDNにアップロード中: {image_path}", flush=True)
+
+    # 画像ファイルをバイナリで読み込んでBase64文字列に変換する
+    with open(image_path, "rb") as f:
+        image_data = f.read()
+
+    # "data:image/png;base64,<データ>" という形式に組み立てる
+    image_b64 = base64.b64encode(image_data).decode()
+    data_uri  = f"data:image/png;base64,{image_b64}"
+
+    # JSONボディとして送る（multipartは不要）
+    resp = session.post(
+        "https://substack.com/api/v1/image",
+        json={"image": data_uri},
+    )
+
+    print(f"  画像アップロードレスポンス: {resp.status_code}", flush=True)
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(f"画像アップロード失敗 [{resp.status_code}]: {resp.text[:500]}")
+
+    cdn_url = resp.json().get("url")
+    if not cdn_url:
+        raise RuntimeError(f"画像アップロード後にURLが取得できませんでした: {resp.text[:500]}")
+
+    print(f"  CDN URL取得: {cdn_url}", flush=True)
+    return cdn_url
 
 
 # =============================
@@ -141,22 +176,42 @@ class ProseMirrorBuilder(HTMLParser):
             self._current_inline.append(node)
 
 
-def html_to_prosemirror(body_html):
-    """body_html 文字列を ProseMirror ドキュメント JSON の文字列に変換する"""
+def html_to_prosemirror_nodes(body_html):
+    """body_html → ProseMirror ノードリストに変換する（画像ノード追加前の状態）"""
     builder = ProseMirrorBuilder()
     builder.feed(body_html)
-    doc = {"type": "doc", "content": builder.nodes}
-    return json.dumps(doc, ensure_ascii=False)
+    return builder.nodes
 
 
 # =============================
 # Substack への投稿
 # =============================
-def create_and_publish_post(session, article):
+def create_and_publish_post(session, article, card_day):
     """curl_cffi（Chrome TLSフィンガープリント偽装）でドラフト作成 → 公開する"""
-    title     = article["title"]
-    subtitle  = article["subtitle"]
-    body_json = html_to_prosemirror(article["body_html"])
+    title    = article["title"]
+    subtitle = article["subtitle"]
+
+    # 書道カード画像をトップに追加する
+    image_path = os.path.join(IMAGES_DIR, f"day{card_day:02d}.png")
+    content_nodes = html_to_prosemirror_nodes(article["body_html"])
+
+    if os.path.exists(image_path):
+        # 画像をSubstack CDNにアップロードしてCDN URLを取得する
+        image_url = upload_image_to_substack(session, image_path)
+        # 画像ノードをコンテンツの先頭に挿入する（今まで通り画像トップ）
+        image_node = {
+            "type": "image",
+            "attrs": {
+                "src":   image_url,
+                "alt":   article.get("japanese", title),
+                "title": article.get("japanese", title),
+            }
+        }
+        content_nodes = [image_node] + content_nodes
+    else:
+        print(f"  画像ファイルが見つかりません（スキップ）: {image_path}", flush=True)
+
+    body_json = json.dumps({"type": "doc", "content": content_nodes}, ensure_ascii=False)
 
     draft_payload = {
         "draft_title":      title,
@@ -240,7 +295,7 @@ def main():
         "Referer": "https://substack.com/publish/post",
     })
 
-    post_id = create_and_publish_post(session, article)
+    post_id = create_and_publish_post(session, article, card_day)
     print(f"  公開完了! Post ID: {post_id}", flush=True)
 
     now = datetime.now(timezone.utc).strftime("%Y/%m/%d %H:%M")
