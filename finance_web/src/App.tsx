@@ -91,6 +91,8 @@ function AppInner(){
   }>({ year: 0, month: 0, income: 0, expense: 0, topCats: [], overBudget: [] });
   // 月次レポートのチェックを1回だけ実行するためのフラグ
   const reportCheckedRef = useRef(false);
+  // 月切り替えハンドラをメモ化してインライン lambda の再生成を防ぐ
+  const handleMonthChange = useCallback((y: number, m: number) => { setSelectedYear(y); setSelectedMonth(m); }, []);
   // 口座フォームの入力値（name: 口座名、balance: 残高、color: カラーラベル）
   const [accF,setAccF]=useState({name:"",balance:"",color:""}),[showAccF,setShowAccF]=useState(false),[editAccId,setEditAccId]=useState<string | null>(null);
   const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady&&recIncReady&&recExpReady;
@@ -302,7 +304,7 @@ function AppInner(){
       {tab==="dash"&&<DashboardView
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
-        onMonthChange={(y,m)=>{setSelectedYear(y);setSelectedMonth(m);}}
+        onMonthChange={handleMonthChange}
         totalIncome={totalIncome}
         totalBurden={totalBurden}
         net={net}
@@ -344,7 +346,7 @@ function AppInner(){
         addInc={addInc}
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
-        onMonthChange={(y,m)=>{setSelectedYear(y);setSelectedMonth(m);}}
+        onMonthChange={handleMonthChange}
         exportMonthlyIncomeCsv={exportMonthlyIncomeCsv}
         monthlyIncomes={monthlyIncomes}
         setIncomes={setIncomes}
@@ -384,7 +386,7 @@ function AppInner(){
         prevMonthlyTransactions={prevMonthlyTransactions}
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
-        onMonthChange={(y,m)=>{setSelectedYear(y);setSelectedMonth(m);}}
+        onMonthChange={handleMonthChange}
         totalVariableExpense={totalVariableExpense}
         exportMonthlyCsv={exportMonthlyCsv}
         setTransactions={setTransactions}
