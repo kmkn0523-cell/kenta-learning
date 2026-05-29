@@ -2,7 +2,7 @@
 // 選択した年の1〜12月を一覧で表示し、
 // 各月の収入・支出・手残りを確認できるカード
 
-import { useMemo } from "react";
+import { useMemo, CSSProperties } from "react";
 import { Tx, Income, FixedExpense, Loan } from "../types";
 import { formatYen } from "../utils/format";
 import {
@@ -15,6 +15,21 @@ import {
   STYLE_CARD,
   STYLE_BUTTON_OUTLINE,
 } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 月行の静的スタイル（background/borderRadius は isCur で動的切り替え）
+const STYLE_YS_ROW_BASE: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "48px 1fr 1fr 1fr",
+  gap: 4,
+  padding: "9px 0",
+  borderBottom: "1px solid rgba(255,255,255,0.04)",
+  cursor: "pointer",
+  transition: "background 0.15s",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // このコンポーネントが受け取る props の型
 interface YearlySummaryProps {
@@ -139,14 +154,9 @@ export default function YearlySummary({
             key={row.month}
             onClick={() => onSelectMonth(row.month)}
             style={{
-              display:"grid",
-              gridTemplateColumns:"48px 1fr 1fr 1fr",
-              gap:4, padding:"9px 0",
-              borderBottom:`1px solid rgba(255,255,255,0.04)`,
-              cursor:"pointer",
+              ...STYLE_YS_ROW_BASE,
               background: isCur ? "rgba(34,211,238,0.05)" : "transparent",
               borderRadius: isCur ? 6 : 0,
-              transition:"background 0.15s",
             }}
           >
             {/* 月ラベル */}

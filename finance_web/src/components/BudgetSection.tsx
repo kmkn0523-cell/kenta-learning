@@ -2,10 +2,20 @@
 // カテゴリ別の月予算を設定し、今月の実績と比較するバー表示を出す
 // 使用率が80%超で黄色、100%超で赤にして超過を視覚的に伝える
 
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { EXPENSE_CATEGORIES, EXPENSE_CATEGORY_ICONS, formatYen } from "../utils/format";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_ACCENT } from "../utils/styles";
 import { Input } from "./ui";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 前月比バッジの静的スタイル（background・color は動的にスプレッドで上書き）
+const STYLE_BS_BADGE_BASE: CSSProperties = {
+  fontSize: 12, fontWeight: 700, fontFamily: "monospace",
+  borderRadius: 4, padding: "1px 5px", letterSpacing: "0.3px",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // 収支1件のデータ型（category と amount だけ使う）
 interface TxEntry {
@@ -188,11 +198,9 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
                     {/* 前月データがある場合だけバッジを表示 */}
                     {badgeText !== null && (
                       <span style={{
-                        fontSize:12, fontWeight:700, fontFamily:"monospace",
+                        ...STYLE_BS_BADGE_BASE,
                         background: pct > 0 ? "rgba(248,113,113,0.13)" : "rgba(74,222,128,0.13)",
                         color: badgeColor,
-                        borderRadius:4, padding:"1px 5px",
-                        letterSpacing:"0.3px",
                       }}>
                         {badgeText}
                       </span>

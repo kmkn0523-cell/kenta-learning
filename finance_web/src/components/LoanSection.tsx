@@ -1,11 +1,27 @@
 // ────────── ローンタブ全体コンポーネント ──────────
 // 消費者金融・銀行ローン・個人ローン3タブで共通して使われるローン管理セクション
 
-import { useState, useRef } from "react";
+import { useState, useRef, CSSProperties } from "react";
 import { parseYenAmount, formatYen } from "../utils/format";
 import { findRate, FREE, calculateMonthlyInterest, calculateTotalInterest } from "../utils/loanCalc";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_NEGATIVE } from "../utils/styles";
 import { newId } from "../utils/crypto";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 金利注意書きポップアップの背景オーバーレイ
+const STYLE_LS_DISC_OVERLAY: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.72)",
+  zIndex: 300,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 20,
+};
+
+// ─────────────────────────────────────────────────────────
 import { Input, Select, StatLabel } from "./ui";
 import LoanCard from "./LoanCard";
 
@@ -164,7 +180,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
       </div>}
 
       {/* 金利の注意書きポップアップ：背景タップ・「わかった」で閉じる */}
-      {showDisc && <div onClick={closeDisc} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.72)",zIndex:300,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+      {showDisc && <div onClick={closeDisc} style={STYLE_LS_DISC_OVERLAY}>
         <div onClick={e=>e.stopPropagation()} style={{background:"#18181f",border:`1px solid ${COLOR_BORDER}`,borderRadius:20,padding:24,width:"100%",maxWidth:340}}>
           <div style={{fontSize:28,marginBottom:8,textAlign:"center"}}>⚠️</div>
           <div style={{fontSize:15,fontWeight:700,marginBottom:10,textAlign:"center"}}>金利の自動入力について</div>

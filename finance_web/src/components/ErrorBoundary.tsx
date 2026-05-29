@@ -2,7 +2,38 @@
 // Reactコンポーネントで予期しないエラーが発生したとき、
 // 画面が真っ白になるのを防いで「再読み込み」画面を表示するセーフティネット
 
-import { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ErrorInfo, ReactNode, CSSProperties } from "react";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 「再読み込みする」ボタン
+const STYLE_EB_RELOAD_BTN: CSSProperties = {
+  width: "100%",
+  padding: "14px 0",
+  borderRadius: 12,
+  border: "none",
+  background: "#818cf8",
+  color: "#0a0a0c",
+  fontSize: 15,
+  fontWeight: 700,
+  cursor: "pointer",
+  fontFamily: "inherit",
+};
+
+// エラー詳細の pre ブロック
+const STYLE_EB_PRE: CSSProperties = {
+  marginTop: 8,
+  padding: 10,
+  background: "rgba(255,255,255,0.04)",
+  borderRadius: 8,
+  fontSize: 12,
+  color: "#f87171",
+  overflowX: "auto",
+  whiteSpace: "pre-wrap",
+  wordBreak: "break-all",
+};
+
+// ─────────────────────────────────────────────────────────
 
 interface Props {
   children: ReactNode;
@@ -83,18 +114,7 @@ export default class ErrorBoundary extends Component<Props, State> {
           {/* 再読み込みボタン */}
           <button type="button"
             onClick={this.handleReload}
-            style={{
-              width: "100%",
-              padding: "14px 0",
-              borderRadius: 12,
-              border: "none",
-              background: "#818cf8",
-              color: "#0a0a0c",
-              fontSize: 15,
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "inherit",
-            }}
+            style={STYLE_EB_RELOAD_BTN}
           >
             再読み込みする
           </button>
@@ -105,17 +125,7 @@ export default class ErrorBoundary extends Component<Props, State> {
               <summary style={{ fontSize: 12, color: "#5a5a63", cursor: "pointer" }}>
                 エラー詳細（開発者向け）
               </summary>
-              <pre style={{
-                marginTop: 8,
-                padding: 10,
-                background: "rgba(255,255,255,0.04)",
-                borderRadius: 8,
-                fontSize: 12,
-                color: "#f87171",
-                overflowX: "auto",
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-all",
-              }}>
+              <pre style={STYLE_EB_PRE}>
                 {this.state.error.message}
               </pre>
             </details>

@@ -2,8 +2,52 @@
 // 初回起動時に6ページのスライドでアプリの使い方を案内するモーダル
 // open=false の時は何も描画しない
 
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { STYLE_BUTTON_PRIMARY } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 背景オーバーレイ（モーダルの後ろの半透明黒幕）
+const STYLE_TUT_OVERLAY: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.72)",
+  zIndex: 300,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 20,
+};
+
+// モーダル本体のカード
+const STYLE_TUT_CARD: CSSProperties = {
+  background: "rgba(15,23,42,0.98)",
+  border: "1px solid rgba(148,163,184,0.16)",
+  borderRadius: 22,
+  padding: "28px 24px 24px",
+  width: "100%",
+  maxWidth: 340,
+  backdropFilter: "blur(20px)",
+  position: "relative",
+  textAlign: "center",
+};
+
+// ✕ 閉じるボタン（右上固定）
+const STYLE_TUT_CLOSE_BTN: CSSProperties = {
+  position: "absolute",
+  top: 14,
+  right: 14,
+  background: "none",
+  border: "none",
+  color: "rgba(255,255,255,0.4)",
+  fontSize: 20,
+  cursor: "pointer",
+  lineHeight: 1,
+  padding: 4,
+  fontFamily: "inherit",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // 各ページの内容（アイコン・タイトル・説明文）
 const PAGES = [
@@ -63,45 +107,14 @@ export default function TutorialModal({ open, onClose }: TutorialModalProps) {
 
   return (
     // 背景オーバーレイ（タップしても閉じない → 誤操作防止）
-    <div style={{
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.72)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 20,
-    }}>
+    <div style={STYLE_TUT_OVERLAY}>
       {/* モーダル本体 */}
-      <div style={{
-        background: "rgba(15,23,42,0.98)",
-        border: "1px solid rgba(148,163,184,0.16)",
-        borderRadius: 22,
-        padding: "28px 24px 24px",
-        width: "100%",
-        maxWidth: 340,
-        backdropFilter: "blur(20px)",
-        position: "relative",
-        textAlign: "center",
-      }}>
+      <div style={STYLE_TUT_CARD}>
         {/* ✕ 閉じるボタン（右上） */}
         <button type="button"
           aria-label="閉じる"
           onClick={handleClose}
-          style={{
-            position: "absolute",
-            top: 14,
-            right: 14,
-            background: "none",
-            border: "none",
-            color: "rgba(255,255,255,0.4)",
-            fontSize: 20,
-            cursor: "pointer",
-            lineHeight: 1,
-            padding: 4,
-            fontFamily: "inherit",
-          }}
+          style={STYLE_TUT_CLOSE_BTN}
         >
           ✕
         </button>

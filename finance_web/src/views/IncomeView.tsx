@@ -2,7 +2,7 @@
 // 収入の入力フォーム・月別ナビ・検索フィルター・一覧表示をまとめたコンポーネント
 // 検索・並び替えは内部 state で管理する（App.tsx に持ち出さない）
 
-import React, { useMemo, useState, useRef } from "react";
+import React, { useMemo, useState, useRef, CSSProperties } from "react";
 import { Income, RecurringIncome, CategoryConfig, Account } from "../types";
 import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
 import { newId } from "../utils/crypto";
@@ -26,6 +26,18 @@ import { filterAndSortItems, TransactionFilter } from "../utils/filterTransactio
 import { Input, Select } from "../components/ui";
 import TxRow from "../components/TxRow";
 import MonthNav from "../components/MonthNav";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 口座選択 select のスタイル（color は選択状態で動的切り替え）
+const STYLE_IV_ACCOUNT_SELECT: CSSProperties = {
+  width: "100%", background: "rgba(255,255,255,0.06)",
+  border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10,
+  fontSize: 14, padding: "12px 14px",
+  fontFamily: "inherit", appearance: "none", WebkitAppearance: "none",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // このコンポーネントが受け取るデータの型定義
 // incSq/setIncSq/incFcat/setIncFcat/fInc はコンポーネント内部で管理するため削除済み
@@ -336,18 +348,7 @@ export default function IncomeView({
             <select
               value={incF.accountId || ""}
               onChange={e => setIncF(f => ({ ...f, accountId: e.target.value || undefined }))}
-              style={{
-                width: "100%",
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 10,
-                color: incF.accountId ? "#e2e8f0" : "#64748b",
-                fontSize: 14,
-                padding: "12px 14px",
-                fontFamily: "inherit",
-                appearance: "none",
-                WebkitAppearance: "none",
-              }}
+              style={{ ...STYLE_IV_ACCOUNT_SELECT, color: incF.accountId ? "#e2e8f0" : "#64748b" }}
             >
               <option value="">🏦 口座を選択（任意）</option>
               {accounts.map(acc => (
