@@ -146,9 +146,12 @@ function autoDetectColumns(headers: string[]): ColumnMap {
   // メモ列のキーワード
   const memoKeywords = ["メモ", "摘要", "内容", "備考", "memo", "商品名", "利用先", "先方", "店名", "description"];
 
+  // 小文字変換は1度だけ行う（ループごとに変換するとO(n×k)になるため）
+  const lowerHeaders = headers.map(h => h.toLowerCase());
   function findCol(keywords: string[]): number | null {
     for (const kw of keywords) {
-      const idx = headers.findIndex(h => h.toLowerCase().includes(kw.toLowerCase()));
+      const lkw = kw.toLowerCase();
+      const idx = lowerHeaders.findIndex(h => h.includes(lkw));
       if (idx !== -1) return idx;
     }
     return null;
@@ -406,7 +409,7 @@ export default function CsvImportModal({
                   onChange={e => setColMap(m => ({ ...m, [key]: Number(e.target.value) === -1 ? null : Number(e.target.value) }))}
                   style={selectStyle}
                 >
-                  <option value={-1}>— 使わない —</option>
+                  <option value={-1}>{"— 使わない —"}</option>
                   {parsed.headers.map((h, i) => (
                     <option key={i} value={i}>{h} （{parsed.rows[0]?.[i] ?? ""}）</option>
                   ))}
