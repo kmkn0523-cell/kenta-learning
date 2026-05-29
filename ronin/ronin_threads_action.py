@@ -464,6 +464,13 @@ def post_sequential():
     post_id = post_to_threads(full_text, image_url=image_url)
     print(f"✅ 投稿成功！（投稿ID: {post_id}）")
 
+    # 朝投稿のときだけdeep-diveスレッドをリプライとして追加する（夜投稿はスキップ）
+    if post["type"] == "morning":
+        try:
+            post_deep_dive_thread(post_id, post["day"])
+        except Exception as e:
+            print(f"⚠️ Deep-diveスレッド投稿に失敗しました（カード投稿は成功済み）: {e}")
+
     # 次の投稿番号に進める（60を超えたら0に戻る）
     progress["index"] = (index + 1) % len(posts)
     next_post = posts[progress["index"]]
@@ -546,6 +553,13 @@ def post_optimized():
         image_url = get_image_url(day)
         post_id = post_to_threads(full_text, image_url=image_url)
         print(f"✅ 投稿成功！（投稿ID: {post_id}）")
+
+        # 朝投稿のときだけdeep-diveスレッドをリプライとして追加する（夜投稿はスキップ）
+        if post_type == "morning":
+            try:
+                post_deep_dive_thread(post_id, day)
+            except Exception as e:
+                print(f"⚠️ Deep-diveスレッド投稿に失敗しました（カード投稿は成功済み）: {e}")
 
         # キューから削除
         opt_index["next_post_queue"].pop(0)
