@@ -1,0 +1,17 @@
+/* キーボード操作時のフォーカスリング（アクセシビリティ対応） */
+/* マウスクリックではリングを表示せず、Tabキーなどキーボード操作時だけ表示する */
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}
+
+/* マウス操作・タッチ操作時はブラウザデフォルトのフォーカスリングを非表示 */
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
+}

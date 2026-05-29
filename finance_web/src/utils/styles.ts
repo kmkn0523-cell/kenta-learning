@@ -33,7 +33,6 @@ export const STYLE_INPUT = {
   padding:"12px 14px",                  // 内側の余白：上下12px・左右14px
   color:COLOR_TEXT_PRIMARY,             // 文字色：メインの白色
   fontSize:16,                          // 文字サイズ：16px
-  outline:"none",                       // フォーカス枠を非表示（デフォルトの青枠を消す）
   width:"100%",                         // 横幅：親要素いっぱいに広げる
   fontFamily:"inherit",                 // フォント：親要素と同じフォントを使う
   minHeight:46,                         // 最低の高さ：46px（タップしやすいサイズ）

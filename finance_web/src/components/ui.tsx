@@ -37,7 +37,6 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
           color: show ? "#f5f5f7" : "transparent",
           caretColor:"#f5f5f7", // カーソルは常に表示
           fontSize:16,
-          outline:"none",
           width:"100%",
           boxSizing:"border-box",
           fontFamily:"inherit",

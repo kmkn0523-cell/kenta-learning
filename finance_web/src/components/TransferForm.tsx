@@ -30,7 +30,6 @@ const SELECT_STYLE: React.CSSProperties = {
   color: COLOR_TEXT_PRIMARY,
   fontSize: 15,
   padding: "12px 14px",
-  outline: "none",
   appearance: "none",
 };
 

@@ -47,6 +47,8 @@
 !docs/
 !finance_web/
 !finance_web/src/
+!finance_web/src/*.css
+!finance_web/src/*.d.ts
 !finance_web/src/components/
 !finance_web/src/components/*.tsx
 !finance_web/src/hooks/
