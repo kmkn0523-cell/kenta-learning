@@ -6,7 +6,7 @@
 // ステップ2: 列マッピング（どの列が日付/金額/メモか）を確認・修正
 // ステップ3: プレビュー確認 → インポート実行
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, CSSProperties } from "react";
 import { CategoryConfig } from "../types";
 import { newId } from "../utils/crypto";
 import {
@@ -21,6 +21,57 @@ import {
   STYLE_BUTTON_PRIMARY,
   STYLE_BUTTON_OUTLINE,
 } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// モーダル背景オーバーレイ（画面全体を覆う半透明黒）
+const STYLE_CSV_OVERLAY: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  zIndex: 200,
+  background: "rgba(0,0,0,0.7)",
+  backdropFilter: "blur(4px)",
+  display: "flex",
+  alignItems: "flex-end",
+  justifyContent: "center",
+  padding: "0 0 env(safe-area-inset-bottom)",
+};
+
+// ファイルドロップゾーンの静的スタイル
+const STYLE_CSV_DROPZONE: CSSProperties = {
+  border: `2px dashed ${COLOR_BORDER}`,
+  borderRadius: 12,
+  padding: "40px 20px",
+  textAlign: "center",
+  cursor: "pointer",
+  background: "rgba(255,255,255,0.02)",
+  marginBottom: 16,
+  transition: "border-color 0.15s",
+};
+
+// プレビュー行の静的スタイル（background/border/opacity は動的に上書き）
+const STYLE_CSV_ROW_BASE: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+  padding: "8px 10px",
+  borderRadius: 8,
+  marginBottom: 4,
+  cursor: "pointer",
+};
+
+// チェックバッジの静的スタイル（border/background は動的に上書き）
+const STYLE_CSV_BADGE_BASE: CSSProperties = {
+  width: 16,
+  height: 16,
+  borderRadius: "50%",
+  flexShrink: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // ────────── 型定義 ──────────
 
@@ -278,7 +329,7 @@ export default function CsvImportModal({
   // ────────── 共通スタイル ──────────
 
   // Select コンポーネント代わりのインライン select
-  const selectStyle: React.CSSProperties = {
+  const selectStyle: CSSProperties = {
     width: "100%",
     background: "rgba(255,255,255,0.06)",
     border: `1px solid ${COLOR_BORDER}`,
@@ -296,12 +347,7 @@ export default function CsvImportModal({
     // オーバーレイ（背景クリックで閉じる）
     <div
       onClick={e => { if (e.target === e.currentTarget) onClose(); }}
-      style={{
-        position: "fixed", inset: 0, zIndex: 200,
-        background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)",
-        display: "flex", alignItems: "flex-end", justifyContent: "center",
-        padding: "0 0 env(safe-area-inset-bottom)",
-      }}
+      style={STYLE_CSV_OVERLAY}
     >
       {/* モーダル本体 */}
       <div style={{
@@ -341,16 +387,7 @@ export default function CsvImportModal({
               onDragOver={e => e.preventDefault()}
               onDrop={handleFileDrop}
               onClick={() => fileInputRef.current?.click()}
-              style={{
-                border: `2px dashed ${COLOR_BORDER}`,
-                borderRadius: 12,
-                padding: "40px 20px",
-                textAlign: "center",
-                cursor: "pointer",
-                background: "rgba(255,255,255,0.02)",
-                marginBottom: 16,
-                transition: "border-color 0.15s",
-              }}
+              style={STYLE_CSV_DROPZONE}
             >
               <div style={{ fontSize: 36, marginBottom: 12 }}>📄</div>
               <div style={{ fontSize: 14, color: COLOR_TEXT_PRIMARY, fontWeight: 600, marginBottom: 6 }}>
@@ -521,22 +558,19 @@ export default function CsvImportModal({
                     key={r.rowIndex}
                     onClick={() => setSelected(s => ({ ...s, [r.rowIndex]: !s[r.rowIndex] }))}
                     style={{
-                      display: "flex", alignItems: "center", gap: 10,
-                      padding: "8px 10px", borderRadius: 8, marginBottom: 4,
+                      ...STYLE_CSV_ROW_BASE,
                       background: isSel
                         ? (isOk ? "rgba(255,255,255,0.04)" : "rgba(248,113,113,0.06)")
                         : "rgba(255,255,255,0.01)",
                       border: `1px solid ${isSel ? (isOk ? "rgba(255,255,255,0.08)" : "rgba(248,113,113,0.2)") : "transparent"}`,
-                      cursor: "pointer",
                       opacity: isSel ? 1 : 0.4,
                     }}
                   >
                     {/* チェックボックス代わりの丸バッジ */}
                     <div style={{
-                      width: 16, height: 16, borderRadius: "50%", flexShrink: 0,
+                      ...STYLE_CSV_BADGE_BASE,
                       border: `2px solid ${isSel ? COLOR_ACCENT : "rgba(255,255,255,0.2)"}`,
                       background: isSel ? "rgba(34,211,238,0.15)" : "transparent",
-                      display: "flex", alignItems: "center", justifyContent: "center",
                     }}>
                       {isSel && <div style={{ width: 6, height: 6, borderRadius: "50%", background: COLOR_ACCENT }}/>}
                     </div>

@@ -3,7 +3,7 @@
 // 初回：パスワード設定画面 → 設定済み：ログイン画面
 // ログイン成功後は CryptoKeyContext に AES-GCM 鍵をセットして children（本体）を描画する
 
-import { useState, useRef } from "react";
+import { useState, useRef, CSSProperties } from "react";
 import CryptoKeyContext from "../contexts/CryptoKeyContext";
 import {
   simpleHash, makeNewHash, verifyNewHash, isLegacyHash,
@@ -12,6 +12,36 @@ import {
 import { PasswordInput } from "./ui";
 
 import { ReactNode } from "react";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 「パスワードを忘れた場合」リンクボタンの静的スタイル
+const STYLE_PG_FORGOT_BTN: CSSProperties = {
+  background: "none", border: "none", color: "#5a5a63", fontSize: 12,
+  cursor: "pointer", marginTop: 20, fontFamily: "inherit", textDecoration: "underline",
+};
+
+// リセット確認ダイアログ背景オーバーレイの静的スタイル
+const STYLE_PG_RESET_OVERLAY: CSSProperties = {
+  position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)", zIndex: 200,
+  display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
+};
+
+// リセットダイアログ内「キャンセル」ボタンの静的スタイル
+const STYLE_PG_CANCEL_BTN: CSSProperties = {
+  flex: 1, background: "transparent", border: "1px solid rgba(255,255,255,0.08)",
+  borderRadius: 10, padding: "12px 0", cursor: "pointer", fontSize: 13,
+  color: "#9a9aa3", fontFamily: "inherit", minHeight: 44,
+};
+
+// リセットダイアログ内「リセットする」確認ボタンの静的スタイル
+const STYLE_PG_CONFIRM_BTN: CSSProperties = {
+  flex: 1, border: "none", borderRadius: 10, padding: "12px 0", cursor: "pointer",
+  fontSize: 13, fontWeight: 700, background: "#f87171", color: "#0a0a0c",
+  fontFamily: "inherit", minHeight: 44,
+};
+
+// ─────────────────────────────────────────────────────────
 
 export default function PasswordGate({ children }: { children: ReactNode }) {
   // sessionStorage = ブラウザを閉じると消えるので毎回ログインが必要
@@ -219,16 +249,16 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
       {err && <div style={{color:"#f87171",fontSize:13,marginBottom:10}}>{err}</div>}
       <button type="button" onClick={login} disabled={busy} style={btnStyle}>{busy ? "確認中..." : "ログイン"}</button>
       {/* パスワードを忘れた場合のリンク */}
-      <button type="button" onClick={()=>setShowReset(true)} style={{background:"none",border:"none",color:"#5a5a63",fontSize:12,cursor:"pointer",marginTop:20,fontFamily:"inherit",textDecoration:"underline"}}>パスワードを忘れた場合</button>
+      <button type="button" onClick={()=>setShowReset(true)} style={STYLE_PG_FORGOT_BTN}>パスワードを忘れた場合</button>
       {/* リセット確認ダイアログ */}
-      {showReset&&<div onClick={()=>setShowReset(false)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.72)",zIndex:200,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+      {showReset&&<div onClick={()=>setShowReset(false)} style={STYLE_PG_RESET_OVERLAY}>
         <div onClick={e=>e.stopPropagation()} style={{background:"#18181f",border:"1px solid rgba(255,255,255,0.08)",borderRadius:20,padding:24,width:"100%",maxWidth:320,textAlign:"left" as const}}>
           <div style={{fontSize:15,fontWeight:700,color:"#f5f5f7",marginBottom:8}}>パスワードをリセット</div>
           <div style={{fontSize:13,color:"#9a9aa3",marginBottom:4,lineHeight:1.7}}>パスワードをリセットして、新しく設定し直します。</div>
           <div style={{fontSize:13,color:"#f87171",marginBottom:20,lineHeight:1.7}}>⚠ 新しいパスワードでは既存の家計データを読み込めなくなります。事前にバックアップを取ってください。</div>
           <div style={{display:"flex",gap:10}}>
-            <button type="button" onClick={()=>setShowReset(false)} style={{flex:1,background:"transparent",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 0",cursor:"pointer",fontSize:13,color:"#9a9aa3",fontFamily:"inherit",minHeight:44}}>キャンセル</button>
-            <button type="button" onClick={resetPw} style={{flex:1,border:"none",borderRadius:10,padding:"12px 0",cursor:"pointer",fontSize:13,fontWeight:700,background:"#f87171",color:"#0a0a0c",fontFamily:"inherit",minHeight:44}}>リセットする</button>
+            <button type="button" onClick={()=>setShowReset(false)} style={STYLE_PG_CANCEL_BTN}>キャンセル</button>
+            <button type="button" onClick={resetPw} style={STYLE_PG_CONFIRM_BTN}>リセットする</button>
           </div>
         </div>
       </div>}

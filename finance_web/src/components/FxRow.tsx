@@ -1,9 +1,65 @@
 // ────────── 固定費1行コンポーネント ──────────
 // 固定費リストの1件分。通常表示 ↔ 編集フォームを切り替える
 
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { parseYenAmount, formatYen, FIXED_EXPENSE_CATEGORIES, FIXED_EXPENSE_CATEGORY_ICONS } from "../utils/format";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// カテゴリアイコン丸バッジの静的スタイル
+const STYLE_FX_ICON: CSSProperties = {
+  width: 40,
+  height: 40,
+  borderRadius: "50%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: 16,
+  background: "rgba(255,255,255,0.06)",
+  color: COLOR_TEXT_SECONDARY,
+  flexShrink: 0,
+};
+
+// 毎月自動追加トグルボタンの静的スタイル（border/background/color は動的に上書き）
+const STYLE_FX_AUTO_BTN_BASE: CSSProperties = {
+  marginTop: 8,
+  width: "100%",
+  minHeight: 32,
+  padding: "5px 12px",
+  borderRadius: 8,
+  fontSize: 12,
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 6,
+  transition: "background 0.2s, color 0.2s, opacity 0.2s",
+};
+
+// トグルインジケーター（外枠）の静的スタイル（background は動的に上書き）
+const STYLE_FX_TOGGLE_BASE: CSSProperties = {
+  marginLeft: "auto",
+  width: 28,
+  height: 16,
+  borderRadius: 8,
+  position: "relative",
+  flexShrink: 0,
+  transition: "background 0.2s",
+};
+
+// トグルノブ（丸い白い点）の静的スタイル（left は動的に上書き）
+const STYLE_FX_TOGGLE_KNOB: CSSProperties = {
+  position: "absolute",
+  top: 2,
+  width: 12,
+  height: 12,
+  borderRadius: "50%",
+  background: "#fff",
+  transition: "left 0.2s",
+};
+
+// ─────────────────────────────────────────────────────────
 import { Input, Select } from "./ui";
 
 // 固定費1件分のデータ型
@@ -49,7 +105,7 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
     <div style={{...STYLE_CARD}}>
       <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:10}}>
         {/* カテゴリ絵文字アイコン */}
-        <div style={{width:40,height:40,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,background:"rgba(255,255,255,0.06)",color:COLOR_TEXT_SECONDARY,flexShrink:0}}>{FIXED_EXPENSE_CATEGORY_ICONS[item.category]||"📌"}</div>
+        <div style={STYLE_FX_ICON}>{FIXED_EXPENSE_CATEGORY_ICONS[item.category]||"📌"}</div>
         <div style={{flex:1,minWidth:0}}>
           <div style={{fontSize:13,fontWeight:600}}>{item.name}</div>
           <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>{item.category}</div>
@@ -69,21 +125,10 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
         <button type="button"
           onClick={onToggleAutoTrack}
           style={{
-            marginTop: 8,
-            width: "100%",
-            minHeight: 32,
-            padding: "5px 12px",
-            borderRadius: 8,
+            ...STYLE_FX_AUTO_BTN_BASE,
             border: `1px solid ${item.autoTrack ? "rgba(34,211,238,0.5)" : "rgba(148,163,184,0.2)"}`,
             background: item.autoTrack ? "rgba(34,211,238,0.08)" : "rgba(148,163,184,0.04)",
             color: item.autoTrack ? "#22d3ee" : COLOR_TEXT_HINT,
-            fontSize: 12,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 6,
-            transition: "background 0.2s, color 0.2s, opacity 0.2s",
           }}
         >
           <span style={{fontSize:13}}>🔁</span>
@@ -94,20 +139,12 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
           </span>
           {/* オン/オフのインジケーター */}
           <span style={{
-            marginLeft: "auto",
-            width: 28, height: 16, borderRadius: 8,
+            ...STYLE_FX_TOGGLE_BASE,
             background: item.autoTrack ? "#22d3ee" : "rgba(148,163,184,0.2)",
-            position: "relative",
-            flexShrink: 0,
-            transition: "background 0.2s",
           }}>
             <span style={{
-              position: "absolute",
-              top: 2, left: item.autoTrack ? 14 : 2,
-              width: 12, height: 12,
-              borderRadius: "50%",
-              background: "#fff",
-              transition: "left 0.2s",
+              ...STYLE_FX_TOGGLE_KNOB,
+              left: item.autoTrack ? 14 : 2,
             }}/>
           </span>
         </button>

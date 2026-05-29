@@ -2,7 +2,7 @@
 // App.tsx のローンタブ部分を切り出したファイル
 // 全ローン合計・アバランチ法アドバイス・種別ごとのローン一覧を表示する
 
-import React from "react";
+import React, { CSSProperties } from "react";
 import { Loan } from "../types";
 import { formatYen } from "../utils/format";
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate, BRANDS_CF, BRANDS_BL } from "../utils/loanCalc";
@@ -27,6 +27,48 @@ const AFFILIATE = {
   moneyforward: "https://px.a8.net/svt/ejp?a8mat=4B3RV6+8OKLDE+4JGQ+BYT9E",     // マネーフォワード クラウド確定申告（報酬1,500円）
 };
 
+// ── スタイル定数 ──────────────────────────────────────────
+
+// アフィリエイトバナーのカード外枠
+const STYLE_AFFIL_CARD: CSSProperties = {
+  background: "rgba(15,23,42,0.85)",
+  border: "1px solid rgba(34,211,238,0.2)",
+  borderRadius: 14,
+  padding: "14px 16px",
+  marginBottom: 10,
+  display: "flex",
+  alignItems: "center",
+  gap: 12,
+  cursor: "pointer",
+  transition: "border-color 0.15s",
+};
+
+// CTAボタン（右端の申し込みボタン風テキスト）
+const STYLE_AFFIL_CTA: CSSProperties = {
+  flexShrink: 0,
+  background: COLOR_ACCENT,
+  color: "#070b14",
+  borderRadius: 10,
+  padding: "8px 12px",
+  fontSize: 12,
+  fontWeight: 700,
+  whiteSpace: "nowrap",
+};
+
+// 利息累計アラート（完済までの利息額を強調する帯）
+const STYLE_LOAN_INTEREST_ALERT: CSSProperties = {
+  marginTop: 10,
+  padding: "10px 12px",
+  background: "rgba(248,113,113,0.06)",
+  border: "1px solid rgba(248,113,113,0.2)",
+  borderRadius: 10,
+  fontSize: 12,
+  color: COLOR_NEGATIVE,
+  lineHeight: 1.5,
+};
+
+// ─────────────────────────────────────────────────────────
+
 // アフィリエイトバナー1枚を描画するコンポーネント
 function AffiliateBanner({ tag, title, desc, cta, href }: {
   tag: string;   // タグ（例: "年会費無料" "高還元"）
@@ -42,18 +84,7 @@ function AffiliateBanner({ tag, title, desc, cta, href }: {
       rel="noopener noreferrer sponsored"
       style={{ textDecoration: "none", display: "block" }}
     >
-      <div style={{
-        background: "rgba(15,23,42,0.85)",
-        border: "1px solid rgba(34,211,238,0.2)",
-        borderRadius: 14,
-        padding: "14px 16px",
-        marginBottom: 10,
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        cursor: "pointer",
-        transition: "border-color 0.15s",
-      }}>
+      <div style={STYLE_AFFIL_CARD}>
         {/* 左：テキスト情報 */}
         <div style={{ flex: 1, minWidth: 0 }}>
           {/* 広告タグ + カテゴリラベル */}
@@ -67,16 +98,7 @@ function AffiliateBanner({ tag, title, desc, cta, href }: {
           <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY }}>{desc}</div>
         </div>
         {/* 右：CTAボタン */}
-        <div style={{
-          flexShrink: 0,
-          background: COLOR_ACCENT,
-          color: "#070b14",
-          borderRadius: 10,
-          padding: "8px 12px",
-          fontSize: 12,
-          fontWeight: 700,
-          whiteSpace: "nowrap",
-        }}>{cta}</div>
+        <div style={STYLE_AFFIL_CTA}>{cta}</div>
       </div>
     </a>
   );
@@ -290,7 +312,7 @@ export default function LoanView({
         </div>
         {/* 利息累計の動機づけメッセージ：完済までに払う利息額を強調表示 */}
         {totalFutureInterest > 0 && (
-          <div style={{ marginTop: 10, padding: "10px 12px", background: "rgba(248,113,113,0.06)", border: "1px solid rgba(248,113,113,0.2)", borderRadius: 10, fontSize: 12, color: COLOR_NEGATIVE, lineHeight: 1.5 }}>
+          <div style={STYLE_LOAN_INTEREST_ALERT}>
             💸 このペースで返すと、完済までに <span style={{ fontWeight: 700, fontFamily: "monospace" }}>{formatYen(totalFutureInterest)}</span> を利息として支払います。繰り上げ返済で減らせます。
           </div>
         )}

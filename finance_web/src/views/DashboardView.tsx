@@ -2,7 +2,7 @@
 // App.tsx から「概要タブ」の JSX を切り出して独立させたファイル
 // 表示に必要なデータはすべて props（親から渡す値）で受け取る
 
-import React, { useState, useMemo, lazy, Suspense } from "react";
+import React, { useState, useMemo, lazy, Suspense, CSSProperties } from "react";
 import { Tx, Income, Loan, Account, Transfer, SavingGoal, FixedExpense } from "../types";
 import MonthNav from "../components/MonthNav";
 import { Input, StatLabel, ProgressBar } from "../components/ui";
@@ -34,6 +34,31 @@ import {
   STYLE_BUTTON_PRIMARY,
   STYLE_BUTTON_OUTLINE,
 } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 月次/年間タブ切替ボタンの静的スタイル（background/color/fontWeight は動的に上書き）
+const STYLE_DASH_TAB_BTN: CSSProperties = {
+  flex: 1, padding: "9px 0", border: "none", cursor: "pointer",
+  fontSize: 13, fontFamily: "inherit",
+  transition: "background 0.15s, color 0.15s, font-weight 0.15s",
+};
+
+// カラーラベル「なし」ボタンの静的スタイル（border は選択状態で動的に上書き）
+const STYLE_DASH_COLOR_NONE_BTN: CSSProperties = {
+  width: 26, height: 26, borderRadius: "50%", background: "rgba(255,255,255,0.06)",
+  cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+  fontSize: 12, color: COLOR_TEXT_HINT, padding: 0,
+};
+
+// カラーラベル色スウォッチボタンの静的スタイル（background/border/boxShadow は色ごとに動的に上書き）
+const STYLE_DASH_COLOR_SWATCH: CSSProperties = {
+  width: 26, height: 26, borderRadius: "50%",
+  cursor: "pointer", padding: 0,
+  transition: "border 0.15s, box-shadow 0.15s",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // Account 型に updatedAt・color フィールドを追加した拡張型
 // 型定義には updatedAt がないので、ここだけローカルに定義する
@@ -241,12 +266,10 @@ export default function DashboardView({
               if (mode === "yearly") setYearlyYear(selectedYear);
             }}
             style={{
-              flex:1, padding:"9px 0", border:"none", cursor:"pointer",
+              ...STYLE_DASH_TAB_BTN,
               background: viewMode === mode ? "rgba(34,211,238,0.15)" : "rgba(255,255,255,0.03)",
               color: viewMode === mode ? "#22d3ee" : "#64748b",
               fontWeight: viewMode === mode ? 700 : 400,
-              fontSize:13, fontFamily:"inherit",
-              transition:"background 0.15s, color 0.15s, font-weight 0.15s",
             }}
           >
             {mode === "monthly" ? "📅 月次" : "📆 年間"}
@@ -454,11 +477,8 @@ export default function DashboardView({
                   <button type="button"
                     onClick={()=>setAccF(f=>({...f,color:""}))}
                     style={{
-                      width:26, height:26, borderRadius:"50%",
-                      background:"rgba(255,255,255,0.06)",
+                      ...STYLE_DASH_COLOR_NONE_BTN,
                       border:`2px solid ${accF.color===""?"rgba(34,211,238,0.7)":"rgba(255,255,255,0.15)"}`,
-                      cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
-                      fontSize:12, color:COLOR_TEXT_HINT, padding:0,
                     }}
                     title="なし"
                   >✕</button>
@@ -475,12 +495,10 @@ export default function DashboardView({
                       key={c}
                       onClick={()=>setAccF(f=>({...f,color:c}))}
                       style={{
-                        width:26, height:26, borderRadius:"50%",
-                        background:c,
+                        ...STYLE_DASH_COLOR_SWATCH,
+                        background: c,
                         border:`2px solid ${accF.color===c?"#fff":"transparent"}`,
-                        cursor:"pointer", padding:0,
                         boxShadow:accF.color===c?`0 0 0 2px ${c}55`:"none",
-                        transition:"border 0.15s, box-shadow 0.15s",
                       }}
                       title={label}
                     />

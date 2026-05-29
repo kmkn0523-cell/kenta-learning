@@ -2,7 +2,7 @@
 // 変動支出の入力フォーム・クイックテンプレート・予算管理・月別一覧をまとめたコンポーネント
 // App.tsx から切り出して、見通しを良くしている
 
-import React, { useMemo, useState, useRef } from "react";
+import React, { useMemo, useState, useRef, CSSProperties } from "react";
 import { Tx, Budget, CategoryConfig, Account, RecurringExpense } from "../types";
 import { newId } from "../utils/crypto";
 import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
@@ -30,6 +30,30 @@ import BudgetSection from "../components/BudgetSection";
 import WeeklyBreakdown from "../components/WeeklyBreakdown";
 import DayOfWeekBreakdown from "../components/DayOfWeekBreakdown";
 import MonthNav from "../components/MonthNav";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// クイックテンプレートカードの静的スタイル
+const STYLE_EX_TPL_CARD: CSSProperties = {
+  flexShrink: 0, background: "rgba(148,163,184,0.06)", border: `1px solid ${COLOR_BORDER}`,
+  borderRadius: 12, padding: "10px 30px 10px 14px", cursor: "pointer",
+  position: "relative", minWidth: 100,
+};
+
+// テンプレートカード内「✕」削除ボタンの静的スタイル
+const STYLE_EX_TPL_DEL_BTN: CSSProperties = {
+  position: "absolute", top: 6, right: 8, background: "none", border: "none",
+  color: COLOR_TEXT_HINT, cursor: "pointer", fontSize: 13, padding: 2, lineHeight: 1,
+};
+
+// 口座選択セレクトボックスの静的スタイル（color は口座選択状態で動的に上書き）
+const STYLE_EX_ACCOUNT_SELECT: CSSProperties = {
+  width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+  borderRadius: 10, fontSize: 14, padding: "12px 14px", fontFamily: "inherit",
+  appearance: "none", WebkitAppearance: "none",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // クイックテンプレートの形（id・カテゴリ・金額・メモ）
 interface Template {
@@ -312,11 +336,11 @@ export default function ExpenseView({
         <div style={{fontSize:12,color:COLOR_TEXT_HINT,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:8}}>よく使う支出</div>
         <div style={{display:"flex",gap:8,overflowX:"auto",paddingBottom:4,WebkitOverflowScrolling:"touch" as any}}>
           {tpls.map(tp=>(
-            <div key={tp.id} onClick={()=>{setTxF(f=>({...f,cat:tp.cat,amt:String(tp.amount),memo:tp.note}));setShowTxForm(true);}} style={{flexShrink:0,background:"rgba(148,163,184,0.06)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:"10px 30px 10px 14px",cursor:"pointer",position:"relative",minWidth:100}}>
+            <div key={tp.id} onClick={()=>{setTxF(f=>({...f,cat:tp.cat,amt:String(tp.amount),memo:tp.note}));setShowTxForm(true);}} style={STYLE_EX_TPL_CARD}>
               <div style={{fontSize:12,fontWeight:600,color:COLOR_TEXT_SECONDARY}}>{expenseCategoryIcons[tp.cat]} {tp.cat}</div>
               <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,marginTop:2}}>{formatYen(tp.amount)}</div>
               {tp.note&&<div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2,maxWidth:80,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{tp.note}</div>}
-              <button type="button" onClick={e=>{e.stopPropagation();delItem(tp.id,setTpls,"テンプレートを削除しました");}} style={{position:"absolute",top:6,right:8,background:"none",border:"none",color:COLOR_TEXT_HINT,cursor:"pointer",fontSize:13,padding:2,lineHeight:1}}>✕</button>
+              <button type="button" onClick={e=>{e.stopPropagation();delItem(tp.id,setTpls,"テンプレートを削除しました");}} style={STYLE_EX_TPL_DEL_BTN}>✕</button>
             </div>
           ))}
         </div>
@@ -340,16 +364,8 @@ export default function ExpenseView({
                   value={txF.accountId || ""}
                   onChange={e => setTxF(f => ({ ...f, accountId: e.target.value || undefined }))}
                   style={{
-                    width: "100%",
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    borderRadius: 10,
+                    ...STYLE_EX_ACCOUNT_SELECT,
                     color: txF.accountId ? "#e2e8f0" : "#64748b",
-                    fontSize: 14,
-                    padding: "12px 14px",
-                    fontFamily: "inherit",
-                    appearance: "none",
-                    WebkitAppearance: "none",
                   }}
                 >
                   {/* 空欄＝口座指定なし */}
