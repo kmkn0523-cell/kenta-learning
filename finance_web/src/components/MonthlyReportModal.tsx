@@ -2,6 +2,7 @@
 // 月が変わった最初のアクセス時に自動表示される「前月振り返り」サマリーモーダル
 // open=false の時は何も描画しない
 
+import { CSSProperties } from "react";
 import { formatYen } from "../utils/format";
 import {
   STYLE_BUTTON_PRIMARY,
@@ -11,6 +12,55 @@ import {
   COLOR_NEGATIVE,
   COLOR_BORDER,
 } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 背景オーバーレイ（タップして閉じるエリア）
+const STYLE_REPORT_OVERLAY: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  zIndex: 200,
+  background: "rgba(0,0,0,0.75)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "20px 16px",
+};
+
+// モーダル本体カード
+const STYLE_REPORT_MODAL: CSSProperties = {
+  background: "#0f1520",
+  border: `1px solid ${COLOR_BORDER}`,
+  borderRadius: 18,
+  padding: "28px 24px",
+  width: "100%",
+  maxWidth: 440,
+  maxHeight: "80vh",
+  overflowY: "auto",
+};
+
+// 収支サマリーグリッド（収入・支出・手残りの3列）
+const STYLE_REPORT_SUMMARY_GRID: CSSProperties = {
+  background: "rgba(255,255,255,0.04)",
+  borderRadius: 12,
+  padding: "16px 20px",
+  marginBottom: 16,
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr 1fr",
+  gap: 12,
+  textAlign: "center",
+};
+
+// 結果バッジの静的スタイル（background・color・border は isBlack で動的に変わる）
+const STYLE_REPORT_BADGE_BASE: CSSProperties = {
+  display: "inline-block",
+  padding: "6px 18px",
+  borderRadius: 999,
+  fontSize: 13,
+  fontWeight: 700,
+};
+
+// ─────────────────────────────────────────────────────────
 
 // このコンポーネントが受け取るpropsの型
 interface MonthlyReportProps {
@@ -42,33 +92,9 @@ export default function MonthlyReportModal({
 
   return (
     // 背景オーバーレイ（タップして閉じることもできる）
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 200,
-        background: "rgba(0,0,0,0.75)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px 16px",
-      }}
-    >
+    <div onClick={onClose} style={STYLE_REPORT_OVERLAY}>
       {/* モーダル本体（クリックが背景に伝わらないように止める） */}
-      <div
-        onClick={e => e.stopPropagation()}
-        style={{
-          background: "#0f1520",
-          border: `1px solid ${COLOR_BORDER}`,
-          borderRadius: 18,
-          padding: "28px 24px",
-          width: "100%",
-          maxWidth: 440,
-          maxHeight: "80vh",
-          overflowY: "auto",
-        }}
-      >
+      <div onClick={e => e.stopPropagation()} style={STYLE_REPORT_MODAL}>
         {/* ── ヘッダー：カレンダーアイコン＋タイトル ── */}
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <div style={{ fontSize: 38, marginBottom: 8 }}>📅</div>
@@ -81,16 +107,7 @@ export default function MonthlyReportModal({
         </div>
 
         {/* ── 収支サマリー：3列グリッドで収入・支出・手残りを表示 ── */}
-        <div style={{
-          background: "rgba(255,255,255,0.04)",
-          borderRadius: 12,
-          padding: "16px 20px",
-          marginBottom: 16,
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gap: 12,
-          textAlign: "center",
-        }}>
+        <div style={STYLE_REPORT_SUMMARY_GRID}>
           {/* 収入 */}
           <div>
             <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>収入</div>
@@ -117,11 +134,7 @@ export default function MonthlyReportModal({
         {/* ── 結果バッジ（黒字 or 赤字） ── */}
         <div style={{ textAlign: "center", marginBottom: 20 }}>
           <span style={{
-            display: "inline-block",
-            padding: "6px 18px",
-            borderRadius: 999,
-            fontSize: 13,
-            fontWeight: 700,
+            ...STYLE_REPORT_BADGE_BASE,
             background: isBlack ? "rgba(34,197,94,0.12)" : "rgba(244,63,94,0.12)",
             color: isBlack ? COLOR_POSITIVE : COLOR_NEGATIVE,
             border: `1px solid ${isBlack ? "rgba(34,197,94,0.25)" : "rgba(244,63,94,0.25)"}`,
@@ -149,14 +162,12 @@ export default function MonthlyReportModal({
                   borderBottom: "1px solid rgba(255,255,255,0.05)",
                 }}
               >
-                {/* 順位番号＋カテゴリ名 */}
                 <span style={{ fontSize: 13, color: COLOR_TEXT_PRIMARY }}>
                   <span style={{ color: COLOR_TEXT_HINT, marginRight: 8, fontFamily: "monospace" }}>
                     {i + 1}.
                   </span>
                   {cat}
                 </span>
-                {/* 金額（赤系で表示） */}
                 <span style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 600, color: COLOR_NEGATIVE }}>
                   {formatYen(amt)}
                 </span>
@@ -174,11 +185,9 @@ export default function MonthlyReportModal({
             padding: "12px 16px",
             marginBottom: 20,
           }}>
-            {/* バナータイトル */}
             <div style={{ fontSize: 12, color: COLOR_NEGATIVE, fontWeight: 600, marginBottom: 8, letterSpacing: "0.5px" }}>
               🚨 先月の予算超過カテゴリ
             </div>
-            {/* 超過カテゴリ一覧 */}
             {overBudget.map(([cat, over]) => (
               <div key={cat} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
                 <span style={{ color: COLOR_TEXT_PRIMARY }}>{cat}</span>

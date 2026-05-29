@@ -2,7 +2,7 @@
 // 今月の固定費引落日を日付順に並べて一覧表示する
 // 「今月あといくら引き落とされるか」を把握しやすくする
 
-import { useMemo } from "react";
+import { useMemo, CSSProperties } from "react";
 import { FixedExpense } from "../types";
 import { formatYen } from "../utils/format";
 import {
@@ -13,6 +13,21 @@ import {
   COLOR_BORDER,
   COLOR_NEGATIVE,
 } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 日付バッジの静的スタイル（background・border は isToday/isPast で動的に変わる）
+const STYLE_CALENDAR_DAY_BADGE: CSSProperties = {
+  minWidth: 36, height: 36,
+  borderRadius: 8,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  flexShrink: 0,
+};
+
+// ─────────────────────────────────────────────────────────
 
 interface FixedExpenseCalendarProps {
   fixedExpenses: FixedExpense[];
@@ -88,19 +103,13 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
           >
             {/* 日付バッジ */}
             <div style={{
-              minWidth: 36, height: 36,
-              borderRadius: 8,
+              ...STYLE_CALENDAR_DAY_BADGE,
               background: isToday
                 ? "rgba(251,191,36,0.18)"          // 今日は黄色背景
                 : isPast
                   ? "rgba(255,255,255,0.05)"        // 引落済みは薄い背景
                   : "rgba(255,255,255,0.08)",        // 未来は通常背景
               border: isToday ? "1px solid rgba(251,191,36,0.5)" : "none",
-              display: "flex",
-              flexDirection: "column" as const,
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
             }}>
               <span style={{
                 fontSize: 14,

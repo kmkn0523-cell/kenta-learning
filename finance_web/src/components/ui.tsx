@@ -5,6 +5,73 @@ import { useState, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from 
 import { formatAmount, formatYen } from "../utils/format";
 import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
 
+// ── スタイル定数 ──────────────────────────────────────────
+
+// PasswordInput: テキスト入力欄の静的スタイル（border・color は動的なので呼び出し側で追加）
+const STYLE_PW_INPUT_BASE: CSSProperties = {
+  background: "rgba(255,255,255,0.05)",
+  borderRadius: 10,
+  padding: "13px 44px 13px 16px",
+  caretColor: "#f5f5f7",
+  fontSize: 16,
+  width: "100%",
+  boxSizing: "border-box",
+  fontFamily: "inherit",
+  textAlign: "center",
+  letterSpacing: "0.2em",
+};
+
+// PasswordInput: 非表示モード時のオーバーレイ共通スタイル（fontSize・color は呼び出し側で追加）
+const STYLE_PW_OVERLAY_BASE: CSSProperties = {
+  position: "absolute",
+  top: 0, left: 0, right: 44, bottom: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  pointerEvents: "none",
+  overflow: "hidden",
+  userSelect: "none",
+};
+
+// PasswordInput: 目アイコンボタン
+const STYLE_PW_TOGGLE_BTN: CSSProperties = {
+  position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
+  background: "none", border: "none", cursor: "pointer",
+  fontSize: 18, padding: 4, color: "#9a9aa3",
+};
+
+// ProgressBar: ラベル列（左側のカテゴリ名）
+const STYLE_PROGRESS_LABEL: CSSProperties = {
+  fontSize: 12, color: COLOR_TEXT_SECONDARY, width: 80,
+  display: "flex", alignItems: "center", gap: 4,
+  overflow: "hidden", flexShrink: 0,
+};
+
+// Toast: バナー全体の静的スタイル（pointerEvents・color・border・boxShadow は動的）
+const STYLE_TOAST_BASE: CSSProperties = {
+  position: "fixed", top: 16, left: "50%", transform: "translateX(-50%)",
+  zIndex: 999, padding: "10px 20px", borderRadius: 24, fontSize: 13,
+  fontWeight: 600, whiteSpace: "nowrap",
+  background: "rgba(7,11,20,0.95)", backdropFilter: "blur(12px)",
+  display: "flex", alignItems: "center", gap: 10,
+};
+
+// Toast: アクションボタンの静的スタイル（border・color は動的）
+const STYLE_TOAST_BTN_BASE: CSSProperties = {
+  background: "rgba(255,255,255,0.08)",
+  fontSize: 12, fontWeight: 700, padding: "4px 10px",
+  borderRadius: 14, cursor: "pointer", fontFamily: "inherit",
+};
+
+// ConfirmDialog: 背景オーバーレイ
+const STYLE_CONFIRM_OVERLAY: CSSProperties = {
+  position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)",
+  zIndex: 200, display: "flex", alignItems: "center",
+  justifyContent: "center", padding: 20,
+};
+
+// ─────────────────────────────────────────────────────────
+
 // 目アイコン付きパスワード入力欄（👁️ボタンで文字を見せたり隠したりできる）
 interface PasswordInputProps {
   value: string;
@@ -29,58 +96,26 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
         onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && onEnter && onEnter()}
         placeholder={show ? placeholder : ""}
         style={{
-          background:"rgba(255,255,255,0.05)",
-          border:`1px solid ${border}`,
-          borderRadius:10,
-          padding:"13px 44px 13px 16px",
+          ...STYLE_PW_INPUT_BASE,
+          border: `1px solid ${border}`,
           // 非表示モードのとき文字色を透明にする（inputは動作し続けるがテキストが見えない）
           color: show ? "#f5f5f7" : "transparent",
-          caretColor:"#f5f5f7", // カーソルは常に表示
-          fontSize:16,
-          width:"100%",
-          boxSizing:"border-box",
-          fontFamily:"inherit",
-          textAlign:"center",
-          letterSpacing:"0.2em",
         }}
       />
       {/* 非表示モード時のオーバーレイ：•を文字数分だけ表示（クリックはinputに通す） */}
       {!show && value.length > 0 && (
-        <div style={{
-          position:"absolute",
-          top:0, left:0, right:44, bottom:0,
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center",
-          pointerEvents:"none",  // タップがinputに届くように透過させる
-          fontSize:20,
-          color:"#f5f5f7",
-          letterSpacing:"0.15em",
-          overflow:"hidden",
-          userSelect:"none",
-        }}>
+        <div style={{ ...STYLE_PW_OVERLAY_BASE, fontSize: 20, color: "#f5f5f7", letterSpacing: "0.15em" }}>
           {"•".repeat(value.length)}
         </div>
       )}
       {/* 非表示モードでvalue空のときだけplaceholderを代替表示 */}
       {!show && value.length === 0 && placeholder && (
-        <div style={{
-          position:"absolute",
-          top:0, left:0, right:44, bottom:0,
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center",
-          pointerEvents:"none",
-          fontSize:16,
-          color:"rgba(255,255,255,0.25)",
-          overflow:"hidden",
-          userSelect:"none",
-        }}>
+        <div style={{ ...STYLE_PW_OVERLAY_BASE, fontSize: 16, color: "rgba(255,255,255,0.25)" }}>
           {placeholder}
         </div>
       )}
       {/* 👁️ボタン：クリックするたびに表示/非表示が切り替わる */}
-      <button type="button" onClick={() => setShow(s => !s)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:18,padding:4,color:"#9a9aa3"}}>
+      <button type="button" onClick={() => setShow(s => !s)} style={STYLE_PW_TOGGLE_BTN}>
         {show ? "👁️" : "🙈"}
       </button>
     </div>
@@ -149,7 +184,7 @@ interface ProgressBarProps {
 }
 export const ProgressBar = ({label, value, max, color, icon}: ProgressBarProps) =>
   <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:11}}>
-    <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,width:80,display:"flex",alignItems:"center",gap:4,overflow:"hidden",flexShrink:0}}>
+    <div style={STYLE_PROGRESS_LABEL}>
       {icon&&<span>{icon}</span>}
       <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{label}</span>
     </div>
@@ -179,12 +214,12 @@ export function Toast({data}: { data: ToastData | null }) {
   // action があるときだけタップを受け付ける（誤タップでフォーム操作を邪魔しないため）
   const pe = data.action ? "auto" : "none";
   return (
-    <div style={{position:"fixed",top:16,left:"50%",transform:"translateX(-50%)",zIndex:999,padding:"10px 20px",borderRadius:24,fontSize:13,fontWeight:600,whiteSpace:"nowrap",pointerEvents:pe as any,color:cl,background:"rgba(7,11,20,0.95)",border:`1px solid ${cl}55`,backdropFilter:"blur(12px)",boxShadow:`0 4px 24px ${cl}22`,display:"flex",alignItems:"center",gap:10}}>
+    <div style={{ ...STYLE_TOAST_BASE, pointerEvents: pe as any, color: cl, border: `1px solid ${cl}55`, boxShadow: `0 4px 24px ${cl}22` }}>
       <span>{data.msg}</span>
       {data.action && (
         <button type="button"
           onClick={data.action.onClick}
-          style={{background:"rgba(255,255,255,0.08)",border:`1px solid ${cl}66`,color:cl,fontSize:12,fontWeight:700,padding:"4px 10px",borderRadius:14,cursor:"pointer",fontFamily:"inherit"}}
+          style={{ ...STYLE_TOAST_BTN_BASE, border: `1px solid ${cl}66`, color: cl }}
         >
           {data.action.label}
         </button>
@@ -203,7 +238,7 @@ interface ConfirmDialogData {
 export function ConfirmDialog({data, onOk, onCancel}: { data: ConfirmDialogData | null; onOk: () => void; onCancel: () => void }) {
   if (!data) return null;
   return (
-    <div onClick={onCancel} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.72)",zIndex:200,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+    <div onClick={onCancel} style={STYLE_CONFIRM_OVERLAY}>
       <div onClick={e=>e.stopPropagation()} style={{background:"rgba(15,23,42,0.98)",border:`1px solid ${COLOR_BORDER}`,borderRadius:22,padding:24,width:"100%",maxWidth:340,backdropFilter:"blur(20px)"}}>
         <div style={{fontSize:15,fontWeight:600,marginBottom:8}}>{data.title}</div>
         <div style={{fontSize:13,color:COLOR_TEXT_SECONDARY,marginBottom:20}}>{data.msg||"この操作は元に戻せません。"}</div>
