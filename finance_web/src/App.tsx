@@ -19,7 +19,49 @@ import { COLOR_BACKGROUND, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_
 import { migrateTransactions, migrateIncomes, migrateFixedExpenses, migrateLoans } from "./utils/dataMigration";
 import { Transfer, CategoryConfig, SavingGoal, RecurringIncome, RecurringExpense } from "./types";
 import { makeDefaultCategoryConfig } from "./utils/defaultCategories";
+import { CSSProperties } from "react";
 import PasswordGate from "./components/PasswordGate";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 通知許可バナー全体
+const STYLE_NOTIF_BANNER: CSSProperties = {
+  display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10,
+  background: "rgba(34,211,238,0.06)", border: "1px solid rgba(34,211,238,0.2)",
+  borderRadius: 10, padding: "10px 14px", marginBottom: 12, fontSize: 12,
+};
+
+// 通知許可バナー内「有効にする」ボタン
+const STYLE_NOTIF_BTN: CSSProperties = {
+  background: "rgba(34,211,238,0.15)", border: "1px solid rgba(34,211,238,0.4)",
+  borderRadius: 6, color: COLOR_ACCENT, fontSize: 11, fontWeight: 700,
+  padding: "4px 12px", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap",
+};
+
+// 下部ナビゲーションバー全体
+const STYLE_BOTTOM_NAV: CSSProperties = {
+  position: "fixed", bottom: 0, left: 0, right: 0,
+  background: "rgba(7,11,20,0.96)", backdropFilter: "blur(24px)",
+  borderTop: `1px solid ${COLOR_BORDER}`, display: "flex",
+  zIndex: 100, paddingBottom: "env(safe-area-inset-bottom)",
+};
+
+// 下部ナビの各タブボタンの静的スタイル（color は active 状態で動的に変わる）
+const STYLE_NAV_BTN_BASE: CSSProperties = {
+  flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+  padding: "12px 4px 14px", cursor: "pointer", border: "none", background: "none",
+  fontSize: 10, gap: 3, fontFamily: "inherit", minHeight: 60,
+  position: "relative", WebkitTapHighlightColor: "transparent",
+};
+
+// 下部ナビ・アクティブタブの上部インジケーターバー
+const STYLE_NAV_INDICATOR: CSSProperties = {
+  position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
+  width: 30, height: 2, background: COLOR_ACCENT,
+  borderRadius: 1, boxShadow: `0 0 8px ${COLOR_ACCENT},0 0 16px rgba(34,211,238,0.4)`,
+};
+
+// ─────────────────────────────────────────────────────────
 import { Input, Select, StatLabel, ProgressBar, Toast, ConfirmDialog } from "./components/ui";
 import FxRow from "./components/FxRow";
 import TxRow from "./components/TxRow";
@@ -281,20 +323,12 @@ function AppInner(){
     <div style={{padding:"16px 16px calc(110px + env(safe-area-inset-bottom))",maxWidth:520,margin:"0 auto"}}>
       {/* 通知許可バナー（まだ許可/拒否を選んでいない時だけ表示） */}
       {notifPermission === "default" && (
-        <div style={{
-          display:"flex", alignItems:"center", justifyContent:"space-between", gap:10,
-          background:"rgba(34,211,238,0.06)", border:"1px solid rgba(34,211,238,0.2)",
-          borderRadius:10, padding:"10px 14px", marginBottom:12, fontSize:12,
-        }}>
+        <div style={STYLE_NOTIF_BANNER}>
           <span style={{color:COLOR_TEXT_SECONDARY}}>🔔 予算超過などをブラウザ通知で受け取れます</span>
           <button
             type="button"
             onClick={requestPermission}
-            style={{
-              background:"rgba(34,211,238,0.15)", border:"1px solid rgba(34,211,238,0.4)",
-              borderRadius:6, color:COLOR_ACCENT, fontSize:11, fontWeight:700,
-              padding:"4px 12px", cursor:"pointer", fontFamily:"inherit", whiteSpace:"nowrap",
-            }}
+            style={STYLE_NOTIF_BTN}
           >
             有効にする
           </button>
@@ -433,10 +467,10 @@ function AppInner(){
       />}
       </Suspense>
     </div>
-    <nav style={{position:"fixed",bottom:0,left:0,right:0,background:"rgba(7,11,20,0.96)",backdropFilter:"blur(24px)",borderTop:`1px solid ${COLOR_BORDER}`,display:"flex",zIndex:100,paddingBottom:"env(safe-area-inset-bottom)"}}>
+    <nav style={STYLE_BOTTOM_NAV}>
       {[["dash","📊","概要"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["set","⚙️","設定"]].map(([key,icon,label])=>(
-        <button type="button" key={key} onClick={()=>setTab(key)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"12px 4px 14px",cursor:"pointer",border:"none",background:"none",color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT,fontSize:10,gap:3,fontFamily:"inherit",minHeight:60,position:"relative",WebkitTapHighlightColor:"transparent"}}>
-          {tab===key&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:30,height:2,background:COLOR_ACCENT,borderRadius:1,boxShadow:`0 0 8px ${COLOR_ACCENT},0 0 16px rgba(34,211,238,0.4)`}}/>}
+        <button type="button" key={key} onClick={()=>setTab(key)} style={{...STYLE_NAV_BTN_BASE,color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT}}>
+          {tab===key&&<div style={STYLE_NAV_INDICATOR}/>}
           <span style={{fontSize:22,lineHeight:1,transform:tab===key?"scale(1.12)":"scale(1)",transition:"transform 0.15s ease"}}>{icon}</span>
           <span style={{fontWeight:tab===key?700:400,letterSpacing:tab===key?"0.5px":"0"}}>{label}</span>
         </button>

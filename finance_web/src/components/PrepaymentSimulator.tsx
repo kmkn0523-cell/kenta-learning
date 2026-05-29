@@ -2,7 +2,7 @@
 // あるローンに対して「毎月いくら多く払うと、何ヶ月早く完済できて、利息はいくら節約できるか」を試算する
 // スライダーで追加月額を動かすとリアルタイムで結果が更新される
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, CSSProperties } from "react";
 import { formatYen } from "../utils/format";
 import { calculateTotalInterest, calculateCompletionDate } from "../utils/loanCalc";
 import {
@@ -16,6 +16,45 @@ import {
   STYLE_BUTTON_PRIMARY,
   STYLE_BUTTON_OUTLINE,
 } from "../utils/styles";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// モーダル背景オーバーレイの静的スタイル
+const STYLE_SIM_OVERLAY: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.72)",
+  zIndex: 200,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 16,
+};
+
+// モーダルカード本体の静的スタイル
+const STYLE_SIM_CARD: CSSProperties = {
+  background: "rgba(15,23,42,0.98)",
+  border: `1px solid ${COLOR_BORDER}`,
+  borderRadius: 22,
+  padding: 20,
+  width: "100%",
+  maxWidth: 420,
+  maxHeight: "90vh",
+  overflowY: "auto",
+  backdropFilter: "blur(20px)",
+};
+
+// 選択ボタン（月額増額・一括返済額）の静的共通スタイル（border/background/color は動的に上書き）
+const STYLE_SIM_BTN_BASE: CSSProperties = {
+  flex: "1 1 auto",
+  padding: "6px 8px",
+  borderRadius: 999,
+  fontSize: 12,
+  fontFamily: "monospace",
+  cursor: "pointer",
+};
+
+// ─────────────────────────────────────────────────────────
 
 interface LoanItem {
   id: string;
@@ -67,15 +106,8 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
   const baseCompletion = baseline ? calculateCompletionDate(baseline.months) : null;
 
   return (
-    <div onClick={onClose} style={{
-      position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)", zIndex: 200,
-      display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
-    }}>
-      <div onClick={e => e.stopPropagation()} style={{
-        background: "rgba(15,23,42,0.98)", border: `1px solid ${COLOR_BORDER}`,
-        borderRadius: 22, padding: 20, width: "100%", maxWidth: 420, maxHeight: "90vh",
-        overflowY: "auto", backdropFilter: "blur(20px)",
-      }}>
+    <div onClick={onClose} style={STYLE_SIM_OVERLAY}>
+      <div onClick={e => e.stopPropagation()} style={STYLE_SIM_CARD}>
         {/* ヘッダー */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
           <div>
@@ -105,16 +137,11 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
                 key={amt}
                 onClick={() => setExtra(amt)}
                 style={{
-                  flex: "1 1 auto",
+                  ...STYLE_SIM_BTN_BASE,
                   minWidth: 70,
-                  padding: "6px 8px",
-                  borderRadius: 999,
                   border: `1px solid ${extra === amt ? COLOR_ACCENT : COLOR_BORDER}`,
                   background: extra === amt ? COLOR_ACCENT : "transparent",
                   color: extra === amt ? "#fff" : COLOR_TEXT_PRIMARY,
-                  fontSize: 12,
-                  fontFamily: "monospace",
-                  cursor: "pointer",
                 }}
               >
                 +{amt === 0 ? "0" : `${(amt / 1000)}k`}
@@ -137,16 +164,11 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
                 key={amt}
                 onClick={() => setLumpSum(Math.min(amt, loan.remaining))}
                 style={{
-                  flex: "1 1 auto",
+                  ...STYLE_SIM_BTN_BASE,
                   minWidth: 60,
-                  padding: "6px 8px",
-                  borderRadius: 999,
                   border: `1px solid ${lumpSum === amt ? COLOR_ACCENT : COLOR_BORDER}`,
                   background: lumpSum === amt ? COLOR_ACCENT : "transparent",
                   color: lumpSum === amt ? "#fff" : COLOR_TEXT_PRIMARY,
-                  fontSize: 12,
-                  fontFamily: "monospace",
-                  cursor: "pointer",
                 }}
               >
                 {amt === 0 ? "なし" : `+${amt / 10000}万`}

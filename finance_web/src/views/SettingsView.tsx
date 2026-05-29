@@ -1,5 +1,5 @@
 // ────────── 設定画面（カテゴリ管理） ──────────
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { CategoryConfig, CategoryItem, Tx, Income, FixedExpense, Transfer } from "../types";
 import { Input } from "../components/ui";
 import {
@@ -13,6 +13,36 @@ import {
 import { makeDefaultCategoryConfig } from "../utils/defaultCategories";
 
 import { useRef } from "react";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 年・月セレクトボックスの共通スタイル
+const STYLE_SELECT_INPUT: CSSProperties = {
+  flex: 1,
+  background: "rgba(255,255,255,0.06)",
+  border: "1px solid rgba(255,255,255,0.12)",
+  borderRadius: 10,
+  color: "#e2e8f0",
+  fontSize: 14,
+  padding: "10px 12px",
+  fontFamily: "inherit",
+  appearance: "none",
+  WebkitAppearance: "none",
+};
+
+// 確認モーダルの背景オーバーレイ共通スタイル
+const STYLE_MODAL_OVERLAY: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.72)",
+  zIndex: 200,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 20,
+};
+
+// ─────────────────────────────────────────────────────────
 
 // カテゴリの種類（変動費・固定費・収入）
 type CategoryKind = "expense" | "fixedExpense" | "income";
@@ -373,18 +403,7 @@ export default function SettingsView(props: SettingsViewProps) {
                 <select
                   value={bulkYear}
                   onChange={e => setBulkYear(Number(e.target.value))}
-                  style={{
-                    flex: 1,
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    borderRadius: 10,
-                    color: "#e2e8f0",
-                    fontSize: 14,
-                    padding: "10px 12px",
-                    fontFamily: "inherit",
-                    appearance: "none",
-                    WebkitAppearance: "none",
-                  }}
+                  style={STYLE_SELECT_INPUT}
                 >
                   {yearOptions.map(y => (
                     <option key={y} value={y}>{y}年</option>
@@ -394,18 +413,7 @@ export default function SettingsView(props: SettingsViewProps) {
                 <select
                   value={bulkMonth}
                   onChange={e => setBulkMonth(Number(e.target.value))}
-                  style={{
-                    flex: 1,
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    borderRadius: 10,
-                    color: "#e2e8f0",
-                    fontSize: 14,
-                    padding: "10px 12px",
-                    fontFamily: "inherit",
-                    appearance: "none",
-                    WebkitAppearance: "none",
-                  }}
+                  style={STYLE_SELECT_INPUT}
                 >
                   {monthLabels.map((label, idx) => (
                     <option key={idx} value={idx}>{label}</option>
@@ -584,16 +592,7 @@ export default function SettingsView(props: SettingsViewProps) {
       {showResetConfirm && (
         <div
           onClick={() => setShowResetConfirm(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.72)",
-            zIndex: 200,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 20,
-          }}
+          style={STYLE_MODAL_OVERLAY}
         >
           <div onClick={e => e.stopPropagation()} style={{ ...STYLE_CARD, maxWidth: 340 }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 8 }}>
@@ -652,16 +651,7 @@ export default function SettingsView(props: SettingsViewProps) {
       {deleteTarget && (
         <div
           onClick={() => setDeleteTarget(null)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.72)",
-            zIndex: 200,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 20,
-          }}
+          style={STYLE_MODAL_OVERLAY}
         >
           <div onClick={e => e.stopPropagation()} style={{ ...STYLE_CARD, maxWidth: 340 }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: COLOR_TEXT_PRIMARY, marginBottom: 8 }}>

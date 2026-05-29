@@ -1,12 +1,44 @@
 // ────────── ローン1件カードコンポーネント ──────────
 // ローン・借入1件分の情報表示と、手動/自動返済モードの切替・反映ボタンを提供する
 
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate } from "../utils/loanCalc";
 import { formatYen, formatAmount } from "../utils/format";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE } from "../utils/styles";
 import { Input, StatLabel } from "./ui";
 import PrepaymentSimulator from "./PrepaymentSimulator";
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 完済バッジ（✓ 完済）
+const STYLE_LOAN_COMPLETE_BADGE: CSSProperties = {
+  fontSize: 12, fontWeight: 700, color: COLOR_POSITIVE,
+  background: "rgba(52,211,153,0.1)", borderRadius: 5,
+  padding: "2px 8px", display: "inline-block", marginBottom: 4,
+};
+
+// 手動↔自動トグルスライダー本体の静的スタイル（background は isAuto で動的に変わる）
+const STYLE_LOAN_TOGGLE_BASE: CSSProperties = {
+  width: 44, height: 24, borderRadius: 12,
+  position: "relative", cursor: "pointer",
+  transition: "background 0.2s", flexShrink: 0,
+};
+
+// トグルスライダー内の丸ノブの静的スタイル（left は isAuto で動的に変わる）
+const STYLE_LOAN_TOGGLE_KNOB: CSSProperties = {
+  position: "absolute", top: 3,
+  width: 18, height: 18, borderRadius: "50%",
+  background: "white", transition: "left 0.2s",
+};
+
+// 完済予定日ボックス
+const STYLE_LOAN_COMPLETION_BOX: CSSProperties = {
+  background: "rgba(255,255,255,0.03)", border: `1px solid ${COLOR_BORDER}`,
+  borderRadius: 12, padding: "12px 14px", marginBottom: 10,
+  display: "flex", justifyContent: "space-between", alignItems: "center",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // ローン1件分のデータ型
 interface LoanItem {
@@ -52,7 +84,7 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
       {/* ヘッダー：ローン名・金利・編集/削除ボタン */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
         <div style={{flex:1,minWidth:0}}>
-          {paid && <div style={{fontSize:12,fontWeight:700,color:COLOR_POSITIVE,background:"rgba(52,211,153,0.1)",borderRadius:5,padding:"2px 8px",display:"inline-block",marginBottom:4}}>✓ 完済</div>}
+          {paid && <div style={STYLE_LOAN_COMPLETE_BADGE}>✓ 完済</div>}
           <div style={{fontSize:15,fontWeight:700}}>{loan.name}</div>
           <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>
             金利 <span style={{fontFamily:"monospace",color:COLOR_TEXT_PRIMARY,fontWeight:700}}>{loan.rate}%</span>
@@ -70,8 +102,8 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
         <span style={{fontSize:12,color:COLOR_TEXT_HINT,flex:1}}>返済モード</span>
         <span style={{fontSize:12,color:isAuto?COLOR_TEXT_HINT:COLOR_TEXT_PRIMARY,fontWeight:isAuto?400:700}}>手動</span>
         {/* スライドトグルボタン：クリックで手動↔自動を切り替える */}
-        <div onClick={onToggleAuto} style={{width:44,height:24,borderRadius:12,background:isAuto?COLOR_ACCENT:"rgba(255,255,255,0.1)",position:"relative",cursor:"pointer",transition:"background 0.2s",flexShrink:0}}>
-          <div style={{position:"absolute",top:3,left:isAuto?23:3,width:18,height:18,borderRadius:"50%",background:"white",transition:"left 0.2s"}}/>
+        <div onClick={onToggleAuto} style={{...STYLE_LOAN_TOGGLE_BASE,background:isAuto?COLOR_ACCENT:"rgba(255,255,255,0.1)"}}>
+          <div style={{...STYLE_LOAN_TOGGLE_KNOB,left:isAuto?23:3}}/>
         </div>
         <span style={{fontSize:12,color:isAuto?COLOR_TEXT_PRIMARY:COLOR_TEXT_HINT,fontWeight:isAuto?700:400}}>自動</span>
       </div>}
@@ -83,7 +115,7 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
       {!paid && isAuto && !hasPayDay && <div style={{background:"rgba(248,113,113,0.06)",border:"1px solid rgba(248,113,113,0.3)",borderRadius:10,padding:"10px 14px",marginBottom:10,fontSize:12,color:COLOR_NEGATIVE}}>⚠️ 自動モードには引落日の設定が必要です（編集から設定してください）</div>}
 
       {/* 完済予定日 */}
-      {!paid && comp && <div style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:"12px 14px",marginBottom:10,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+      {!paid && comp && <div style={STYLE_LOAN_COMPLETION_BOX}>
         <div>
           <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:3}}>完済予定</div>
           <span style={{fontFamily:"monospace",fontSize:20,fontWeight:700}}>{comp.y}年{comp.m}月</span>
