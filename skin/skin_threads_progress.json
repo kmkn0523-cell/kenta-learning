@@ -1,5 +1,5 @@
 {
-  "daily_index": 189,
+  "daily_index": 190,
   "launch_index": 0,
   "history": [
     {
@@ -3989,6 +3989,13 @@
       "theme_id": 81,
       "variant": "B",
       "post_id": "17898229038311061"
+    },
+    {
+      "date": "2026/05/29 19:00",
+      "theme": "脂質と肌の関係",
+      "theme_id": 82,
+      "variant": "B",
+      "post_id": "18599538961042704"
     }
   ],
   "ab_next": "A",
@@ -4015,7 +4022,7 @@
     "79": "A",
     "80": "A",
     "81": "A",
-    "82": "B",
+    "82": "A",
     "83": "B",
     "84": "B",
     "85": "B",
@@ -4234,7 +4241,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "83": {
       "a_score": 0.0,
@@ -4753,7 +4760,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-29T17:01:22.641120+00:00",
+  "last_posted_at": "2026-05-29T19:01:17.157412+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
