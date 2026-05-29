@@ -1,5 +1,5 @@
 {
-  "daily_index": 190,
+  "daily_index": 192,
   "launch_index": 0,
   "history": [
     {
@@ -3996,6 +3996,20 @@
       "theme_id": 82,
       "variant": "B",
       "post_id": "18599538961042704"
+    },
+    {
+      "date": "2026/05/29 21:00",
+      "theme": "腸内フローラを整える",
+      "theme_id": 83,
+      "variant": "B",
+      "post_id": "18538318840077722"
+    },
+    {
+      "date": "2026/05/29 23:00",
+      "theme": "汗と肌の関係",
+      "theme_id": 84,
+      "variant": "B",
+      "post_id": "18118143046743233"
     }
   ],
   "ab_next": "A",
@@ -4023,8 +4037,8 @@
     "80": "A",
     "81": "A",
     "82": "A",
-    "83": "B",
-    "84": "B",
+    "83": "A",
+    "84": "A",
     "85": "B",
     "86": "B",
     "87": "B",
@@ -4247,13 +4261,13 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "84": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "85": {
       "a_score": 0.0,
@@ -4760,7 +4774,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-29T19:01:17.157412+00:00",
+  "last_posted_at": "2026-05-29T23:01:17.742293+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
