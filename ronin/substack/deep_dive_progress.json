@@ -1,17 +1,20 @@
 {
-  "next_day": 14,
   "history": [
     {
       "date": "2026/05/29 01:18",
-      "day": 1,
+      "card_day": 3,
+      "japanese": "七転び八起き",
       "post_id": 199679732,
-      "title": "The Arithmetic of Rising"
+      "title": "The Arithmetic of Rising",
+      "note": "旧フォーマットのDay1として投稿。実際の諺はCard Day 3"
     },
     {
       "date": "2026/05/29 01:20",
-      "day": 13,
+      "card_day": 16,
+      "japanese": "千里の道も一歩から",
       "post_id": 199679889,
-      "title": "The First Step of a Thousand Miles"
+      "title": "The First Step of a Thousand Miles",
+      "note": "旧フォーマットのDay13として投稿。実際の諺はCard Day 16"
     }
   ]
 }

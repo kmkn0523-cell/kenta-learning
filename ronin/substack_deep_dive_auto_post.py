@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # substack_deep_dive_auto_post.py
-# substack_deep_dive.json の long-form 記事を Substack に1日1本投稿するスクリプト
-# カード投稿 (substack_auto_post.py) と連動して同じ Day 番号を投稿する
+# カード投稿（substack_auto_post.py）の直後に実行し、同じ諺の long-form 記事を Substack に投稿する
+# 「今日のカード」を substack_progress.json から特定し、日本語テキストで deep-dive 記事を検索する
 # 使い方: python3 substack_deep_dive_auto_post.py
 
 import os                                # パソコンの環境変数を読み込む道具
+import re                                # 文字列のパターン検索をする道具
 import json                              # JSONファイルを読み書きする道具
 from html.parser import HTMLParser       # HTMLを解析する標準ライブラリ
 from urllib.parse import unquote         # URLエンコードを元に戻す道具
@@ -18,40 +19,62 @@ load_dotenv()
 # =============================
 # 設定
 # =============================
-SUBSTACK_SID    = os.getenv("SUBSTACK_SID")           # Substackのセッションクッキー
-PUBLICATION_URL = "https://roninwords.substack.com"   # パブリケーションのURL
-SCRIPT_DIR      = os.path.dirname(os.path.abspath(__file__))
-DEEP_DIVE_JSON  = os.path.join(SCRIPT_DIR, "substack", "substack_deep_dive.json")
-PROGRESS_FILE   = os.path.join(SCRIPT_DIR, "substack", "deep_dive_progress.json")
-MAX_DAY         = 100                                 # 総日数
+SUBSTACK_SID      = os.getenv("SUBSTACK_SID")           # Substackのセッションクッキー
+PUBLICATION_URL   = "https://roninwords.substack.com"   # パブリケーションのURL
+SCRIPT_DIR        = os.path.dirname(os.path.abspath(__file__))
+DEEP_DIVE_JSON    = os.path.join(SCRIPT_DIR, "substack", "substack_deep_dive.json")
+PROGRESS_FILE     = os.path.join(SCRIPT_DIR, "substack", "deep_dive_progress.json")
+CARD_PROGRESS     = os.path.join(SCRIPT_DIR, "substack", "substack_progress.json")
+CARDS_FILE        = os.path.join(SCRIPT_DIR, "generate_ronin_cards.py")
+MAX_DAY           = 100                                  # カード投稿の総日数
 
 
 # =============================
-# 進捗ファイルの読み書き
+# カード進捗ファイルの読み込み
+# =============================
+def load_card_progress():
+    """カード投稿スクリプトが更新した進捗ファイルを読んで「今日のカードDay番号」を返す"""
+    with open(CARD_PROGRESS, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+# =============================
+# カードデータの読み込み（generate_ronin_cards.py から）
+# =============================
+def load_cards():
+    """generate_ronin_cards.py のproverbs定義を解析して day → 日本語諺 の辞書を作る"""
+    with open(CARDS_FILE, "r", encoding="utf-8") as f:
+        content = f.read()
+    pattern = re.compile(r'\{"day":\s*(\d+),\s*"jp":\s*"([^"]+)"')
+    return {int(m.group(1)): m.group(2).strip() for m in pattern.finditer(content)}
+
+
+# =============================
+# deep-dive 記事データの読み込み
+# =============================
+def load_articles_by_jp():
+    """substack_deep_dive.json を読んで 日本語テキスト → 記事データ の辞書を作る"""
+    with open(DEEP_DIVE_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    # japanese フィールドをキーにする（day番号は使わない）
+    return {article["japanese"]: article for article in data["articles"]}
+
+
+# =============================
+# deep-dive 進捗ファイルの読み書き
 # =============================
 def load_progress():
-    """今日は何日目を投稿するか、進捗ファイルから読み込む"""
+    """deep-dive 進捗ファイルを読み込む。なければ初期値を返す"""
     if os.path.exists(PROGRESS_FILE):
         with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    # 初回実行時はゼロスタート
-    return {"next_day": 1, "history": []}
+    return {"history": []}
 
 
 def save_progress(progress):
-    """投稿完了後に進捗ファイルを更新する"""
+    """deep-dive 進捗ファイルを更新する"""
     with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
         json.dump(progress, f, ensure_ascii=False, indent=2)
-
-
-# =============================
-# 記事データの読み込み
-# =============================
-def load_articles():
-    """substack_deep_dive.json を読んで day番号 → 記事データ の辞書を作る"""
-    with open(DEEP_DIVE_JSON, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    return {article["day"]: article for article in data["articles"]}
 
 
 # =============================
@@ -170,27 +193,41 @@ def create_and_publish_post(session, article):
 # メイン処理
 # =============================
 def main():
-    progress = load_progress()
-    day = progress["next_day"]
+    # カード投稿の進捗から「今日投稿されたDay番号」を取得する
+    # substack_auto_post.py が実行直後なので next_day はすでに +1 されている
+    card_progress = load_card_progress()
+    card_day = card_progress["next_day"] - 1
 
-    if day > MAX_DAY:
-        print(f"全{MAX_DAY}日分の投稿が完了しています。")
+    if card_day < 1:
+        print("カード投稿がまだ始まっていません。スキップ。", flush=True)
+        return
+    if card_day > MAX_DAY:
+        print(f"全{MAX_DAY}日分のカード投稿が完了しています。deep-dive もスキップ。", flush=True)
         return
 
-    articles = load_articles()
-    if day not in articles:
-        raise RuntimeError(f"Day {day} のデータが substack_deep_dive.json に見つかりません")
-
-    article = articles[day]
-
-    # 重複投稿防止
-    already_posted = any(h["day"] == day for h in progress.get("history", []))
-    if already_posted:
-        print(f"[Day {day}] はすでに投稿済みのためスキップします。", flush=True)
+    # そのDay の日本語諺を取得する
+    cards = load_cards()
+    if card_day not in cards:
+        print(f"[Card Day {card_day}] generate_ronin_cards.py にデータが見つかりません。スキップ。", flush=True)
         return
 
-    print(f"[Day {day}] deep-dive 投稿開始: {article['japanese']}", flush=True)
+    japanese = cards[card_day]
+    print(f"[Card Day {card_day}] 今日の諺: {japanese}", flush=True)
+
+    # 対応する deep-dive 記事を日本語テキストで検索する
+    articles_by_jp = load_articles_by_jp()
+    if japanese not in articles_by_jp:
+        print(f"[Card Day {card_day}] {japanese} のdeep-dive記事は存在しません。スキップ。", flush=True)
+        return
+
+    article = articles_by_jp[japanese]
     print(f"  タイトル: {article['title']}", flush=True)
+
+    # 重複投稿防止（同じ card_day がすでに履歴にあればスキップ）
+    progress = load_progress()
+    if any(h.get("card_day") == card_day for h in progress.get("history", [])):
+        print(f"[Card Day {card_day}] はすでに投稿済みのためスキップします。", flush=True)
+        return
 
     if not SUBSTACK_SID:
         raise ValueError("SUBSTACK_SID が .env に設定されていません")
@@ -208,15 +245,15 @@ def main():
 
     now = datetime.now(timezone.utc).strftime("%Y/%m/%d %H:%M")
     progress["history"].append({
-        "date":    now,
-        "day":     day,
-        "post_id": post_id,
-        "title":   article["title"],
+        "date":     now,
+        "card_day": card_day,
+        "japanese": japanese,
+        "post_id":  post_id,
+        "title":    article["title"],
     })
-    progress["next_day"] = day + 1
     save_progress(progress)
 
-    print(f"[Day {day}] 完了。次回は Day {day + 1} を投稿します。", flush=True)
+    print(f"[Card Day {card_day}] 完了。", flush=True)
 
 
 if __name__ == "__main__":
