@@ -2,7 +2,7 @@
 // 選択中の月の支出を月〜日の7曜日に分けて集計し、
 // どの曜日に使いがちかを一目で確認できるカード
 
-import { useMemo } from "react";
+import { useMemo, CSSProperties } from "react";
 import { formatYen } from "../utils/format";
 import {
   STYLE_CARD,
@@ -25,6 +25,17 @@ interface DayOfWeekBreakdownProps {
   // 表示中の月の支出一覧（日付フィルタ済み）
   mTx: TxEntry[];
 }
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 曜日バッジ（丸型）の静的スタイル（background は支出有無・最大曜日で動的切り替え）
+const STYLE_DOW_BADGE_BASE: CSSProperties = {
+  width: 26, height: 26, borderRadius: "50%",
+  display: "flex", alignItems: "center", justifyContent: "center",
+  flexShrink: 0,
+};
+
+// ─────────────────────────────────────────────────────────
 
 // 曜日の定義：getDay() が返す 0=日〜6=土 に対応する日本語ラベル
 // 月曜始まり（月火水木金土日）で表示する
@@ -120,13 +131,10 @@ export default function DayOfWeekBreakdown({ mTx }: DayOfWeekBreakdownProps) {
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
               {/* 曜日バッジ（丸型） */}
               <div style={{
-                width: 26, height: 26,
-                borderRadius: "50%",
+                ...STYLE_DOW_BADGE_BASE,
                 background: r.total > 0
                   ? (isMax ? "rgba(248,113,113,0.15)" : "rgba(255,255,255,0.06)")
                   : "rgba(255,255,255,0.03)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0,
               }}>
                 <span style={{
                   fontSize: 12,

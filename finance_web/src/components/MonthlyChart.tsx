@@ -2,7 +2,7 @@
 // 過去3/6/12ヶ月の収入・支出（変動＋固定）を棒グラフで表示する
 // 右上のボタンで表示期間を切り替えられる
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, CSSProperties } from "react";
 import {
   BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -44,6 +44,18 @@ function CustomTooltip({ active, payload, label }: TooltipProps) {
     </div>
   );
 }
+
+// ── スタイル定数 ──────────────────────────────────────────
+
+// 期間切り替えボタンの静的スタイル（background・border・color・fontWeight は選択状態で動的切り替え）
+const STYLE_MC_RANGE_BTN_BASE: CSSProperties = {
+  borderRadius: 6, fontSize: 12,
+  padding: "3px 9px", cursor: "pointer",
+  fontFamily: "inherit",
+  transition: "background 0.15s, border-color 0.15s, color 0.15s, font-weight 0.15s",
+};
+
+// ─────────────────────────────────────────────────────────
 
 // 表示期間の選択肢（ヶ月）
 const RANGE_OPTIONS = [3, 6, 12] as const;
@@ -102,16 +114,11 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
               key={r}
               onClick={() => setRange(r)}
               style={{
+                ...STYLE_MC_RANGE_BTN_BASE,
                 background: range === r ? "rgba(34,211,238,0.15)" : "rgba(255,255,255,0.04)",
                 border: `1px solid ${range === r ? "rgba(34,211,238,0.4)" : "rgba(255,255,255,0.1)"}`,
-                borderRadius: 6,
                 color: range === r ? "#22d3ee" : COLOR_TEXT_HINT,
-                fontSize: 12,
                 fontWeight: range === r ? 700 : 400,
-                padding: "3px 9px",
-                cursor: "pointer",
-                fontFamily: "inherit",
-                transition: "background 0.15s, border-color 0.15s, color 0.15s, font-weight 0.15s",
               }}
             >
               {r}ヶ月
