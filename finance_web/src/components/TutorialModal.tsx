@@ -92,10 +92,18 @@ interface TutorialModalProps {
 export default function TutorialModal({ open, onClose }: TutorialModalProps) {
   // 現在表示中のページ番号（0〜5）
   const [page, setPage] = useState(0);
+  // 直前の open 状態を覚えておく変数（「閉じている→開いた」の切り替わりを見分けるため）
+  const [wasOpen, setWasOpen] = useState(open);
 
-  // 閉じる時にページを0に戻す（useEffect不要のパターン）
+  // open が「閉じている→開いた」に変わった瞬間だけ、最初のページ(0)に戻す
+  // レンダー中に前回の値と比べて直す方法。useEffect より無駄な再描画が少なく React 公式も推奨している
+  if (open !== wasOpen) {
+    setWasOpen(open);          // 今の open 状態を覚え直す
+    if (open) setPage(0);      // 開いた時だけページを先頭に戻す
+  }
+
+  // 閉じる時に呼ぶ関数（✕ボタン・はじめるボタンから使う）
   function handleClose() {
-    setPage(0);
     onClose();
   }
 
