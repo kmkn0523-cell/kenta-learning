@@ -815,7 +815,10 @@ def note_promo_main():
 
 if __name__ == "__main__":
     import sys
-    if "--paid-note-promo" in sys.argv:
+    if "--bonus" in sys.argv:
+        # ボーナス投稿モード（通常4枠とは完全独立・A/Bに触れない）
+        bonus_main()
+    elif "--paid-note-promo" in sys.argv:
         paid_note_promo_main()
     elif "--note-promo" in sys.argv:
         note_promo_main()
