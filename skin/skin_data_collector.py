@@ -102,11 +102,41 @@ def calculate_engagement_rate(likes, comments, shares, views):
     return round(rate, 2)
 
 
+def match_day_and_type(posts_data, post_text):
+    """投稿テキストを posts_data の投稿パターンと照合し (Day番号, テーマ, 朝夜) を返す純関数。
+    threads_a と threads_b の両方を走査する（旧 threads キーは存在しないため全件スキップしていたバグの修正）。
+    一致しなければ (None, None, None) を返す。
+    """
+    # threads_a と threads_b を1つのリストに連結して両方走査する
+    all_threads = posts_data.get("threads_a", []) + posts_data.get("threads_b", [])
+
+    # 比較対象テキストの最初の50文字を取り出す（正確な比較用）
+    post_text_normalized = post_text[:50].strip()
+
+    # 各投稿パターンを順番にチェックする
+    for thread_info in all_threads:
+        day_num = thread_info.get("id")            # このパターンのDay番号
+        theme_name = thread_info.get("theme", "")  # このパターンのテーマ名
+        post_texts = thread_info.get("posts", [])  # このパターンの投稿文リスト
+
+        for index, stored_text in enumerate(post_texts):
+            # 保存テキストの最初の50文字を取り出す
+            stored_text_normalized = stored_text[:50].strip()
+
+            # 最初の50文字が完全一致したら、その投稿に確定する
+            if post_text_normalized == stored_text_normalized:
+                # 投稿位置で朝夜を判定する（index 0,1 = 朝 / それ以降 = 夜）
+                post_type = "morning" if index <= 1 else "evening"
+                return (day_num, theme_name, post_type)
+
+    # どのパターンにも一致しなかった場合
+    return (None, None, None)
+
+
 def identify_day_and_type(post_text):
     """
     投稿テキストをskin_threads_posts.jsonの投稿パターンと照合して
-    Day番号とテーマを特定する関数
-    正確なテキストマッチングで朝夜を判定する
+    Day番号とテーマを特定する関数（ファイル読み込み担当・照合は match_day_and_type に委譲）
     """
 
     try:
@@ -114,32 +144,8 @@ def identify_day_and_type(post_text):
         with open(POSTS_FILE, "r", encoding="utf-8") as f:
             posts_data = json.load(f)
 
-        # threadsリストの各要素をチェックする
-        for thread_info in posts_data.get("threads", []):
-            day_num = thread_info.get("id")
-            theme_name = thread_info.get("theme", "")
-
-            # このパターンの投稿文リストを取得する
-            post_texts = thread_info.get("posts", [])
-
-            # 投稿テキストの最初の50文字を取得する（正確な比較用）
-            post_text_normalized = post_text[:50].strip()
-
-            for index, stored_text in enumerate(post_texts):
-                # 保存されたテキストの最初の50文字を取得する
-                stored_text_normalized = stored_text[:50].strip()
-
-                # 最初の50文字が完全に一致するかチェック
-                if post_text_normalized == stored_text_normalized:
-                    # テキスト位置から朝夜を判定する
-                    # 最初の投稿（index 0）= 朝、2番目の投稿（index 1）= 朝、3番目（index 2）= 朝
-                    # ※ 実際のデータで朝夜の判定ロジックが必要な場合は調整が必要
-                    post_type = "morning" if index <= 1 else "evening"
-
-                    return (day_num, theme_name, post_type)
-
-        # マッチしなかった場合はNoneを返す
-        return (None, None, None)
+        # 読み込んだデータを純関数に渡して照合する
+        return match_day_and_type(posts_data, post_text)
 
     except FileNotFoundError:
         print(f"⚠️  警告: {POSTS_FILE}が見つかりません")
