@@ -6,7 +6,7 @@ from pathlib import Path
 # skin/ 配下を import path に追加する
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from skin_data_collector import match_day_and_type
+from skin_data_collector import match_day_and_type, build_fetch_params
 
 
 def test_match_day_and_type_finds_post_in_threads_a():
@@ -41,3 +41,17 @@ def test_match_day_and_type_returns_none_when_no_match():
     }
     result = match_day_and_type(posts_data, "存在しないテキスト")
     assert result == (None, None, None)
+
+
+def test_build_fetch_params_includes_limit_100():
+    # 取得件数の上限100が params に含まれることを確認（過去分の取りこぼし防止）
+    params = build_fetch_params()
+    assert params["limit"] == 100
+
+
+def test_build_fetch_params_includes_required_fields():
+    # 既存の fields と access_token が欠けていないことを確認
+    params = build_fetch_params()
+    assert "fields" in params
+    assert "access_token" in params
+    assert "insights" in params["fields"]

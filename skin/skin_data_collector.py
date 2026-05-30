@@ -47,10 +47,7 @@ def fetch_threads_data():
         api_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads"
 
         # APIに送るパラメータ（取得したいデータフィールドを指定）
-        params = {
-            "fields": "id,text,timestamp,insights.metric(likes,replies,shares,views)",
-            "access_token": THREADS_ACCESS_TOKEN
-        }
+        params = build_fetch_params()
 
         # APIにリクエストを送る（タイムアウト設定あり）
         response = requests.get(api_url, params=params, timeout=API_TIMEOUT)
@@ -82,6 +79,22 @@ def fetch_threads_data():
     except json.JSONDecodeError:
         print("❌ エラー: APIレスポンスのJSON解析に失敗しました")
         return []
+
+
+def build_fetch_params():
+    """
+    Threads APIへ渡すリクエストパラメータを組み立てる純関数。
+    limit=100 を付けて過去分の取りこぼしを防ぐ（API上限は100）。
+    """
+    # APIに要求するパラメータ一式を辞書で返す
+    return {
+        # 取得したいフィールド（既存と同じ。投稿ID・本文・日時・反応指標）
+        "fields": "id,text,timestamp,insights.metric(likes,replies,shares,views)",
+        # 認証用のアクセストークン
+        "access_token": THREADS_ACCESS_TOKEN,
+        # 1ページあたりの取得件数（API上限の100。デフォルト25だと過去分が届かない）
+        "limit": 100,
+    }
 
 
 def calculate_engagement_rate(likes, comments, shares, views):
