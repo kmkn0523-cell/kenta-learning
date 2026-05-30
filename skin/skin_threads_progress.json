@@ -1,5 +1,5 @@
 {
-  "daily_index": 202,
+  "daily_index": 203,
   "launch_index": 0,
   "history": [
     {
@@ -4080,6 +4080,13 @@
       "theme_id": 94,
       "variant": "B",
       "post_id": "18115590751794946"
+    },
+    {
+      "date": "2026/05/30 21:00",
+      "theme": "肌に良いサプリの選び方",
+      "theme_id": 95,
+      "variant": "B",
+      "post_id": "17896656279463671"
     }
   ],
   "ab_next": "A",
@@ -4119,7 +4126,7 @@
     "92": "A",
     "93": "A",
     "94": "A",
-    "95": "B",
+    "95": "A",
     "96": "B",
     "97": "B",
     "98": "B",
@@ -4403,7 +4410,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "96": {
       "a_score": 0.0,
@@ -4844,7 +4851,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-30T19:01:10.259412+00:00",
+  "last_posted_at": "2026-05-30T21:01:11.140582+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
