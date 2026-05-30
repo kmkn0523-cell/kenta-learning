@@ -1,0 +1,77 @@
+# skin_threads_bonus.yml
+# GitHub Actionsのワークフローファイル
+# 1日1回 JST 20:00 に起動し、前日の反応が跳ねていればボーナス投稿を1本だけ撃つ
+
+name: skin Threads ボーナス投稿
+
+on:
+  schedule:
+    # JST 20:00 = UTC 11:00（通常4枠 18:30/21:30 の隙間。前後90分ずつ空く位置）
+    - cron: '0 11 * * *'
+  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
+
+# 同じグループ名のジョブは同時に1つだけ動く（二重起動・push競合を防ぐ）
+concurrency:
+  group: skin-threads-bonus  # ボーナス専用グループ（投稿系・分析系と競合しない）
+  cancel-in-progress: false  # 実行中のジョブを止めず、後から来たジョブを待たせる
+
+jobs:
+  bonus-post:
+    runs-on: ubuntu-latest  # GitHubのサーバーで動かす
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Node.js 24を使う（Node.js 20廃止対応）
+    permissions:
+      contents: write  # git pushに必要な書き込み権限
+
+    steps:
+      # Step 1: リポジトリのファイルをダウンロードする
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      # Step 2: Pythonをセットアップする
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step 3: 必要なライブラリをインストールする
+      - name: ライブラリをインストール
+        run: pip install requests
+
+      # Step 4: 進捗ファイルをキャッシュから復元する（bonus_index・last_bonus_date を引き継ぐ）
+      - name: 進捗ファイルをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_threads_progress.json
+          key: skin-threads-progress-${{ github.run_id }}
+          restore-keys: |
+            skin-threads-progress-
+
+      # Step 5: ボーナス投稿を判定して撃つ
+      - name: ボーナス投稿
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: cd skin && python skin_threads_action.py --bonus
+
+      # Step 6: 更新した進捗ファイルをキャッシュに保存する
+      - name: 進捗ファイルをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_threads_progress.json
+          key: skin-threads-progress-${{ github.run_id }}
+
+      # Step 7: 進捗ファイルをGitにコミット＆プッシュする
+      - name: 進捗ファイルをGitにコミット＆プッシュ
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add skin/skin_threads_progress.json
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: skin Threadsボーナス進捗更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
