@@ -1,5 +1,5 @@
 {
-  "daily_index": 197,
+  "daily_index": 198,
   "launch_index": 0,
   "history": [
     {
@@ -4045,6 +4045,13 @@
       "theme_id": 89,
       "variant": "B",
       "post_id": "18021219926838477"
+    },
+    {
+      "date": "2026/05/30 10:59",
+      "theme": "肌荒れとメンタルの関係",
+      "theme_id": 90,
+      "variant": "B",
+      "post_id": "17939958936218258"
     }
   ],
   "ab_next": "A",
@@ -4079,7 +4086,7 @@
     "87": "A",
     "88": "A",
     "89": "A",
-    "90": "B",
+    "90": "A",
     "91": "B",
     "92": "B",
     "93": "B",
@@ -4338,7 +4345,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "91": {
       "a_score": 0.0,
@@ -4809,7 +4816,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-30T09:01:12.578194+00:00",
+  "last_posted_at": "2026-05-30T11:00:05.191634+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
