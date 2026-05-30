@@ -68,7 +68,7 @@ Phase 0 完了の確認:
 should_fire_bonus(posts_history, today) -> bool
   1. JST前日の投稿を posts_history から抽出（posted_at の UTC を JST に変換して日付一致）
   2. 前日の投稿が無ければ False
-  3. 直近14日の投稿から engagement_rate の平均を出す
+  3. 直近14日の全投稿から engagement_rate の平均を出す（views=0・rate=0 のレコードも母集団に含める）
   4. 前日の投稿のうち、3条件すべてを満たすものが1本でもあれば True（any 判定）
   5. それ以外は False（安全側 = 撃たない）
 ```
