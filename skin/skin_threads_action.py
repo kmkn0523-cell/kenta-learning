@@ -378,6 +378,61 @@ def should_fire_bonus(posts_history, today):
     return False                                # どれも届かなければ撃たない
 
 
+def load_bonus_posts():
+    """ボーナス専用の弾プール（skin_threads_bonus_posts.json）を読み込む。"""
+    if not os.path.exists(BONUS_POSTS_FILE):
+        return []                               # ファイルが無ければ弾なし扱い
+    with open(BONUS_POSTS_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data.get("bonus_posts", [])          # 弾のリストを取り出す
+
+
+def bonus_main():
+    """ボーナス投稿モードの本体（通常4枠とは完全独立・A/Bに触れない）。"""
+    # 今のJST日付を出す（UTC+9時間）
+    now_jst = datetime.now(timezone.utc) + timedelta(hours=9)
+    today_jst = now_jst.date()
+    today_str = today_jst.isoformat()           # "YYYY-MM-DD" の文字列
+    progress = load_progress()                  # 進捗を読む
+    # 今日すでにボーナスを撃っていたら二重投稿防止で終了
+    if progress.get("last_bonus_date") == today_str:
+        print(f"⏭️  本日({today_str})は既にボーナス投稿済みのため終了します")
+        return
+    # 反応データファイルが無ければ判定できないのでスキップ
+    if not os.path.exists(BONUS_ANALYTICS_FILE):
+        print(f"⚠️  {BONUS_ANALYTICS_FILE} が見つかりません。ボーナス判定をスキップします")
+        return
+    with open(BONUS_ANALYTICS_FILE, "r", encoding="utf-8") as f:
+        analytics = json.load(f)
+    posts_history = analytics.get("posts_history", [])  # 反応データ履歴
+    # 発火条件を満たさなければ撃たずに終了（安全側）
+    if not should_fire_bonus(posts_history, today_jst):
+        print(f"📊 本日({today_str})はボーナス発火条件を満たしません。投稿せず終了します")
+        return
+    bonus_posts = load_bonus_posts()            # 弾を読み込む
+    if not bonus_posts:
+        print("⚠️  ボーナス弾プールが空です。投稿せず終了します（弾の補充が必要）")
+        return
+    bonus_index = progress.get("bonus_index", 0)  # 次に使う弾の番号
+    if bonus_index >= len(bonus_posts):
+        print(f"⚠️  ボーナス弾を撃ち尽くしました(bonus_index={bonus_index})。補充するまでスキップします")
+        return
+    chosen = bonus_posts[bonus_index]           # 今回撃つ弾
+    post_text = chosen.get("text", "")
+    if not post_text:
+        print(f"⚠️  bonus_index={bonus_index} の弾にテキストがありません。スキップします")
+        return
+    full_text = post_text + HASHTAGS            # 本文＋ハッシュタグ
+    print(f"🚀 ボーナス投稿を実行します（bonus_index={bonus_index}）")
+    post_id = post_to_threads(full_text)        # Threadsへ投稿
+    print(f"✅ ボーナス投稿完了: post_id={post_id}")
+    # 進捗の専用キーだけ更新（last_posted_at は絶対に触らない）
+    progress["bonus_index"] = bonus_index + 1
+    progress["last_bonus_date"] = today_str
+    save_progress(progress)                     # last_posted_at を渡さず保存
+    print(f"💾 進捗を更新しました: bonus_index={bonus_index + 1}, last_bonus_date={today_str}")
+
+
 def get_last_post_time():
     """
     Threads APIで自分の最新投稿の時刻を取得する
