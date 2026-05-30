@@ -1,5 +1,5 @@
 {
-  "daily_index": 203,
+  "daily_index": 204,
   "launch_index": 0,
   "history": [
     {
@@ -4087,6 +4087,13 @@
       "theme_id": 95,
       "variant": "B",
       "post_id": "17896656279463671"
+    },
+    {
+      "date": "2026/05/30 23:00",
+      "theme": "紫外線ケアの年中習慣",
+      "theme_id": 96,
+      "variant": "B",
+      "post_id": "18586860073004975"
     }
   ],
   "ab_next": "A",
@@ -4127,7 +4134,7 @@
     "93": "A",
     "94": "A",
     "95": "A",
-    "96": "B",
+    "96": "A",
     "97": "B",
     "98": "B",
     "99": "B",
@@ -4416,7 +4423,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "97": {
       "a_score": 0.0,
@@ -4851,7 +4858,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-30T21:01:11.140582+00:00",
+  "last_posted_at": "2026-05-30T23:01:16.433315+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
