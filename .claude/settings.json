@@ -32,7 +32,7 @@
       "/mnt/c/Users/kenta kamijyo"
     ]
   },
-  "model": "claude-opus-4-8",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
