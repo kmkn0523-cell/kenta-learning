@@ -327,6 +327,57 @@ def save_progress(progress, last_posted_at=None):
         json.dump(progress, f, ensure_ascii=False, indent=2)
 
 
+def _parse_posted_at_to_jst_date(posted_at):
+    """UTCの投稿時刻文字列（例 "2026-05-15T04:01:07+0000"）をJSTの日付に変換する。"""
+    # Threads APIは "+0000" 形式で返すが、fromisoformat は "+00:00" を求めるので直す
+    normalized = posted_at.replace("+0000", "+00:00")
+    dt_utc = datetime.fromisoformat(normalized)  # UTCの日時に変換
+    dt_jst = dt_utc + timedelta(hours=9)          # 日本時間は +9時間
+    return dt_jst.date()                          # 日付の部分だけ取り出す
+
+
+def should_fire_bonus(posts_history, today):
+    """ボーナス投稿を撃つべきか判定する純関数。
+
+    JST前日の投稿のうち、3条件（views/likes/相対engagement_rate）を
+    すべて満たすものが1本でもあれば True。それ以外は False（安全側＝撃たない）。
+    """
+    yesterday = today - timedelta(days=1)  # 判定対象は「JST前日」
+    dated_posts = []                       # (JST日付, 投稿) のペアを貯める箱
+    for post in posts_history:
+        posted_at = post.get("posted_at", "")  # 投稿時刻の文字列
+        if not posted_at:
+            continue                            # 時刻が無い投稿は無視
+        try:
+            jst_date = _parse_posted_at_to_jst_date(posted_at)  # JST日付へ変換
+        except (ValueError, TypeError):
+            continue                            # 変換できない壊れた値は無視
+        dated_posts.append((jst_date, post))
+    # 前日に投稿したものだけ抜き出す
+    yesterday_posts = [post for (jst_date, post) in dated_posts if jst_date == yesterday]
+    if not yesterday_posts:
+        return False                            # 前日に投稿が無ければ撃たない
+    # 直近14日の engagement_rate を集めて平均を出す（views=0/rate=0も母集団に含める）
+    window_start = today - timedelta(days=BONUS_LOOKBACK_DAYS)
+    recent_rates = [
+        post.get("engagement_rate", 0)
+        for (jst_date, post) in dated_posts
+        if window_start <= jst_date <= today
+    ]
+    if not recent_rates:
+        return False                            # 直近データが無ければ撃たない
+    average_rate = sum(recent_rates) / len(recent_rates)      # 直近平均
+    relative_threshold = average_rate * BONUS_RATE_MULTIPLIER  # 相対閾値
+    # 前日の投稿で3条件すべて満たすものが1本でもあれば発火
+    for post in yesterday_posts:
+        views = post.get("views", 0)
+        likes = post.get("likes", 0)
+        rate = post.get("engagement_rate", 0)
+        if views >= BONUS_MIN_VIEWS and likes >= BONUS_MIN_LIKES and rate >= relative_threshold:
+            return True
+    return False                                # どれも届かなければ撃たない
+
+
 def get_last_post_time():
     """
     Threads APIで自分の最新投稿の時刻を取得する
