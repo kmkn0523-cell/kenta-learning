@@ -1,5 +1,5 @@
 {
-  "daily_index": 199,
+  "daily_index": 200,
   "launch_index": 0,
   "history": [
     {
@@ -4059,6 +4059,13 @@
       "theme_id": 91,
       "variant": "B",
       "post_id": "18100638578130170"
+    },
+    {
+      "date": "2026/05/30 15:00",
+      "theme": "手荒れと腸の関係",
+      "theme_id": 92,
+      "variant": "B",
+      "post_id": "18085132898415630"
     }
   ],
   "ab_next": "A",
@@ -4095,7 +4102,7 @@
     "89": "A",
     "90": "A",
     "91": "A",
-    "92": "B",
+    "92": "A",
     "93": "B",
     "94": "B",
     "95": "B",
@@ -4364,7 +4371,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "93": {
       "a_score": 0.0,
@@ -4823,7 +4830,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-30T13:01:17.144359+00:00",
+  "last_posted_at": "2026-05-30T15:01:10.388612+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
