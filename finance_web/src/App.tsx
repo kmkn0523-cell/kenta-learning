@@ -85,6 +85,7 @@ const ExpenseView = lazy(() => import("./views/ExpenseView"));
 const LoanView = lazy(() => import("./views/LoanView"));
 const SettingsView = lazy(() => import("./views/SettingsView"));
 const SummaryView = lazy(() => import("./views/SummaryView"));
+const SearchView = lazy(() => import("./views/SearchView"));
 
 // 初期値：何もデータが無い時の空配列（usePersist の第2引数に渡す）
 const INIT_FX = [];
@@ -485,6 +486,12 @@ function AppInner(){
         delItem={delItem}
         showT={showT}
       />}
+      {tab==="search"&&<SearchView
+        transactions={transactions}
+        incomes={incomes}
+        accounts={accounts}
+        categoryConfig={categoryConfig}
+      />}
       {tab==="set"&&<SettingsView
         categoryConfig={categoryConfig}
         setCategoryConfig={setCategoryConfig}
@@ -504,7 +511,7 @@ function AppInner(){
       </Suspense>
     </div>
     <nav style={STYLE_BOTTOM_NAV}>
-      {[["dash","📊","概要"],["sum","🧾","サマリー"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["set","⚙️","設定"]].map(([key,icon,label])=>(
+      {[["dash","📊","概要"],["sum","🧾","サマリー"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["search","🔍","検索"],["set","⚙️","設定"]].map(([key,icon,label])=>(
         <button type="button" key={key} onClick={()=>setTab(key)} style={{...STYLE_NAV_BTN_BASE,color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT}}>
           {tab===key&&<div style={STYLE_NAV_INDICATOR}/>}
           <span style={{fontSize:22,lineHeight:1,transform:tab===key?"scale(1.12)":"scale(1)",transition:"transform 0.15s ease"}}>{icon}</span>
