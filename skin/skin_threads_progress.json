@@ -1,5 +1,5 @@
 {
-  "daily_index": 205,
+  "daily_index": 206,
   "launch_index": 0,
   "history": [
     {
@@ -4101,6 +4101,13 @@
       "theme_id": 97,
       "variant": "B",
       "post_id": "17956998770966032"
+    },
+    {
+      "date": "2026/05/31 03:00",
+      "theme": "更年期と肌荒れ",
+      "theme_id": 98,
+      "variant": "B",
+      "post_id": "18083687177129926"
     }
   ],
   "ab_next": "A",
@@ -4143,7 +4150,7 @@
     "95": "A",
     "96": "A",
     "97": "A",
-    "98": "B",
+    "98": "A",
     "99": "B",
     "100": "B",
     "101": "B",
@@ -4442,7 +4449,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "99": {
       "a_score": 0.0,
@@ -4865,7 +4872,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-31T01:01:10.307517+00:00",
+  "last_posted_at": "2026-05-31T03:01:10.094996+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
