@@ -4136,6 +4136,13 @@
       "theme_id": 102,
       "variant": "B",
       "post_id": "18081309584554931"
+    },
+    {
+      "date": "2026/05/31 12:06",
+      "theme": "note宣伝: 肌荒れを悪化させる食べ物5選と、代わりに食べるべきもの",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18144745441509530"
     }
   ],
   "ab_next": "A",
@@ -4900,9 +4907,9 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-31T11:01:11.093324+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
-  "last_note_promo_date": "2026/05/29",
+  "last_posted_at": "2026-05-31T12:06:45.938306+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
+  "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/05/29"
 }
