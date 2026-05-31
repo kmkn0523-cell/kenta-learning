@@ -1,5 +1,5 @@
 {
-  "daily_index": 213,
+  "daily_index": 214,
   "launch_index": 0,
   "history": [
     {
@@ -4164,6 +4164,13 @@
       "theme_id": 105,
       "variant": "B",
       "post_id": "17939785824227849"
+    },
+    {
+      "date": "2026/05/31 20:00",
+      "theme": "AB_B_乾燥なのにニキビ",
+      "theme_id": 106,
+      "variant": "B",
+      "post_id": "18155729254417155"
     }
   ],
   "ab_next": "A",
@@ -4214,7 +4221,7 @@
     "103": "A",
     "104": "A",
     "105": "A",
-    "106": "B",
+    "106": "A",
     "107": "B",
     "108": "B",
     "1": "B",
@@ -4553,7 +4560,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "107": {
       "a_score": 0.0,
@@ -4928,7 +4935,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-31T18:01:06.731428+00:00",
+  "last_posted_at": "2026-05-31T20:01:11.306731+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
