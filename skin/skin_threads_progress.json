@@ -1,5 +1,5 @@
 {
-  "daily_index": 215,
+  "daily_index": 216,
   "launch_index": 0,
   "history": [
     {
@@ -4178,6 +4178,13 @@
       "theme_id": 107,
       "variant": "B",
       "post_id": "18075105158300651"
+    },
+    {
+      "date": "2026/05/31 23:39",
+      "theme": "AB_B_引き算スキンケア",
+      "theme_id": 108,
+      "variant": "B",
+      "post_id": "17919995454362779"
     }
   ],
   "ab_next": "A",
@@ -4230,7 +4237,7 @@
     "105": "A",
     "106": "A",
     "107": "A",
-    "108": "B",
+    "108": "A",
     "1": "B",
     "2": "B",
     "3": "B",
@@ -4579,7 +4586,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "1": {
       "a_score": 0.0,
@@ -4942,7 +4949,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-31T22:01:12.440259+00:00",
+  "last_posted_at": "2026-05-31T23:39:55.262947+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
