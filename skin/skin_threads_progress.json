@@ -1,5 +1,5 @@
 {
-  "daily_index": 204,
+  "daily_index": 205,
   "launch_index": 0,
   "history": [
     {
@@ -4094,6 +4094,13 @@
       "theme_id": 96,
       "variant": "B",
       "post_id": "18586860073004975"
+    },
+    {
+      "date": "2026/05/31 01:00",
+      "theme": "水の飲み方と肌",
+      "theme_id": 97,
+      "variant": "B",
+      "post_id": "17956998770966032"
     }
   ],
   "ab_next": "A",
@@ -4135,7 +4142,7 @@
     "94": "A",
     "95": "A",
     "96": "A",
-    "97": "B",
+    "97": "A",
     "98": "B",
     "99": "B",
     "100": "B",
@@ -4429,7 +4436,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "98": {
       "a_score": 0.0,
@@ -4858,7 +4865,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-30T23:01:16.433315+00:00",
+  "last_posted_at": "2026-05-31T01:01:10.307517+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
