@@ -1,5 +1,5 @@
 {
-  "daily_index": 209,
+  "daily_index": 210,
   "launch_index": 0,
   "history": [
     {
@@ -4129,6 +4129,13 @@
       "theme_id": 101,
       "variant": "B",
       "post_id": "18081495365545865"
+    },
+    {
+      "date": "2026/05/31 11:00",
+      "theme": "AB_B_睡眠と肌",
+      "theme_id": 102,
+      "variant": "B",
+      "post_id": "18081309584554931"
     }
   ],
   "ab_next": "A",
@@ -4175,7 +4182,7 @@
     "99": "A",
     "100": "A",
     "101": "A",
-    "102": "B",
+    "102": "A",
     "103": "B",
     "104": "B",
     "105": "B",
@@ -4494,7 +4501,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "103": {
       "a_score": 0.0,
@@ -4893,7 +4900,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-05-31T09:01:12.484065+00:00",
+  "last_posted_at": "2026-05-31T11:01:11.093324+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/05/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
