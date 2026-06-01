@@ -1,5 +1,5 @@
 {
-  "daily_index": 219,
+  "daily_index": 220,
   "launch_index": 0,
   "history": [
     {
@@ -4206,6 +4206,13 @@
       "theme_id": 3,
       "variant": "B",
       "post_id": "18374722429164747"
+    },
+    {
+      "date": "2026/06/01 08:00",
+      "theme": "洗顔のやりすぎ",
+      "theme_id": 4,
+      "variant": "B",
+      "post_id": "18535507921074928"
     }
   ],
   "ab_next": "A",
@@ -4262,7 +4269,7 @@
     "1": "A",
     "2": "A",
     "3": "A",
-    "4": "B",
+    "4": "A",
     "5": "B",
     "6": "B",
     "7": "B",
@@ -4631,7 +4638,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "5": {
       "a_score": 0.0,
@@ -4970,7 +4977,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-01T06:01:14.084043+00:00",
+  "last_posted_at": "2026-06-01T08:01:16.761342+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
