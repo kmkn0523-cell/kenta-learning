@@ -1,5 +1,5 @@
 {
-  "next_day": 17,
+  "next_day": 18,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -96,6 +96,12 @@
       "day": 16,
       "post_id": 200043784,
       "title": "千里の道も一歩から — A thousand miles begins with one step."
+    },
+    {
+      "date": "2026/06/01 19:52",
+      "day": 17,
+      "post_id": 200177042,
+      "title": "出る杭は打たれる — The nail that sticks up gets hammered."
     }
   ]
 }
