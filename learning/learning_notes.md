@@ -31,6 +31,7 @@
 | 4/25 | number_game.py | 数当てゲーム（難易度選択） | 範囲指定、エラー処理、通算成績 |
 | 4/25 | today_weekday.py | 今日の曜日表示 | CLAUDE.mdの効果体感、日時処理 |
 | 4/27 | ronin_threads_action.py | @RoninWords用Threads自動投稿（GitHub Actions版） | API認証、環境変数、JSONローテーション、共通タグ自動付与 |
+| 6/2 | skin_reply_hunter.py | skinのリプ巡回ツール（探す→書く→記録を1コマンドに・半自動／Threads APIは使わない） | TDD（テスト先行）、純粋関数とファイル操作の分離、キーワードで話題判定、テンプレ共通化（skin_comment_templates.py） |
 
 ---
 
