@@ -1,5 +1,5 @@
 {
-  "daily_index": 226,
+  "daily_index": 227,
   "launch_index": 0,
   "history": [
     {
@@ -4255,6 +4255,13 @@
       "theme_id": 10,
       "variant": "B",
       "post_id": "17890665708507077"
+    },
+    {
+      "date": "2026/06/01 22:00",
+      "theme": "お金をかけない美肌",
+      "theme_id": 11,
+      "variant": "B",
+      "post_id": "17882324034588619"
     }
   ],
   "ab_next": "A",
@@ -4318,7 +4325,7 @@
     "8": "A",
     "9": "A",
     "10": "A",
-    "11": "B",
+    "11": "A",
     "12": "B",
     "13": "B",
     "14": "B",
@@ -4722,7 +4729,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "12": {
       "a_score": 0.0,
@@ -5019,7 +5026,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-01T20:01:13.265143+00:00",
+  "last_posted_at": "2026-06-01T22:01:16.867017+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
