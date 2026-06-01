@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-31T08:53:11.102547",
+  "last_updated": "2026-06-01T11:45:25.197726",
   "posts_history": [
     {
       "day": 28,
@@ -1276,6 +1276,61 @@
       "shares": 0,
       "views": 40,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 5,
+      "type": "睡眠と肌",
+      "post_id": "18098357894149737",
+      "posted_at": "2026-06-01T10:01:15+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 43,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 4,
+      "type": "洗顔のやりすぎ",
+      "post_id": "18535507921074928",
+      "posted_at": "2026-06-01T08:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 46,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 3,
+      "type": "砂糖とニキビ",
+      "post_id": "18374722429164747",
+      "posted_at": "2026-06-01T06:01:11+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 22,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 2,
+      "type": "腸と肌のつながり",
+      "post_id": "18036077546799544",
+      "posted_at": "2026-06-01T04:01:12+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 25,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 1,
+      "type": "問いかけ型",
+      "post_id": "18123192571656235",
+      "posted_at": "2026-06-01T02:01:12+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 24,
+      "engagement_rate": 4.17
     }
   ]
 }
