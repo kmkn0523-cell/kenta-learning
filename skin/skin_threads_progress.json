@@ -1,5 +1,5 @@
 {
-  "daily_index": 224,
+  "daily_index": 225,
   "launch_index": 0,
   "history": [
     {
@@ -4241,6 +4241,13 @@
       "theme_id": 8,
       "variant": "B",
       "post_id": "17911969509404671"
+    },
+    {
+      "date": "2026/06/01 18:00",
+      "theme": "やめた習慣",
+      "theme_id": 9,
+      "variant": "B",
+      "post_id": "17979629946040507"
     }
   ],
   "ab_next": "A",
@@ -4302,7 +4309,7 @@
     "6": "A",
     "7": "A",
     "8": "A",
-    "9": "B",
+    "9": "A",
     "10": "B",
     "11": "B",
     "12": "B",
@@ -4696,7 +4703,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "10": {
       "a_score": 0.0,
@@ -5005,7 +5012,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-01T15:42:01.899069+00:00",
+  "last_posted_at": "2026-06-01T18:01:14.656146+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
