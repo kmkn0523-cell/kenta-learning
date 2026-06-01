@@ -1,5 +1,5 @@
 {
-  "daily_index": 227,
+  "daily_index": 228,
   "launch_index": 0,
   "history": [
     {
@@ -4262,6 +4262,13 @@
       "theme_id": 11,
       "variant": "B",
       "post_id": "17882324034588619"
+    },
+    {
+      "date": "2026/06/01 23:52",
+      "theme": "タイプ別診断",
+      "theme_id": 12,
+      "variant": "B",
+      "post_id": "18106290148986598"
     }
   ],
   "ab_next": "A",
@@ -4326,7 +4333,7 @@
     "9": "A",
     "10": "A",
     "11": "A",
-    "12": "B",
+    "12": "A",
     "13": "B",
     "14": "B",
     "15": "B",
@@ -4735,7 +4742,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "13": {
       "a_score": 0.0,
@@ -5026,7 +5033,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-01T22:01:16.867017+00:00",
+  "last_posted_at": "2026-06-01T23:53:29.573392+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
