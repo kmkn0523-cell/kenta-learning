@@ -1,5 +1,5 @@
 {
-  "daily_index": 218,
+  "daily_index": 219,
   "launch_index": 0,
   "history": [
     {
@@ -4199,6 +4199,13 @@
       "theme_id": 2,
       "variant": "B",
       "post_id": "18036077546799544"
+    },
+    {
+      "date": "2026/06/01 06:00",
+      "theme": "砂糖とニキビ",
+      "theme_id": 3,
+      "variant": "B",
+      "post_id": "18374722429164747"
     }
   ],
   "ab_next": "A",
@@ -4254,7 +4261,7 @@
     "108": "A",
     "1": "A",
     "2": "A",
-    "3": "B",
+    "3": "A",
     "4": "B",
     "5": "B",
     "6": "B",
@@ -4618,7 +4625,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "4": {
       "a_score": 0.0,
@@ -4963,7 +4970,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-01T04:01:14.267338+00:00",
+  "last_posted_at": "2026-06-01T06:01:14.084043+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
