@@ -3,7 +3,13 @@
 # 使い方: python3 skin/skin_comment_helper.py
 
 import random  # ランダムにコメントを並べ替えるための道具
-from skin.skin_comment_templates import COMMENT_TEMPLATES  # テンプレートは共通モジュールから読み込む
+
+# テンプレ集は共通モジュールから読み込む。
+# 直接実行（python3 skin/skin_comment_helper.py）でも、リポジトリ直下からでも動くように2通り試す
+try:
+    from skin_comment_templates import COMMENT_TEMPLATES  # skin/ が import パスにある時（直接実行・pytest）
+except ImportError:
+    from skin.skin_comment_templates import COMMENT_TEMPLATES  # リポジトリ直下から動かす時
 
 # -----------------------------------------------
 # メニュー表示
