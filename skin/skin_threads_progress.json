@@ -1,5 +1,5 @@
 {
-  "daily_index": 223,
+  "daily_index": 224,
   "launch_index": 0,
   "history": [
     {
@@ -4234,6 +4234,13 @@
       "theme_id": 7,
       "variant": "B",
       "post_id": "18111528442921146"
+    },
+    {
+      "date": "2026/06/01 15:41",
+      "theme": "失敗談型",
+      "theme_id": 8,
+      "variant": "B",
+      "post_id": "17911969509404671"
     }
   ],
   "ab_next": "A",
@@ -4294,7 +4301,7 @@
     "5": "A",
     "6": "A",
     "7": "A",
-    "8": "B",
+    "8": "A",
     "9": "B",
     "10": "B",
     "11": "B",
@@ -4683,7 +4690,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "9": {
       "a_score": 0.0,
@@ -4998,7 +5005,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-01T14:01:19.576147+00:00",
+  "last_posted_at": "2026-06-01T15:42:01.899069+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
