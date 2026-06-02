@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-01T11:45:25.197726",
+  "last_updated": "2026-06-02T10:45:01.198389",
   "posts_history": [
     {
       "day": 28,
@@ -1331,6 +1331,138 @@
       "shares": 0,
       "views": 24,
       "engagement_rate": 4.17
+    },
+    {
+      "day": 17,
+      "type": "鉄分不足と肌",
+      "post_id": "17953821339148706",
+      "posted_at": "2026-06-02T10:01:15+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 15,
+      "engagement_rate": 6.67
+    },
+    {
+      "day": 16,
+      "type": "紫外線と肌",
+      "post_id": "17899643793449749",
+      "posted_at": "2026-06-02T08:01:15+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 37,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 15,
+      "type": "ビタミンCと肌",
+      "post_id": "18096191845933748",
+      "posted_at": "2026-06-02T06:01:10+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 7,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 14,
+      "type": "亜鉛と皮脂",
+      "post_id": "18076692866642745",
+      "posted_at": "2026-06-02T04:01:11+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 42,
+      "engagement_rate": 2.38
+    },
+    {
+      "day": 13,
+      "type": "水分と肌",
+      "post_id": "18166511824435865",
+      "posted_at": "2026-06-02T02:01:10+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 16,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 12,
+      "type": "タイプ別診断",
+      "post_id": "18106290148986598",
+      "posted_at": "2026-06-01T23:53:26+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 19,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 11,
+      "type": "お金をかけない美肌",
+      "post_id": "17882324034588619",
+      "posted_at": "2026-06-01T22:01:12+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 45,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 10,
+      "type": "腸活食習慣",
+      "post_id": "17890665708507077",
+      "posted_at": "2026-06-01T20:01:10+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 64,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 9,
+      "type": "やめた習慣",
+      "post_id": "17979629946040507",
+      "posted_at": "2026-06-01T18:01:11+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 28,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 8,
+      "type": "失敗談型",
+      "post_id": "17911969509404671",
+      "posted_at": "2026-06-01T15:41:58+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 38,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 7,
+      "type": "ストレスと皮脂",
+      "post_id": "18111528442921146",
+      "posted_at": "2026-06-01T14:01:16+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 26,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 6,
+      "type": "小麦とグルテン",
+      "post_id": "17953240991984028",
+      "posted_at": "2026-06-01T12:01:18+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 32,
+      "engagement_rate": 0.0
     }
   ]
 }
