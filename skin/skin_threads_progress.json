@@ -1,5 +1,5 @@
 {
-  "daily_index": 228,
+  "daily_index": 229,
   "launch_index": 0,
   "history": [
     {
@@ -4269,6 +4269,13 @@
       "theme_id": 12,
       "variant": "B",
       "post_id": "18106290148986598"
+    },
+    {
+      "date": "2026/06/02 02:00",
+      "theme": "水分と肌",
+      "theme_id": 13,
+      "variant": "B",
+      "post_id": "18166511824435865"
     }
   ],
   "ab_next": "A",
@@ -4334,7 +4341,7 @@
     "10": "A",
     "11": "A",
     "12": "A",
-    "13": "B",
+    "13": "A",
     "14": "B",
     "15": "B",
     "16": "B",
@@ -4748,7 +4755,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "14": {
       "a_score": 0.0,
@@ -5033,7 +5040,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-01T23:53:29.573392+00:00",
+  "last_posted_at": "2026-06-02T02:01:13.307773+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
