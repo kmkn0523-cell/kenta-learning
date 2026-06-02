@@ -132,6 +132,7 @@
       }
     ]
   },
+  "enableWorkflows": true,
   "statusLine": {
     "type": "command",
     "command": "bash /home/kenta_kamijyo/.claude/statusline-command.sh",
@@ -166,7 +167,7 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "verbose": false,
-  "autoCompactEnabled": true,
+  "autoCompactEnabled": false,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
