@@ -32,7 +32,6 @@
       "/mnt/c/Users/kenta kamijyo"
     ]
   },
-  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
