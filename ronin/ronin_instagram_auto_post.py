@@ -60,27 +60,21 @@ def save_progress(next_index):
 
 def load_posts():
     """
-    threads_posts.jsonから全投稿データを読み込み、フラットな配列に変換する
-    朝投稿と夜投稿を交互に並べることで120種類の投稿を確保する
-    （例: Day1朝→Day1夜→Day2朝→Day2夜→...→Day60夜）
+    threads_posts.jsonから全投稿データを読み込み、Dayごとに1件の配列に変換する
+    同じDayのmorningとeveningはどちらも同じ格言テーマなので、
+    朝の本文と夜の本文を1つの投稿にまとめる（同じ画像が2回出るのを防ぐ）
+    （例: Day1→Day2→...→Day200）
     """
     try:
         with open(POSTS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
         flat = []
         for post in data["posts"]:
-            # 朝投稿を追加
+            # 1日分を1件にまとめる（morning本文とevening本文の両方を保持）
             flat.append({
                 "day": post["day"],
-                "type": "morning",
-                "content": post["morning"],
-                "hashtags": post.get("hashtags_set_A", [])
-            })
-            # 夜投稿を追加（短めのテキスト）
-            flat.append({
-                "day": post["day"],
-                "type": "evening",
-                "content": post["evening"],
+                "morning": post["morning"],
+                "evening": post["evening"],
                 "hashtags": post.get("hashtags_set_A", [])
             })
         return flat
@@ -183,18 +177,23 @@ def main():
     post = posts[current_index]
     day = post["day"]
 
-    # 投稿テキストを組み立てる（本文 + フォロー誘導 + ハッシュタグ）
+    # 投稿テキストを組み立てる（朝本文 + 区切り線 + 夜本文 + フォロー誘導 + ハッシュタグ）
+    # 同じDayの朝・夜は同じ格言テーマなので、1つの投稿にまとめる
     hashtags = " ".join(post.get("hashtags", []))
-    caption = post["content"] + CTA + "\n\n" + hashtags
+    caption = (
+        post["morning"]            # 朝の本文（末尾にハッシュタグが入っていることが多い）
+        + "\n\n· · ·\n\n"          # 朝と夜を分ける区切り線
+        + post["evening"]          # 夜の本文（短い補足）
+        + CTA                       # フォロー誘導文
+        + "\n\n" + hashtags         # ハッシュタグ
+    )
 
     # 画像URLを組み立てる（投稿のDay番号と画像のDay番号を一致させる）
-    # 同じDayの朝・夜投稿は同じ画像を使う（内容が同じ格言を扱っているため）
     image_num = post["day"]
     image_filename = f"day{image_num:02d}.png"
     image_url = f"{GITHUB_RAW_BASE}/{image_filename}"
 
-    time_label = "朝" if post["type"] == "morning" else "夜"
-    print(f"📅 Day{day:02d} {time_label}投稿を準備中...")
+    print(f"📅 Day{day:02d} 投稿を準備中...")
     print(f"🖼️  画像URL: {image_url}")
     print(f"📝 テキスト（先頭100文字）: {caption[:100]}...")
 
@@ -222,9 +221,8 @@ def main():
             # 同じ投稿を何度もリトライすると「同じ内容が続く」問題が起きるため
             save_progress(current_index + 1)
             next_post = posts[(current_index + 1) % len(posts)]
-            next_label = "朝" if next_post["type"] == "morning" else "夜"
             print("⏭️ InstagramのAPIブロックのためスキップ（進捗は次へ進めます）")
-            print(f"📊 次回: Day{next_post['day']:02d} {next_label}投稿")
+            print(f"📊 次回: Day{next_post['day']:02d} 投稿")
             sys.exit(0)  # 正常終了（GitHub Actionsを赤くしない）
         print(f"❌ 投稿公開失敗: {publish_result}")
         sys.exit(1)  # 失敗を GitHub Actions に伝える
@@ -234,8 +232,7 @@ def main():
     # 次回の進捗を保存
     save_progress(current_index + 1)
     next_post = posts[(current_index + 1) % len(posts)]
-    next_label = "朝" if next_post["type"] == "morning" else "夜"
-    print(f"📊 次回: Day{next_post['day']:02d} {next_label}投稿")
+    print(f"📊 次回: Day{next_post['day']:02d} 投稿")
     print("=== 完了 ===")
 
 
