@@ -30,8 +30,8 @@ jobs:
 
       - name: Collect data from Threads API
         env:
-          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-          THREADS_BUSINESS_ACCOUNT_ID_RONIN: ${{ secrets.THREADS_BUSINESS_ACCOUNT_ID_RONIN }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.RONIN_THREADS_ACCESS_TOKEN }}
+          THREADS_BUSINESS_ACCOUNT_ID_RONIN: ${{ secrets.RONIN_THREADS_USER_ID }}
         run: python3 ronin/ronin_data_collector.py
 
       - name: Analyze patterns
