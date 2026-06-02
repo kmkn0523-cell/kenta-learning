@@ -1,5 +1,5 @@
 {
-  "daily_index": 238,
+  "daily_index": 239,
   "launch_index": 0,
   "history": [
     {
@@ -4346,6 +4346,13 @@
       "theme_id": 22,
       "variant": "B",
       "post_id": "18086604917453813"
+    },
+    {
+      "date": "2026/06/02 23:00",
+      "theme": "オメガ3と肌",
+      "theme_id": 23,
+      "variant": "B",
+      "post_id": "18042952523790539"
     }
   ],
   "ab_next": "A",
@@ -4421,7 +4428,7 @@
     "20": "A",
     "21": "A",
     "22": "A",
-    "23": "B",
+    "23": "A",
     "24": "B",
     "25": "B",
     "26": "B",
@@ -4885,7 +4892,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "24": {
       "a_score": 0.0,
@@ -5110,7 +5117,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-02T21:01:15.183946+00:00",
+  "last_posted_at": "2026-06-02T23:01:13.200022+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
