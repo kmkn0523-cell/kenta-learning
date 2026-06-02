@@ -4318,6 +4318,13 @@
       "theme_id": 19,
       "variant": "B",
       "post_id": "17947863408190462"
+    },
+    {
+      "date": "2026/06/02 14:41",
+      "theme": "note宣伝: コーヒーを1日3杯以上飲んでいる人が肌荒れしやすい本当の理由",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18108242428742079"
     }
   ],
   "ab_next": "A",
@@ -5082,9 +5089,9 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-02T14:01:24.416219+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
-  "last_note_promo_date": "2026/05/31",
+  "last_posted_at": "2026-06-02T14:41:54.189470+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
+  "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/05/29"
 }
