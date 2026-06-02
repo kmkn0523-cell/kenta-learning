@@ -1,5 +1,5 @@
 {
-  "daily_index": 229,
+  "daily_index": 230,
   "launch_index": 0,
   "history": [
     {
@@ -4276,6 +4276,13 @@
       "theme_id": 13,
       "variant": "B",
       "post_id": "18166511824435865"
+    },
+    {
+      "date": "2026/06/02 04:00",
+      "theme": "亜鉛と皮脂",
+      "theme_id": 14,
+      "variant": "B",
+      "post_id": "18076692866642745"
     }
   ],
   "ab_next": "A",
@@ -4342,7 +4349,7 @@
     "11": "A",
     "12": "A",
     "13": "A",
-    "14": "B",
+    "14": "A",
     "15": "B",
     "16": "B",
     "17": "B",
@@ -4761,7 +4768,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "15": {
       "a_score": 0.0,
@@ -5040,7 +5047,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-02T02:01:13.307773+00:00",
+  "last_posted_at": "2026-06-02T04:01:14.097468+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nb434b1f1f51d",
   "last_note_promo_date": "2026/05/31",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
