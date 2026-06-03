@@ -1,5 +1,5 @@
 {
-  "daily_index": 241,
+  "daily_index": 242,
   "launch_index": 0,
   "history": [
     {
@@ -4367,6 +4367,13 @@
       "theme_id": 25,
       "variant": "B",
       "post_id": "17946149967017863"
+    },
+    {
+      "date": "2026/06/03 05:00",
+      "theme": "お酒と肌",
+      "theme_id": 26,
+      "variant": "B",
+      "post_id": "17941830165237103"
     }
   ],
   "ab_next": "A",
@@ -4445,7 +4452,7 @@
     "23": "A",
     "24": "A",
     "25": "A",
-    "26": "B",
+    "26": "A",
     "27": "B",
     "28": "B",
     "29": "B",
@@ -4924,7 +4931,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "27": {
       "a_score": 0.0,
@@ -5131,7 +5138,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-03T03:01:12.183334+00:00",
+  "last_posted_at": "2026-06-03T05:01:13.532283+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
