@@ -1,5 +1,5 @@
 {
-  "daily_index": 250,
+  "daily_index": 251,
   "launch_index": 0,
   "history": [
     {
@@ -4430,6 +4430,13 @@
       "theme_id": 34,
       "variant": "B",
       "post_id": "18008659904872207"
+    },
+    {
+      "date": "2026/06/03 23:00",
+      "theme": "プロバイオティクスの効果",
+      "theme_id": 35,
+      "variant": "B",
+      "post_id": "18393722437086383"
     }
   ],
   "ab_next": "A",
@@ -4517,7 +4524,7 @@
     "32": "A",
     "33": "A",
     "34": "A",
-    "35": "B",
+    "35": "A",
     "36": "B",
     "37": "B",
     "38": "B",
@@ -5041,7 +5048,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "36": {
       "a_score": 0.0,
@@ -5194,7 +5201,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-03T21:01:23.170674+00:00",
+  "last_posted_at": "2026-06-03T23:01:11.057977+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
