@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-02T10:45:01.198389",
+  "last_updated": "2026-06-03T11:09:17.536259",
   "posts_history": [
     {
       "day": 28,
@@ -1462,6 +1462,105 @@
       "comments": 0,
       "shares": 0,
       "views": 32,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 28,
+      "type": "毛穴が目立つ原因",
+      "post_id": "18127654660720434",
+      "posted_at": "2026-06-03T09:01:13+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 39,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 27,
+      "type": "腸活の始め方",
+      "post_id": "18122258017672807",
+      "posted_at": "2026-06-03T07:01:12+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 31,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 26,
+      "type": "お酒と肌",
+      "post_id": "17941830165237103",
+      "posted_at": "2026-06-03T05:01:11+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 35,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 25,
+      "type": "乳製品と肌",
+      "post_id": "17946149967017863",
+      "posted_at": "2026-06-03T03:01:09+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 23,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 24,
+      "type": "コーヒーと肌",
+      "post_id": "17931521706275654",
+      "posted_at": "2026-06-03T01:01:13+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 56,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 22,
+      "type": "食事のタイミング",
+      "post_id": "18086604917453813",
+      "posted_at": "2026-06-02T21:01:13+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 39,
+      "engagement_rate": 2.56
+    },
+    {
+      "day": 20,
+      "type": "摩擦と肌",
+      "post_id": "18066459665422073",
+      "posted_at": "2026-06-02T17:01:22+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 31,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 19,
+      "type": "カフェインと肌",
+      "post_id": "17947863408190462",
+      "posted_at": "2026-06-02T14:01:22+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 34,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 18,
+      "type": "運動と肌",
+      "post_id": "17985765689831210",
+      "posted_at": "2026-06-02T12:01:21+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 14,
       "engagement_rate": 0.0
     }
   ]
