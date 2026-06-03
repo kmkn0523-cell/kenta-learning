@@ -12,6 +12,7 @@ import os                            # 環境変数を読み取る道具
 import re                            # 正規表現で文字列を切り出す道具
 import sys                           # 異常終了用
 import json                          # JSONファイルを読み書きする道具
+import time                          # 待機処理に使う道具
 import requests                      # HTTPリクエストを送る道具
 from pathlib import Path             # ファイルパスを扱う道具
 
@@ -89,10 +90,24 @@ def post_to_threads(text: str):
 
     creation_id = container_data["id"]
 
-    # コンテナ作成直後に publish するとメディアIDが見つからないエラーになることがある
-    # 5秒待ってから公開することで OAuthException 4279009 を防ぐ
-    import time
-    time.sleep(5)
+    # コンテナが FINISHED になるまで最大30秒ポーリングする
+    # Threads API の仕様では status=FINISHED を確認してから publish するよう推奨されている
+    # 固定 sleep では サーバー処理が遅いときに OAuthException 4279009 が再発するため
+    status_url = f"https://graph.threads.net/{creation_id}"
+    status_params = {"fields": "status,error_message", "access_token": THREADS_ACCESS_TOKEN}
+    for attempt in range(6):          # 最大6回 × 5秒 = 30秒
+        time.sleep(5)
+        status_res = requests.get(status_url, params=status_params).json()
+        current_status = status_res.get("status", "UNKNOWN")
+        print(f"  コンテナ状態確認 ({attempt + 1}/6): {current_status}")
+        if current_status == "FINISHED":
+            break
+        if current_status == "ERROR":
+            error_msg = status_res.get("error_message", "不明なエラー")
+            return False, f"コンテナ処理エラー: {error_msg}"
+    else:
+        # 30秒経っても FINISHED にならなかった場合はエラーとして扱う
+        return False, f"コンテナが30秒以内に FINISHED にならなかった (最終状態: {current_status})"
 
     # ステップ2: コンテナを公開する
     publish_url = f"https://graph.threads.net/{THREADS_USER_ID}/threads_publish"
