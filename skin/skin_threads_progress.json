@@ -1,5 +1,5 @@
 {
-  "daily_index": 245,
+  "daily_index": 246,
   "launch_index": 0,
   "history": [
     {
@@ -4395,6 +4395,13 @@
       "theme_id": 29,
       "variant": "B",
       "post_id": "18104786458998292"
+    },
+    {
+      "date": "2026/06/03 13:00",
+      "theme": "ターンオーバーを整える",
+      "theme_id": 30,
+      "variant": "B",
+      "post_id": "18064594562447716"
     }
   ],
   "ab_next": "A",
@@ -4477,7 +4484,7 @@
     "27": "A",
     "28": "A",
     "29": "A",
-    "30": "B",
+    "30": "A",
     "31": "B",
     "32": "B",
     "33": "B",
@@ -4976,7 +4983,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "31": {
       "a_score": 0.0,
@@ -5159,7 +5166,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-03T11:01:15.829559+00:00",
+  "last_posted_at": "2026-06-03T13:01:20.323058+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
