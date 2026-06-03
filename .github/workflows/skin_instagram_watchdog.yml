@@ -21,11 +21,10 @@ on:
     - cron: '40 12 * * *'  # 21:40 JST（40分後チェック）
   workflow_dispatch:  # 手動実行も可能（テスト用）
 
-# watchdog 専用の concurrency グループを使う
-# メイン投稿ワークフロー（git-push-main）と別グループにすることで、
-# checkout の認証競合を防ぐ（5/23 の "terminal prompts disabled" エラー対策）
+# メイン投稿ワークフローと同じ concurrency グループにすることで、
+# watchdog とメインが同時に動いて二重投稿するのを防ぐ
 concurrency:
-  group: skin-instagram-watchdog
+  group: skin-instagram-post
   cancel-in-progress: false  # キャンセルせず、順番待ちにする
 
 permissions:

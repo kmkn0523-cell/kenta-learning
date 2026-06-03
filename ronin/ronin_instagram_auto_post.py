@@ -7,7 +7,7 @@ import sys                   # exit code を返す道具（失敗時に GitHub A
 import json                  # JSONファイルを扱う道具
 import time                  # 少し待つための道具
 import requests              # インターネットにリクエストを送る道具
-from datetime import datetime  # 今の日時を取得する道具
+from datetime import datetime, timezone  # 今の日時とタイムゾーンを扱う道具
 from dotenv import load_dotenv  # .envファイルからAPIキーを読み込む道具
 
 # .envファイルを読み込む
@@ -45,11 +45,25 @@ def load_progress():
         return {"next_index": 0}
 
 
-def save_progress(next_index):
-    """次に投稿するインデックスをファイルに保存する"""
+def save_progress(next_index, last_posted_at=None):
+    """次に投稿するインデックスと投稿時刻をファイルに保存する
+    last_posted_at: 投稿した日時（UTC ISO形式）。Noneのときは既存ファイルの値を引き継ぐ
+    """
     try:
+        existing_last = None
+        if os.path.exists(PROGRESS_FILE):
+            try:
+                with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+                    existing = json.load(f)
+                existing_last = existing.get("last_posted_at")
+            except Exception:
+                pass
+        data = {
+            "next_index": next_index,
+            "last_posted_at": last_posted_at if last_posted_at is not None else existing_last,
+        }
         with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
-            json.dump({"next_index": next_index}, f, ensure_ascii=False, indent=2)
+            json.dump(data, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"⚠️ 進捗保存エラー: {e}")
 
@@ -84,6 +98,70 @@ def load_posts():
     except json.JSONDecodeError:
         print("❌ threads_posts.jsonの形式が正しくありません")
         return []
+
+
+# =============================
+# ヘルスチェック（重複防止）
+# =============================
+
+def get_last_post_time():
+    """Instagram Graph APIで自分の最新投稿の時刻を取得する（フォールバック用）"""
+    try:
+        url = f"https://graph.facebook.com/v19.0/{USER_ID}/media"
+        params = {
+            "fields":       "id,timestamp",
+            "limit":        1,
+            "access_token": ACCESS_TOKEN,
+        }
+        response = requests.get(url, params=params, timeout=15)
+        data = response.json()
+        posts = data.get("data", [])
+        if not posts:
+            return None
+        timestamp_str = posts[0].get("timestamp", "")
+        if not timestamp_str:
+            return None
+        return datetime.fromisoformat(timestamp_str.replace("+0000", "+00:00"))
+    except Exception as e:
+        print(f"⚠️ 最新投稿時刻の取得に失敗しました: {e}")
+        return None
+
+
+def check_should_skip(skip_minutes=90):
+    """直近 skip_minutes 分以内に投稿済みなら True を返す（スキップすべき状態）
+    ① progress.json の last_posted_at を優先確認（git push 成功時に記録される）
+    ② なければ Instagram API で最新投稿時刻を確認（フォールバック）
+    """
+    progress = load_progress()
+    last_posted_at_str = progress.get("last_posted_at")
+    if last_posted_at_str:
+        try:
+            last_dt = datetime.fromisoformat(last_posted_at_str)
+            if last_dt.tzinfo is None:
+                last_dt = last_dt.replace(tzinfo=timezone.utc)
+            now_utc = datetime.now(timezone.utc)
+            minutes_since_last = (now_utc - last_dt).total_seconds() / 60
+            print(f"📊 ヘルスチェック（ファイル参照）: 最新投稿から {minutes_since_last:.1f} 分経過")
+            if minutes_since_last < skip_minutes:
+                print(f"✅ {skip_minutes}分以内に投稿済みのためスキップします（重複防止）")
+                return True
+            print(f"📢 {skip_minutes}分以上経過しています。投稿を実行します。")
+            return False
+        except Exception as e:
+            print(f"⚠️ last_posted_at のパースに失敗しました: {e}（APIで確認します）")
+
+    last_post_time = get_last_post_time()
+    if last_post_time is None:
+        print("⚠️ 最新投稿が確認できませんでした。念のため投稿を続行します。")
+        return False
+    now_utc = datetime.now(timezone.utc)
+    minutes_since_last = (now_utc - last_post_time).total_seconds() / 60
+    print(f"📊 ヘルスチェック（API参照）: 最新投稿から {minutes_since_last:.1f} 分経過")
+    if minutes_since_last < skip_minutes:
+        print(f"✅ {skip_minutes}分以内に投稿済みのためスキップします（重複防止）")
+        return True
+    print(f"📢 {skip_minutes}分以上経過しています。投稿を実行します。")
+    return False
 
 
 # =============================
@@ -163,7 +241,18 @@ def publish_media(creation_id):
 # =============================
 
 def main():
-    print(f"=== Instagram自動投稿開始 ({datetime.now().strftime('%Y-%m-%d %H:%M')}) ===")
+    print(f"=== Ronin Instagram自動投稿ヘルスチェック ({datetime.now().strftime('%Y-%m-%d %H:%M')}) ===")
+
+    # APIキーの確認
+    if not ACCESS_TOKEN or not USER_ID:
+        print("❌ INSTAGRAM_ACCESS_TOKEN または INSTAGRAM_USER_ID が設定されていません")
+        sys.exit(1)
+
+    # 直近90分以内に投稿済みならスキップ（重複防止）
+    if check_should_skip(skip_minutes=90):
+        return
+
+    print(f"=== Ronin Instagram自動投稿開始 ({datetime.now().strftime('%Y-%m-%d %H:%M')}) ===")
 
     # 投稿データを読み込む
     posts = load_posts()
@@ -215,22 +304,32 @@ def main():
     print("📤 Step 2: 投稿を公開中...")
     publish_result = publish_media(creation_id)
 
+    # 投稿完了時刻を UTC ISO 形式で記録する（重複防止の check_should_skip で使用）
+    now_iso = datetime.now(timezone.utc).isoformat()
+
     if "id" not in publish_result:
         if publish_result.get("rate_limited"):
             # APIブロック（error code 4）でも進捗を1つ進める
             # 同じ投稿を何度もリトライすると「同じ内容が続く」問題が起きるため
-            save_progress(current_index + 1)
+            # last_posted_at も記録して、直後の重複実行をスキップさせる
+            save_progress(current_index + 1, last_posted_at=now_iso)
             next_post = posts[(current_index + 1) % len(posts)]
             print("⏭️ InstagramのAPIブロックのためスキップ（進捗は次へ進めます）")
             print(f"📊 次回: Day{next_post['day']:02d} 投稿")
             sys.exit(0)  # 正常終了（GitHub Actionsを赤くしない）
+        # その他の公開失敗でも進捗を1つ進めて last_posted_at を記録する
+        # 進捗を進めないと次回も同じ内容が投稿されてしまうため
+        save_progress(current_index + 1, last_posted_at=now_iso)
+        next_post = posts[(current_index + 1) % len(posts)]
         print(f"❌ 投稿公開失敗: {publish_result}")
+        print("⏭️ 同一内容の重複投稿を防ぐため進捗を次へ進めました")
+        print(f"📊 次回: Day{next_post['day']:02d} 投稿")
         sys.exit(1)  # 失敗を GitHub Actions に伝える
 
     print(f"✅ 投稿成功！投稿ID: {publish_result['id']}")
 
-    # 次回の進捗を保存
-    save_progress(current_index + 1)
+    # 次回の進捗を保存（last_posted_at を記録して重複防止に使う）
+    save_progress(current_index + 1, last_posted_at=now_iso)
     next_post = posts[(current_index + 1) % len(posts)]
     print(f"📊 次回: Day{next_post['day']:02d} 投稿")
     print("=== 完了 ===")
