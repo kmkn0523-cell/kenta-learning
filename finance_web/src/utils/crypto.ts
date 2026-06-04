@@ -1,8 +1,10 @@
 // ────────── 暗号化ユーティリティ ──────────
 // パスワードのハッシュ化（PBKDF2）とデータ暗号化（AES-GCM）に関する関数をまとめたファイル
 
-// PBKDF2 のイテレーション回数（何回まぜまぜするか）。多いほど安全で少し遅い
-const PBKDF2_ITERATIONS = 100000;
+// パスワードハッシュ用のイテレーション回数（OWASP 2026推奨: SHA-256で31万回）
+const PBKDF2_HASH_ITERATIONS = 310_000;
+// 暗号化鍵の導出用イテレーション回数（既存データとの互換性維持のため変更しない）
+const PBKDF2_ENC_ITERATIONS  = 100_000;
 
 // 暗号化鍵を作るためのsaltを保存するlocalStorageキー
 export const ENC_SALT_KEY = "kk_enc_salt";
@@ -32,7 +34,8 @@ function b64ToBytes(b64: string): Uint8Array<ArrayBuffer> {
 }
 
 // パスワードとsalt（毎回違うランダムな値）からPBKDF2で256ビットのハッシュを作る
-async function derivePwHash(password: string, saltBytes: Uint8Array<ArrayBuffer>): Promise<Uint8Array<ArrayBuffer>> {
+// iterations: 何回混ぜるか（多いほど強い。v2=10万、v3=31万）
+async function derivePwHash(password: string, saltBytes: Uint8Array<ArrayBuffer>, iterations: number): Promise<Uint8Array<ArrayBuffer>> {
   const enc = new TextEncoder();
   // パスワード文字列をWeb Cryptoが扱える形（CryptoKey）に変換する
   const baseKey = await crypto.subtle.importKey(
@@ -44,33 +47,54 @@ async function derivePwHash(password: string, saltBytes: Uint8Array<ArrayBuffer>
   );
   // PBKDF2でビット列を導出する
   const bits = await crypto.subtle.deriveBits(
-    { name: "PBKDF2", salt: saltBytes, iterations: PBKDF2_ITERATIONS, hash: "SHA-256" },
+    { name: "PBKDF2", salt: saltBytes, iterations, hash: "SHA-256" },
     baseKey,
     256
   );
   return new Uint8Array(bits);
 }
 
-// 新形式の保存文字列を作る（"v2:saltのbase64:hashのbase64" という形）
+// 新形式の保存文字列を作る（"v3:イテレーション数:saltのbase64:hashのbase64" という形）
+// v2（旧）は 100k 固定だったが、v3 からはイテレーション数を文字列に埋め込む
 export async function makeNewHash(password: string): Promise<string> {
   // 16バイトのランダムなsaltを毎回作る（同じパスワードでも保存値が毎回違う）
   const salt = crypto.getRandomValues(new Uint8Array(16));
-  const hash = await derivePwHash(password, salt);
-  return `v2:${bytesToB64(salt)}:${bytesToB64(hash)}`;
+  const hash = await derivePwHash(password, salt, PBKDF2_HASH_ITERATIONS);
+  return `v3:${PBKDF2_HASH_ITERATIONS}:${bytesToB64(salt)}:${bytesToB64(hash)}`;
 }
 
 // 新形式の保存文字列と入力パスワードを照合する
+// v2形式: "v2:saltB64:hashB64"（イテレーション100k固定）
+// v3形式: "v3:イテレーション数:saltB64:hashB64"（イテレーション数を文字列から読む）
 export async function verifyNewHash(password: string, stored: string): Promise<boolean> {
   const parts = stored.split(":");
-  if (parts.length !== 3 || parts[0] !== "v2") return false;
+  let iterations: number;
+  let saltB64: string;
+  let hashB64: string;
+
+  if (parts[0] === "v2" && parts.length === 3) {
+    // 旧v2形式: 100k固定
+    iterations = PBKDF2_ENC_ITERATIONS;
+    saltB64 = parts[1];
+    hashB64 = parts[2];
+  } else if (parts[0] === "v3" && parts.length === 4) {
+    // 新v3形式: イテレーション数を読み取る
+    iterations = Number(parts[1]);
+    if (!Number.isInteger(iterations) || iterations < 1_000) return false;
+    saltB64 = parts[2];
+    hashB64 = parts[3];
+  } else {
+    return false;
+  }
+
   let salt, expected;
   try {
-    salt = b64ToBytes(parts[1]);
-    expected = b64ToBytes(parts[2]);
+    salt = b64ToBytes(saltB64);
+    expected = b64ToBytes(hashB64);
   } catch (_) {
     return false;
   }
-  const actual = await derivePwHash(password, salt);
+  const actual = await derivePwHash(password, salt, iterations);
   if (actual.length !== expected.length) return false;
   // タイミング攻撃を防ぐため、長さが同じなら必ず全バイト比較する（定数時間比較）
   let diff = 0;
@@ -106,7 +130,7 @@ export async function deriveEncryptionKey(password: string, encSaltBytes: Uint8A
     ["deriveKey"]
   );
   return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: encSaltBytes, iterations: PBKDF2_ITERATIONS, hash: "SHA-256" },
+    { name: "PBKDF2", salt: encSaltBytes, iterations: PBKDF2_ENC_ITERATIONS, hash: "SHA-256" },
     baseKey,
     { name: "AES-GCM", length: 256 },
     false,
