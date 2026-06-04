@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T10:18:16.943802",
+  "last_updated": "2026-06-04T14:07:12.063111",
   "posts_history": [
     {
       "day": 67,
@@ -1088,6 +1088,28 @@
       "comments": 0,
       "shares": 0,
       "views": 27,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 68,
+      "type": "morning",
+      "post_id": "17861891454634697",
+      "posted_at": "2026-06-04T14:01:20+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 0,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 67,
+      "type": "evening",
+      "post_id": "18119138047689393",
+      "posted_at": "2026-06-04T12:01:16+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 10,
       "engagement_rate": 0.0
     }
   ],
