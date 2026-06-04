@@ -1,5 +1,5 @@
 {
-  "daily_index": 251,
+  "daily_index": 252,
   "launch_index": 0,
   "history": [
     {
@@ -4437,6 +4437,13 @@
       "theme_id": 35,
       "variant": "B",
       "post_id": "18393722437086383"
+    },
+    {
+      "date": "2026/06/04 01:00",
+      "theme": "代謝と肌",
+      "theme_id": 36,
+      "variant": "B",
+      "post_id": "18119180656744661"
     }
   ],
   "ab_next": "A",
@@ -4525,7 +4532,7 @@
     "33": "A",
     "34": "A",
     "35": "A",
-    "36": "B",
+    "36": "A",
     "37": "B",
     "38": "B",
     "39": "B",
@@ -5054,7 +5061,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "37": {
       "a_score": 0.0,
@@ -5201,7 +5208,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-03T23:01:11.057977+00:00",
+  "last_posted_at": "2026-06-04T01:01:10.627524+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
