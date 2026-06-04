@@ -126,6 +126,7 @@
 | 4/23 | 環境構築、おみくじ作成 | WSL2/VS Code/Claude Code セットアップ、Pythonの基本 |
 | 4/24 | じゃんけん、天気予報作成 | API通信、JSON、勝敗判定ロジック |
 | 4/25 | タイマー・数当て・曜日表示作成、learning_notes.md・CLAUDE.md作成 | 指示文の書き方、CLAUDE.mdでClaudeに好みを覚えさせる方法、エラー自己解決 |
+| 6/4 | reaction_dashboard.py作成、ronin反応収集のcomments→500修正、ronin/skin analyzerの+0000日付バグ修正 | 複数JSONの集約・既存ファイルを壊さない「読むだけ」設計、複数日時フォーマットのパース、try/exceptで部分失敗しても全体を止めないエラー処理 |
 
 ---
 

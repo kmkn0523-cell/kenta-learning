@@ -94,6 +94,7 @@
 - [x] 画像投稿対応（書道カード画像をThreadsに自動投稿）
 - [ ] フォロワー数・反応をスプレッドシートで記録する仕組み
 - [ ] 反応の良かった投稿パターンを分析する
+- [ ] **【次の課題】ronin_analyzer「現在: 0日」問題** — `posts_history` の並び順が逆（末尾が最新のはず）で、Day1判定ができず分析が始まらない疑い。日付解析バグとは別件。`posts_history[0]` の日付を確認して蓄積順を調査する
 
 #### マネタイズ（海外版note販売）
 - [ ] 英語翻訳スクリプト作成（自動翻訳 or 手動テンプレート）
@@ -221,7 +222,10 @@
   - 全ワークフローのgit pushに3回リトライループ追加
   - skin_instagram_watchdog を48回/日 → 8回/日に削減
   - ronin/skinアナリティクスのgit設定バグ修正（|| true → if guard）
-- [ ] 投稿ログを1箇所にまとめて見られるようにする
+- [x] 投稿ログを1箇所にまとめて見られるようにする（2026/06/04 `reaction_dashboard.py` 実装。skin/ronin全SNS＝Threads/Instagram/note/Substackの投稿数と反応を `dashboard.md` に集約。標準ライブラリのみ・既存JSONは読むだけ）
+- [x] 反応収集・分析まわりのバグ修正（2026/06/04）
+  - ronin/skin analyzer の日付解析を `+0000`（コロン無しのタイムゾーン表記）に対応（commit c2d0d3d）
+  - ronin 反応収集の comments 取得件数を 500 に修正
 
 ---
 
