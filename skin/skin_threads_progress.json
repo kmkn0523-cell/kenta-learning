@@ -1,5 +1,5 @@
 {
-  "daily_index": 256,
+  "daily_index": 257,
   "launch_index": 0,
   "history": [
     {
@@ -4472,6 +4472,13 @@
       "theme_id": 40,
       "variant": "B",
       "post_id": "17967951168098735"
+    },
+    {
+      "date": "2026/06/04 11:00",
+      "theme": "水を飲むタイミング",
+      "theme_id": 41,
+      "variant": "B",
+      "post_id": "18081316565168998"
     }
   ],
   "ab_next": "A",
@@ -4565,7 +4572,7 @@
     "38": "A",
     "39": "A",
     "40": "A",
-    "41": "B",
+    "41": "A",
     "42": "B",
     "43": "B",
     "44": "B",
@@ -5119,7 +5126,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "42": {
       "a_score": 0.0,
@@ -5236,7 +5243,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-04T09:01:16.491919+00:00",
+  "last_posted_at": "2026-06-04T11:01:21.007858+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
