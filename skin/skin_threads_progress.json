@@ -1,5 +1,5 @@
 {
-  "daily_index": 255,
+  "daily_index": 256,
   "launch_index": 0,
   "history": [
     {
@@ -4465,6 +4465,13 @@
       "theme_id": 39,
       "variant": "B",
       "post_id": "18104037427823780"
+    },
+    {
+      "date": "2026/06/04 09:00",
+      "theme": "日焼けと肌荒れ",
+      "theme_id": 40,
+      "variant": "B",
+      "post_id": "17967951168098735"
     }
   ],
   "ab_next": "A",
@@ -4557,7 +4564,7 @@
     "37": "A",
     "38": "A",
     "39": "A",
-    "40": "B",
+    "40": "A",
     "41": "B",
     "42": "B",
     "43": "B",
@@ -5106,7 +5113,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "41": {
       "a_score": 0.0,
@@ -5229,7 +5236,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-04T07:01:16.106789+00:00",
+  "last_posted_at": "2026-06-04T09:01:16.491919+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
