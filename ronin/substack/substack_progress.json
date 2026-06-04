@@ -1,5 +1,5 @@
 {
-  "next_day": 20,
+  "next_day": 21,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -114,6 +114,12 @@
       "day": 19,
       "post_id": 200546162,
       "title": "艱難汝を玉にす — Hardship polishes you into a gem."
+    },
+    {
+      "date": "2026/06/04 17:38",
+      "day": 20,
+      "post_id": 200648824,
+      "title": "負けるが勝ち — Losing can be winning."
     }
   ]
 }
