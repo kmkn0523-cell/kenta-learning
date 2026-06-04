@@ -32,35 +32,38 @@ def fetch_threads_data():
     APIキーが設定されているか確認し、エラーハンドリングを行う
     """
 
-    # APIキーが設定されているか確認する
+    # APIキーが設定されているか確認する（無ければ異常終了させてワークフローを赤くする）
     if not THREADS_ACCESS_TOKEN:
         print("❌ エラー: THREADS_ACCESS_TOKENが.envに設定されていません")
-        return []
+        sys.exit(1)
 
     if not THREADS_BUSINESS_ACCOUNT_ID_RONIN:
         print("❌ エラー: THREADS_BUSINESS_ACCOUNT_ID_RONINが.envに設定されていません")
-        return []
+        sys.exit(1)
 
     try:
         # Threads APIのエンドポイント
         api_url = f"https://graph.threads.net/v1.0/{THREADS_BUSINESS_ACCOUNT_ID_RONIN}/threads"
 
         # APIに送るパラメータ（取得したいデータフィールドを指定）
+        # コメント数のメトリクス名は "comments" ではなく "replies"（API有効値: clicks/likes/quotes/replies/reposts/shares/views）
+        # limit=100 を付けて過去分の取りこぼしを防ぐ（API上限100・デフォルト25）
         params = {
-            "fields": "id,text,timestamp,insights.metric(likes,comments,shares,views)",
-            "access_token": THREADS_ACCESS_TOKEN
+            "fields": "id,text,timestamp,insights.metric(likes,replies,shares,views)",
+            "access_token": THREADS_ACCESS_TOKEN,
+            "limit": 100,
         }
 
         # APIにリクエストを送る（タイムアウト設定あり）
         response = requests.get(api_url, params=params, timeout=API_TIMEOUT)
 
-        # HTTPステータスコードで結果を判定する
+        # HTTPステータスコードで結果を判定する（異常時は異常終了させてワークフローを赤くする）
         if response.status_code == 401:
             print("❌ エラー: Threads API認証失敗 (401 Unauthorized)")
-            return []
+            sys.exit(1)
         elif response.status_code != 200:
             print(f"❌ エラー: APIリクエスト失敗 (ステータス: {response.status_code})")
-            return []
+            sys.exit(1)
 
         # JSON形式のレスポンスを取得する
         api_data = response.json()
@@ -74,13 +77,13 @@ def fetch_threads_data():
 
     except requests.exceptions.Timeout:
         print(f"❌ エラー: APIリクエストがタイムアウトしました（{API_TIMEOUT}秒以上）")
-        return []
+        sys.exit(1)
     except requests.exceptions.RequestException as e:
         print(f"❌ エラー: ネットワークエラー {str(e)}")
-        return []
+        sys.exit(1)
     except json.JSONDecodeError:
         print("❌ エラー: APIレスポンスのJSON解析に失敗しました")
-        return []
+        sys.exit(1)
 
 
 def calculate_engagement_rate(likes, comments, shares, views):
@@ -103,9 +106,10 @@ def calculate_engagement_rate(likes, comments, shares, views):
 
 def identify_day_and_type(post_text):
     """
-    投稿テキストをronin/threads_posts.jsonの投稿パターンと照合して
-    Day番号とテーマを特定する関数
-    正確なテキストマッチングで朝夜を判定する
+    投稿テキストを ronin/threads_posts.json の投稿パターンと照合して
+    Day番号と朝夜（morning/evening）を特定する関数。
+    roninの構造は {day, morning, evening, ...} なので、朝と夜の本文それぞれと照合する。
+    返り値: (Day番号, タイプ=朝夜, post_type=朝夜)。一致しなければ (None, None, None)。
     """
 
     try:
@@ -113,31 +117,23 @@ def identify_day_and_type(post_text):
         with open(POSTS_FILE, "r", encoding="utf-8") as f:
             posts_data = json.load(f)
 
-        # threadsリストの各要素をチェックする
-        for thread_info in posts_data.get("threads", []):
-            day_num = thread_info.get("id")
-            theme_name = thread_info.get("theme", "")
+        # 比較対象テキストの最初の50文字を取り出す（正確な比較用）
+        post_text_normalized = post_text[:50].strip()
 
-            # このパターンの投稿文リストを取得する
-            post_texts = thread_info.get("posts", [])
+        # posts リスト（1日ぶんのパターン）を順番にチェックする
+        for day_pattern in posts_data.get("posts", []):
+            day_num = day_pattern.get("day")  # この日のDay番号
 
-            # 投稿テキストの最初の50文字を取得する（正確な比較用）
-            post_text_normalized = post_text[:50].strip()
-
-            for index, stored_text in enumerate(post_texts):
-                # 保存されたテキストの最初の50文字を取得する
+            # 朝（morning）と夜（evening）の2投稿それぞれと照合する
+            for time_type in ("morning", "evening"):
+                stored_text = day_pattern.get(time_type, "")
                 stored_text_normalized = stored_text[:50].strip()
 
-                # 最初の50文字が完全に一致するかチェック
-                if post_text_normalized == stored_text_normalized:
-                    # テキスト位置から朝夜を判定する
-                    # 最初の投稿（index 0）= 朝、2番目の投稿（index 1）= 朝、3番目（index 2）= 朝
-                    # ※ 実際のデータで朝夜の判定ロジックが必要な場合は調整が必要
-                    post_type = "morning" if index <= 1 else "evening"
+                # 最初の50文字が完全一致したら、その投稿に確定する
+                if post_text_normalized and post_text_normalized == stored_text_normalized:
+                    return (day_num, time_type, time_type)
 
-                    return (day_num, theme_name, post_type)
-
-        # マッチしなかった場合はNoneを返す
+        # どのパターンにも一致しなかった場合
         return (None, None, None)
 
     except FileNotFoundError:
@@ -187,7 +183,7 @@ def save_analytics(posts_data):
 
                 # insightsの各メトリクスを解析する
                 for insight in insights_data:
-                    metric_name = insight.get("metric", "")
+                    metric_name = insight.get("name", "")   # APIのキーは "metric" ではなく "name"
                     values = insight.get("values", [])
 
                     if len(values) > 0:
@@ -195,7 +191,7 @@ def save_analytics(posts_data):
 
                         if metric_name == "likes":
                             likes = value
-                        elif metric_name == "comments":
+                        elif metric_name == "replies":   # コメント数は "replies" という名前で届く
                             comments = value
                         elif metric_name == "shares":
                             shares = value
