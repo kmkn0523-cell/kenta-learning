@@ -1,5 +1,5 @@
 {
-  "daily_index": 254,
+  "daily_index": 255,
   "launch_index": 0,
   "history": [
     {
@@ -4458,6 +4458,13 @@
       "theme_id": 38,
       "variant": "B",
       "post_id": "18048065756783476"
+    },
+    {
+      "date": "2026/06/04 07:00",
+      "theme": "腸活朝ごはん",
+      "theme_id": 39,
+      "variant": "B",
+      "post_id": "18104037427823780"
     }
   ],
   "ab_next": "A",
@@ -4549,7 +4556,7 @@
     "36": "A",
     "37": "A",
     "38": "A",
-    "39": "B",
+    "39": "A",
     "40": "B",
     "41": "B",
     "42": "B",
@@ -5093,7 +5100,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "40": {
       "a_score": 0.0,
@@ -5222,7 +5229,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-04T05:01:12.333069+00:00",
+  "last_posted_at": "2026-06-04T07:01:16.106789+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
