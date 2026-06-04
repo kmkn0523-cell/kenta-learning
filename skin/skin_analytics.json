@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-03T11:09:17.536259",
+  "last_updated": "2026-06-04T10:03:31.794049",
   "posts_history": [
     {
       "day": 28,
@@ -1561,6 +1561,28 @@
       "comments": 0,
       "shares": 0,
       "views": 14,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 40,
+      "type": "日焼けと肌荒れ",
+      "post_id": "17967951168098735",
+      "posted_at": "2026-06-04T09:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 7,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 39,
+      "type": "腸活朝ごはん",
+      "post_id": "18104037427823780",
+      "posted_at": "2026-06-04T07:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 44,
       "engagement_rate": 0.0
     }
   ]
