@@ -8,6 +8,14 @@ import json                    # JSONファイルを扱う道具
 import os                      # ファイル操作に使う道具
 from datetime import datetime  # 日時を扱う道具
 from collections import defaultdict  # グループ分けを簡単にする道具
+import re                      # 文字列の置換に使う道具
+
+
+def parse_iso_datetime(text):
+    """Threads APIの日時 "+0000"(コロン無し)を Python3.9 が読める "+00:00" に直して datetime に変換する。"""
+    # 末尾のタイムゾーン "+0000" を "+00:00" にする（コロンを差し込む）
+    text = re.sub(r"([+-]\d{2})(\d{2})$", r"\1:\2", text)
+    return datetime.fromisoformat(text)
 
 # ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
 _DIR = os.path.dirname(os.path.abspath(__file__))
@@ -61,7 +69,7 @@ def should_analyze():
 
         # ISO 8601形式の文字列を日時オブジェクトに変換する
         # "+09:00" のようなタイムゾーン情報を処理するため fromisoformatを使う
-        first_post_datetime = datetime.fromisoformat(first_post_datetime_str)
+        first_post_datetime = parse_iso_datetime(first_post_datetime_str)
 
         # 現在の日時を取得する
         now = datetime.now(first_post_datetime.tzinfo)
@@ -142,7 +150,7 @@ def calculate_pattern_performance(posts_history):
                 if posted_at:
                     try:
                         # ISO 8601形式の文字列から時間を取り出す
-                        dt = datetime.fromisoformat(posted_at)
+                        dt = parse_iso_datetime(posted_at)
                         hours.append(dt.hour)
                     except (ValueError, TypeError):
                         pass
