@@ -1,5 +1,5 @@
 {
-  "daily_index": 253,
+  "daily_index": 254,
   "launch_index": 0,
   "history": [
     {
@@ -4451,6 +4451,13 @@
       "theme_id": 37,
       "variant": "B",
       "post_id": "18166244740432276"
+    },
+    {
+      "date": "2026/06/04 05:00",
+      "theme": "化粧落としの落とし穴",
+      "theme_id": 38,
+      "variant": "B",
+      "post_id": "18048065756783476"
     }
   ],
   "ab_next": "A",
@@ -4541,7 +4548,7 @@
     "35": "A",
     "36": "A",
     "37": "A",
-    "38": "B",
+    "38": "A",
     "39": "B",
     "40": "B",
     "41": "B",
@@ -5080,7 +5087,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "39": {
       "a_score": 0.0,
@@ -5215,7 +5222,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-04T03:01:14.467037+00:00",
+  "last_posted_at": "2026-06-04T05:01:12.333069+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n19fa579db70e",
   "last_note_promo_date": "2026/06/02",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
