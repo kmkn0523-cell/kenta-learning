@@ -1,5 +1,5 @@
 {
-  "daily_index": 265,
+  "daily_index": 266,
   "launch_index": 0,
   "history": [
     {
@@ -4542,6 +4542,13 @@
       "theme_id": 49,
       "variant": "B",
       "post_id": "17858914230646496"
+    },
+    {
+      "date": "2026/06/05 14:00",
+      "theme": "姿勢・血流と肌",
+      "theme_id": 50,
+      "variant": "B",
+      "post_id": "18324400126259382"
     }
   ],
   "ab_next": "A",
@@ -4644,7 +4651,7 @@
     "47": "A",
     "48": "A",
     "49": "A",
-    "50": "B",
+    "50": "A",
     "51": "B",
     "52": "B",
     "53": "B",
@@ -5243,7 +5250,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "51": {
       "a_score": 0.0,
@@ -5306,7 +5313,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-05T09:01:20.541765+00:00",
+  "last_posted_at": "2026-06-05T14:01:22.366127+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/04",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
