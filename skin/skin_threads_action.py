@@ -634,8 +634,14 @@ def main():
     now = datetime.now().strftime("%Y/%m/%d %H:%M")
     print(f"=== skin自動投稿ヘルスチェック: {now} ===")
 
-    # 直近90分以内に投稿済みならスキップする（重複防止・自動修復の起点）
-    if check_should_skip(skip_minutes=90):
+    # 深夜帯（JST 0:00〜6:59）は投稿しない（Threadsアルゴリズム最適化）
+    jst_now = datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=9)))
+    if jst_now.hour < 7:
+        print(f"⏸ 深夜帯（JST {jst_now.hour}時）のためスキップします")
+        return
+
+    # 直近240分（4時間）以内に投稿済みならスキップする（1日4回ペースを維持）
+    if check_should_skip(skip_minutes=240):
         return  # 投稿済みなので何もしない
 
     print(f"=== skin自動投稿開始: {now} ===")
