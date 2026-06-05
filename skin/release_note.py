@@ -59,8 +59,21 @@ def main():
         print("⚠️  note_queueフォルダに記事がありません。スキップします。")
         return  # エラーにはしない（GitHub Actionsを失敗させない）
 
-    # 進捗を読み込んで次の記事を決める（30本使い切ったら最初に戻る）
+    # 進捗を読み込む
     progress = load_progress()
+
+    # 本日すでに投稿済みならスキップ（重複投稿防止）
+    # GitHub ActionsのcronはキューにいたときのHEADをpinするため、
+    # 別のジョブが先に動いても古いprogress.jsonを読むことがある。
+    # historyの最新エントリが今日の日付なら重複と判断してスキップする。
+    history = progress.get("history", [])
+    if history and history[-1]["date"].startswith(today):
+        last = history[-1]
+        print(f"✅ 本日（{today}）はすでに投稿済みのためスキップします")
+        print(f"   → 最後の投稿: {last['article']} ({last['date']})")
+        return
+
+    # 次の記事を決める（30本使い切ったら最初に戻る）
     next_index = progress["next_index"] % len(article_files)
     article_filename = article_files[next_index]
     article_path = os.path.join(QUEUE_DIR, article_filename)
