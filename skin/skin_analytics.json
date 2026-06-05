@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-04T10:03:31.794049",
+  "last_updated": "2026-06-05T10:00:48.201959",
   "posts_history": [
     {
       "day": 28,
@@ -1584,6 +1584,977 @@
       "shares": 0,
       "views": 44,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 49,
+      "type": "口呼吸と肌荒れ",
+      "post_id": "17858914230646496",
+      "posted_at": "2026-06-05T09:01:17+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 26,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 48,
+      "type": "添加物・加工食品と肌",
+      "post_id": "18071405372488921",
+      "posted_at": "2026-06-05T04:01:07+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 25,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 47,
+      "type": "体温と肌",
+      "post_id": "18131498944593093",
+      "posted_at": "2026-06-04T23:47:56+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 14,
+      "engagement_rate": 7.14
+    },
+    {
+      "day": 46,
+      "type": "生理周期と肌",
+      "post_id": "18108529807847386",
+      "posted_at": "2026-06-04T22:01:16+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 39,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 45,
+      "type": "花粉・アレルギーと肌",
+      "post_id": "18085934603439954",
+      "posted_at": "2026-06-04T20:01:09+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 19,
+      "engagement_rate": 5.26
+    },
+    {
+      "day": 44,
+      "type": "血糖値と肌まとめ",
+      "post_id": "18109773604816835",
+      "posted_at": "2026-06-04T18:01:12+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 9,
+      "engagement_rate": 11.11
+    },
+    {
+      "day": 43,
+      "type": "食物繊維と腸",
+      "post_id": "18108106624827798",
+      "posted_at": "2026-06-04T15:59:06+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 20,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 41,
+      "type": "水を飲むタイミング",
+      "post_id": "18081316565168998",
+      "posted_at": "2026-06-04T11:01:18+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 41,
+      "engagement_rate": 0.0
     }
-  ]
+  ],
+  "pattern_performance": {
+    "day_28": {
+      "毛穴が目立つ原因": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 26.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_27": {
+      "腸活の始め方": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 1,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_26": {
+      "お酒と肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 19,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_25": {
+      "乳製品と肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 20.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_24": {
+      "コーヒーと肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 26.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 1,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_22": {
+      "食事のタイミング": {
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 0.85,
+        "best_hour": 10,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_20": {
+      "保湿の正しいやり方": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 2.0,
+        "avg_views": 11.0,
+        "avg_engagement_rate": 18.18,
+        "best_hour": 10,
+        "best_hashtag_set": "A"
+      },
+      "摩擦と肌": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 25.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_19": {
+      "大人ニキビの特徴": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 2.0,
+        "avg_views": 9.0,
+        "avg_engagement_rate": 22.22,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
+      },
+      "カフェインと肌": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 4,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_18": {
+      "シャワー温度と肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 2.0,
+        "avg_views": 0.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 7,
+        "best_hashtag_set": "A"
+      },
+      "運動と肌": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 12.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 2,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_17": {
+      "枕カバーと肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 2.0,
+        "avg_views": 8.0,
+        "avg_engagement_rate": 25.0,
+        "best_hour": 5,
+        "best_hashtag_set": "A"
+      },
+      "鉄分不足と肌": {
+        "total_posts": 2,
+        "avg_likes": 0.5,
+        "avg_comments": 0.0,
+        "avg_views": 21.0,
+        "avg_engagement_rate": 3.33,
+        "best_hour": 0,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_16": {
+      "運動と肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 2.0,
+        "avg_views": 2.0,
+        "avg_engagement_rate": 100.0,
+        "best_hour": 3,
+        "best_hashtag_set": "A"
+      },
+      "紫外線と肌": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 30.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_15": {
+      "ビタミンCと肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 8.0,
+        "avg_engagement_rate": 22.22,
+        "best_hour": 1,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_14": {
+      "亜鉛と皮脂": {
+        "total_posts": 3,
+        "avg_likes": 0.7,
+        "avg_comments": 0.7,
+        "avg_views": 38.0,
+        "avg_engagement_rate": 9.64,
+        "best_hour": 18,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_13": {
+      "水分と肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 19.0,
+        "avg_engagement_rate": 22.22,
+        "best_hour": 16,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_12": {
+      "タイプ別診断": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 22.0,
+        "avg_engagement_rate": 7.41,
+        "best_hour": 19,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_11": {
+      "お金をかけない美肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 27.0,
+        "avg_engagement_rate": 4.76,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_10": {
+      "腸活食習慣": {
+        "total_posts": 4,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 28.0,
+        "avg_engagement_rate": 10.1,
+        "best_hour": 16,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_9": {
+      "やめた習慣": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 40.0,
+        "avg_engagement_rate": 4.44,
+        "best_hour": 18,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_8": {
+      "失敗談型": {
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.7,
+        "avg_views": 27.0,
+        "avg_engagement_rate": 5.95,
+        "best_hour": 10,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_7": {
+      "ストレスと皮脂": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 17.0,
+        "avg_engagement_rate": 6.06,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_6": {
+      "小麦とグルテン": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 20.0,
+        "avg_engagement_rate": 6.67,
+        "best_hour": 2,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_5": {
+      "睡眠と肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.7,
+        "avg_views": 20.0,
+        "avg_engagement_rate": 16.67,
+        "best_hour": 0,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_41": {
+      "水を飲むタイミング": {
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 1.19,
+        "best_hour": 11,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_40": {
+      "日焼けと肌荒れ": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 7.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_39": {
+      "腸活朝ごはん": {
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.0,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 1.75,
+        "best_hour": 2,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_46": {
+      "生理周期と肌": {
+        "total_posts": 4,
+        "avg_likes": 1.2,
+        "avg_comments": 0.0,
+        "avg_views": 40.0,
+        "avg_engagement_rate": 3.14,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_45": {
+      "花粉・アレルギーと肌": {
+        "total_posts": 3,
+        "avg_likes": 1.3,
+        "avg_comments": 0.0,
+        "avg_views": 26.0,
+        "avg_engagement_rate": 6.1,
+        "best_hour": 20,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_44": {
+      "血糖値と肌まとめ": {
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.0,
+        "avg_views": 6.0,
+        "avg_engagement_rate": 3.7,
+        "best_hour": 0,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_43": {
+      "食物繊維と腸": {
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.0,
+        "avg_views": 16.0,
+        "avg_engagement_rate": 3.03,
+        "best_hour": 20,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_52": {
+      "リンパと肌": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 20.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 10,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_51": {
+      "部位別ニキビの原因": {
+        "total_posts": 2,
+        "avg_likes": 0.5,
+        "avg_comments": 0.0,
+        "avg_views": 29.0,
+        "avg_engagement_rate": 2.27,
+        "best_hour": 1,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_50": {
+      "姿勢・血流と肌": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 10.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 2,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_49": {
+      "口呼吸と肌荒れ": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 21.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_48": {
+      "添加物・加工食品と肌": {
+        "total_posts": 3,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 32.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 18,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_47": {
+      "体温と肌": {
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.0,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 2.38,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_56": {
+      "ニキビ跡を消す方法": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 60.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 11,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_55": {
+      "腸活夜ごはん": {
+        "total_posts": 2,
+        "avg_likes": 0.5,
+        "avg_comments": 0.0,
+        "avg_views": 44.0,
+        "avg_engagement_rate": 1.17,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_54": {
+      "ビタミンDと肌": {
+        "total_posts": 2,
+        "avg_likes": 0.5,
+        "avg_comments": 0.0,
+        "avg_views": 38.0,
+        "avg_engagement_rate": 1.06,
+        "best_hour": 7,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_53": {
+      "塩分と肌": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 30.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 5,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_91": {
+      "目の下のクマと肌ケア": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 39.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 13,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_90": {
+      "肌荒れとメンタルの関係": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 21.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 11,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_89": {
+      "首・デコルテのケア": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 28.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_87": {
+      "喫煙と肌老化": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 17.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 5,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_85": {
+      "朝のスキンケアルーティン": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 45.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 1,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_84": {
+      "汗と肌の関係": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 23,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_83": {
+      "腸内フローラを整える": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 45.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 21,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_82": {
+      "脂質と肌の関係": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 35.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 19,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_81": {
+      "化粧品の使用期限と肌荒れ": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 22.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_80": {
+      "貧血と肌荒れ": {
+        "total_posts": 1,
+        "avg_likes": 1.0,
+        "avg_comments": 0.0,
+        "avg_views": 104.0,
+        "avg_engagement_rate": 0.96,
+        "best_hour": 12,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_78": {
+      "肌荒れ改善の3ヶ月ルール": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 36.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_76": {
+      "頭皮と肌の関係": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 19.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 4,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_75": {
+      "ダイエットと肌荒れ": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 21.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 2,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_74": {
+      "エアコンと乾燥肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 20.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 23,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_73": {
+      "タオルと肌荒れ": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 11.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 22,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_72": {
+      "砂糖断ちの効果": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 20,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_69": {
+      "肌荒れと自律神経": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 26.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 14,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_68": {
+      "体内時計と肌修復": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 14.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 12,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_67": {
+      "タンパク質不足と肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 32.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 10,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_66": {
+      "仕事のストレスと肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 20.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_65": {
+      "間食と肌荒れ": {
+        "total_posts": 1,
+        "avg_likes": 1.0,
+        "avg_comments": 0.0,
+        "avg_views": 56.0,
+        "avg_engagement_rate": 1.79,
+        "best_hour": 6,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_64": {
+      "肌のバリア機能": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 4,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_63": {
+      "スキンケアのやりすぎ問題": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 16.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 2,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_61": {
+      "抗糖化と美肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 23.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 22,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_59": {
+      "洗顔料の選び方": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 43.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 18,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_58": {
+      "黒ずみ毛穴の対策": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 64.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 16,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_57": {
+      "敏感肌の正体": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 38.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 12,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_4": {
+      "洗顔のやりすぎ": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 41.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_3": {
+      "砂糖とニキビ": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 48.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 20,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_2": {
+      "腸と肌のつながり": {
+        "total_posts": 2,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 18,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_100": {
+      "続けることの力": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 29.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 7,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_99": {
+      "肌荒れが治った人の共通点": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 75.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 5,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_95": {
+      "肌に良いサプリの選び方": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 30.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 21,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_94": {
+      "腸活と便秘改善": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 62.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 19,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_93": {
+      "肌荒れ改善チェックリスト": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 71.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_92": {
+      "手荒れと腸の関係": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 0.0,
+        "avg_views": 40.0,
+        "avg_engagement_rate": 0.0,
+        "best_hour": 15,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_1": {
+      "問いかけ型": {
+        "total_posts": 1,
+        "avg_likes": 1.0,
+        "avg_comments": 0.0,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 4.17,
+        "best_hour": 2,
+        "best_hashtag_set": "A"
+      }
+    }
+  }
 }
