@@ -4577,6 +4577,13 @@
       "theme_id": 53,
       "variant": "B",
       "post_id": "18100730771031423"
+    },
+    {
+      "date": "2026/06/06 12:03",
+      "theme": "note宣伝: 「腸活してるのに肌が治らない」人の正体。リーキーガットの話。",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18090620702608157"
     }
   ],
   "ab_next": "A",
@@ -5341,9 +5348,9 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-06T08:01:16.933436+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
-  "last_note_promo_date": "2026/06/04",
+  "last_posted_at": "2026-06-06T12:03:49.682139+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n8d4de0dad736",
+  "last_note_promo_date": "2026/06/06",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/05"
 }
