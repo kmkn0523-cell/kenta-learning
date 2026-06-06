@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-05T10:00:48.201959",
+  "last_updated": "2026-06-06T08:40:00.419289",
   "posts_history": [
     {
       "day": 28,
@@ -1672,6 +1672,50 @@
       "shares": 0,
       "views": 41,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 53,
+      "type": "塩分と肌",
+      "post_id": "18100730771031423",
+      "posted_at": "2026-06-06T08:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 6,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 52,
+      "type": "リンパと肌",
+      "post_id": "18102759173008651",
+      "posted_at": "2026-06-06T03:01:10+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 70,
+      "engagement_rate": 1.43
+    },
+    {
+      "day": 51,
+      "type": "部位別ニキビの原因",
+      "post_id": "17940390657236920",
+      "posted_at": "2026-06-05T22:01:12+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 49,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 50,
+      "type": "姿勢・血流と肌",
+      "post_id": "18324400126259382",
+      "posted_at": "2026-06-05T14:01:20+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 37,
+      "engagement_rate": 0.0
     }
   ],
   "pattern_performance": {
@@ -2041,32 +2085,32 @@
     },
     "day_52": {
       "リンパと肌": {
-        "total_posts": 2,
-        "avg_likes": 0.0,
+        "total_posts": 3,
+        "avg_likes": 0.3,
         "avg_comments": 0.0,
-        "avg_views": 20.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 10,
+        "avg_views": 37.0,
+        "avg_engagement_rate": 0.48,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_51": {
       "部位別ニキビの原因": {
-        "total_posts": 2,
-        "avg_likes": 0.5,
+        "total_posts": 3,
+        "avg_likes": 0.3,
         "avg_comments": 0.0,
-        "avg_views": 29.0,
-        "avg_engagement_rate": 2.27,
+        "avg_views": 36.0,
+        "avg_engagement_rate": 1.52,
         "best_hour": 1,
         "best_hashtag_set": "A"
       }
     },
     "day_50": {
       "姿勢・血流と肌": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 10.0,
+        "avg_views": 19.0,
         "avg_engagement_rate": 0.0,
         "best_hour": 2,
         "best_hashtag_set": "A"
@@ -2140,12 +2184,12 @@
     },
     "day_53": {
       "塩分と肌": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 30.0,
+        "avg_views": 22.0,
         "avg_engagement_rate": 0.0,
-        "best_hour": 5,
+        "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
