@@ -35,11 +35,11 @@ HASHTAGS = "\n\n#JapaneseWisdom #Bushido #Zen #Samurai #Wisdom"
 
 # Gumroad壁紙パックへの誘導文（14投稿に1回・偶数サイクル）
 GUMROAD_URL = "https://kmknova8.gumroad.com/l/mowuxf"
-GUMROAD_CTA = f"\n\n🔗 Wallpaper pack → {GUMROAD_URL}"
+GUMROAD_CTA = f"\n\n🖌 Get the calligraphy wallpaper pack → {GUMROAD_URL}"
 
 # Substackへの誘導文（14投稿に1回・奇数サイクル、Gumroadと交互）
 SUBSTACK_URL = "https://substack.com/@roninwords"
-SUBSTACK_CTA = f"\n\n📖 Read deeper → {SUBSTACK_URL}"
+SUBSTACK_CTA = f"\n\n📖 Full deep dive on this teaching → {SUBSTACK_URL}"
 
 
 def get_image_url(day):
