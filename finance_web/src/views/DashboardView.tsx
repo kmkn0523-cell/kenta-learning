@@ -595,14 +595,17 @@ export default function DashboardView({
             {label:"手残り",cur:net,prev:prevTInc-(prevTVar+totalFixedExpense+totalLoanRepayment),inv:false},
           ] as {label:string;cur:number;prev:number;inv:boolean}[]).map(({label,cur,prev,inv})=>{
             const diff=cur-prev;
+            const pct=prev>0?Math.round((diff/prev)*100):null;
             const good=diff===0?null:(inv?diff<0:diff>0);
+            const arrow=diff>0?"↑":diff<0?"↓":"";
             return (
               <div key={label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:`1px solid ${COLOR_BORDER}`}}>
                 <span style={{fontSize:13,color:COLOR_TEXT_SECONDARY}}>{label}</span>
                 <div style={{textAlign:"right"}}>
                   <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700}}>{formatYen(cur)}</div>
                   <div style={{fontSize:12,color:good===null?COLOR_TEXT_HINT:good?COLOR_POSITIVE:COLOR_NEGATIVE}}>
-                    {diff>=0?"+":""}{formatYen(diff)}
+                    {arrow} {diff>=0?"+":""}{formatYen(diff)}
+                    {pct!==null&&<span style={{marginLeft:6,fontFamily:"monospace"}}>({pct>=0?"+":""}{pct}%)</span>}
                   </div>
                 </div>
               </div>

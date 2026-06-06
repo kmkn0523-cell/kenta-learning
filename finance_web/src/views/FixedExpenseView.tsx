@@ -64,6 +64,7 @@ export default function FixedExpenseView({
         <div>
           <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 5, letterSpacing: "2px", textTransform: "uppercase" }}>毎月の固定費合計</div>
           <div style={{ fontFamily: "monospace", fontSize: 28, fontWeight: 700, letterSpacing: "-0.5px" }}>{formatYen(totalFixedExpense)}</div>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 3 }}>年間 {formatYen(totalFixedExpense * 12)}</div>
           {/* 自動追加中の項目があれば補足説明を表示 */}
           {fixedExpenses.some(f => f.autoTrack) && (
             <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 4 }}>
