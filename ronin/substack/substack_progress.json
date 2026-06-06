@@ -1,5 +1,5 @@
 {
-  "next_day": 21,
+  "next_day": 22,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -120,6 +120,12 @@
       "day": 20,
       "post_id": 200648824,
       "title": "負けるが勝ち — Losing can be winning."
+    },
+    {
+      "date": "2026/06/06 16:01",
+      "day": 21,
+      "post_id": 200906296,
+      "title": "柔よく剛を制す — Softness overcomes hardness."
     }
   ]
 }
