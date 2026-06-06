@@ -1,5 +1,5 @@
 {
-  "daily_index": 268,
+  "daily_index": 269,
   "launch_index": 0,
   "history": [
     {
@@ -4570,6 +4570,13 @@
       "theme_id": 52,
       "variant": "B",
       "post_id": "18102759173008651"
+    },
+    {
+      "date": "2026/06/06 08:00",
+      "theme": "塩分と肌",
+      "theme_id": 53,
+      "variant": "B",
+      "post_id": "18100730771031423"
     }
   ],
   "ab_next": "A",
@@ -4675,7 +4682,7 @@
     "50": "A",
     "51": "A",
     "52": "A",
-    "53": "B",
+    "53": "A",
     "54": "B",
     "55": "B",
     "56": "B",
@@ -5289,7 +5296,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     },
     "54": {
       "a_score": 0.0,
@@ -5334,7 +5341,7 @@
       "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-06T03:01:13.047314+00:00",
+  "last_posted_at": "2026-06-06T08:01:16.933436+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/04",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
