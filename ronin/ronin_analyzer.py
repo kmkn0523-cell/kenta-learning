@@ -17,6 +17,20 @@ def parse_iso_datetime(text):
     text = re.sub(r"([+-]\d{2})(\d{2})$", r"\1:\2", text)
     return datetime.fromisoformat(text)
 
+
+def earliest_post_datetime(posts_history):
+    """posts_history全件から最古の投稿日時を返す（並び順に依存しない）。無ければNone。"""
+    dates = []
+    for post in posts_history:
+        posted_at = post.get("posted_at")
+        if not posted_at:
+            continue  # posted_atが無いレコードは無視
+        try:
+            dates.append(parse_iso_datetime(posted_at))
+        except (ValueError, TypeError):
+            continue  # 壊れた日時も無視
+    return min(dates) if dates else None
+
 # ファイルパスの設定（スクリプトからの相対パスで指定 → GitHub Actionsでも動く）
 _DIR = os.path.dirname(os.path.abspath(__file__))
 ANALYTICS_FILE = os.path.join(_DIR, "ronin_analytics.json")
@@ -64,12 +78,11 @@ def should_analyze():
         return False
 
     try:
-        # 最初の投稿（最も古い投稿）の日時を取得する
-        first_post_datetime_str = posts_history[0]["posted_at"]
-
-        # ISO 8601形式の文字列を日時オブジェクトに変換する
-        # "+09:00" のようなタイムゾーン情報を処理するため fromisoformatを使う
-        first_post_datetime = parse_iso_datetime(first_post_datetime_str)
+        # 最初の投稿（最も古い投稿）の日時を全件から求める（並び順に依存しない）
+        first_post_datetime = earliest_post_datetime(posts_history)
+        if first_post_datetime is None:
+            print("⚠️  学習フェーズ: 有効な投稿日時がありません")
+            return False
 
         # 現在の日時を取得する
         now = datetime.now(first_post_datetime.tzinfo)
