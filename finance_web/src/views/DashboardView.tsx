@@ -240,7 +240,7 @@ export default function DashboardView({
   }
   // 今日以降に引き落とされる固定費の合計（今日含む・active な項目のみ）
   const remainingFixed = useMemo(() => {
-    const todayD = today.getDate();
+    const todayD = daysElapsed; // today.getDate() と同じ。毎レンダリングで作り直す today を依存に入れないための数値
     return fixedExpenses
       .filter(f => f.active !== false)
       .reduce((sum, f) => {
@@ -249,7 +249,8 @@ export default function DashboardView({
         if (d === null || d >= todayD) return sum + Number(f.amount || 0);
         return sum;
       }, 0);
-  }, [fixedExpenses, today]);
+  // today はレンダリングごとに新しい Date になりメモ化が効かないので、数値の daysElapsed を依存にする
+  }, [fixedExpenses, daysElapsed]);
   // 今月末予測残高 = 現在の口座残高合計 − 残り固定費 − ローン月額返済合計
   const predictedEndBalance = totalSavings - remainingFixed - totalLoanRepayment;
 
@@ -544,6 +545,7 @@ export default function DashboardView({
         totalSavings={totalSavings}
         prevNet={prevTInc - prevTVar}
         prevTotalIncome={prevTInc}
+        hasAccounts={accounts.length > 0}
       />
 
       {/* ────────── 貯金目標カード（未設定なら CTA、設定済みなら進捗を表示） ────────── */}

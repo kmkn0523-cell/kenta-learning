@@ -29,6 +29,8 @@ interface HealthCheckCardProps {
   prevNet?: number;
   // 前月の収入（前月比貯蓄率の計算に使う。省略可）
   prevTotalIncome?: number;
+  // 口座が1件以上登録されているか（未登録なら緊急資金は診断から除外して不当なE評価を防ぐ。省略時はtrue）
+  hasAccounts?: boolean;
 }
 
 // 個別指標の判定結果
@@ -50,6 +52,7 @@ export default function HealthCheckCard({
   totalSavings,
   prevNet,
   prevTotalIncome,
+  hasAccounts = true,
 }: HealthCheckCardProps) {
 
   // 5指標を個別に判定
@@ -108,19 +111,22 @@ export default function HealthCheckCard({
     }
 
     // ④ 緊急資金：口座残高が月支出の何ヶ月分か。3〜6ヶ月分が推奨（FP業界の定石）
-    const monthsCovered = totalBurden > 0 ? totalSavings / totalBurden : 0;
-    list.push({
-      label: "緊急資金",
-      icon: "🛟",
-      value: totalBurden > 0 ? `${monthsCovered.toFixed(1)}ヶ月分` : "—",
-      score: Math.max(0, Math.min(100, monthsCovered * 16.67)),  // 6ヶ月で100点
-      level: monthsCovered >= 6 ? "good" : monthsCovered >= 3 ? "ok" : "bad",
-      hint: monthsCovered >= 6
-        ? "失業や病気にも備えられます"
-        : monthsCovered >= 3
-          ? "もう少し増やすとより安心"
-          : "月支出3〜6ヶ月分の貯金を目標に",
-    });
+    // 口座が未登録のときは残高が分からず0点になってしまうので、この指標自体を診断から外す
+    if (hasAccounts) {
+      const monthsCovered = totalBurden > 0 ? totalSavings / totalBurden : 0;
+      list.push({
+        label: "緊急資金",
+        icon: "🛟",
+        value: totalBurden > 0 ? `${monthsCovered.toFixed(1)}ヶ月分` : "—",
+        score: Math.max(0, Math.min(100, monthsCovered * 16.67)),  // 6ヶ月で100点
+        level: monthsCovered >= 6 ? "good" : monthsCovered >= 3 ? "ok" : "bad",
+        hint: monthsCovered >= 6
+          ? "失業や病気にも備えられます"
+          : monthsCovered >= 3
+            ? "もう少し増やすとより安心"
+            : "月支出3〜6ヶ月分の貯金を目標に",
+      });
+    }
 
     // ⑤ 収支バランス：単月の手残りがプラスかマイナスか
     list.push({
@@ -137,7 +143,7 @@ export default function HealthCheckCard({
     });
 
     return list;
-  }, [totalIncome, totalBurden, totalLoanRepayment, totalFixedExpense, net, totalSavings]);
+  }, [totalIncome, totalBurden, totalLoanRepayment, totalFixedExpense, net, totalSavings, hasAccounts]);
 
   // 前月比の貯蓄率を計算（prevNet・prevTotalIncome が両方あれば表示）
   const prevSavingRate = prevNet !== undefined && prevTotalIncome !== undefined && prevTotalIncome > 0
