@@ -1,7 +1,7 @@
 // ────────── 共通UIコンポーネント ──────────
 // アプリ全体で使い回す小さな部品をまとめたファイル
 
-import { useState, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
+import { useState, useEffect, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
 import { formatAmount, formatYen } from "../utils/format";
 import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
 
@@ -81,7 +81,8 @@ interface PasswordInputProps {
   err?: boolean;
 }
 export function PasswordInput({ value, onChange, onEnter, placeholder, err }: PasswordInputProps) {
-  const [show, setShow] = useState(true);
+  // 初期状態は「隠す」にする（金融データなので、開いた瞬間にパスワードが丸見えにならないように）
+  const [show, setShow] = useState(false);
   // エラーがある時は枠を赤くする
   const border = err ? "#f87171" : "rgba(255,255,255,0.08)";
 
@@ -115,8 +116,8 @@ export function PasswordInput({ value, onChange, onEnter, placeholder, err }: Pa
         </div>
       )}
       {/* 👁️ボタン：クリックするたびに表示/非表示が切り替わる */}
-      <button type="button" onClick={() => setShow(s => !s)} style={STYLE_PW_TOGGLE_BTN}>
-        {show ? "👁️" : "🙈"}
+      <button type="button" onClick={() => setShow(s => !s)} aria-label={show ? "パスワードを隠す" : "パスワードを表示"} style={STYLE_PW_TOGGLE_BTN}>
+        <span aria-hidden="true">{show ? "👁️" : "🙈"}</span>
       </button>
     </div>
   );
@@ -213,8 +214,10 @@ export function Toast({data}: { data: ToastData | null }) {
   const cl = data.type==="error" ? COLOR_NEGATIVE : data.type==="info" ? COLOR_TEXT_SECONDARY : COLOR_POSITIVE;
   // action があるときだけタップを受け付ける（誤タップでフォーム操作を邪魔しないため）
   const pe = data.action ? "auto" : "none";
+  // エラーは即読み上げ（alert）、それ以外は控えめに読み上げ（status）してスクリーンリーダーに伝える
+  const isError = data.type === "error";
   return (
-    <div style={{ ...STYLE_TOAST_BASE, pointerEvents: pe as any, color: cl, border: `1px solid ${cl}55`, boxShadow: `0 4px 24px ${cl}22` }}>
+    <div role={isError ? "alert" : "status"} aria-live={isError ? "assertive" : "polite"} style={{ ...STYLE_TOAST_BASE, pointerEvents: pe as any, color: cl, border: `1px solid ${cl}55`, boxShadow: `0 4px 24px ${cl}22` }}>
       <span>{data.msg}</span>
       {data.action && (
         <button type="button"
@@ -236,10 +239,17 @@ interface ConfirmDialogData {
   onOk: () => void;
 }
 export function ConfirmDialog({data, onOk, onCancel}: { data: ConfirmDialogData | null; onOk: () => void; onCancel: () => void }) {
+  // Escapeキーでダイアログを閉じられるようにする（キーボード操作のアクセシビリティ対応）
+  useEffect(() => {
+    if (!data) return;
+    const onKey = (e: globalThis.KeyboardEvent) => { if (e.key === "Escape") onCancel(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [data, onCancel]);
   if (!data) return null;
   return (
     <div onClick={onCancel} style={STYLE_CONFIRM_OVERLAY}>
-      <div onClick={e=>e.stopPropagation()} style={{background:"rgba(15,23,42,0.98)",border:`1px solid ${COLOR_BORDER}`,borderRadius:22,padding:24,width:"100%",maxWidth:340,backdropFilter:"blur(20px)"}}>
+      <div onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" style={{background:"rgba(15,23,42,0.98)",border:`1px solid ${COLOR_BORDER}`,borderRadius:22,padding:24,width:"100%",maxWidth:340,backdropFilter:"blur(20px)"}}>
         <div style={{fontSize:15,fontWeight:600,marginBottom:8}}>{data.title}</div>
         <div style={{fontSize:13,color:COLOR_TEXT_SECONDARY,marginBottom:20}}>{data.msg||"この操作は元に戻せません。"}</div>
         <div style={{display:"flex",gap:10}}>

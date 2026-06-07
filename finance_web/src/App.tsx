@@ -347,7 +347,7 @@ function AppInner(){
     <div style={{position:"sticky",top:0,zIndex:50,background:"rgba(7,11,20,0.95)",backdropFilter:"blur(24px)",borderBottom:`1px solid ${COLOR_BORDER_GLOW}`,padding:"0 16px"}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0 12px",maxWidth:520,margin:"0 auto"}}>
         <div><div style={{fontSize:9,letterSpacing:"3px",color:COLOR_ACCENT,textTransform:"uppercase",marginBottom:3,fontWeight:600}}>Before You Broke</div><div style={{fontSize:18,fontWeight:700,letterSpacing:"-0.5px"}}>BYB</div></div>
-        <div style={{textAlign:"right"}}><div style={{fontSize:9,color:COLOR_TEXT_HINT,marginBottom:3,letterSpacing:"1px",textTransform:"uppercase"}}>今月の手残り</div><div style={{fontFamily:"monospace",fontSize:18,fontWeight:700,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE,letterSpacing:"-0.5px"}}>{net>=0?"+":""}{formatYen(net)}</div></div>
+        <div style={{textAlign:"right"}}><div style={{fontSize:9,color:COLOR_TEXT_HINT,marginBottom:3,letterSpacing:"1px",textTransform:"uppercase"}}>{isCur?"今月の手残り":`${selectedMonth+1}月の手残り`}</div><div style={{fontFamily:"monospace",fontSize:18,fontWeight:700,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE,letterSpacing:"-0.5px"}}>{net>=0?"+":""}{formatYen(net)}</div></div>
       </div>
     </div>
     <div style={{padding:"16px 16px calc(110px + env(safe-area-inset-bottom))",maxWidth:520,margin:"0 auto"}}>
@@ -512,9 +512,9 @@ function AppInner(){
     </div>
     <nav style={STYLE_BOTTOM_NAV}>
       {[["dash","📊","概要"],["sum","🧾","サマリー"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["search","🔍","検索"],["set","⚙️","設定"]].map(([key,icon,label])=>(
-        <button type="button" key={key} onClick={()=>setTab(key)} style={{...STYLE_NAV_BTN_BASE,color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT}}>
+        <button type="button" key={key} onClick={()=>setTab(key)} aria-current={tab===key?"page":undefined} style={{...STYLE_NAV_BTN_BASE,color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT}}>
           {tab===key&&<div style={STYLE_NAV_INDICATOR}/>}
-          <span style={{fontSize:22,lineHeight:1,transform:tab===key?"scale(1.12)":"scale(1)",transition:"transform 0.15s ease"}}>{icon}</span>
+          <span aria-hidden="true" style={{fontSize:22,lineHeight:1,transform:tab===key?"scale(1.12)":"scale(1)",transition:"transform 0.15s ease"}}>{icon}</span>
           <span style={{fontWeight:tab===key?700:400,letterSpacing:tab===key?"0.5px":"0"}}>{label}</span>
         </button>
       ))}

@@ -43,9 +43,9 @@ export default function MonthNav({ selectedYear, selectedMonth, onChange }: Mont
 
   return (
     <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:18}}>
-      <button type="button" onClick={prev} style={STYLE_MONTH_NAV_ARROW}>‹</button>
+      <button type="button" onClick={prev} aria-label="前の月へ" style={STYLE_MONTH_NAV_ARROW}><span aria-hidden="true">‹</span></button>
       <span style={{flex:1,textAlign:"center",fontSize:15,fontWeight:600}}>{selectedYear}年 {MONTH_LABELS[selectedMonth]}</span>
-      <button type="button" onClick={next} style={STYLE_MONTH_NAV_ARROW}>›</button>
+      <button type="button" onClick={next} aria-label="次の月へ" style={STYLE_MONTH_NAV_ARROW}><span aria-hidden="true">›</span></button>
       {/* 今月以外を見ている時だけ「今月」ボタンを表示する */}
       {!isCur && <button type="button" onClick={()=>onChange(today.getFullYear(),today.getMonth())} style={{...STYLE_BUTTON_OUTLINE,fontSize:12,padding:"6px 12px",minHeight:30}}>今月</button>}
     </div>
