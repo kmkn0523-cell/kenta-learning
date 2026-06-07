@@ -1,35 +1,35 @@
 {
-  "_comment": "@RoninWords のリプ巡回先。handle/url/theme/notes を実在の英語アカウントに差し替えて使う。stoic / self-discipline / Japanese-wisdom / self-improvement 系の、欧米男性に届くアカウントが狙い目。下のentryはプレースホルダ（PLACEHOLDER）なので必ず本物に置き換えること。",
+  "_comment": "@RoninWords のリプ巡回先。stoic / discipline / masculinity 系で欧米男性に届く実在アカウントに差し替え済み。reach狙いで巨大アンカー+中規模の混成。各 threads.net/@handle がThreadsでアクティブ（直近投稿あり・コメ欄が動いている）か、ときどき目視確認すること。",
   "targets": [
     {
-      "handle": "@PLACEHOLDER_stoic_1",
-      "url": "https://www.threads.net/@PLACEHOLDER_stoic_1",
+      "handle": "@dailystoic",
+      "url": "https://www.threads.net/@dailystoic",
       "theme": "stoicism / mindset",
-      "notes": "コメント欄が活発で、心の在り方系の投稿が多いアカウントに差し替え"
+      "notes": "Ryan Holiday運営・約300万フォロワー。最大級のreachアンカー。コメ欄の競争が激しいので早く・刺さる1コメを返すこと"
     },
     {
-      "handle": "@PLACEHOLDER_discipline_1",
-      "url": "https://www.threads.net/@PLACEHOLDER_discipline_1",
-      "theme": "discipline / habits",
-      "notes": "規律・習慣テーマ。フォロワー多すぎず絡みやすい規模が理想"
+      "handle": "@menwithdiscipline",
+      "url": "https://www.threads.net/@menwithdiscipline",
+      "theme": "discipline / masculinity",
+      "notes": "約22万フォロワー『Stoicism | Masculinity | Life』。Roninの客層ど真ん中・中規模でトップコメに残りやすい"
     },
     {
-      "handle": "@PLACEHOLDER_selfimprovement_1",
-      "url": "https://www.threads.net/@PLACEHOLDER_selfimprovement_1",
-      "theme": "self-improvement",
-      "notes": "自己研鑽系。質問形の投稿が多いとリプしやすい"
+      "handle": "@masculinitylessons",
+      "url": "https://www.threads.net/@masculinitylessons",
+      "theme": "self-improvement / stoic masculinity",
+      "notes": "約27万フォロワー『Masculinity | Stoic | Mindset』。欧米男性の自己研鑽層。共感+1行の知恵リプが効く"
     },
     {
-      "handle": "@PLACEHOLDER_japanese_wisdom_1",
-      "url": "https://www.threads.net/@PLACEHOLDER_japanese_wisdom_1",
-      "theme": "Japanese wisdom / zen",
-      "notes": "禅・東洋思想系。roninの世界観と親和性が高い"
+      "handle": "@theeverydaystoic",
+      "url": "https://www.threads.net/@theeverydaystoic",
+      "theme": "stoicism / daily wisdom",
+      "notes": "約47万フォロワー。日々の実践stoic。Japanese wisdom専用の良アカウントが希少なため、客層重視でこの枠に採用"
     },
     {
-      "handle": "@PLACEHOLDER_mindset_2",
-      "url": "https://www.threads.net/@PLACEHOLDER_mindset_2",
-      "theme": "stoic / resilience",
-      "notes": "逆境・打たれ強さ系。共感リプが効く"
+      "handle": "@thestoiccs",
+      "url": "https://www.threads.net/@thestoiccs",
+      "theme": "stoic / resilience / brotherhood",
+      "notes": "約100万フォロワー『Largest Brotherhood of Stoics』。男性層が濃く、逆境・打たれ強さ系の共感リプが刺さる"
     }
   ]
 }
