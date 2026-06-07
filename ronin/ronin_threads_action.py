@@ -9,6 +9,11 @@ import time                    # 待機処理に使う道具
 import requests                # インターネットにリクエストを送る道具
 from datetime import datetime, timezone  # 今の日時とタイムゾーンを扱う道具
 
+# ronin専用モジュール（同じ ronin/ フォルダ内・cd ronin で実行されるためベアimport）
+import ronin_hashtags          # ハッシュタグ・ローテーション
+import ronin_engagement        # engagement在庫（コメント誘発投稿）
+import ronin_comment_seeder    # 1コメ目テキスト生成
+
 # ローカル実行時は .env ファイルからAPIキーを読み込む（GitHub Actionsでは不要）
 try:
     from dotenv import load_dotenv
@@ -30,16 +35,11 @@ PROGRESS_FILE = "ronin_threads_progress.json"   # 「次は何番目を投稿す
 # GitHubにpushされた画像ファイルを直接URLで参照する
 GITHUB_RAW_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_images"
 
-# 全投稿に自動でつける共通ハッシュタグ（英語アカウント向け）
-HASHTAGS = "\n\n#JapaneseWisdom #Bushido #Zen #Samurai #Wisdom"
-
-# Gumroad壁紙パックへの誘導文（14投稿に1回・偶数サイクル）
+# マネタイズ導線は本文ではなく「1コメ目」に載せる（本文をクリーンに保ち配信抑制を避ける）
 GUMROAD_URL = "https://kmknova8.gumroad.com/l/mowuxf"
-GUMROAD_CTA = f"\n\n🖌 Get the calligraphy wallpaper pack → {GUMROAD_URL}"
-
-# Substackへの誘導文（14投稿に1回・奇数サイクル、Gumroadと交互）
 SUBSTACK_URL = "https://substack.com/@roninwords"
-SUBSTACK_CTA = f"\n\n📖 Full deep dive on this teaching → {SUBSTACK_URL}"
+GUMROAD_LINE = f"🖌 Get the calligraphy wallpaper pack → {GUMROAD_URL}"
+SUBSTACK_LINE = f"📖 Full deep dive on this teaching → {SUBSTACK_URL}"
 
 
 def get_image_url(day):
@@ -132,6 +132,31 @@ def post_to_threads(text, image_url=None, reply_to_id=None):
     return publish_data["id"]  # 投稿IDを返す
 
 
+def decide_post_kind(history_count):
+    """投稿履歴の件数から、今回が教えの投稿かengagement投稿かを決める。
+    4投稿に1回(余り3)をengagementにする。"""
+    return "engagement" if history_count % 4 == 3 else "teaching"
+
+
+def build_full_text(content, hashtags):
+    """本文＋ハッシュタグを組み立てる。500字を超える場合は本文側を丸める（タグは必ず残す）。"""
+    suffix = f"\n\n{hashtags}"
+    if len(content) + len(suffix) > 500:
+        content = content[:500 - len(suffix) - 1] + "…"
+    return content + suffix
+
+
+def cta_line_for_cycle(history_count):
+    """14投稿サイクルで、1コメ目に載せるCTAリンク行を返す（通常回は空文字）。
+    余り0=Gumroad / 余り7=Substack（従来の本文CTAと同じ周期）。"""
+    cycle = history_count % 14
+    if cycle == 0:
+        return GUMROAD_LINE
+    if cycle == 7:
+        return SUBSTACK_LINE
+    return ""
+
+
 def flatten_posts():
     """
     threads_posts.jsonの「Day×朝夜」構造を、フラットな配列に変換する
@@ -175,20 +200,8 @@ def save_progress(progress, last_posted_at=None):
         json.dump(progress, f, ensure_ascii=False, indent=2)
 
 
-def should_use_optimization():
-    """
-    Day21以降かチェック（ロニン用）
-    ronin_optimization_index.jsonの analysis_phase が "optimizing" なら True
-    """
-    try:
-        with open("ronin_optimization_index.json", "r", encoding="utf-8") as f:
-            opt_index = json.load(f)
-
-        # analysis_phase が "optimizing" なら最適化モードを使う
-        return opt_index.get("analysis_phase") == "optimizing"
-    except:
-        # ファイルがなければ False（Day1-20モード）
-        return False
+# NOTE: 旧データ駆動の最適化パス（should_use_optimization / post_optimized）は休止のため削除した。
+#       反応データが有意になったら、型別ランキング選択を git 履歴から戻して main に組み込む。
 
 
 def get_last_post_time():
@@ -274,165 +287,98 @@ def check_should_skip(skip_minutes=90):
     return False
 
 
-def post_sequential():
-    """
-    Day1-20用：投稿データを順番にローテーション投稿する
-    （元のmain()関数の内容をそのまま移動）
+def post_once(dry_run=False):
+    """1回分の投稿を行う。
+    - 4投稿に1回はengagement投稿、それ以外は教えの投稿
+    - 本文にCTAリンクは入れず、公開直後に「1コメ目」を自動返信する
+    - dry_run=True なら組み立て結果を表示するだけでAPIも保存もしない
     """
     now = datetime.now().strftime("%Y/%m/%d %H:%M")
-    print(f"=== Ronin自動投稿開始（シーケンシャルモード）: {now} ===")
+    print(f"=== Ronin自動投稿: {now}{' [DRY-RUN]' if dry_run else ''} ===")
 
-    # 投稿データと進捗を読み込む
-    posts    = flatten_posts()
     progress = load_progress()
+    teaching_posts = flatten_posts()
+    history_count = len(progress.get("history", []))
 
-    # 順番にローテーション（60投稿を超えたら最初に戻る）
-    index = progress.get("index", 0) % len(posts)
-    post  = posts[index]
+    # 今回の種別・ハッシュタグ・CTAを決める
+    kind = decide_post_kind(history_count)
+    hashtags = ronin_hashtags.pick_hashtag_set(history_count)
+    cta_line = cta_line_for_cycle(history_count)
 
-    # 本文に共通ハッシュタグを追加
-    # Threads APIの上限は500文字なので、超える場合は末尾を「…」でカットする
-    # 14投稿ごとにGumroad/Substackを交互に追加する
-    # 0,14,28…投稿目→Gumroad  7,21,35…投稿目→Substack
-    total_so_far = len(progress.get("history", []))
-    cycle = total_so_far % 14
-    extra_cta = GUMROAD_CTA if cycle == 0 else (SUBSTACK_CTA if cycle == 7 else "")
-    suffix = HASHTAGS + extra_cta
-    content = post["content"]
-    if len(content + suffix) > 500:
-        content = content[:500 - len(suffix) - 1] + "…"
-    full_text = content + suffix
+    image_url = None  # engagementは画像なし、teachingは後で設定
 
-    print(f"投稿番号: {index + 1}/{len(posts)}")
-    print(f"投稿タイプ: Day{post['day']:02d} {post['type']}")
-    print(f"投稿内容（先頭100文字）:\n{full_text[:100]}...\n")
+    if kind == "engagement":
+        eng_posts = ronin_engagement.load_engagement_posts()
+        if eng_posts:
+            eng_index = progress.get("engagement_index", 0)
+            eng = ronin_engagement.pick_engagement_post(eng_posts, eng_index)
+            content = eng["text"]
+            seed_base = eng["seed_comment"]
+            label = f"engagement {eng['id']}"
+        else:
+            # 在庫が無ければ教えの投稿にフォールバック
+            print("⚠️ engagement在庫が空。教えの投稿にフォールバックします。")
+            kind = "teaching"
 
-    # Threads APIで投稿する（書道カード画像付き）
-    image_url = get_image_url(post["day"])
+    if kind == "teaching":
+        index = progress.get("index", 0) % len(teaching_posts)
+        post = teaching_posts[index]
+        content = post["content"]
+        seed_base = ronin_comment_seeder.pick_generic_seed(history_count)
+        image_url = get_image_url(post["day"])
+        label = f"Day{post['day']:02d} {post['type']}"
+
+    # 本文（CTA無し・ハッシュタグ付き）と1コメ目を組み立てる
+    full_text = build_full_text(content, hashtags)
+    seed_text = ronin_comment_seeder.build_seed_comment(seed_base, cta=cta_line)
+
+    print(f"種別: {kind} / {label} / タグ: {hashtags}")
+    print(f"本文(先頭80字): {full_text[:80]}...")
+    print(f"1コメ目(seed): {seed_text[:80]}...")
+
+    if dry_run:
+        print("=== DRY-RUN 完了（投稿も保存もしていません）===")
+        return
+
+    # 本投稿
     post_id = post_to_threads(full_text, image_url=image_url)
-    print(f"✅ 投稿成功！（投稿ID: {post_id}）")
+    print(f"✅ 本投稿成功（ID: {post_id}）")
 
-    # 次の投稿番号に進める（60を超えたら0に戻る）
-    progress["index"] = (index + 1) % len(posts)
-    next_post = posts[progress["index"]]
-    print(f"次回: Day{next_post['day']:02d} {next_post['type']}")
+    # 1コメ目を自動返信（失敗しても本投稿は成功扱い）
+    try:
+        reply_id = post_to_threads(seed_text, reply_to_id=post_id)
+        print(f"✅ 1コメ目シード成功（ID: {reply_id}）")
+    except Exception as e:
+        print(f"⚠️ 1コメ目シード失敗（本投稿は成功済み・スキップ）: {e}")
 
-    # 履歴に記録する
-    if "history" not in progress:
-        progress["history"] = []
-    progress["history"].append({
+    # 進捗を進める（種別ごとにインデックスを別管理）
+    if kind == "engagement":
+        progress["engagement_index"] = progress.get("engagement_index", 0) + 1
+    else:
+        progress["index"] = (progress.get("index", 0) + 1) % len(teaching_posts)
+
+    progress.setdefault("history", []).append({
         "date": now,
-        "day": post["day"],
-        "type": post["type"],
-        "post_id": post_id
+        "kind": kind,
+        "label": label,
+        "post_id": post_id,
     })
-
-    now_iso = datetime.now(timezone.utc).isoformat()  # 投稿した日時（UTC）を記録
-    save_progress(progress, last_posted_at=now_iso)  # 進捗と投稿時刻を保存する
+    now_iso = datetime.now(timezone.utc).isoformat()
+    save_progress(progress, last_posted_at=now_iso)
     print("=== 完了 ===")
 
 
-def post_optimized():
-    """
-    Day21以降用：最適化インデックスを参照して投稿する
-    （ハッシュタグと投稿順序を最適化）
-    """
-    now = datetime.now().strftime("%Y/%m/%d %H:%M")
-    print(f"=== Ronin自動投稿開始（最適化モード）: {now} ===")
-
-    try:
-        # 最適化インデックスを読む
-        with open("ronin_optimization_index.json", "r", encoding="utf-8") as f:
-            opt_index = json.load(f)
-
-        # posts データを読む
-        posts_data = flatten_posts()
-
-        # next_post_queue から次の投稿を取得
-        queue = opt_index.get("next_post_queue", [])
-        if not queue:
-            print("❌ キューが空です。シーケンシャルモードにフォールバックします。")
-            post_sequential()
-            return
-
-        # キューの最初の投稿を取得
-        next_post_info = queue[0]
-        day = next_post_info["day"]
-        post_type = next_post_info["type"]
-
-        # posts_dataから該当する投稿を検索
-        target_post = None
-        for p in posts_data:
-            if p["day"] == day and p["type"] == post_type:
-                target_post = p
-                break
-
-        if not target_post:
-            print(f"❌ Day {day} の {post_type} 投稿データが見つかりません")
-            return
-
-        # 最適ハッシュタグセットを取得（デフォルトは基本タグセット）
-        hashtag_set = opt_index.get("hashtag_optimization", {}).get(f"day_{day}", "hashtags_set_A")
-
-        # 投稿本文
-        # 14投稿ごとにGumroad/Substackを交互に追加する
-        progress_check = load_progress()
-        total_so_far = len(progress_check.get("history", []))
-        cycle = total_so_far % 14
-        extra_cta = GUMROAD_CTA if cycle == 0 else (SUBSTACK_CTA if cycle == 7 else "")
-        suffix = HASHTAGS + extra_cta
-        content = target_post["content"]
-        if len(content + suffix) > 500:
-            content = content[:500 - len(suffix) - 1] + "…"
-        full_text = content + suffix
-
-        print(f"投稿タイプ: Day{day:02d} {post_type}")
-        print(f"ハッシュタグセット: {hashtag_set}")
-        print(f"投稿内容（先頭100文字）:\n{full_text[:100]}...\n")
-
-        # Threads APIで投稿する（書道カード画像付き）
-        image_url = get_image_url(day)
-        post_id = post_to_threads(full_text, image_url=image_url)
-        print(f"✅ 投稿成功！（投稿ID: {post_id}）")
-
-        # キューから削除
-        opt_index["next_post_queue"].pop(0)
-        with open("ronin_optimization_index.json", "w", encoding="utf-8") as f:
-            json.dump(opt_index, f, indent=2, ensure_ascii=False)
-
-        # progress.json にも last_posted_at を記録する（重複防止の check_should_skip で参照）
-        progress = load_progress()
-        now_iso = datetime.now(timezone.utc).isoformat()  # 投稿した日時（UTC）を記録
-        save_progress(progress, last_posted_at=now_iso)   # 投稿時刻を保存する
-
-        print("✅ キューを更新しました")
-        print("=== 完了 ===")
-
-    except Exception as e:
-        print(f"❌ エラー発生: {e}")
-        print("シーケンシャルモードにフォールバックします。")
-        post_sequential()
-
-
 def main():
-    """
-    メイン処理
-    1. ヘルスチェック: 90分以内に投稿済みならスキップ（重複防止）
-    2. Day21前後で投稿モードを自動切り替え
-    """
+    """メイン処理: 90分以内に投稿済みならスキップ。--dry-runで実投稿せず確認。"""
+    import sys
+    dry_run = "--dry-run" in sys.argv
+
     print(f"=== Ronin自動投稿ヘルスチェック: {datetime.now().strftime('%Y/%m/%d %H:%M')} ===")
 
-    # 直近90分以内に投稿済みならスキップする（重複防止・自動修復の起点）
-    if check_should_skip(skip_minutes=90):
-        return  # 投稿済みなので何もしない
+    if not dry_run and check_should_skip(skip_minutes=90):
+        return  # 直近に投稿済み（重複防止）
 
-    # Day21以降かチェック
-    if should_use_optimization():
-        print("📊 最適化モードを使用します (Day 21以降)")
-        post_optimized()
-    else:
-        print("📍 シーケンシャルモードを使用します (Day 1-20)")
-        post_sequential()
+    post_once(dry_run=dry_run)
 
 
 if __name__ == "__main__":
