@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T08:27:42.885980",
+  "last_updated": "2026-06-07T08:48:45.122441",
   "posts_history": [
     {
       "day": 67,
@@ -1341,6 +1341,138 @@
       "comments": 0,
       "shares": 0,
       "views": 25,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 84,
+      "type": "morning",
+      "post_id": "18183000037383173",
+      "posted_at": "2026-06-07T06:01:11+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 9,
+      "engagement_rate": 11.11
+    },
+    {
+      "day": 83,
+      "type": "evening",
+      "post_id": "18104914802074506",
+      "posted_at": "2026-06-07T04:01:10+0000",
+      "likes": 1,
+      "comments": 1,
+      "shares": 0,
+      "views": 15,
+      "engagement_rate": 13.33
+    },
+    {
+      "day": 83,
+      "type": "morning",
+      "post_id": "18092019266603286",
+      "posted_at": "2026-06-07T02:01:12+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 20,
+      "engagement_rate": 5.0
+    },
+    {
+      "day": 83,
+      "type": "morning",
+      "post_id": "18108549884317438",
+      "posted_at": "2026-06-07T01:44:47+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 12,
+      "engagement_rate": 8.33
+    },
+    {
+      "day": 82,
+      "type": "evening",
+      "post_id": "17863034985595026",
+      "posted_at": "2026-06-07T00:01:13+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 6,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 82,
+      "type": "morning",
+      "post_id": "18354841723240984",
+      "posted_at": "2026-06-06T22:01:12+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 1,
+      "views": 18,
+      "engagement_rate": 5.56
+    },
+    {
+      "day": 81,
+      "type": "evening",
+      "post_id": "17993215484963547",
+      "posted_at": "2026-06-06T20:01:13+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 20,
+      "engagement_rate": 5.0
+    },
+    {
+      "day": 81,
+      "type": "morning",
+      "post_id": "17992023911986743",
+      "posted_at": "2026-06-06T17:41:47+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 8,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 80,
+      "type": "evening",
+      "post_id": "18122183587679485",
+      "posted_at": "2026-06-06T16:01:09+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 8,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 80,
+      "type": "morning",
+      "post_id": "17899012089310829",
+      "posted_at": "2026-06-06T14:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 24,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 79,
+      "type": "evening",
+      "post_id": "18094522309983932",
+      "posted_at": "2026-06-06T12:01:12+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 19,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 79,
+      "type": "morning",
+      "post_id": "18093563612221687",
+      "posted_at": "2026-06-06T10:01:11+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 27,
       "engagement_rate": 0.0
     }
   ],
