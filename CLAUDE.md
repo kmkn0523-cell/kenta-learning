@@ -53,7 +53,7 @@
 - `.env` の `GITHUB_PERSONAL_ACCESS_TOKEN` はMCP github用、コミット禁止
 
 ## 稼働中の自動化（触るときは慎重に）
-- **@RoninWords Threads**: 1日16回（毎時30分 7:30〜22:30 JST）GitHub Actions経由
+- **@RoninWords Threads**: 1日約12回・約2時間おき（cron 4回/日＋外部スケジューラ`kmkn0523-cell`の毎時dispatchを、スクリプトの90分間隔ガードで間引いた実態）GitHub Actions経由
 - **skin Threads**: 1日4回（7:30/12:30/18:30/21:30 JST）GitHub Actions経由
 - **Threadsトークン期限**: 2026/06/26頃 → 手順: `docs/threads_token_renewal.md`
 
