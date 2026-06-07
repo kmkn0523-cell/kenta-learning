@@ -33,6 +33,9 @@
 | 4/27 | ronin_threads_action.py | @RoninWords用Threads自動投稿（GitHub Actions版） | API認証、環境変数、JSONローテーション、共通タグ自動付与 |
 | 6/2 | skin_reply_hunter.py | skinのリプ巡回ツール（探す→書く→記録を1コマンドに・半自動／Threads APIは使わない） | TDD（テスト先行）、純粋関数とファイル操作の分離、キーワードで話題判定、テンプレ共通化（skin_comment_templates.py） |
 | 6/4 | reaction_dashboard.py | skin/ronin全SNS（Threads・Instagram・note・Substack）の投稿数と反応を1枚の dashboard.md に集約するダッシュボード生成 | 複数JSONの集約読み込み、標準ライブラリのみ（json/pathlib/datetime）、「読むだけ＝既存ファイルを壊さない」設計、複数の日時形式のパース、try/exceptで一部が壊れても全体を止めないエラー処理 |
+| 6/7 | ronin_hashtags.py | @RoninWordsのハッシュタグを4セットで回す（純粋関数） | 投稿カウントの余りでローテーション、純粋関数はI/Oと分離してテストしやすくする |
+| 6/7 | ronin_engagement.py | コメント誘発投稿(engagement post)の在庫ロード/選択/検証 | JSON在庫の読込・選択、必須キー/字数/重複のバリデーション、検証関数をエラー文字列リストで返す設計 |
+| 6/7 | ronin_comment_seeder.py | 投稿直後に付ける「1コメ目」の文章生成（純粋関数） | 早期リプライでreachを伸ばす考え方、本文とリンクの分離、500字丸め |
 
 ---
 
@@ -127,6 +130,7 @@
 | 4/24 | じゃんけん、天気予報作成 | API通信、JSON、勝敗判定ロジック |
 | 4/25 | タイマー・数当て・曜日表示作成、learning_notes.md・CLAUDE.md作成 | 指示文の書き方、CLAUDE.mdでClaudeに好みを覚えさせる方法、エラー自己解決 |
 | 6/4 | reaction_dashboard.py作成、ronin反応収集のcomments→500修正、ronin/skin analyzerの+0000日付バグ修正 | 複数JSONの集約・既存ファイルを壊さない「読むだけ」設計、複数日時フォーマットのパース、try/exceptで部分失敗しても全体を止めないエラー処理 |
+| 6/7 | @RoninWords reach加速：コメント誘発投稿32本＋1コメ目自動シード＋動的ハッシュタグ＋analyzer 0日バグ修正（TDD・feature隔離→mainマージ） | Threadsはリプライ数で非フォロワー拡散が決まる、reply_to_idで自分の投稿に返信、本文クリーン化で配信抑制回避、auto_syncがmainを自動pushするのでfeatureブランチで本番保護、純粋関数のTDD、死んだコードの撤去 |
 
 ---
 

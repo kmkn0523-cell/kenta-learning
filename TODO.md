@@ -94,7 +94,16 @@
 - [x] 画像投稿対応（書道カード画像をThreadsに自動投稿）
 - [ ] フォロワー数・反応をスプレッドシートで記録する仕組み
 - [ ] 反応の良かった投稿パターンを分析する
-- [ ] **【次の課題】ronin_analyzer「現在: 0日」問題** — `posts_history` の並び順が逆（末尾が最新のはず）で、Day1判定ができず分析が始まらない疑い。日付解析バグとは別件。`posts_history[0]` の日付を確認して蓄積順を調査する
+- [x] **ronin_analyzer「現在: 0日」問題**（2026/06/07 修正：`should_analyze` が `posts_history[0]` を最古と仮定していたのを、全件 `min` で最古を求める `earliest_post_datetime` に変更）
+
+#### reach加速（2026/06/07・feature/ronin-reach-boost → main マージ済み）
+- [x] コメント誘発engagement投稿32本（6型×5＋種2・`ronin/ronin_engagement_posts.json`）。4投稿に1回自動差し込み
+- [x] 投稿直後の1コメ目自動シード（`reply_to_id`・早期リプライで非フォロワー拡散）。ライブ実証済み（本投稿18108549884317438＋1コメ目17967528567091426）
+- [x] ハッシュタグ動的ローテーション（固定5個→4セット・越境タグ #StoicMindset 等で新規流入・`ronin/ronin_hashtags.py`）
+- [x] Gumroad/SubstackのCTAを本文から1コメ目へ移動（本文クリーン化で配信抑制回避）
+- [x] 死んだ最適化パス（should_use_optimization/post_optimized）を撤去し本線を単純化
+- [x] `--dry-run` 追加・テスト24件 全通過・設計書/計画書を `docs/superpowers/` に追加
+- [ ] 1〜2週後：engagement投稿のコメント数・1コメ目以降の自然リプライ・非フォロワー流入をダッシュボードで確認
 
 #### マネタイズ（海外版note販売）
 - [ ] 英語翻訳スクリプト作成（自動翻訳 or 手動テンプレート）
