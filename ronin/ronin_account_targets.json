@@ -1,0 +1,35 @@
+{
+  "_comment": "@RoninWords のリプ巡回先。handle/url/theme/notes を実在の英語アカウントに差し替えて使う。stoic / self-discipline / Japanese-wisdom / self-improvement 系の、欧米男性に届くアカウントが狙い目。下のentryはプレースホルダ（PLACEHOLDER）なので必ず本物に置き換えること。",
+  "targets": [
+    {
+      "handle": "@PLACEHOLDER_stoic_1",
+      "url": "https://www.threads.net/@PLACEHOLDER_stoic_1",
+      "theme": "stoicism / mindset",
+      "notes": "コメント欄が活発で、心の在り方系の投稿が多いアカウントに差し替え"
+    },
+    {
+      "handle": "@PLACEHOLDER_discipline_1",
+      "url": "https://www.threads.net/@PLACEHOLDER_discipline_1",
+      "theme": "discipline / habits",
+      "notes": "規律・習慣テーマ。フォロワー多すぎず絡みやすい規模が理想"
+    },
+    {
+      "handle": "@PLACEHOLDER_selfimprovement_1",
+      "url": "https://www.threads.net/@PLACEHOLDER_selfimprovement_1",
+      "theme": "self-improvement",
+      "notes": "自己研鑽系。質問形の投稿が多いとリプしやすい"
+    },
+    {
+      "handle": "@PLACEHOLDER_japanese_wisdom_1",
+      "url": "https://www.threads.net/@PLACEHOLDER_japanese_wisdom_1",
+      "theme": "Japanese wisdom / zen",
+      "notes": "禅・東洋思想系。roninの世界観と親和性が高い"
+    },
+    {
+      "handle": "@PLACEHOLDER_mindset_2",
+      "url": "https://www.threads.net/@PLACEHOLDER_mindset_2",
+      "theme": "stoic / resilience",
+      "notes": "逆境・打たれ強さ系。共感リプが効く"
+    }
+  ]
+}
