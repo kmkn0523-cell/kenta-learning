@@ -5,7 +5,7 @@
 import React, { useState, useMemo, lazy, Suspense, CSSProperties } from "react";
 import { Tx, Income, Loan, Account, Transfer, SavingGoal, FixedExpense } from "../types";
 import MonthNav from "../components/MonthNav";
-import { Input, StatLabel, ProgressBar } from "../components/ui";
+import { Input, StatLabel, ProgressBar, CollapsibleSection } from "../components/ui";
 import TransferForm from "../components/TransferForm";
 // グラフコンポーネントは画面下部にあり recharts(500KB) を引っ張ってくるので遅延ロードで分離
 const MonthlyChart = lazy(() => import("../components/MonthlyChart"));
@@ -320,8 +320,9 @@ export default function DashboardView({
         </div>
       </div>
 
-      {/* ────────── 今月のペース予測カード（今月かつ変動支出が1件以上ある時だけ表示） ────────── */}
+      {/* ────────── 今月のペース予測（折りたたみ・今月かつ変動支出が1件以上ある時だけ表示） ────────── */}
       {isCurMonth && totalVariableExpense > 0 && (
+        <CollapsibleSection title="📈 今月のペース" defaultOpen>
         <div style={{...STYLE_CARD, borderColor: paceRed ? `${COLOR_NEGATIVE}44` : paceYellow ? "rgba(251,191,36,0.3)" : COLOR_BORDER}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
             <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>📈 今月のペース</div>
@@ -349,9 +350,11 @@ export default function DashboardView({
               : `現在のペースなら月末は手残り ${formatYen(Math.max(0,projectedNet))} の見込み`}
           </div>
         </div>
+        </CollapsibleSection>
       )}
 
-      {/* ────────── 口座残高カード ────────── */}
+      {/* ────────── 口座残高（折りたたみ・初期は開く） ────────── */}
+      <CollapsibleSection title="🏦 口座残高" defaultOpen>
       <div style={STYLE_CARD}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
           <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>口座残高</div>
@@ -534,8 +537,11 @@ export default function DashboardView({
           </div>
         )}
       </div>
+      </CollapsibleSection>
 
-      {/* ────────── 家計診断カード（5指標で A〜E 評価） ────────── */}
+      {/* ────────── 家計診断（折りたたみ・データがある時だけ表示） ────────── */}
+      {(totalIncome > 0 || totalSavings > 0 || totalBurden > 0) && (
+      <CollapsibleSection title="🩺 家計診断">
       <HealthCheckCard
         totalIncome={totalIncome}
         totalBurden={totalBurden}
@@ -547,8 +553,11 @@ export default function DashboardView({
         prevTotalIncome={prevTInc}
         hasAccounts={accounts.length > 0}
       />
+      </CollapsibleSection>
+      )}
 
-      {/* ────────── 貯金目標カード（未設定なら CTA、設定済みなら進捗を表示） ────────── */}
+      {/* ────────── 貯金目標（折りたたみ） ────────── */}
+      <CollapsibleSection title="🎯 貯金目標">
       <SavingGoalCard
         goal={savingGoal}
         setGoal={setSavingGoal}
@@ -559,7 +568,10 @@ export default function DashboardView({
         ask={ask}
         showT={showT}
       />
+      </CollapsibleSection>
 
+      {/* ────────── 詳しい分析（折りたたみ・4指標/収支バランス/カテゴリ内訳/前月比/前年同月比をまとめる） ────────── */}
+      <CollapsibleSection title="📊 詳しい分析">
       {/* ────────── 4つの集計ラベル（変動支出・固定費・返済・利息） ────────── */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
         <StatLabel label="変動支出" value={formatYen(totalVariableExpense)}/>
@@ -645,8 +657,11 @@ export default function DashboardView({
           }))}
         </div>
       )}
+      </CollapsibleSection>
 
-      {/* ────────── ローン残債一覧カード ────────── */}
+      {/* ────────── ローン残債（折りたたみ・ローンが1件以上ある時だけ表示） ────────── */}
+      {allL.length > 0 && (
+      <CollapsibleSection title="💳 ローン残債">
       <div style={STYLE_CARD}>
         <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px",marginBottom:14,display:"flex",justifyContent:"space-between"}}>
           <span>ローン残債一覧</span><span>{allL.length}件</span>
@@ -684,6 +699,8 @@ export default function DashboardView({
           </span>
         </div>
       </div>
+      </CollapsibleSection>
+      )}
 
       {/* ────────── 振替モーダル ────────── */}
       {showTransfer && (
@@ -694,7 +711,8 @@ export default function DashboardView({
         />
       )}
 
-      {/* ────────── 月次推移グラフ（recharts は重いので Suspense で遅延ロード） ────────── */}
+      {/* ────────── グラフ（折りたたみ・開いた時だけ recharts を読み込むので初期表示が軽い） ────────── */}
+      <CollapsibleSection title="📉 グラフ">
       <Suspense fallback={<div style={{...STYLE_CARD,textAlign:"center",color:COLOR_TEXT_HINT,fontSize:12,padding:"40px 0"}}>📊 グラフを読み込み中…</div>}>
         {/* カテゴリ別支出割合：今月どのカテゴリに何%使ったかをドーナツグラフで可視化 */}
         <CategoryPieChart
@@ -708,6 +726,7 @@ export default function DashboardView({
         {/* 累積手残り推移：貯まっているかどうかをひと目で確認できる折れ線グラフ */}
         <NetWorthChart tx={transactions} inc={incomes} tFx={totalFixedExpense}/>
       </Suspense>
+      </CollapsibleSection>
 
       {/* ────────── バックアップ／復元カード ────────── */}
       <div style={STYLE_CARD}>
