@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "id": "eng001",
+      "archetype": "either_or",
+      "theme": "discipline",
+      "text": "Train for a war that never comes.\n\nWise preparation — or wasted years?\n\nReply 🅰 wise  /  🅱 wasted.",
+      "seed_comment": "I say 🅰. A blade kept sharp for nothing is still a sharp blade. Which did you pick — and why?"
+    },
+    {
+      "id": "eng002",
+      "archetype": "fill_blank",
+      "theme": "mastery",
+      "text": "The hardest discipline is ___.\n\nFinish the sentence in one word.",
+      "seed_comment": "Mine is patience. The slow work feels like doing nothing — until it isn't. What's your word?"
+    }
+  ]
+}
