@@ -47,16 +47,27 @@ def get_image_url(day):
     return f"{GITHUB_RAW_BASE}/day{day:02d}.png"
 
 
-def post_to_threads(text, image_url=None):
+def post_to_threads(text, image_url=None, reply_to_id=None):
     """
     Threads APIを使って実際に投稿する（2段階APIコール）
-    image_urlを渡すと画像付き投稿、なければテキスト投稿になる
+    - image_url を渡すと画像付き投稿
+    - reply_to_id を渡すと、その投稿への返信になる（1コメ目シーディング用）
+    - どちらも無ければテキスト投稿
     """
 
     # ステップ1: 投稿コンテナ（投稿の下書き）を作成する
     container_url = f"https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads"
 
-    if image_url:
+    if reply_to_id:
+        # 返信投稿（テキストのみ・親投稿IDを指定）
+        container_params = {
+            "media_type": "TEXT",                 # 返信はテキスト
+            "text": text,                         # 返信文
+            "reply_to_id": reply_to_id,           # 返信先の投稿ID
+            "access_token": THREADS_ACCESS_TOKEN  # 認証キー
+        }
+        print(f"  返信先ID: {reply_to_id}")
+    elif image_url:
         # 画像付き投稿（media_type=IMAGE、テキストはキャプションとして添付）
         container_params = {
             "media_type": "IMAGE",                # 画像投稿
