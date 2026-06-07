@@ -1,7 +1,7 @@
 // ────────── 共通UIコンポーネント ──────────
 // アプリ全体で使い回す小さな部品をまとめたファイル
 
-import { useState, useEffect, ChangeEvent, CSSProperties, KeyboardEvent, forwardRef } from "react";
+import { useState, useEffect, ChangeEvent, CSSProperties, KeyboardEvent, ReactNode, forwardRef } from "react";
 import { formatAmount, formatYen } from "../utils/format";
 import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
 
@@ -257,6 +257,43 @@ export function ConfirmDialog({data, onOk, onCancel}: { data: ConfirmDialogData 
           <button type="button" onClick={onOk} style={{...STYLE_BUTTON_PRIMARY,flex:1,background:COLOR_NEGATIVE}}>削除する</button>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ────────── 折りたたみセクション ──────────
+// 見出しをタップすると中身が開閉する。重いグラフなどは open のときだけ描画するので初期表示が軽くなる
+interface CollapsibleSectionProps {
+  title: string;          // 見出しテキスト（絵文字を含めてOK）
+  defaultOpen?: boolean;  // 初期状態で開いておくか（省略時は閉じた状態）
+  children: ReactNode;    // 開いたときに表示する中身
+}
+export function CollapsibleSection({ title, defaultOpen = false, children }: CollapsibleSectionProps) {
+  // このセクションが開いているかどうか（その場のメモリで管理）
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div style={{ marginBottom: open ? 0 : 14 }}>
+      {/* 見出しバー：タップで開閉。aria-expanded で開閉状態をスクリーンリーダーに伝える */}
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        style={{
+          width: "100%",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          background: "rgba(15,23,42,0.6)", backdropFilter: "blur(12px)",
+          border: `1px solid ${COLOR_BORDER}`, borderRadius: 12,
+          cursor: "pointer", color: COLOR_TEXT_PRIMARY, fontFamily: "inherit",
+          padding: "13px 16px", fontSize: 13, fontWeight: 700,
+          marginBottom: open ? 12 : 0,
+        }}
+      >
+        <span>{title}</span>
+        {/* ▸ アイコン：開いているときは90度回して▾のように見せる */}
+        <span aria-hidden="true" style={{ color: COLOR_TEXT_HINT, fontSize: 12, transform: open ? "rotate(90deg)" : "none", transition: "transform 0.2s ease" }}>▸</span>
+      </button>
+      {/* 中身は開いているときだけ描画する（閉じている間はDOMにも作らない＝軽い） */}
+      {open && <div>{children}</div>}
     </div>
   );
 }
