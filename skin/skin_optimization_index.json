@@ -1,8 +1,8 @@
 {
-  "last_analyzed": "2026-06-06T08:40:00.442391",
+  "last_analyzed": "2026-06-07T09:22:12.331801",
   "analysis_phase": "optimizing",
   "days_accumulated": 0,
-  "status": "最適化フェーズ：156日分のデータをもとに投稿パターンを最適化しています",
+  "status": "最適化フェーズ：159日分のデータをもとに投稿パターンを最適化しています",
   "pattern_ranking": [
     {
       "day": 16,
@@ -130,22 +130,22 @@
       "priority": 25
     },
     {
-      "day": 55,
-      "score": 0.6,
+      "day": 80,
+      "score": 0.5,
       "priority": 26
     },
     {
-      "day": 54,
-      "score": 0.5,
+      "day": 22,
+      "score": 0.4,
       "priority": 27
     },
     {
-      "day": 80,
-      "score": 0.5,
+      "day": 55,
+      "score": 0.4,
       "priority": 28
     },
     {
-      "day": 22,
+      "day": 54,
       "score": 0.4,
       "priority": 29
     },
