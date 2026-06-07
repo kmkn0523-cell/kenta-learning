@@ -4602,7 +4602,14 @@
       "kind": "teaching",
       "label": "Day84 morning",
       "post_id": "18183000037383173"
+    },
+    {
+      "date": "2026/06/07 08:00",
+      "kind": "engagement",
+      "label": "engagement eng001",
+      "post_id": "18156453163462330"
     }
   ],
-  "last_posted_at": "2026-06-07T06:01:50.161361+00:00"
+  "last_posted_at": "2026-06-07T08:01:49.498464+00:00",
+  "engagement_index": 1
 }
