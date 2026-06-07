@@ -33,6 +33,7 @@
       "/mnt/c/Users/kenta kamijyo"
     ]
   },
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -172,6 +173,5 @@
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "model": "opus"
+  "agentPushNotifEnabled": true
 }
