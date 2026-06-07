@@ -5,7 +5,7 @@
 export const COLOR_BACKGROUND = "#070b14";        // ページの背景（ダークネイビー）
 export const COLOR_TEXT_PRIMARY = "#f0f4ff";      // メインの文字色（クールホワイト）
 export const COLOR_TEXT_SECONDARY = "#94a3b8";    // サブの文字色（スレートグレー）
-export const COLOR_TEXT_HINT = "#475569";         // ヒント・補足テキストの色（暗めスレート）
+export const COLOR_TEXT_HINT = "#7c8aa0";         // ヒント・補足テキストの色（背景#070b14で約5.6:1。WCAG AA 4.5:1をクリア）
 export const COLOR_BORDER = "rgba(148,163,184,0.12)"; // ボーダー色（青みがかった透明）
 export const COLOR_BORDER_GLOW = "rgba(34,211,238,0.18)"; // シアン寄りの微光ボーダー（ヘッダー・アクセント用）
 export const COLOR_ACCENT = "#22d3ee";            // アクセントカラー（フィンテックサイアン）

@@ -179,7 +179,7 @@ interface ProgressBarProps {
   label: string;
   value: number;
   max: number;
-  color: string; // グラデーション固定のため未使用（呼び出し元との型互換のため残している）
+  color: string; // バーの色（収入=緑・ローン返済=赤 などを色分けするのに使う）
   icon?: string;
 }
 export const ProgressBar = ({label, value, max, color, icon}: ProgressBarProps) =>
@@ -192,7 +192,7 @@ export const ProgressBar = ({label, value, max, color, icon}: ProgressBarProps) 
       <div style={{
         height:"100%",                                            // バーの高さを親に合わせる
         borderRadius:4,                                           // 角の丸み
-        background:`linear-gradient(90deg,#22d3ee,#38bdf8)`,    // シアン→水色のグラデーション（color引数は使わない）
+        background:`linear-gradient(90deg,${color},${color}cc)`,  // 渡された色から少し薄い色へのグラデーション（末尾ccは不透明度約80%）
         width:Math.min(100,(value/(max||1))*100)+"%",            // 値に応じた幅（最大100%）
         transition:"width 0.4s ease",                            // 幅が変わるとき0.4秒でアニメーション
       }}/>
