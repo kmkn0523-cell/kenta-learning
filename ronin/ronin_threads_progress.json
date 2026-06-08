@@ -1,5 +1,5 @@
 {
-  "index": 180,
+  "index": 181,
   "history": [
     {
       "date": "2026/04/27 16:11",
@@ -4710,8 +4710,14 @@
       "kind": "teaching",
       "label": "Day90 evening",
       "post_id": "17934564231266190"
+    },
+    {
+      "date": "2026/06/08 20:00",
+      "kind": "teaching",
+      "label": "Day91 morning",
+      "post_id": "18180976219392566"
     }
   ],
-  "last_posted_at": "2026-06-08T18:01:57.098221+00:00",
+  "last_posted_at": "2026-06-08T20:01:54.166205+00:00",
   "engagement_index": 5
 }
