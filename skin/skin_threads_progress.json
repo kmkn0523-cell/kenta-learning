@@ -1,5 +1,5 @@
 {
-  "daily_index": 275,
+  "daily_index": 276,
   "launch_index": 0,
   "history": [
     {
@@ -4626,6 +4626,13 @@
       "theme_id": 59,
       "variant": "B",
       "post_id": "18120560281669434"
+    },
+    {
+      "date": "2026/06/08 08:00",
+      "theme": "ビタミンB群と肌",
+      "theme_id": 60,
+      "variant": "B",
+      "post_id": "18129431077609720"
     }
   ],
   "ab_next": "A",
@@ -4738,7 +4745,7 @@
     "57": "A",
     "58": "A",
     "59": "A",
-    "60": "B"
+    "60": "A"
   },
   "ab_results": {
     "61": {
@@ -5387,10 +5394,10 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 1,
-      "b_posts": 0
+      "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-08T03:01:16.745671+00:00",
+  "last_posted_at": "2026-06-08T08:01:21.439071+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8d4de0dad736",
   "last_note_promo_date": "2026/06/06",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
