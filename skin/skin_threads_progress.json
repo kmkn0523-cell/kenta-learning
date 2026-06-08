@@ -4640,6 +4640,13 @@
       "theme_id": 61,
       "variant": "A",
       "post_id": "18456058330118821"
+    },
+    {
+      "date": "2026/06/08 14:41",
+      "theme": "note宣伝: 乳製品をやめたら肌荒れが治った。その理由を科学的に説明します",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18086861918526731"
     }
   ],
   "ab_next": "A",
@@ -5404,9 +5411,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-08T13:01:21.039741+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n8d4de0dad736",
-  "last_note_promo_date": "2026/06/06",
+  "last_posted_at": "2026-06-08T14:42:24.145975+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/nd6c4a831644b",
+  "last_note_promo_date": "2026/06/08",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/05"
 }
