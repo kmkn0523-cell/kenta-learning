@@ -1,5 +1,5 @@
 {
-  "next_day": 22,
+  "next_day": 23,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -126,6 +126,12 @@
       "day": 21,
       "post_id": 200906296,
       "title": "柔よく剛を制す — Softness overcomes hardness."
+    },
+    {
+      "date": "2026/06/07 16:06",
+      "day": 22,
+      "post_id": 201025047,
+      "title": "禍を転じて福となす — Turn disaster into fortune."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-06T08:40:00.419289",
+  "last_updated": "2026-06-08T11:06:32.756616",
   "posts_history": [
     {
       "day": 28,
@@ -1716,6 +1716,72 @@
       "shares": 0,
       "views": 37,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 56,
+      "type": "ニキビ跡を消す方法",
+      "post_id": "17910311391411789",
+      "posted_at": "2026-06-07T07:43:10+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 47,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 55,
+      "type": "腸活夜ごはん",
+      "post_id": "18112767755506592",
+      "posted_at": "2026-06-07T03:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 30,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 54,
+      "type": "ビタミンDと肌",
+      "post_id": "18065624900695582",
+      "posted_at": "2026-06-06T22:01:11+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 41,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 59,
+      "type": "洗顔料の選び方",
+      "post_id": "18120560281669434",
+      "posted_at": "2026-06-08T03:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 14,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 58,
+      "type": "黒ずみ毛穴の対策",
+      "post_id": "18177427963407684",
+      "posted_at": "2026-06-07T22:01:12+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 88,
+      "engagement_rate": 1.14
+    },
+    {
+      "day": 57,
+      "type": "敏感肌の正体",
+      "post_id": "18096650572906335",
+      "posted_at": "2026-06-07T12:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 23,
+      "engagement_rate": 0.0
     }
   ],
   "pattern_performance": {
@@ -2151,33 +2217,33 @@
     },
     "day_56": {
       "ニキビ跡を消す方法": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 60.0,
+        "avg_views": 56.0,
         "avg_engagement_rate": 0.0,
-        "best_hour": 11,
+        "best_hour": 7,
         "best_hashtag_set": "A"
       }
     },
     "day_55": {
       "腸活夜ごはん": {
-        "total_posts": 2,
-        "avg_likes": 0.5,
+        "total_posts": 3,
+        "avg_likes": 0.3,
         "avg_comments": 0.0,
-        "avg_views": 44.0,
-        "avg_engagement_rate": 1.17,
-        "best_hour": 9,
+        "avg_views": 39.0,
+        "avg_engagement_rate": 0.78,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_54": {
       "ビタミンDと肌": {
-        "total_posts": 2,
-        "avg_likes": 0.5,
+        "total_posts": 3,
+        "avg_likes": 0.3,
         "avg_comments": 0.0,
-        "avg_views": 38.0,
-        "avg_engagement_rate": 1.06,
+        "avg_views": 39.0,
+        "avg_engagement_rate": 0.71,
         "best_hour": 7,
         "best_hashtag_set": "A"
       }
@@ -2459,10 +2525,10 @@
     },
     "day_59": {
       "洗顔料の選び方": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 43.0,
+        "avg_views": 28.0,
         "avg_engagement_rate": 0.0,
         "best_hour": 18,
         "best_hashtag_set": "A"
@@ -2470,21 +2536,21 @@
     },
     "day_58": {
       "黒ずみ毛穴の対策": {
-        "total_posts": 1,
-        "avg_likes": 0.0,
+        "total_posts": 2,
+        "avg_likes": 0.5,
         "avg_comments": 0.0,
-        "avg_views": 64.0,
-        "avg_engagement_rate": 0.0,
+        "avg_views": 76.0,
+        "avg_engagement_rate": 0.57,
         "best_hour": 16,
         "best_hashtag_set": "A"
       }
     },
     "day_57": {
       "敏感肌の正体": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 38.0,
+        "avg_views": 30.0,
         "avg_engagement_rate": 0.0,
         "best_hour": 12,
         "best_hashtag_set": "A"
