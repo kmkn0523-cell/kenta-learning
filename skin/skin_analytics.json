@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-07T09:22:12.303108",
+  "last_updated": "2026-06-08T11:06:32.756616",
   "posts_history": [
     {
       "day": 28,
@@ -1749,6 +1749,39 @@
       "shares": 0,
       "views": 41,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 59,
+      "type": "洗顔料の選び方",
+      "post_id": "18120560281669434",
+      "posted_at": "2026-06-08T03:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 14,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 58,
+      "type": "黒ずみ毛穴の対策",
+      "post_id": "18177427963407684",
+      "posted_at": "2026-06-07T22:01:12+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 88,
+      "engagement_rate": 1.14
+    },
+    {
+      "day": 57,
+      "type": "敏感肌の正体",
+      "post_id": "18096650572906335",
+      "posted_at": "2026-06-07T12:01:14+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 23,
+      "engagement_rate": 0.0
     }
   ],
   "pattern_performance": {
@@ -2492,10 +2525,10 @@
     },
     "day_59": {
       "洗顔料の選び方": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 43.0,
+        "avg_views": 28.0,
         "avg_engagement_rate": 0.0,
         "best_hour": 18,
         "best_hashtag_set": "A"
@@ -2503,21 +2536,21 @@
     },
     "day_58": {
       "黒ずみ毛穴の対策": {
-        "total_posts": 1,
-        "avg_likes": 0.0,
+        "total_posts": 2,
+        "avg_likes": 0.5,
         "avg_comments": 0.0,
-        "avg_views": 64.0,
-        "avg_engagement_rate": 0.0,
+        "avg_views": 76.0,
+        "avg_engagement_rate": 0.57,
         "best_hour": 16,
         "best_hashtag_set": "A"
       }
     },
     "day_57": {
       "敏感肌の正体": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 38.0,
+        "avg_views": 30.0,
         "avg_engagement_rate": 0.0,
         "best_hour": 12,
         "best_hashtag_set": "A"
