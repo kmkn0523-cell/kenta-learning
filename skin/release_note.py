@@ -6,6 +6,7 @@ import os        # ファイルの存在確認に使う道具
 import json      # JSONファイルを読み書きする道具
 import sys       # エラー時に終了コードを返す道具
 from datetime import datetime  # 今日の日付を取得する道具
+from note_dedup import already_posted_today  # 今日すでに投稿済みかを判定する共通関数
 
 # ファイルのパス設定（このスクリプトがある場所を基準にする）
 BASE_DIR      = os.path.dirname(__file__)                           # skinフォルダ
@@ -65,12 +66,15 @@ def main():
     # 本日すでに投稿済みならスキップ（重複投稿防止）
     # GitHub ActionsのcronはキューにいたときのHEADをpinするため、
     # 別のジョブが先に動いても古いprogress.jsonを読むことがある。
-    # historyの最新エントリが今日の日付なら重複と判断してスキップする。
+    # ワークフロー側で最新mainを取り込んだ上で、historyに今日の投稿が
+    # 1件でもあれば重複と判断してスキップする（末尾だけでなく全件を走査）。
     history = progress.get("history", [])
-    if history and history[-1]["date"].startswith(today):
-        last = history[-1]
-        print(f"✅ 本日（{today}）はすでに投稿済みのためスキップします")
-        print(f"   → 最後の投稿: {last['article']} ({last['date']})")
+    if already_posted_today(history, today):
+        print(f"✅ 本日（{today}）はすでに投稿済みのためスキップします（重複投稿防止）")
+        todays = [entry for entry in history if entry.get("date", "").startswith(today)]
+        if todays:
+            last = todays[-1]
+            print(f"   → 本日の投稿: {last.get('article')} ({last.get('date')})")
         return
 
     # 次の記事を決める（30本使い切ったら最初に戻る）

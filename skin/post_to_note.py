@@ -17,6 +17,7 @@ import json                                    # JSONファイルを読み書き
 import asyncio                                 # 非同期処理を動かすための道具
 from pathlib import Path                       # ファイルパスを扱う道具
 from datetime import datetime, timezone, timedelta  # 日付・時刻を扱う道具
+from note_dedup import already_posted_today  # 今日すでに投稿済みかを判定する共通関数
 
 # ファイルパスを定義する（このスクリプトと同じフォルダ＝skin/ を基準）
 BASE_DIR = Path(__file__).parent                          # skinフォルダ
@@ -398,6 +399,20 @@ def update_progress(article_filename, title, post_url):
 async def main():
     """メイン処理: note_ready.md を読み込み → note.com に投稿 → 進捗を記録"""
     print(f"=== note.com 自動投稿開始 ({datetime.now(JST).strftime('%Y/%m/%d %H:%M')}) ===")
+
+    # 重複投稿ガード（不可逆な「公開」の直前チェック）
+    # 複数のActions実行が古い状態を掴んでも、今日すでに投稿済みなら二度と公開しない。
+    # 下書きモードは履歴を汚さない＆公開もしないのでガード対象外。
+    today = datetime.now(JST).strftime("%Y/%m/%d")
+    if not is_draft_mode():
+        try:
+            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+                current_progress = json.load(f)
+            if already_posted_today(current_progress.get("history", []), today):
+                print(f"⛔ 本日（{today}）は既に投稿済みです。重複投稿を防止して終了します。")
+                return
+        except (json.JSONDecodeError, FileNotFoundError):
+            print("⚠️ progress.json を読めませんでした。ガードはスキップして続行します。")
 
     # note_ready.md を解析する
     article_filename, title, body = parse_ready_file()

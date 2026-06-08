@@ -35,6 +35,13 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: 最新のmainを取り込む（重複投稿防止）
+        # 他の自動実行（Threads/Instagram等）が更新した最新の progress.json / history を
+        # 反映してから判定する。古い状態を掴んで同じ記事を二重投稿するのを防ぐ。
+        run: |
+          git fetch origin main
+          git reset --hard FETCH_HEAD
+
       - name: 次の記事を note_ready.md に展開する
         # 下書きモードでは note_ready.md は既存のものを再利用する（next_indexを進めない）
         if: ${{ inputs.draft_mode != true }}
