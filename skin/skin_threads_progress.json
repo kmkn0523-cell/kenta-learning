@@ -1,5 +1,5 @@
 {
-  "daily_index": 279,
+  "daily_index": 280,
   "launch_index": 0,
   "history": [
     {
@@ -4661,6 +4661,13 @@
       "theme_id": 63,
       "variant": "A",
       "post_id": "18133976494574565"
+    },
+    {
+      "date": "2026/06/09 07:03",
+      "theme": "肌のバリア機能",
+      "theme_id": 64,
+      "variant": "A",
+      "post_id": "18081333044645853"
     }
   ],
   "ab_next": "A",
@@ -4669,7 +4676,7 @@
     "61": "B",
     "62": "B",
     "63": "B",
-    "64": "A",
+    "64": "B",
     "65": "A",
     "66": "A",
     "67": "A",
@@ -4797,7 +4804,7 @@
     "64": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "65": {
@@ -5425,7 +5432,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-09T03:01:20.374582+00:00",
+  "last_posted_at": "2026-06-09T07:03:51.582995+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nd6c4a831644b",
   "last_note_promo_date": "2026/06/08",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
