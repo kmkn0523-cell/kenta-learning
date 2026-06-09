@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-08T11:06:32.756616",
+  "last_updated": "2026-06-09T09:54:38.844609",
   "posts_history": [
     {
       "day": 28,
@@ -1782,6 +1782,39 @@
       "shares": 0,
       "views": 23,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 64,
+      "type": "肌のバリア機能",
+      "post_id": "18081333044645853",
+      "posted_at": "2026-06-09T07:03:48+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 38,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 63,
+      "type": "スキンケアのやりすぎ問題",
+      "post_id": "18133976494574565",
+      "posted_at": "2026-06-09T03:01:17+0000",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "views": 17,
+      "engagement_rate": 0.0
+    },
+    {
+      "day": 61,
+      "type": "抗糖化と美肌",
+      "post_id": "18456058330118821",
+      "posted_at": "2026-06-08T13:01:18+0000",
+      "likes": 1,
+      "comments": 0,
+      "shares": 0,
+      "views": 79,
+      "engagement_rate": 1.27
     }
   ],
   "pattern_performance": {
@@ -2492,10 +2525,10 @@
     },
     "day_64": {
       "肌のバリア機能": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
-        "avg_views": 24.0,
+        "avg_views": 31.0,
         "avg_engagement_rate": 0.0,
         "best_hour": 4,
         "best_hashtag_set": "A"
@@ -2503,7 +2536,7 @@
     },
     "day_63": {
       "スキンケアのやりすぎ問題": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
         "avg_comments": 0.0,
         "avg_views": 16.0,
@@ -2514,12 +2547,12 @@
     },
     "day_61": {
       "抗糖化と美肌": {
-        "total_posts": 1,
-        "avg_likes": 0.0,
+        "total_posts": 2,
+        "avg_likes": 0.5,
         "avg_comments": 0.0,
-        "avg_views": 23.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 22,
+        "avg_views": 51.0,
+        "avg_engagement_rate": 0.64,
+        "best_hour": 13,
         "best_hashtag_set": "A"
       }
     },
