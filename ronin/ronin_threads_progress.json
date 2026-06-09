@@ -4722,8 +4722,14 @@
       "kind": "teaching",
       "label": "Day91 evening",
       "post_id": "18081555455202809"
+    },
+    {
+      "date": "2026/06/09 00:00",
+      "kind": "engagement",
+      "label": "engagement eng006",
+      "post_id": "18097101716336950"
     }
   ],
-  "last_posted_at": "2026-06-08T22:01:52.089362+00:00",
-  "engagement_index": 5
+  "last_posted_at": "2026-06-09T00:01:55.361179+00:00",
+  "engagement_index": 6
 }
