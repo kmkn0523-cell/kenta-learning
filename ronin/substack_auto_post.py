@@ -7,7 +7,10 @@ import os           # パソコンの環境変数を読み込む道具
 import re           # 文字列のパターン検索をする道具
 import json         # JSONファイルを読み書きする道具
 from urllib.parse import unquote         # URLエンコードを元に戻す道具
-from datetime import datetime, timezone  # 日時を扱う道具
+from datetime import datetime, timezone, timedelta  # 日時を扱う道具（timedeltaは時差計算用）
+
+# 日本時間（JST）は世界標準時（UTC）より9時間進んでいる
+JST = timezone(timedelta(hours=9))  # 「毎日きっちり1本」の判定を日本の日付で行うために使う
 from dotenv import load_dotenv           # .envファイルからAPIキーを読み込む道具
 from curl_cffi import requests as cf     # ChromeのTLSフィンガープリントを模倣してCloudflare回避
 import base64                             # 画像データをBase64文字列に変換する道具
@@ -313,6 +316,14 @@ def main():
         print(f"[Day {day}] はすでに投稿済みのためスキップします。", flush=True)
         return
 
+    # 今日（日本時間）すでに1本投稿していれば何もしない（毎日きっちり1本にするためのガード）
+    # ワークフローを1日に何回トリガーしても、最初の1回だけ投稿して残りはここでスキップされる
+    today_jst = datetime.now(JST).strftime("%Y/%m/%d")  # 日本時間での今日の日付（例: 2026/06/11）
+    posted_today = any(h.get("date", "").split(" ")[0] == today_jst for h in progress.get("history", []))
+    if posted_today:
+        print(f"本日（{today_jst} JST）はすでに投稿済みのためスキップします。", flush=True)
+        return
+
     print(f"[Day {day}] 投稿開始: {proverb['japanese']}", flush=True)
 
     # 記事を作成して公開する（curl_cffi経由・画像はCDNにアップロード）
@@ -322,7 +333,7 @@ def main():
     print(f"  公開完了! Post ID: {post_id}", flush=True)
 
     # 進捗を保存する（次回は day+1 から投稿する）
-    now = datetime.now(timezone.utc).strftime("%Y/%m/%d %H:%M")
+    now = datetime.now(JST).strftime("%Y/%m/%d %H:%M")  # 記録は日本時間で残す（当日ガードと日付を揃えるため）
     progress["history"].append({
         "date":    now,
         "day":     day,
