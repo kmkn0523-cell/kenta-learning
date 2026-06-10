@@ -4705,6 +4705,13 @@
       "variant": "A",
       "post_id": "18106171538069684",
       "seed_id": "18095471384600588"
+    },
+    {
+      "date": "2026/06/10 14:15",
+      "theme": "note宣伝: 運動すると肌荒れが治る、は本当か？科学的に答えます。",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18593045461005305"
     }
   ],
   "ab_next": "A",
@@ -5469,9 +5476,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-10T12:02:01.999403+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/nd6c4a831644b",
-  "last_note_promo_date": "2026/06/08",
+  "last_posted_at": "2026-06-10T14:16:40.410534+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
+  "last_note_promo_date": "2026/06/10",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/05"
 }
