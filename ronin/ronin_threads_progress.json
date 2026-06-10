@@ -4818,8 +4818,14 @@
       "kind": "teaching",
       "label": "Day97 evening",
       "post_id": "18593890891061734"
+    },
+    {
+      "date": "2026/06/10 08:00",
+      "kind": "engagement",
+      "label": "engagement eng010",
+      "post_id": "18084782486568917"
     }
   ],
-  "last_posted_at": "2026-06-10T06:01:53.756724+00:00",
-  "engagement_index": 9
+  "last_posted_at": "2026-06-10T08:01:59.444823+00:00",
+  "engagement_index": 10
 }
