@@ -1,5 +1,5 @@
 {
-  "daily_index": 284,
+  "daily_index": 286,
   "launch_index": 0,
   "history": [
     {
@@ -4697,6 +4697,29 @@
       "variant": "A",
       "post_id": "18057704831565608",
       "seed_id": "18114356155731140"
+    },
+    {
+      "date": "2026/06/10 12:00",
+      "theme": "背中ニキビの対策",
+      "theme_id": 29,
+      "variant": "A",
+      "post_id": "18106171538069684",
+      "seed_id": "18095471384600588"
+    },
+    {
+      "date": "2026/06/10 14:15",
+      "theme": "note宣伝: 運動すると肌荒れが治る、は本当か？科学的に答えます。",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18593045461005305"
+    },
+    {
+      "date": "2026/06/10 22:00",
+      "theme": "ターンオーバーを整える",
+      "theme_id": 30,
+      "variant": "A",
+      "post_id": "18079091261646117",
+      "seed_id": "18051988295522383"
     }
   ],
   "ab_next": "A",
@@ -4778,8 +4801,8 @@
     "26": "A",
     "27": "A",
     "28": "B",
-    "29": "A",
-    "30": "A",
+    "29": "B",
+    "30": "B",
     "31": "A",
     "32": "A",
     "33": "A",
@@ -5271,13 +5294,13 @@
     "29": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "30": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "31": {
@@ -5461,9 +5484,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-10T07:54:34.745712+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/nd6c4a831644b",
-  "last_note_promo_date": "2026/06/08",
+  "last_posted_at": "2026-06-10T22:01:54.485484+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
+  "last_note_promo_date": "2026/06/10",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/05"
 }
