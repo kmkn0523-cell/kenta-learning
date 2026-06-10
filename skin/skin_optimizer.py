@@ -39,10 +39,38 @@ def load_analytics():
         return {}
 
 
+# スコア計算の調整値
+SMOOTHING_VIEWS = 30        # 分母に足す数（閲覧数が少ない時の率の跳ね上がりを抑える）
+ENGAGEMENT_MULTIPLIER = 10  # 反応率をスコアに反映する強さ（加点の倍率）
+
+
+def calculate_pattern_score(avg_views, avg_likes, avg_comments):
+    """
+    閲覧数（リーチ）を主軸にした複合スコアを計算する関数
+
+    考え方：
+    - 閲覧数0は評価できないので0点
+    - 基本点は閲覧数そのもの（リーチ最優先の方針）
+    - いいね・コメントが付くと加点（ただし閲覧数が少ない時の
+      「9閲覧でコメント2＝率22%」のような外れ値は平滑化で抑える）
+
+    計算式: 閲覧数 × (1 + (いいね+コメント) ÷ (閲覧数+30) × 10)
+    """
+    # 閲覧数が0以下なら評価不能なので0点を返す
+    if avg_views <= 0:
+        return 0.0
+
+    # 平滑化した反応率を計算する（分母に30を足して少数分母の暴れを防ぐ）
+    engagement_rate = (avg_likes + avg_comments) / (avg_views + SMOOTHING_VIEWS)
+
+    # 閲覧数を基本点にして、反応率ぶんを加点する
+    return avg_views * (1 + engagement_rate * ENGAGEMENT_MULTIPLIER)
+
+
 def generate_pattern_ranking(pattern_performance):
     """
     パターン成績をもとに、Day別のランキングを生成する関数
-    各Dayについて朝夜の平均エンゲージメントスコアを計算し、スコア順に優先度を割り当てる
+    各Dayについて全テーマの複合スコア（リーチ主軸）を平均し、スコア順に優先度を割り当てる
     """
 
     # ランキング用の空のリストを作成する
@@ -54,24 +82,19 @@ def generate_pattern_ranking(pattern_performance):
             # "day_3" のような形式から数字を抽出する
             day_number = int(day_key.split("_")[1])
 
-            # morning（朝）のエンゲージメントスコアを取得する
-            morning_data = day_data.get("問いかけ型", {})  # 問いかけ型をデフォルトにする
-            morning_score = morning_data.get("avg_engagement_rate", 0)
-
-            # evening（夜）のエンゲージメントスコアを取得する
-            # もし複数のタイプがある場合は全て平均して使う
-            evening_score = 0
+            # このDayの全テーマの複合スコアを合計する
+            total_score = 0
             type_count = 0
             for post_type, data in day_data.items():
-                evening_score += data.get("avg_engagement_rate", 0)
+                total_score += calculate_pattern_score(
+                    data.get("avg_views", 0),
+                    data.get("avg_likes", 0),
+                    data.get("avg_comments", 0),
+                )
                 type_count += 1
 
-            # 複数タイプがある場合は平均を取る
-            if type_count > 0:
-                evening_score = evening_score / type_count
-
-            # 朝と夜の平均を計算して、小数第1位で四捨五入する
-            day_avg = round((morning_score + evening_score) / 2, 1)
+            # テーマ数で割って平均にし、小数第1位で四捨五入する
+            day_avg = round(total_score / type_count, 1) if type_count > 0 else 0.0
 
             # このDayの情報をリストに追加する
             ranking_list.append({
