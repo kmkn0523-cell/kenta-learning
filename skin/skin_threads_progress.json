@@ -1,5 +1,5 @@
 {
-  "daily_index": 284,
+  "daily_index": 285,
   "launch_index": 0,
   "history": [
     {
@@ -4697,6 +4697,14 @@
       "variant": "A",
       "post_id": "18057704831565608",
       "seed_id": "18114356155731140"
+    },
+    {
+      "date": "2026/06/10 12:00",
+      "theme": "背中ニキビの対策",
+      "theme_id": 29,
+      "variant": "A",
+      "post_id": "18106171538069684",
+      "seed_id": "18095471384600588"
     }
   ],
   "ab_next": "A",
@@ -4778,7 +4786,7 @@
     "26": "A",
     "27": "A",
     "28": "B",
-    "29": "A",
+    "29": "B",
     "30": "A",
     "31": "A",
     "32": "A",
@@ -5271,7 +5279,7 @@
     "29": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "30": {
@@ -5461,7 +5469,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-10T07:54:34.745712+00:00",
+  "last_posted_at": "2026-06-10T12:02:01.999403+00:00",
   "last_note_promo_article": "https://note.com/neima/n/nd6c4a831644b",
   "last_note_promo_date": "2026/06/08",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
