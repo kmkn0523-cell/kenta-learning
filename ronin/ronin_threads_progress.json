@@ -1,5 +1,5 @@
 {
-  "index": 191,
+  "index": 193,
   "history": [
     {
       "date": "2026/04/27 16:11",
@@ -4794,8 +4794,26 @@
       "kind": "teaching",
       "label": "Day96 morning",
       "post_id": "18091428437579180"
+    },
+    {
+      "date": "2026/06/10 00:00",
+      "kind": "engagement",
+      "label": "engagement eng009",
+      "post_id": "17954790921153800"
+    },
+    {
+      "date": "2026/06/10 02:00",
+      "kind": "teaching",
+      "label": "Day96 evening",
+      "post_id": "18117994435794527"
+    },
+    {
+      "date": "2026/06/10 04:00",
+      "kind": "teaching",
+      "label": "Day97 morning",
+      "post_id": "18006475316920411"
     }
   ],
-  "last_posted_at": "2026-06-09T22:01:56.234688+00:00",
-  "engagement_index": 8
+  "last_posted_at": "2026-06-10T04:01:55.395365+00:00",
+  "engagement_index": 9
 }
