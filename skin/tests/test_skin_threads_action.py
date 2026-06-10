@@ -11,6 +11,8 @@ from skin_threads_action import (
     select_ab_variant,
     flip_ab_variant,
     load_posts_for_variant,
+    build_note_promo_texts,
+    build_paid_note_promo_texts,
 )
 
 
@@ -27,6 +29,34 @@ def test_pick_today_theme_wraps_at_108():
 def test_pick_today_theme_returns_108():
     # daily_index=107 のとき テーマ108 が返ることを確認
     assert pick_today_theme(107) == 108
+
+
+def test_pick_today_theme_uses_theme_count_128():
+    # theme_count=128 のとき テーマ109〜128 も回ることを確認（死蔵バグの修正）
+    assert pick_today_theme(108, theme_count=128) == 109
+    assert pick_today_theme(127, theme_count=128) == 128
+    assert pick_today_theme(128, theme_count=128) == 1
+
+
+def test_note_promo_body_has_no_url_and_comment_has_url():
+    # 本文にはURLが入らず、1コメ目にURLが入ることを確認（配信抑制の回避）
+    url = "https://note.com/example/n/abc123"
+    body, comment = build_note_promo_texts("テスト記事タイトル", url)
+    assert url not in body
+    assert url in comment
+    assert "テスト記事タイトル" in body
+    assert len(body) <= 500
+
+
+def test_paid_note_promo_body_has_no_url_and_comment_has_url():
+    # 有料note宣伝も本文にURLが入らず、1コメ目にURLと価格が入ることを確認
+    url = "https://note.com/example/n/xyz789"
+    body, comment = build_paid_note_promo_texts("有料記事タイトル", url, "2,980円")
+    assert url not in body
+    assert url in comment
+    assert "2,980円" in body
+    assert "2,980円" in comment
+    assert len(body) <= 500
 
 
 def test_select_ab_variant_returns_stored_value():

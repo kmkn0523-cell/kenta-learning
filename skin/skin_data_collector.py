@@ -142,6 +142,11 @@ def match_day_and_type(posts_data, post_text):
                 post_type = "morning" if index <= 1 else "evening"
                 return (day_num, theme_name, post_type)
 
+        # human_post（完結型の投稿）も照合する（従来は未追跡で分析から漏れていた）
+        human_text = thread_info.get("human_post", "")
+        if human_text and post_text_normalized == human_text[:50].strip():
+            return (day_num, theme_name, "morning")
+
     # どのパターンにも一致しなかった場合
     return (None, None, None)
 

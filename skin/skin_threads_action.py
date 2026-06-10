@@ -39,8 +39,8 @@ def get_image_url(thread_id):
 POSTS_FILE    = "skin_threads_posts.json"      # ツリー用の新しい投稿データ
 PROGRESS_FILE = "skin_threads_progress.json"  # 次に投稿する番号を覚えておくファイル
 
-# 3本目の投稿につけるハッシュタグ
-HASHTAGS = "\n\n#肌荒れ #大人ニキビ #ニキビ改善 #腸活 #美肌習慣"
+# ハッシュタグは skin_hashtags.pick_hashtag_set() のローテーションで付ける
+# （固定5個の連投はスパム判定リスクがあったため2026-06-10に廃止）
 
 # ===== ボーナス投稿の設定（バズ追撃・案A クリーン加速） =====
 BONUS_POSTS_FILE = "skin_threads_bonus_posts.json"  # ボーナス専用の弾プール（通常投稿と被らない）
@@ -423,7 +423,8 @@ def bonus_main():
     if not post_text:
         print(f"⚠️  bonus_index={bonus_index} の弾にテキストがありません。スキップします")
         return
-    full_text = post_text + HASHTAGS            # 本文＋ハッシュタグ
+    # ハッシュタグはローテーションから選ぶ（固定5個はスパム判定リスクのため廃止）
+    full_text = post_text + "\n\n" + skin_hashtags.pick_hashtag_set(bonus_index)
     print(f"🚀 ボーナス投稿を実行します（bonus_index={bonus_index}）")
     post_id = post_to_threads(full_text)        # Threadsへ投稿
     print(f"✅ ボーナス投稿完了: post_id={post_id}")
@@ -582,12 +583,15 @@ def pick_random_note(progress):
     return random.choice(candidates)
 
 
-def build_note_promo_text(title, url):
-    """note宣伝投稿の文面をテンプレートからランダムに生成する"""
+def build_note_promo_texts(title, url):
+    """note宣伝の（本文, 1コメ目）の2つを生成する。
+    本文にはURLを入れず、リンクは1コメ目に置く（リンク付き投稿の配信抑制を回避）"""
     template = random.choice(NOTE_PROMO_TEMPLATES)
     # タイトルが長すぎる場合は先頭部分だけ使う（Threadsの500文字制限対策）
     short_title = title if len(title) <= 60 else title[:57] + "..."
-    return template.format(title=short_title, url=url)
+    body = template.format(title=short_title)
+    comment = NOTE_PROMO_COMMENT.format(url=url)
+    return body, comment
 
 
 def post_note_promo(progress, now):
@@ -599,16 +603,23 @@ def post_note_promo(progress, now):
 
     title = note.get("title", "")
     url = note.get("url", "")
-    promo_text = build_note_promo_text(title, url)
+    promo_text, link_comment = build_note_promo_texts(title, url)
 
     print(f"📢 note宣伝投稿: 『{title}』")
     print(f"🔗 URL: {url}")
     print(f"📝 文字数: {len(promo_text)}")
 
-    # テキストのみで投稿する（画像なし）
-    print("\n投稿中（note宣伝・テキストのみ）...")
+    # 本文を投稿する（リンクなし・テキストのみ）
+    print("\n投稿中（note宣伝・本文にリンクなし）...")
     post_id = post_to_threads(promo_text)
     print(f"  ✅ note宣伝投稿成功！（ID: {post_id}）")
+
+    # リンクは1コメ目に付ける（失敗しても本投稿は成功扱い・次回宣伝でリトライされる）
+    try:
+        link_id = post_to_threads(link_comment, reply_to_id=post_id)
+        print(f"  ✅ リンクコメント成功（ID: {link_id}）")
+    except Exception as e:
+        print(f"  ⚠️ リンクコメント失敗（本文は投稿済み）: {e}")
 
     # 進捗を更新する（投稿成功後のみ）
     progress["last_note_promo_article"] = note.get("url", "")
@@ -630,19 +641,35 @@ def post_note_promo(progress, now):
     return True
 
 
-def main():
-    """メイン処理（全自動・対話なし）"""
+def pick_cta_note_url(count):
+    """CTAローテのnote誘導回に使う記事URLを順番に選ぶ。読めなければ空文字を返す。"""
+    try:
+        with open(NOTE_PROMO_FILE, "r", encoding="utf-8") as f:
+            note_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return ""  # ファイルが無い・壊れているときはCTA側で保存誘導に切り替わる
+    articles = note_data.get("articles", [])
+    if not articles:
+        return ""
+    return articles[count % len(articles)].get("url", "")
+
+
+def main(dry_run=False):
+    """メイン処理（全自動・対話なし）
+    親投稿（フック＋質問・画像付き）→1コメ目（深掘り＋CTA）のツリー型で投稿する。
+    dry_run=True なら投稿も保存もせず、組み立て結果の確認だけ行う。
+    """
     now = datetime.now().strftime("%Y/%m/%d %H:%M")
     print(f"=== skin自動投稿ヘルスチェック: {now} ===")
 
     # 深夜帯（JST 0:00〜6:59）は投稿しない（Threadsアルゴリズム最適化）
     jst_now = datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=9)))
-    if jst_now.hour < 7:
+    if not dry_run and jst_now.hour < 7:
         print(f"⏸ 深夜帯（JST {jst_now.hour}時）のためスキップします")
         return
 
     # 直近240分（4時間）以内に投稿済みならスキップする（1日4回ペースを維持）
-    if check_should_skip(skip_minutes=240):
+    if not dry_run and check_should_skip(skip_minutes=240):
         return  # 投稿済みなので何もしない
 
     print(f"=== skin自動投稿開始: {now} ===")
@@ -652,20 +679,39 @@ def main():
     progress = load_progress()
 
     # 今日のテーマ番号とA/Bバリアントを決めて投稿セットを選ぶ
-    theme_id   = pick_today_theme(progress["daily_index"])
+    # テーマ総数はthreads_aの件数から動的に求める（109〜128が回らなかったバグの修正）
+    theme_count = len(posts.get("threads_a", [])) or 108
+    theme_id   = pick_today_theme(progress["daily_index"], theme_count)
     variant    = select_ab_variant(progress, theme_id)
     thread_set = load_posts_for_variant(posts, theme_id, variant)
 
     print(f"投稿セット: {thread_set['theme']}")
 
-    # human_post があればそれを優先（人間っぽい短い完結型）
-    # なければ従来通り posts[0]+posts[1]+固定ハッシュタグ
+    # ハッシュタグとCTA（保存→フォロー→note誘導→リポスト）は投稿履歴数でローテーションする
+    history_count = len(progress.get("history", []))
+    hashtags = skin_hashtags.pick_hashtag_set(history_count)
+    note_url = pick_cta_note_url(history_count)
+    cta_line = skin_comment_seeder.cta_line_for_cycle(history_count, note_url)
+
+    # 親投稿と1コメ目を組み立てる
+    # human_post（タグ内蔵の完結型）はそのまま、通常はposts[0]（フック＋質問）＋ローテタグ
     if thread_set.get("human_post"):
         post_text = thread_set["human_post"]
-        print("  📝 human_post を使用")
+        seed_text = skin_comment_seeder.build_seed_comment(
+            skin_comment_seeder.pick_generic_seed(history_count), cta=cta_line)
+        print("  📝 human_post を使用（1コメ目は汎用問いかけ＋CTA）")
     else:
-        post_text = thread_set["posts"][0] + "\n\n" + thread_set["posts"][1] + HASHTAGS
-        print("  📝 従来版（posts[0]+posts[1]）を使用")
+        post_text = thread_set["posts"][0] + "\n\n" + hashtags
+        seed_text = skin_comment_seeder.build_seed_comment(
+            thread_set["posts"][1], cta=cta_line, deep_dive=True)
+        print("  📝 親=posts[0]＋ローテタグ / 1コメ目=posts[1]深掘り＋CTA")
+
+    print(f"  本文(先頭60字): {post_text[:60].replace(chr(10), ' ')}...")
+    print(f"  1コメ目(先頭60字): {seed_text[:60].replace(chr(10), ' ')}...")
+
+    if dry_run:
+        print("=== DRY-RUN 完了（投稿も保存もしていません）===")
+        return
 
     # 画像付きか・テキストのみかを決める（skip_imageフラグで切り替え）
     if thread_set.get("skip_image"):
@@ -676,6 +722,15 @@ def main():
         image_url = get_image_url(thread_set["id"])
         post_id = post_to_threads(post_text, image_url=image_url)
     print(f"  ✅ 投稿成功！（ID: {post_id}）")
+
+    # 1コメ目を自動返信する（早期リプライで非フォロワー配信を促す・roninで実証済み）
+    # 失敗しても本投稿は成功扱いにする（投稿の二重発射を防ぐため例外を握りつぶす）
+    seed_id = None
+    try:
+        seed_id = post_to_threads(seed_text, reply_to_id=post_id)
+        print(f"  ✅ 1コメ目シード成功（ID: {seed_id}）")
+    except Exception as e:
+        print(f"  ⚠️ 1コメ目シード失敗（本投稿は成功済み・スキップ）: {e}")
 
     # A/B選択状態を反転して次回に備える
     flip_ab_variant(progress, theme_id)
@@ -694,7 +749,8 @@ def main():
         "theme": thread_set["theme"],
         "theme_id": theme_id,
         "variant": variant,
-        "post_id": post_id
+        "post_id": post_id,
+        "seed_id": seed_id
     })
 
     now_iso = datetime.now(timezone.utc).isoformat()  # 投稿した日時（UTC）を記録
@@ -736,11 +792,14 @@ def pick_random_paid_note(progress):
     return random.choice(candidates)
 
 
-def build_paid_note_promo_text(title, url, price):
-    """有料note宣伝投稿の文面をテンプレートからランダムに生成する"""
+def build_paid_note_promo_texts(title, url, price):
+    """有料note宣伝の（本文, 1コメ目）の2つを生成する。
+    本文にはURLを入れず、リンクは1コメ目に置く（リンク付き投稿の配信抑制を回避）"""
     template = random.choice(PAID_NOTE_PROMO_TEMPLATES)
     short_title = title if len(title) <= 60 else title[:57] + "..."
-    return template.format(title=short_title, url=url, price=price)
+    body = template.format(title=short_title, price=price)
+    comment = PAID_NOTE_PROMO_COMMENT.format(url=url, price=price)
+    return body, comment
 
 
 def post_paid_note_promo(progress, now):
@@ -753,15 +812,22 @@ def post_paid_note_promo(progress, now):
     title = note.get("title", "")
     url = note.get("url", "")
     price = note.get("price", "")
-    promo_text = build_paid_note_promo_text(title, url, price)
+    promo_text, link_comment = build_paid_note_promo_texts(title, url, price)
 
     print(f"📢 有料note宣伝投稿: 『{title}』（{price}）")
     print(f"🔗 URL: {url}")
     print(f"📝 文字数: {len(promo_text)}")
 
-    print("\n投稿中（有料note宣伝・テキストのみ）...")
+    print("\n投稿中（有料note宣伝・本文にリンクなし）...")
     post_id = post_to_threads(promo_text)
     print(f"  ✅ 有料note宣伝投稿成功！（ID: {post_id}）")
+
+    # リンクは1コメ目に付ける（失敗しても本投稿は成功扱い）
+    try:
+        link_id = post_to_threads(link_comment, reply_to_id=post_id)
+        print(f"  ✅ リンクコメント成功（ID: {link_id}）")
+    except Exception as e:
+        print(f"  ⚠️ リンクコメント失敗（本文は投稿済み）: {e}")
 
     progress["last_paid_note_promo_article"] = url
     progress["last_paid_note_promo_date"] = datetime.now().strftime("%Y/%m/%d")
@@ -830,4 +896,5 @@ if __name__ == "__main__":
     elif "--note-promo" in sys.argv:
         note_promo_main()
     else:
-        main()
+        # --dry-run を付けると投稿も保存もせず組み立て結果だけ確認できる
+        main(dry_run="--dry-run" in sys.argv)

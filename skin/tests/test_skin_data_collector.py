@@ -55,3 +55,20 @@ def test_build_fetch_params_includes_required_fields():
     assert "fields" in params
     assert "access_token" in params
     assert "insights" in params["fields"]
+
+
+def test_match_day_and_type_finds_human_post():
+    # human_post（完結型の投稿）も照合できることを確認（従来は分析から漏れていた）
+    posts_data = {
+        "threads_a": [
+            {"id": 29, "theme": "背中ニキビの対策", "posts": [],
+             "human_post": "背中ニキビ、ボディソープ変えても治らないんだよなぁ\n\n私もそうだった。"}
+        ],
+        "threads_b": [],
+    }
+    # 実際の投稿はhuman_postの全文がそのまま使われるので、同じテキストで照合する
+    day, theme, post_type = match_day_and_type(
+        posts_data, "背中ニキビ、ボディソープ変えても治らないんだよなぁ\n\n私もそうだった。")
+    assert day == 29
+    assert theme == "背中ニキビの対策"
+    assert post_type == "morning"
