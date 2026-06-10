@@ -155,6 +155,22 @@ async def type_body_with_formatting(page, body_markdown):
         await page.keyboard.press("Enter")
 
 
+def write_github_output(key, value):
+    """GitHub Actions のステップ出力に書き込む（後続ステップに結果を伝える）
+
+    GITHUB_OUTPUT 環境変数が無い場合（ローカル実行）は何もしない。
+    """
+    output_path = os.environ.get("GITHUB_OUTPUT", "")
+    if not output_path:
+        return
+    try:
+        with open(output_path, "a", encoding="utf-8") as f:
+            f.write(f"{key}={value}\n")
+    except OSError as error:
+        # 出力に失敗しても投稿処理自体は止めない
+        print(f"⚠️ GITHUB_OUTPUT への書き込みに失敗: {error}")
+
+
 def is_draft_mode():
     """環境変数 NOTE_DRAFT_MODE が真値ならテスト/下書きモード"""
     val = os.environ.get("NOTE_DRAFT_MODE", "").strip().lower()
@@ -410,6 +426,8 @@ async def main():
                 current_progress = json.load(f)
             if already_posted_today(current_progress.get("history", []), today):
                 print(f"⛔ 本日（{today}）は既に投稿済みです。重複投稿を防止して終了します。")
+                # スキップしたことを後続のメール通知ステップに伝える（成功メール2通防止）
+                write_github_output("result", "skipped")
                 return
         except (json.JSONDecodeError, FileNotFoundError):
             print("⚠️ progress.json を読めませんでした。ガードはスキップして続行します。")
@@ -435,6 +453,9 @@ async def main():
         print("🧪 下書きモードのため history への書き込みはスキップ")
     else:
         update_progress(article_filename, title, post_url)
+
+    # 実際に投稿（または下書き保存）まで完了したことを後続ステップに伝える
+    write_github_output("result", "posted")
 
     print("=== 完了 ===")
 

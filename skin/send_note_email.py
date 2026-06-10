@@ -132,16 +132,39 @@ def send_mail(subject, plain_body, html_body):
     print("✅ 通知メール送信完了")
 
 
+def decide_mail_kind(status, post_result, latest):
+    """送るメールの種類を決める純粋関数
+
+    戻り値: "success"（成功メール）/ "failure"（失敗メール）/ None（送らない）
+    post_result は post_to_note.py がセットする実行結果
+    （"posted"=実際に投稿した / "skipped"=今日は投稿済みでスキップ / ""=シグナルなし）
+    """
+    # 重複投稿ガードでスキップした実行はメール不要（同じ成功メールが2通届く不具合の防止）
+    if status == "success" and post_result == "skipped":
+        return None
+    # 投稿成功かつ履歴あり → 成功メール
+    if status == "success" and latest:
+        return "success"
+    # それ以外（失敗・履歴なし等）はすべて失敗メール
+    return "failure"
+
+
 def main():
     """成功 or 失敗を判定してメールを送る"""
     # NOTE_POST_STATUS 環境変数で成否を受け取る（GitHub Actions側でセット）
     # "success" 以外（空・"failure" 等）はすべて失敗扱い
     status = os.environ.get("NOTE_POST_STATUS", "").strip().lower()
+    # NOTE_POST_RESULT は post_to_note.py の実行結果（posted / skipped）
+    post_result = os.environ.get("NOTE_POST_RESULT", "").strip().lower()
 
     latest = load_latest_history()
 
-    # 成功判定: ステータスが success かつ history に最新エントリがある
-    if status == "success" and latest:
+    kind = decide_mail_kind(status, post_result, latest)
+
+    if kind is None:
+        print("⏭️ 本日は投稿済みスキップのためメール送信なし（重複メール防止）")
+        return
+    elif kind == "success":
         subject, plain, html = build_success_mail(latest)
         print(f"📧 成功通知を送信: {latest.get('title', '')}")
     else:

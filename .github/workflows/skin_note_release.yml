@@ -65,6 +65,7 @@ jobs:
         env:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           NOTE_POST_STATUS: ${{ steps.post.outcome }}
+          NOTE_POST_RESULT: ${{ steps.post.outputs.result }}  # posted / skipped（重複メール防止）
         run: python3 skin/send_note_email.py
 
       - name: Threadsにnote公開告知を投稿する
