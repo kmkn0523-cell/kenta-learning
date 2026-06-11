@@ -78,12 +78,38 @@ export function exportSummaryCsv(
   downloadFile(fileName, csv, "text/csv;charset=utf-8");
 }
 
+// 透かしに入れる文言（シェアされた画像からアプリにたどり着けるようにする）
+export const WATERMARK_TEXT = "BYB — financeweb-nine.vercel.app";
+
+// PNG画像の下に透かし帯（アプリ名＋URL）を追加した新しいcanvasを返す
+// 2Dコンテキストが取れない環境では透かしなしの元canvasをそのまま返す
+export function appendWatermark(source: HTMLCanvasElement): HTMLCanvasElement {
+  const FOOTER_HEIGHT = 56; // 帯の高さ（scale:2 で出力されるので実質28px相当）
+  const output = document.createElement("canvas");
+  output.width = source.width;
+  output.height = source.height + FOOTER_HEIGHT;
+  const context = output.getContext("2d");
+  if (!context) return source;
+
+  // 背景をアプリの背景色で塗ってから、元の画像を上に重ねる
+  context.fillStyle = "#0a0a0c";
+  context.fillRect(0, 0, output.width, output.height);
+  context.drawImage(source, 0, 0);
+
+  // 帯の中央に小さくアプリ名とURLを描く
+  context.font = "22px monospace";
+  context.fillStyle = "#9a9aa3";
+  context.textAlign = "center";
+  context.fillText(WATERMARK_TEXT, output.width / 2, source.height + 36);
+  return output;
+}
+
 // 月次サマリーの表示エリア（DOM）をPNG画像にして保存する
 // html2canvas で画面の見た目を画像化し、Blob 経由でダウンロードさせる
 export async function exportSummaryImage(node: HTMLElement, fileName: string): Promise<void> {
-  // node（サマリーカードのまとまり）をそのまま画像化する
+  // node（サマリーカードのまとまり）を画像化してから下部に透かし帯を追加する
   // backgroundColor はアプリの背景色に合わせる。scale:2 で高解像度にする
-  const canvas = await html2canvas(node, { backgroundColor: "#0a0a0c", scale: 2 });
+  const canvas = appendWatermark(await html2canvas(node, { backgroundColor: "#0a0a0c", scale: 2 }));
 
   // canvas を Blob（画像データのかたまり）に変換する。コールバックをPromiseで包む
   const blob = await new Promise<Blob | null>((resolve) => {

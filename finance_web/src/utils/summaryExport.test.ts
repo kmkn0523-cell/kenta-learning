@@ -3,8 +3,23 @@
 // 画像書き出しは canvas が必要なので、ここではテストしない（手動で確認する）
 
 import { describe, it, expect } from "vitest";
-import { computeSavingRate, buildSummaryCsv } from "./summaryExport";
+import { computeSavingRate, buildSummaryCsv, appendWatermark, WATERMARK_TEXT } from "./summaryExport";
 import type { SummaryStats } from "../types";
+
+describe("appendWatermark", () => {
+  it("透かし文言にアプリ名とURLが含まれている", () => {
+    expect(WATERMARK_TEXT).toContain("BYB");
+    expect(WATERMARK_TEXT).toContain("financeweb-nine.vercel.app");
+  });
+
+  it("2Dコンテキストが使えない環境（jsdom）では元のcanvasをそのまま返す", () => {
+    // jsdom の canvas.getContext は null を返すのでフォールバック分岐が通る
+    const canvas = document.createElement("canvas");
+    canvas.width = 100;
+    canvas.height = 50;
+    expect(appendWatermark(canvas)).toBe(canvas);
+  });
+});
 
 describe("computeSavingRate", () => {
   it("手残り60000円・収入300000円なら貯蓄率は20%", () => {
