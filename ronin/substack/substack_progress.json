@@ -1,5 +1,5 @@
 {
-  "next_day": 25,
+  "next_day": 26,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -144,6 +144,12 @@
       "day": 24,
       "post_id": 201524622,
       "title": "当たって砕けろ — Charge in, even if you shatter."
+    },
+    {
+      "date": "2026/06/11 16:20",
+      "day": 25,
+      "post_id": 201562034,
+      "title": "情けは人の為ならず — Kindness to others is kindness to yourself."
     }
   ]
 }
