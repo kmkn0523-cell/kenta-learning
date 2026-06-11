@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-10T10:11:55.685343",
+  "last_updated": "2026-06-11T10:45:39.953090",
   "posts_history": [
     {
       "day": 28,
@@ -2068,6 +2068,50 @@
       "shares": 0,
       "views": 10,
       "engagement_rate": 0.0
+    },
+    {
+      "day": 32,
+      "type": "マスクと肌荒れ",
+      "post_id": "18121862263677041",
+      "posted_at": "2026-06-11T08:01:25+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 186,
+      "engagement_rate": 0.54
+    },
+    {
+      "day": 31,
+      "type": "スマホと肌",
+      "post_id": "18135232063497285",
+      "posted_at": "2026-06-11T03:01:13+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 19,
+      "engagement_rate": 5.26
+    },
+    {
+      "day": 30,
+      "type": "ターンオーバーを整える",
+      "post_id": "18079091261646117",
+      "posted_at": "2026-06-10T22:01:15+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 63,
+      "engagement_rate": 1.59
+    },
+    {
+      "day": 29,
+      "type": "背中ニキビの対策",
+      "post_id": "18106171538069684",
+      "posted_at": "2026-06-10T12:01:21+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 37,
+      "engagement_rate": 2.7
     }
   ],
   "pattern_performance": {
@@ -3031,44 +3075,44 @@
     },
     "day_32": {
       "マスクと肌荒れ": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 142.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 17,
+        "avg_comments": 0.5,
+        "avg_views": 164.0,
+        "avg_engagement_rate": 0.27,
+        "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
     "day_31": {
       "スマホと肌": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 85.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 15,
+        "avg_comments": 0.5,
+        "avg_views": 52.0,
+        "avg_engagement_rate": 2.63,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_30": {
       "ターンオーバーを整える": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 75.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 69.0,
+        "avg_engagement_rate": 0.8,
         "best_hour": 13,
         "best_hashtag_set": "A"
       }
     },
     "day_29": {
       "背中ニキビの対策": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 48.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 42.0,
+        "avg_engagement_rate": 1.35,
         "best_hour": 11,
         "best_hashtag_set": "A"
       }
