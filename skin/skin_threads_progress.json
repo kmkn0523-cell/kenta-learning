@@ -1,5 +1,5 @@
 {
-  "daily_index": 288,
+  "daily_index": 289,
   "launch_index": 0,
   "history": [
     {
@@ -4736,6 +4736,14 @@
       "variant": "A",
       "post_id": "18121862263677041",
       "seed_id": "18102307597843455"
+    },
+    {
+      "date": "2026/06/11 13:00",
+      "theme": "冬の乾燥肌対策",
+      "theme_id": 33,
+      "variant": "A",
+      "post_id": "18140847700532559",
+      "seed_id": "17991303410996428"
     }
   ],
   "ab_next": "A",
@@ -4821,7 +4829,7 @@
     "30": "B",
     "31": "B",
     "32": "B",
-    "33": "A",
+    "33": "B",
     "34": "A",
     "35": "A",
     "36": "A",
@@ -5334,7 +5342,7 @@
     "33": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "34": {
@@ -5500,7 +5508,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-11T08:02:05.091723+00:00",
+  "last_posted_at": "2026-06-11T13:02:09.493271+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
   "last_note_promo_date": "2026/06/10",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
