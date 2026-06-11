@@ -4,6 +4,8 @@
 
 import { CSSProperties } from "react";
 import { formatYen } from "../utils/format";
+import { selectAffiliateOffer } from "../utils/affiliates";
+import AffiliateBanner from "./AffiliateBanner";
 import {
   STYLE_BUTTON_PRIMARY,
   COLOR_TEXT_PRIMARY,
@@ -77,10 +79,12 @@ interface MonthlyReportProps {
   topCats: [string, number][];
   // 予算超過したカテゴリ（[カテゴリ名, 超過額] の配列）
   overBudget: [string, number][];
+  // 口座が1件以上登録されているか（提案枠の表示判定に使う）
+  hasAccounts: boolean;
 }
 
 export default function MonthlyReportModal({
-  open, onClose, year, month, income, expense, topCats, overBudget,
+  open, onClose, year, month, income, expense, topCats, overBudget, hasAccounts,
 }: MonthlyReportProps) {
   // open=false なら何も描画しない（DOMに残さない）
   if (!open) return null;
@@ -198,6 +202,26 @@ export default function MonthlyReportModal({
             ))}
           </div>
         )}
+
+        {/* ── あなたへの提案（前月の家計状態に連動・最大1枠） ── */}
+        {(() => {
+          // 前月の貯蓄率（収入0なら0%として扱う）
+          const savingRate = income > 0 ? (net / income) * 100 : 0;
+          const offer = selectAffiliateOffer({
+            savingRate,
+            hasAccounts,
+            month: new Date().getMonth() + 1,
+          });
+          if (!offer) return null;
+          return (
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", marginBottom: 8 }}>
+                💡 あなたへの提案
+              </div>
+              <AffiliateBanner offer={offer} />
+            </div>
+          );
+        })()}
 
         {/* ── 閉じるボタン ── */}
         <button type="button" onClick={onClose} style={{ ...STYLE_BUTTON_PRIMARY, width: "100%" }}>

@@ -343,6 +343,7 @@ function AppInner(){
       expense={reportData.expense}
       topCats={reportData.topCats}
       overBudget={reportData.overBudget}
+      hasAccounts={accounts.length > 0}
     />
     <div style={{position:"sticky",top:0,zIndex:50,background:"rgba(7,11,20,0.95)",backdropFilter:"blur(24px)",borderBottom:`1px solid ${COLOR_BORDER_GLOW}`,padding:"0 16px"}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0 12px",maxWidth:520,margin:"0 auto"}}>
