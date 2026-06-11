@@ -5,6 +5,8 @@
 
 import { useMemo } from "react";
 import { formatYen } from "../utils/format";
+import { selectAffiliateOffer } from "../utils/affiliates";
+import AffiliateBanner from "./AffiliateBanner";
 import {
   COLOR_TEXT_PRIMARY,
   COLOR_TEXT_SECONDARY,
@@ -277,6 +279,26 @@ export default function HealthCheckCard({
           );
         })}
       </div>
+
+      {/* ────────── あなたへの提案（診断連動・最大1枠） ──────────
+          家計の状態に合うサービスがある時だけ表示する。合わなければ何も出さない */}
+      {(() => {
+        // 現在の貯蓄率と口座の有無から、文脈に合う広告を最大1件選ぶ
+        const offer = selectAffiliateOffer({
+          savingRate: curSavingRate ?? 0,
+          hasAccounts,
+          month: new Date().getMonth() + 1,
+        });
+        if (!offer) return null;
+        return (
+          <div style={{ marginTop: 12 }}>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", marginBottom: 8 }}>
+              💡 あなたへの提案
+            </div>
+            <AffiliateBanner offer={offer} />
+          </div>
+        );
+      })()}
 
       {/* 説明書き */}
       <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginTop: 10, lineHeight: 1.5 }}>
