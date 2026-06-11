@@ -232,7 +232,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
 
         {/* フッター */}
         <div style={{textAlign:"center",fontSize:12,color:"#5a5a63",marginTop:32,lineHeight:1.6}}>
-          v1.2.2 / © 2026 kmkn0523<br/>
+          v{__APP_VERSION__} / © 2026 kmkn0523<br/>
           PWA対応{" — "}ホーム画面に追加してアプリのように使えます
         </div>
       </div>

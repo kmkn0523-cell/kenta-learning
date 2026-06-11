@@ -1,8 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import { readFileSync } from "node:fs";
+
+// package.json の version をビルド時に読み込んで __APP_VERSION__ として全コードに注入する
+const packageJson = JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf-8"));
 
 export default defineConfig({
+  // __APP_VERSION__ という名前で package.json のバージョン文字列を使えるようにする
+  define: {
+    __APP_VERSION__: JSON.stringify(packageJson.version),
+  },
   plugins: [
     react(),
     // ──────── PWA設定：オフライン対応・ホーム画面追加を有効にする ────────

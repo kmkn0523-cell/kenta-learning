@@ -635,11 +635,11 @@ export default function SettingsView(props: SettingsViewProps) {
         <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 12, color: COLOR_TEXT_SECONDARY }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>アプリ名</span>
-            <span style={{ color: COLOR_TEXT_PRIMARY }}>家計管理アプリ</span>
+            <span style={{ color: COLOR_TEXT_PRIMARY }}>BYB — Before You Broke</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>バージョン</span>
-            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v1.5.0</span>
+            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v{__APP_VERSION__}</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>制作</span>
