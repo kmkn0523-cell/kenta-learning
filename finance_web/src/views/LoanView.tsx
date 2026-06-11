@@ -10,6 +10,7 @@ import { COLOR_TEXT_HINT, COLOR_TEXT_SECONDARY, COLOR_TEXT_PRIMARY, COLOR_ACCENT
 import { StatLabel } from "../components/ui";
 import LoanSection from "../components/LoanSection";
 import StatBlock from "../components/StatBlock";
+import { AffiliateSection } from "../components/AffiliateBanner";
 
 // ── スタイル定数 ──────────────────────────────────────────
 
