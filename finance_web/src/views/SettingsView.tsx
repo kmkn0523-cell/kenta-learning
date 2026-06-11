@@ -11,6 +11,7 @@ import {
   COLOR_NEGATIVE,
 } from "../utils/styles";
 import { makeDefaultCategoryConfig } from "../utils/defaultCategories";
+import ShareCard from "../components/ShareCard";
 
 import { useRef } from "react";
 
@@ -622,6 +623,9 @@ export default function SettingsView(props: SettingsViewProps) {
           📖 使い方を見る
         </button>
       </div>
+
+      {/* ────────── 友達に教えるカード ────────── */}
+      <ShareCard />
 
       {/* ────────── アプリ情報カード（バージョン・制作者・著作権） ────────── */}
       <div style={{ ...STYLE_CARD, marginTop: 16 }}>
