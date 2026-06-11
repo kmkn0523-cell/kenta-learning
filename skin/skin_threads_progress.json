@@ -1,5 +1,5 @@
 {
-  "daily_index": 289,
+  "daily_index": 290,
   "launch_index": 0,
   "history": [
     {
@@ -4744,6 +4744,14 @@
       "variant": "A",
       "post_id": "18140847700532559",
       "seed_id": "17991303410996428"
+    },
+    {
+      "date": "2026/06/11 22:00",
+      "theme": "夏の肌荒れ対策",
+      "theme_id": 34,
+      "variant": "A",
+      "post_id": "18017824148896570",
+      "seed_id": "18139985149550418"
     }
   ],
   "ab_next": "A",
@@ -4830,7 +4838,7 @@
     "31": "B",
     "32": "B",
     "33": "B",
-    "34": "A",
+    "34": "B",
     "35": "A",
     "36": "A",
     "37": "A",
@@ -5348,7 +5356,7 @@
     "34": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "35": {
@@ -5508,7 +5516,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-11T13:02:09.493271+00:00",
+  "last_posted_at": "2026-06-11T22:01:56.800913+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
   "last_note_promo_date": "2026/06/10",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
