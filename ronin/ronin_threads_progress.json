@@ -4938,8 +4938,14 @@
       "kind": "teaching",
       "label": "Day105 morning",
       "post_id": "18375556117205332"
+    },
+    {
+      "date": "2026/06/12 00:00",
+      "kind": "engagement",
+      "label": "engagement eng015",
+      "post_id": "17893886604355696"
     }
   ],
-  "last_posted_at": "2026-06-11T22:01:56.457009+00:00",
-  "engagement_index": 14
+  "last_posted_at": "2026-06-12T00:01:58.425273+00:00",
+  "engagement_index": 15
 }
