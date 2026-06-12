@@ -1,5 +1,5 @@
 {
-  "daily_index": 292,
+  "daily_index": 293,
   "launch_index": 0,
   "history": [
     {
@@ -4768,6 +4768,14 @@
       "variant": "A",
       "post_id": "18102819047286175",
       "seed_id": "17892274665532883"
+    },
+    {
+      "date": "2026/06/12 12:42",
+      "theme": "鉄分不足と肌",
+      "theme_id": 37,
+      "variant": "A",
+      "post_id": "17875912749611214",
+      "seed_id": "18299928190303743"
     }
   ],
   "ab_next": "A",
@@ -4857,7 +4865,7 @@
     "34": "B",
     "35": "B",
     "36": "B",
-    "37": "A",
+    "37": "B",
     "38": "A",
     "39": "A",
     "40": "A",
@@ -5390,7 +5398,7 @@
     "37": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "38": {
@@ -5532,7 +5540,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-12T08:01:50.591510+00:00",
+  "last_posted_at": "2026-06-12T12:43:47.407222+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
   "last_note_promo_date": "2026/06/10",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
