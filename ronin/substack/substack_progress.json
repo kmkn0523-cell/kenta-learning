@@ -1,5 +1,5 @@
 {
-  "next_day": 26,
+  "next_day": 27,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -150,6 +150,12 @@
       "day": 25,
       "post_id": 201562034,
       "title": "情けは人の為ならず — Kindness to others is kindness to yourself."
+    },
+    {
+      "date": "2026/06/12 13:43",
+      "day": 26,
+      "post_id": 201697985,
+      "title": "型があるから型を破れる — Master the form, then break free."
     }
   ]
 }
