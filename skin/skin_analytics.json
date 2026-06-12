@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-11T10:45:39.953090",
+  "last_updated": "2026-06-12T10:21:23.856020",
   "posts_history": [
     {
       "day": 28,
@@ -2112,6 +2112,50 @@
       "shares": 0,
       "views": 37,
       "engagement_rate": 2.7
+    },
+    {
+      "day": 36,
+      "type": "代謝と肌",
+      "post_id": "18102819047286175",
+      "posted_at": "2026-06-12T08:01:11+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 126,
+      "engagement_rate": 0.79
+    },
+    {
+      "day": 35,
+      "type": "プロバイオティクスの効果",
+      "post_id": "18098221148180661",
+      "posted_at": "2026-06-12T03:01:15+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 129,
+      "engagement_rate": 0.78
+    },
+    {
+      "day": 34,
+      "type": "夏の肌荒れ対策",
+      "post_id": "18017824148896570",
+      "posted_at": "2026-06-11T22:01:15+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 21,
+      "engagement_rate": 4.76
+    },
+    {
+      "day": 33,
+      "type": "冬の乾燥肌対策",
+      "post_id": "18140847700532559",
+      "posted_at": "2026-06-11T13:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 75,
+      "engagement_rate": 1.33
     }
   ],
   "pattern_performance": {
@@ -3031,44 +3075,44 @@
     },
     "day_36": {
       "代謝と肌": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 87.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 1,
+        "avg_comments": 0.5,
+        "avg_views": 106.0,
+        "avg_engagement_rate": 0.4,
+        "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
     "day_35": {
       "プロバイオティクスの効果": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 62.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 23,
+        "avg_comments": 0.5,
+        "avg_views": 96.0,
+        "avg_engagement_rate": 0.39,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_34": {
       "夏の肌荒れ対策": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 27.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 2.38,
         "best_hour": 21,
         "best_hashtag_set": "A"
       }
     },
     "day_33": {
       "冬の乾燥肌対策": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 98.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 86.0,
+        "avg_engagement_rate": 0.67,
         "best_hour": 19,
         "best_hashtag_set": "A"
       }
