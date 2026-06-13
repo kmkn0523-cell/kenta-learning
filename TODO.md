@@ -9,6 +9,11 @@
 - [x] Task 8: Instagram Batch 1 初動チェック（v2 8枚カルーセル4件・公開確認済み 2026-05-20）
 - [ ] Task 4: Instagram insights 権限申請（Facebook Developer Console で `instagram_manage_insights`）
 - [ ] Week 2 (5/25〜) リプ運用準備 — `skin/skin_account_targets.json` の10アカウントの最新投稿を再確認
+- [ ] skinアフィリエイト導線（コード準備済 2026/06/13）— あとは商品リンクを入れるだけ
+  - [ ] 楽天アフィリエイト登録（楽天会員なら審査ほぼなしで即発行）。または既存のA8.netで化粧品案件を提携（finance_webで登録済なので新規登録不要）
+  - [ ] スキンケア商品のアフィリリンクを取得し `skin/skin_affiliate_products.json` の `products` に追記
+        （`{"name": 商品名, "url": リンク}` 形式。入れた瞬間からThreadsの1コメ目CTAに自動で「リポスト⇄アフィリ」交互で出る。空の間は一切出ない）
+  - [ ] Instagram用にbioリンク（linktr.ee無料 or 楽天room）を用意（IGは本文リンク不可のためプロフィール誘導型）
 
 > 完了済み（5/18〜5/19）: プロフィールv2・ヘッダー画像（IG版含む）・観測対象10アカウント・日次ログ雛形
 > 計画書: `docs/superpowers/plans/2026-05-18-skin-monetize-m1-w1-w2.md`（M1 Week 1-2 全8タスク）

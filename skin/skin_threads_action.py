@@ -61,6 +61,10 @@ NOTE_PROMO_FILE = "note_promo_articles.json"
 PAID_NOTE_PROMO_INTERVAL = 7  # 7日に1回（毎週）有料note宣伝を投稿する
 PAID_NOTE_PROMO_FILE = "paid_note_promo_articles.json"  # 有料記事の一覧ファイル
 
+# ===== アフィリエイト商品の設定 =====
+# 楽天アフィリエイト等の商品リンク一覧。productsが空の間は投稿に一切出ない（本番無害）
+AFFILIATE_PRODUCTS_FILE = "skin_affiliate_products.json"
+
 # note宣伝投稿の本文テンプレート（毎回ランダムで1つ選ぶ → 同じ文面の繰り返しを防ぐ）
 # ⚠️ 本文にURLを入れない設計：Threadsはリンク付き投稿の配信を抑制するため、
 #     リンクは1コメ目（リプライ）に置く（roninで実証済みのreach施策）
@@ -654,6 +658,25 @@ def pick_cta_note_url(count):
     return articles[count % len(articles)].get("url", "")
 
 
+def pick_affiliate_product(count):
+    """CTAのアフィリエイト回に使う商品を順番に選ぶ。
+    商品が無い・ファイルが壊れている・楽天未登録の場合は None を返す
+    （Noneだとcta_line_for_cycleはリポストCTAのまま＝本番無影響）。"""
+    try:
+        with open(AFFILIATE_PRODUCTS_FILE, "r", encoding="utf-8") as f:
+            affiliate_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None  # ファイルが無い・壊れているときはアフィリ無しで通常運転
+    products = affiliate_data.get("products", [])
+    if not products:
+        return None  # 商品未登録（=今）はアフィリ無し
+    product = products[count % len(products)]  # 商品を順番にローテーション
+    # name と url が揃っているものだけ返す（欠けていたらアフィリ無し扱い）
+    if product.get("name") and product.get("url"):
+        return {"name": product["name"], "url": product["url"]}
+    return None
+
+
 def main(dry_run=False):
     """メイン処理（全自動・対話なし）
     親投稿（フック＋質問・画像付き）→1コメ目（深掘り＋CTA）のツリー型で投稿する。
@@ -691,7 +714,8 @@ def main(dry_run=False):
     history_count = len(progress.get("history", []))
     hashtags = skin_hashtags.pick_hashtag_set(history_count)
     note_url = pick_cta_note_url(history_count)
-    cta_line = skin_comment_seeder.cta_line_for_cycle(history_count, note_url)
+    affiliate = pick_affiliate_product(history_count)  # 商品未登録ならNone（リポストのまま）
+    cta_line = skin_comment_seeder.cta_line_for_cycle(history_count, note_url, affiliate)
 
     # 親投稿と1コメ目を組み立てる
     # human_post（タグ内蔵の完結型）はそのまま、通常はposts[0]（フック＋質問）＋ローテタグ
