@@ -6,6 +6,7 @@
 import json                    # JSONファイルを扱う道具
 import os                      # ファイル操作に使う道具
 import sys                     # コマンドライン引数を取得する道具
+import time                    # 待ち時間（リトライの間隔）に使う道具
 import requests                # インターネットにリクエストを送る道具
 from datetime import datetime  # 日時を扱う道具
 from dotenv import load_dotenv # .envファイルからAPIキーを読み込む道具
@@ -22,8 +23,12 @@ _DIR = os.path.dirname(os.path.abspath(__file__))
 POSTS_FILE     = os.path.join(_DIR, "threads_posts.json")       # 投稿テキストデータ
 ANALYTICS_FILE = os.path.join(_DIR, "ronin_analytics.json")     # 分析データ保存先
 
-# APIリクエストのタイムアウト時間（秒）
-API_TIMEOUT = 10
+# APIリクエストのタイムアウト時間（秒）— 混雑時に10秒では足りないことがあるため20秒に延長
+API_TIMEOUT = 20
+# タイムアウトやネットワークエラーのときに再挑戦する回数（一瞬の遅延で失敗しないようにするため）
+API_MAX_RETRIES = 3
+# 再挑戦するまでの待ち時間（秒）。回を追うごとに長くする（2秒→4秒→6秒…）
+API_RETRY_WAIT_SECONDS = 2
 
 
 def fetch_threads_data():
@@ -41,49 +46,67 @@ def fetch_threads_data():
         print("❌ エラー: THREADS_BUSINESS_ACCOUNT_ID_RONINが.envに設定されていません")
         sys.exit(1)
 
-    try:
-        # Threads APIのエンドポイント
-        api_url = f"https://graph.threads.net/v1.0/{THREADS_BUSINESS_ACCOUNT_ID_RONIN}/threads"
+    # Threads APIのエンドポイント
+    api_url = f"https://graph.threads.net/v1.0/{THREADS_BUSINESS_ACCOUNT_ID_RONIN}/threads"
 
-        # APIに送るパラメータ（取得したいデータフィールドを指定）
-        # コメント数のメトリクス名は "comments" ではなく "replies"（API有効値: clicks/likes/quotes/replies/reposts/shares/views）
-        # limit=100 を付けて過去分の取りこぼしを防ぐ（API上限100・デフォルト25）
-        params = {
-            "fields": "id,text,timestamp,insights.metric(likes,replies,shares,views)",
-            "access_token": THREADS_ACCESS_TOKEN,
-            "limit": 100,
-        }
+    # APIに送るパラメータ（取得したいデータフィールドを指定）
+    # コメント数のメトリクス名は "comments" ではなく "replies"（API有効値: clicks/likes/quotes/replies/reposts/shares/views）
+    # limit=100 を付けて過去分の取りこぼしを防ぐ（API上限100・デフォルト25）
+    params = {
+        "fields": "id,text,timestamp,insights.metric(likes,replies,shares,views)",
+        "access_token": THREADS_ACCESS_TOKEN,
+        "limit": 100,
+    }
 
-        # APIにリクエストを送る（タイムアウト設定あり）
-        response = requests.get(api_url, params=params, timeout=API_TIMEOUT)
+    # タイムアウトやネットワークエラーのときは、少し待ってから最大 API_MAX_RETRIES 回まで再挑戦する
+    # （一瞬のAPI遅延だけでワークフローが赤くなってメールが飛ぶのを防ぐため）
+    for attempt in range(1, API_MAX_RETRIES + 1):
+        try:
+            # APIにリクエストを送る（タイムアウト設定あり）
+            response = requests.get(api_url, params=params, timeout=API_TIMEOUT)
 
-        # HTTPステータスコードで結果を判定する（異常時は異常終了させてワークフローを赤くする）
-        if response.status_code == 401:
-            print("❌ エラー: Threads API認証失敗 (401 Unauthorized)")
+            # HTTPステータスコードで結果を判定する（異常時は異常終了させてワークフローを赤くする）
+            # 認証失敗やデータ不正は再挑戦しても直らないので、すぐに終了する
+            if response.status_code == 401:
+                print("❌ エラー: Threads API認証失敗 (401 Unauthorized)")
+                sys.exit(1)
+            elif response.status_code != 200:
+                print(f"❌ エラー: APIリクエスト失敗 (ステータス: {response.status_code})")
+                sys.exit(1)
+
+            # JSON形式のレスポンスを取得する
+            api_data = response.json()
+
+            # APIレスポンスにデータが含まれているか確認する
+            if "data" not in api_data:
+                print("⚠️  警告: APIレスポンスにデータが含まれていません")
+                return []
+
+            return api_data.get("data", [])
+
+        except (requests.exceptions.Timeout, requests.exceptions.RequestException) as network_error:
+            # タイムアウト・ネットワークエラーは一時的なことが多いので、待ってから再挑戦する
+            # タイムアウトかどうかでメッセージを分かりやすく出し分ける
+            if isinstance(network_error, requests.exceptions.Timeout):
+                reason = f"APIリクエストがタイムアウトしました（{API_TIMEOUT}秒以上）"
+            else:
+                reason = f"ネットワークエラー {str(network_error)}"
+
+            # まだ再挑戦できる回数が残っているなら、待ってからやり直す
+            if attempt < API_MAX_RETRIES:
+                wait_seconds = API_RETRY_WAIT_SECONDS * attempt  # 2秒→4秒→… と少しずつ長く待つ
+                print(f"⏳ {reason}（{attempt}/{API_MAX_RETRIES}回目）→ {wait_seconds}秒待って再挑戦します")
+                time.sleep(wait_seconds)
+                continue
+
+            # 最後の挑戦でも失敗したら、従来どおり異常終了させてワークフローを赤くする
+            print(f"❌ エラー: {reason}（{API_MAX_RETRIES}回試して全て失敗）")
             sys.exit(1)
-        elif response.status_code != 200:
-            print(f"❌ エラー: APIリクエスト失敗 (ステータス: {response.status_code})")
+
+        except json.JSONDecodeError:
+            # レスポンスがJSONとして壊れている場合は再挑戦しても直らないので、すぐに終了する
+            print("❌ エラー: APIレスポンスのJSON解析に失敗しました")
             sys.exit(1)
-
-        # JSON形式のレスポンスを取得する
-        api_data = response.json()
-
-        # APIレスポンスにデータが含まれているか確認する
-        if "data" not in api_data:
-            print("⚠️  警告: APIレスポンスにデータが含まれていません")
-            return []
-
-        return api_data.get("data", [])
-
-    except requests.exceptions.Timeout:
-        print(f"❌ エラー: APIリクエストがタイムアウトしました（{API_TIMEOUT}秒以上）")
-        sys.exit(1)
-    except requests.exceptions.RequestException as e:
-        print(f"❌ エラー: ネットワークエラー {str(e)}")
-        sys.exit(1)
-    except json.JSONDecodeError:
-        print("❌ エラー: APIレスポンスのJSON解析に失敗しました")
-        sys.exit(1)
 
 
 def calculate_engagement_rate(likes, comments, shares, views):
