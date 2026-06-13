@@ -5058,8 +5058,14 @@
       "kind": "teaching",
       "label": "Day112 evening",
       "post_id": "18358870207211392"
+    },
+    {
+      "date": "2026/06/13 19:00",
+      "kind": "engagement",
+      "label": "engagement eng020",
+      "post_id": "17942582898227267"
     }
   ],
-  "last_posted_at": "2026-06-13T17:02:07.944124+00:00",
-  "engagement_index": 19
+  "last_posted_at": "2026-06-13T19:02:04.629484+00:00",
+  "engagement_index": 20
 }
