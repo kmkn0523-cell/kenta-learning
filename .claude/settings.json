@@ -33,7 +33,7 @@
       "/mnt/c/Users/kenta kamijyo"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
