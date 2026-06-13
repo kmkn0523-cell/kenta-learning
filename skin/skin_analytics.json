@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-12T10:21:23.856020",
+  "last_updated": "2026-06-13T09:23:30.077665",
   "posts_history": [
     {
       "day": 28,
@@ -2156,6 +2156,50 @@
       "shares": 0,
       "views": 75,
       "engagement_rate": 1.33
+    },
+    {
+      "day": 40,
+      "type": "日焼けと肌荒れ",
+      "post_id": "17990754809806625",
+      "posted_at": "2026-06-13T07:11:08+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 94,
+      "engagement_rate": 1.06
+    },
+    {
+      "day": 39,
+      "type": "腸活朝ごはん",
+      "post_id": "18105056003061589",
+      "posted_at": "2026-06-13T03:01:18+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 9,
+      "engagement_rate": 11.11
+    },
+    {
+      "day": 38,
+      "type": "化粧落としの落とし穴",
+      "post_id": "17972290968110358",
+      "posted_at": "2026-06-12T22:01:32+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 56,
+      "engagement_rate": 1.79
+    },
+    {
+      "day": 37,
+      "type": "鉄分不足と肌",
+      "post_id": "17875912749611214",
+      "posted_at": "2026-06-12T12:43:08+0000",
+      "likes": 1,
+      "comments": 1,
+      "shares": 0,
+      "views": 246,
+      "engagement_rate": 0.81
     }
   ],
   "pattern_performance": {
@@ -2459,22 +2503,22 @@
     },
     "day_40": {
       "日焼けと肌荒れ": {
-        "total_posts": 3,
+        "total_posts": 4,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 7.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.2,
+        "avg_views": 28.0,
+        "avg_engagement_rate": 0.27,
         "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
     "day_39": {
       "腸活朝ごはん": {
-        "total_posts": 3,
-        "avg_likes": 0.3,
-        "avg_comments": 0.0,
-        "avg_views": 24.0,
-        "avg_engagement_rate": 1.75,
+        "total_posts": 4,
+        "avg_likes": 0.2,
+        "avg_comments": 0.2,
+        "avg_views": 20.0,
+        "avg_engagement_rate": 4.09,
         "best_hour": 2,
         "best_hashtag_set": "A"
       }
@@ -3053,22 +3097,22 @@
     },
     "day_38": {
       "化粧落としの落とし穴": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 40.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 48.0,
+        "avg_engagement_rate": 0.9,
         "best_hour": 5,
         "best_hashtag_set": "A"
       }
     },
     "day_37": {
       "鉄分不足と肌": {
-        "total_posts": 1,
-        "avg_likes": 2.0,
-        "avg_comments": 0.0,
-        "avg_views": 94.0,
-        "avg_engagement_rate": 2.13,
+        "total_posts": 2,
+        "avg_likes": 1.5,
+        "avg_comments": 0.5,
+        "avg_views": 170.0,
+        "avg_engagement_rate": 1.47,
         "best_hour": 3,
         "best_hashtag_set": "A"
       }

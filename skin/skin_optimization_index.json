@@ -1,32 +1,32 @@
 {
-  "last_analyzed": "2026-06-12T10:21:23.881090",
+  "last_analyzed": "2026-06-13T09:23:30.105494",
   "analysis_phase": "optimizing",
   "days_accumulated": 0,
-  "status": "最適化フェーズ：196日分のデータをもとに投稿パターンを最適化しています",
+  "status": "最適化フェーズ：200日分のデータをもとに投稿パターンを最適化しています",
   "pattern_ranking": [
+    {
+      "day": 37,
+      "score": 187.0,
+      "priority": 1
+    },
     {
       "day": 32,
       "score": 168.2,
-      "priority": 1
+      "priority": 2
     },
     {
       "day": 105,
       "score": 115.0,
-      "priority": 2
+      "priority": 3
     },
     {
       "day": 80,
       "score": 111.8,
-      "priority": 3
+      "priority": 4
     },
     {
       "day": 36,
       "score": 109.9,
-      "priority": 4
-    },
-    {
-      "day": 37,
-      "score": 109.2,
       "priority": 5
     },
     {
@@ -90,72 +90,72 @@
       "priority": 17
     },
     {
+      "day": 38,
+      "score": 51.1,
+      "priority": 18
+    },
+    {
       "day": 3,
       "score": 48.0,
-      "priority": 18
+      "priority": 19
     },
     {
       "day": 46,
       "score": 46.9,
-      "priority": 19
+      "priority": 20
     },
     {
       "day": 14,
       "score": 45.8,
-      "priority": 20
+      "priority": 21
     },
     {
       "day": 85,
       "score": 45.0,
-      "priority": 21
+      "priority": 22
     },
     {
       "day": 83,
       "score": 45.0,
-      "priority": 22
+      "priority": 23
     },
     {
       "day": 60,
       "score": 45.0,
-      "priority": 23
+      "priority": 24
     },
     {
       "day": 29,
       "score": 44.9,
-      "priority": 24
+      "priority": 25
     },
     {
       "day": 9,
       "score": 44.0,
-      "priority": 25
+      "priority": 26
     },
     {
       "day": 103,
       "score": 42.0,
-      "priority": 26
+      "priority": 27
     },
     {
       "day": 4,
       "score": 41.0,
-      "priority": 27
+      "priority": 28
     },
     {
       "day": 55,
       "score": 40.7,
-      "priority": 28
+      "priority": 29
     },
     {
       "day": 54,
       "score": 40.7,
-      "priority": 29
-    },
-    {
-      "day": 92,
-      "score": 40.0,
       "priority": 30
     },
     {
-      "day": 38,
+      "day": 92,
       "score": 40.0,
       "priority": 31
     },
@@ -240,48 +240,48 @@
       "priority": 47
     },
     {
-      "day": 100,
+      "day": 40,
       "score": 29.0,
       "priority": 48
     },
     {
+      "day": 100,
+      "score": 29.0,
+      "priority": 49
+    },
+    {
       "day": 1,
       "score": 28.4,
-      "priority": 49
+      "priority": 50
     },
     {
       "day": 89,
       "score": 28.0,
-      "priority": 50
+      "priority": 51
     },
     {
       "day": 59,
       "score": 28.0,
-      "priority": 51
+      "priority": 52
     },
     {
       "day": 34,
       "score": 26.2,
-      "priority": 52
+      "priority": 53
     },
     {
       "day": 24,
       "score": 26.0,
-      "priority": 53
+      "priority": 54
     },
     {
       "day": 69,
       "score": 26.0,
-      "priority": 54
+      "priority": 55
     },
     {
       "day": 108,
       "score": 26.0,
-      "priority": 55
-    },
-    {
-      "day": 39,
-      "score": 25.3,
       "priority": 56
     },
     {
@@ -360,108 +360,108 @@
       "priority": 71
     },
     {
-      "day": 49,
-      "score": 21.0,
+      "day": 39,
+      "score": 21.6,
       "priority": 72
     },
     {
-      "day": 90,
+      "day": 49,
       "score": 21.0,
       "priority": 73
     },
     {
-      "day": 75,
+      "day": 90,
       "score": 21.0,
       "priority": 74
     },
     {
+      "day": 75,
+      "score": 21.0,
+      "priority": 75
+    },
+    {
       "day": 20,
       "score": 20.7,
-      "priority": 75
+      "priority": 76
     },
     {
       "day": 25,
       "score": 20.0,
-      "priority": 76
+      "priority": 77
     },
     {
       "day": 74,
       "score": 20.0,
-      "priority": 77
+      "priority": 78
     },
     {
       "day": 7,
       "score": 19.5,
-      "priority": 78
+      "priority": 79
     },
     {
       "day": 50,
       "score": 19.0,
-      "priority": 79
+      "priority": 80
     },
     {
       "day": 76,
       "score": 19.0,
-      "priority": 80
+      "priority": 81
     },
     {
       "day": 19,
       "score": 18.3,
-      "priority": 81
+      "priority": 82
     },
     {
       "day": 17,
       "score": 17.6,
-      "priority": 82
+      "priority": 83
     },
     {
       "day": 43,
       "score": 17.0,
-      "priority": 83
+      "priority": 84
     },
     {
       "day": 87,
       "score": 17.0,
-      "priority": 84
+      "priority": 85
     },
     {
       "day": 16,
       "score": 16.6,
-      "priority": 85
+      "priority": 86
     },
     {
       "day": 63,
       "score": 16.0,
-      "priority": 86
+      "priority": 87
     },
     {
       "day": 68,
       "score": 14.0,
-      "priority": 87
+      "priority": 88
     },
     {
       "day": 66,
       "score": 14.0,
-      "priority": 88
+      "priority": 89
     },
     {
       "day": 73,
       "score": 11.0,
-      "priority": 89
+      "priority": 90
     },
     {
       "day": 101,
       "score": 10.0,
-      "priority": 90
+      "priority": 91
     },
     {
       "day": 15,
       "score": 9.5,
-      "priority": 91
-    },
-    {
-      "day": 40,
-      "score": 7.0,
       "priority": 92
     },
     {
@@ -484,37 +484,37 @@
   "hashtag_optimization": {},
   "next_post_queue": [
     {
-      "day": 32,
+      "day": 37,
+      "priority": 1,
+      "reason": "優先度1：高反応パターン"
+    },
+    {
+      "day": 37,
       "priority": 1,
       "reason": "優先度1：高反応パターン"
     },
     {
       "day": 32,
-      "priority": 1,
-      "reason": "優先度1：高反応パターン"
+      "priority": 2,
+      "reason": "優先度2：次点パターン"
     },
     {
-      "day": 105,
+      "day": 32,
       "priority": 2,
       "reason": "優先度2：次点パターン"
     },
     {
       "day": 105,
-      "priority": 2,
-      "reason": "優先度2：次点パターン"
-    },
-    {
-      "day": 80,
       "priority": 3,
       "reason": "優先度3：中程度パターン"
     },
     {
-      "day": 36,
+      "day": 80,
       "priority": 4,
       "reason": "優先度4：参考パターン"
     },
     {
-      "day": 37,
+      "day": 36,
       "priority": 5,
       "reason": "優先度5：参考パターン"
     },
