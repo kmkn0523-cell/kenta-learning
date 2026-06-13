@@ -4808,6 +4808,13 @@
       "variant": "A",
       "post_id": "18106442563949536",
       "seed_id": "18098826854129337"
+    },
+    {
+      "date": "2026/06/13 12:19",
+      "theme": "note宣伝: 背中ニキビの9割はシャンプーが原因だった。",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18051853673769920"
     }
   ],
   "ab_next": "A",
@@ -5572,9 +5579,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-13T11:30:18.365524+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
-  "last_note_promo_date": "2026/06/10",
+  "last_posted_at": "2026-06-13T12:20:49.211038+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n2f1b6631ec38",
+  "last_note_promo_date": "2026/06/13",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/05"
 }
