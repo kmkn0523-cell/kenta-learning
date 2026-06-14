@@ -1,5 +1,5 @@
 {
-  "next_day": 29,
+  "next_day": 30,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -168,6 +168,12 @@
       "day": 28,
       "post_id": 201928909,
       "title": "道を極めるには終わりがない — The mastery of a path has no end."
+    },
+    {
+      "date": "2026/06/15 01:15",
+      "day": 29,
+      "post_id": 202004129,
+      "title": "武士は食わねど高楊枝 — Dignity over comfort."
     }
   ]
 }
