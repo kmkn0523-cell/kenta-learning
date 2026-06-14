@@ -1,5 +1,5 @@
 {
-  "daily_index": 298,
+  "daily_index": 299,
   "launch_index": 0,
   "history": [
     {
@@ -4823,6 +4823,14 @@
       "variant": "A",
       "post_id": "18166605028378021",
       "seed_id": "18081503120183118"
+    },
+    {
+      "date": "2026/06/14 03:00",
+      "theme": "食物繊維と腸",
+      "theme_id": 43,
+      "variant": "A",
+      "post_id": "17982746063847106",
+      "seed_id": "18087423704096962"
     }
   ],
   "ab_next": "A",
@@ -4918,7 +4926,7 @@
     "40": "B",
     "41": "B",
     "42": "B",
-    "43": "A",
+    "43": "B",
     "44": "A",
     "45": "A",
     "46": "A",
@@ -5481,7 +5489,7 @@
     "43": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "44": {
@@ -5587,7 +5595,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-13T22:02:08.191654+00:00",
+  "last_posted_at": "2026-06-14T03:02:05.218203+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n2f1b6631ec38",
   "last_note_promo_date": "2026/06/13",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
