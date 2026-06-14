@@ -1,5 +1,5 @@
 {
-  "daily_index": 301,
+  "daily_index": 302,
   "launch_index": 0,
   "history": [
     {
@@ -4847,6 +4847,14 @@
       "variant": "A",
       "post_id": "17866802751565835",
       "seed_id": "18017998520691455"
+    },
+    {
+      "date": "2026/06/14 22:00",
+      "theme": "生理周期と肌",
+      "theme_id": 46,
+      "variant": "A",
+      "post_id": "17910356655419086",
+      "seed_id": "18090229394622209"
     }
   ],
   "ab_next": "A",
@@ -4945,7 +4953,7 @@
     "43": "B",
     "44": "B",
     "45": "B",
-    "46": "A",
+    "46": "B",
     "47": "A",
     "48": "A",
     "49": "A",
@@ -5523,7 +5531,7 @@
     "46": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "47": {
@@ -5611,7 +5619,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-14T13:02:13.187150+00:00",
+  "last_posted_at": "2026-06-14T22:02:08.431082+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n2f1b6631ec38",
   "last_note_promo_date": "2026/06/13",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
