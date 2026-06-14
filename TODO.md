@@ -1,6 +1,6 @@
 # TODO リスト
 
-最終更新: 2026/06/04（SNS反応集約ダッシュボード reaction_dashboard.py 実装・analyzerの日付解析/反応収集バグ修正）
+最終更新: 2026/06/15（skinアフィリのASP方針を修正: A8→楽天/afb。A8はThreads投稿掲載が公式非推奨のため）
 
 ---
 
@@ -10,7 +10,8 @@
 - [ ] Task 4: Instagram insights 権限申請（Facebook Developer Console で `instagram_manage_insights`）
 - [ ] Week 2 (5/25〜) リプ運用準備 — `skin/skin_account_targets.json` の10アカウントの最新投稿を再確認
 - [ ] skinアフィリエイト導線（コード準備済 2026/06/13）— あとは商品リンクを入れるだけ
-  - [ ] 楽天アフィリエイト登録（楽天会員なら審査ほぼなしで即発行）。または既存のA8.netで化粧品案件を提携（finance_webで登録済なので新規登録不要）
+  - [ ] 楽天アフィリエイト登録（楽天会員なら審査ほぼなしで即発行・Threads認定SNS済）。または afb（Threads原則OK・案件ごと要項確認）
+        ※⚠️ A8.netは使わない（公式がThreads投稿への広告掲載を非推奨＝iOSアプリでリンクが正常遷移しない不具合のため。A8はプロフィールリンク欄のみ可）。1コメ目CTAに出す用途には楽天/afbを使う（2026/06/15 リサーチで確認）
   - [ ] スキンケア商品のアフィリリンクを取得し `skin/skin_affiliate_products.json` の `products` に追記
         （`{"name": 商品名, "url": リンク}` 形式。入れた瞬間からThreadsの1コメ目CTAに自動で「リポスト⇄アフィリ」交互で出る。空の間は一切出ない）
   - [ ] Instagram用にbioリンク（linktr.ee無料 or 楽天room）を用意（IGは本文リンク不可のためプロフィール誘導型）
