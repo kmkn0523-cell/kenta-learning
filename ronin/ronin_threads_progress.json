@@ -5130,8 +5130,14 @@
       "kind": "teaching",
       "label": "Day117 morning",
       "post_id": "18151905946434414"
+    },
+    {
+      "date": "2026/06/14 19:00",
+      "kind": "engagement",
+      "label": "engagement eng023",
+      "post_id": "17947478928194426"
     }
   ],
-  "last_posted_at": "2026-06-14T17:02:09.090890+00:00",
-  "engagement_index": 22
+  "last_posted_at": "2026-06-14T19:02:05.207442+00:00",
+  "engagement_index": 23
 }
