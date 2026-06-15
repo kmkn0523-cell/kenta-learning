@@ -183,3 +183,65 @@ def append_daily_log(count, today):
     line = f"\n- {today} リプライ・エンジン: {count}件自動返信"
     with open(DAILY_LOG_PATH, "a", encoding="utf-8") as f:
         f.write(line)
+
+
+def main():
+    # キルスイッチ：環境変数が "true" でなければ何もしないで終了
+    if os.environ.get("SKIN_REPLY_ENGINE_ENABLED") != "true":
+        print("SKIN_REPLY_ENGINE_ENABLED が true でないため停止します。")
+        return
+
+    token = os.environ["THREADS_ACCESS_TOKEN"]  # 返信に使うアクセストークン
+    config = load_config()
+    today = datetime.now(JST).strftime("%Y-%m-%d")
+    state = load_state(STATE_PATH, today)
+
+    # 本日の上限に達していたら終了（状態だけ保存して日付リセットを永続化）
+    if state["count_today"] >= config["daily_cap"]:
+        print("本日の上限に到達済み。")
+        save_state(STATE_PATH, state)
+        return
+
+    # キーワードをシャッフルして検索（毎回同じ並びにしない）
+    keywords = config["keywords"][:]
+    random.shuffle(keywords)
+    posts = []
+    for keyword in keywords:
+        try:
+            posts.extend(search_recent_posts(keyword, token))
+        except Exception as error:  # 1キーワードの失敗で全体を止めない
+            print(f"検索失敗 keyword={keyword}: {error}")
+        if len(posts) >= config["per_run"] * 5:  # 十分集まったら早めに切り上げる
+            break
+
+    rng = random.Random()
+    targets = select_targets(posts, config["my_username"], state, config, rng)
+    if not targets:
+        print("返信対象が見つかりませんでした。")
+        save_state(STATE_PATH, state)
+        return
+
+    # 返信送信は既存スクリプトを再利用（env必須なので遅延import）
+    from skin_threads_action import post_to_threads
+
+    sent = 0
+    for post in targets:
+        category = classify_category(post["text"])
+        reply = compose_reply(category, state["recent_replies"], rng)
+        try:
+            post_to_threads(reply, reply_to_id=post["id"])
+        except Exception as error:  # 1件の失敗で残りを止めない
+            print(f"返信失敗 post={post['id']}: {error}")
+            continue
+        record_reply(state, post["id"], post["author"], reply, config)
+        save_state(STATE_PATH, state)  # 1件ごとに保存（途中で落ちても二重返信しない）
+        sent += 1
+        print(f"返信 {sent}/{len(targets)} → @{post['author']}")
+        time.sleep(random.randint(config["min_sleep_seconds"], config["max_sleep_seconds"]))
+
+    append_daily_log(sent, today)
+    print(f"完了: {sent} 件返信")
+
+
+if __name__ == "__main__":
+    main()
