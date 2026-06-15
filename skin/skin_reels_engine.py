@@ -18,3 +18,17 @@ def next_theme_index(progress, total_themes):
     """進捗から次に使うテーマのインデックス（0始まり）を返す。末尾の次は先頭へ循環。"""
     current = progress.get("reels_index", 0)
     return (current + 1) % total_themes
+
+
+def slides_to_use(slide_count, seconds_per_slide, max_slides, max_total_seconds):
+    """使うスライド枚数を決める。max_slides と『合計秒数が上限を超えない枚数』の小さい方で頭打ち。"""
+    by_duration = int(max_total_seconds // seconds_per_slide)  # 合計秒数で許される最大枚数
+    return min(slide_count, max_slides, by_duration)
+
+
+def build_local_slide_paths(theme_id, slide_count, carousel_dir):
+    """テーマIDと枚数から、カルーセル画像のローカルパス一覧を作る（命名: themeNN_slideM.png）。"""
+    return [
+        f"{carousel_dir}/theme{theme_id:02d}_slide{i}.png"
+        for i in range(1, slide_count + 1)
+    ]
