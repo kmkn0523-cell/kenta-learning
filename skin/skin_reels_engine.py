@@ -79,3 +79,17 @@ def build_caption(theme):
 def build_raw_video_url(raw_video_base, filename):
     """動画のraw公開URLを組み立てる。"""
     return f"{raw_video_base}/{filename}"
+
+
+def load_json(path, default):
+    """JSONファイルを読み込む。無ければ default を返す。"""
+    if not os.path.exists(path):
+        return default
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_json(path, data):
+    """JSONファイルを書き出す（日本語そのまま・読みやすいインデント）。"""
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)

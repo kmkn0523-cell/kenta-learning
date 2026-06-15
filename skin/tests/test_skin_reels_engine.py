@@ -11,6 +11,8 @@ from skin_reels_engine import next_theme_index
 from skin_reels_engine import slides_to_use, build_local_slide_paths
 from skin_reels_engine import build_ffmpeg_command
 from skin_reels_engine import build_caption, build_raw_video_url
+import json as _json
+from skin_reels_engine import load_json, save_json
 
 
 def test_next_theme_index_通常は1進む():
@@ -76,3 +78,14 @@ def test_build_caption_フックとハッシュタグを含む():
 def test_build_raw_video_url_ベースとファイル名を連結():
     url = build_raw_video_url("https://example.com/reels", "latest_reel.mp4")
     assert url == "https://example.com/reels/latest_reel.mp4"
+
+
+def test_save_と_load_で往復できる(tmp_path):
+    path = tmp_path / "state.json"
+    data = {"reels_index": 3, "history": ["2026-06-15"]}
+    save_json(str(path), data)
+    assert load_json(str(path), default={}) == data
+
+def test_load_json_無ければdefault(tmp_path):
+    path = tmp_path / "missing.json"
+    assert load_json(str(path), default={"reels_index": 0}) == {"reels_index": 0}
