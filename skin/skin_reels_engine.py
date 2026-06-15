@@ -32,3 +32,38 @@ def build_local_slide_paths(theme_id, slide_count, carousel_dir):
         f"{carousel_dir}/theme{theme_id:02d}_slide{i}.png"
         for i in range(1, slide_count + 1)
     ]
+
+
+def build_ffmpeg_command(image_paths, audio_path, output_path, seconds_per_slide, fps, width, height):
+    """静止画スライド＋音源から縦型(9:16)H.264動画を作る ffmpeg コマンド（引数リスト）を返す。
+    各画像を seconds_per_slide 秒ずつ表示し、scale+pad で width x height に収め、concat で連結。
+    音声は動画の長さに合わせて -shortest で切る。"""
+    command = ["ffmpeg", "-y"]  # -y: 既存ファイルを上書き
+    for path in image_paths:  # 画像を1枚ずつ静止画入力として追加
+        command += ["-loop", "1", "-t", str(seconds_per_slide), "-i", path]
+    command += ["-i", audio_path]  # 最後に音源を追加（入力インデックス = 画像枚数）
+
+    # 各画像を縦型キャンバスに収める filter を組み立てる
+    filters = []
+    for index in range(len(image_paths)):
+        filters.append(
+            f"[{index}:v]scale={width}:{height}:force_original_aspect_ratio=decrease,"
+            f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2,setsar=1[v{index}]"
+        )
+    concat_inputs = "".join(f"[v{i}]" for i in range(len(image_paths)))
+    filters.append(f"{concat_inputs}concat=n={len(image_paths)}:v=1:a=0[outv]")
+    filter_complex = ";".join(filters)
+
+    audio_index = len(image_paths)  # 音源の入力番号
+    command += [
+        "-filter_complex", filter_complex,
+        "-map", "[outv]",
+        "-map", f"{audio_index}:a",
+        "-c:v", "libx264",
+        "-pix_fmt", "yuv420p",
+        "-r", str(fps),
+        "-c:a", "aac",
+        "-shortest",
+        output_path,
+    ]
+    return command

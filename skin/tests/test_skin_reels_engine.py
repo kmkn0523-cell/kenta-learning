@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from skin_reels_engine import next_theme_index
 from skin_reels_engine import slides_to_use, build_local_slide_paths
+from skin_reels_engine import build_ffmpeg_command
 
 
 def test_next_theme_index_通常は1進む():
@@ -39,3 +40,20 @@ def test_build_local_slide_paths_命名規則どおり():
         "skin/skin_instagram_carousels/theme01_slide2.png",
         "skin/skin_instagram_carousels/theme01_slide3.png",
     ]
+
+
+def test_build_ffmpeg_command_必須フラグを含む():
+    images = ["a.png", "b.png"]
+    cmd = build_ffmpeg_command(images, "bgm.mp3", "out.mp4", 3.5, 30, 1080, 1920)
+    # 画像2枚＋音声1＝-i が3回
+    assert cmd.count("-i") == 3
+    # 各画像が -loop 1 -t 3.5 で入る
+    assert "-loop" in cmd
+    assert "3.5" in cmd
+    # H.264・縦型・音声・shortest・出力が含まれる
+    assert "libx264" in cmd
+    assert "-shortest" in cmd
+    assert "1080:1920" in " ".join(cmd)
+    assert "concat=n=2" in " ".join(cmd)
+    assert cmd[-1] == "out.mp4"
+    assert cmd[0] == "ffmpeg"
