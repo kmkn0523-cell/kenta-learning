@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from skin_reels_engine import next_theme_index
 from skin_reels_engine import slides_to_use, build_local_slide_paths
 from skin_reels_engine import build_ffmpeg_command
+from skin_reels_engine import build_caption, build_raw_video_url
 
 
 def test_next_theme_index_通常は1進む():
@@ -57,3 +58,21 @@ def test_build_ffmpeg_command_必須フラグを含む():
     assert "concat=n=2" in " ".join(cmd)
     assert cmd[-1] == "out.mp4"
     assert cmd[0] == "ffmpeg"
+
+
+def test_build_caption_フックとハッシュタグを含む():
+    theme = {
+        "hook": "肌を荒らす食卓 5 チェック",
+        "fixed_hashtags": ["肌荒れ", "大人ニキビ"],
+        "theme_hashtags": ["食事と肌"],
+        "size_mix_hashtags": ["30代肌悩み"],
+    }
+    caption = build_caption(theme)
+    assert "肌を荒らす食卓 5 チェック" in caption
+    assert "#肌荒れ" in caption
+    assert "#食事と肌" in caption
+    assert "#30代肌悩み" in caption
+
+def test_build_raw_video_url_ベースとファイル名を連結():
+    url = build_raw_video_url("https://example.com/reels", "latest_reel.mp4")
+    assert url == "https://example.com/reels/latest_reel.mp4"
