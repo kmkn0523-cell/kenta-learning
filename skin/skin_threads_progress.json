@@ -1,5 +1,5 @@
 {
-  "daily_index": 304,
+  "daily_index": 305,
   "launch_index": 0,
   "history": [
     {
@@ -4871,6 +4871,14 @@
       "variant": "A",
       "post_id": "18393688903088325",
       "seed_id": "18136182307562565"
+    },
+    {
+      "date": "2026/06/15 13:00",
+      "theme": "口呼吸と肌荒れ",
+      "theme_id": 49,
+      "variant": "A",
+      "post_id": "18012473672712733",
+      "seed_id": "17940376077247540"
     }
   ],
   "ab_next": "A",
@@ -4972,7 +4980,7 @@
     "46": "B",
     "47": "B",
     "48": "B",
-    "49": "A",
+    "49": "B",
     "50": "A",
     "51": "A",
     "52": "A",
@@ -5565,7 +5573,7 @@
     "49": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "50": {
@@ -5635,7 +5643,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-15T08:02:01.033767+00:00",
+  "last_posted_at": "2026-06-15T13:02:12.572441+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n2f1b6631ec38",
   "last_note_promo_date": "2026/06/13",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
