@@ -49,3 +49,18 @@ def classify_category(post_text):
             best_key = key
             best_hits = hits
     return best_key
+
+
+# テンプレ本文の前に付ける短い枕詞。先頭の "" は「枕詞なし」。
+# 本文×枕詞の組み合わせで母数を増やし、固定文の連投（スパム署名）を避ける。
+OPENERS = ["", "わかります。", "それ大事ですよね。", "なるほどです。", "共感します。"]
+
+
+def compose_reply(category_key, recent_replies, rng):
+    """カテゴリに合うテンプレ本文に枕詞を合成して1件の返信文を返す。
+    recent_replies（直近で送った合成文）に入っている文は避ける。
+    全部使い切っていたら重複を許して選ぶ。rng は random.Random（テストで固定するため）。"""
+    pool = COMMENT_TEMPLATES[category_key]["comments"] if category_key else GENERIC_TEMPLATES
+    combos = [opener + body for body in pool for opener in OPENERS]
+    fresh = [combo for combo in combos if combo not in recent_replies]
+    return rng.choice(fresh) if fresh else rng.choice(combos)
