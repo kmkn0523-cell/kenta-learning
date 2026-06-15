@@ -82,3 +82,20 @@ def is_repliable(post, my_username, state, config):
     if count_urls(text) > config["max_urls"]:  # 宣伝色が強い投稿
         return False
     return True
+
+
+def select_targets(posts, my_username, state, config, rng):
+    """検索結果から、今回返信する投稿を選ぶ。
+    フィルタ通過 → 重複ID除去 → 新しい順 → （per_run と 日次残量）で頭打ち。"""
+    candidates = [p for p in posts if is_repliable(p, my_username, state, config)]
+    seen_ids = set()
+    unique = []
+    for post in candidates:
+        if post["id"] in seen_ids:  # 複数キーワードで同じ投稿が来ることがある
+            continue
+        seen_ids.add(post["id"])
+        unique.append(post)
+    unique.sort(key=lambda p: p.get("timestamp", ""), reverse=True)  # 新しい順（早押し優先）
+    remaining_today = config["daily_cap"] - state["count_today"]  # 今日あと何件送れるか
+    limit = max(0, min(config["per_run"], remaining_today))
+    return unique[:limit]

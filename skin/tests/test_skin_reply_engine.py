@@ -13,6 +13,33 @@ import random as _random  # テスト内で決定的な乱数を作るため
 from skin_reply_engine import compose_reply, OPENERS
 from skin_comment_templates import COMMENT_TEMPLATES, GENERIC_TEMPLATES
 from skin_reply_engine import is_repliable
+from skin_reply_engine import select_targets
+
+SELECT_CONFIG = {"max_per_author_per_day": 1, "min_post_length": 15, "max_urls": 1, "daily_cap": 25, "per_run": 2}
+
+def test_select_targets_新しい順にper_run件まで返す():
+    rng = _random.Random(0)
+    posts = [
+        _post(id="a", author="u1", timestamp="2026-06-15T01:00:00+0000"),
+        _post(id="b", author="u2", timestamp="2026-06-15T03:00:00+0000"),
+        _post(id="c", author="u3", timestamp="2026-06-15T02:00:00+0000"),
+    ]
+    result = select_targets(posts, "skin_reset_jp", _fresh_state(), SELECT_CONFIG, rng)
+    assert [p["id"] for p in result] == ["b", "c"]  # 新しい順に2件
+
+def test_select_targets_重複IDは1件に():
+    rng = _random.Random(0)
+    posts = [_post(id="a", author="u1"), _post(id="a", author="u1")]
+    result = select_targets(posts, "skin_reset_jp", _fresh_state(), SELECT_CONFIG, rng)
+    assert len(result) == 1
+
+def test_select_targets_日次残量で頭打ち():
+    rng = _random.Random(0)
+    state = _fresh_state()
+    state["count_today"] = 24  # 残り1件（daily_cap=25）
+    posts = [_post(id="a", author="u1"), _post(id="b", author="u2")]
+    result = select_targets(posts, "skin_reset_jp", state, SELECT_CONFIG, rng)
+    assert len(result) == 1
 
 CONFIG = {"max_per_author_per_day": 1, "min_post_length": 15, "max_urls": 1}
 
