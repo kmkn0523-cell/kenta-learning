@@ -37,6 +37,7 @@
 | 6/7 | ronin_engagement.py | コメント誘発投稿(engagement post)の在庫ロード/選択/検証 | JSON在庫の読込・選択、必須キー/字数/重複のバリデーション、検証関数をエラー文字列リストで返す設計 |
 | 6/7 | ronin_comment_seeder.py | 投稿直後に付ける「1コメ目」の文章生成（純粋関数） | 早期リプライでreachを伸ばす考え方、本文とリンクの分離、500字丸め |
 | 6/15 | skin_reply_engine.py | skin Threads自動リプライ・エンジン（keyword_searchで見つけた投稿にテンプレ返信） | 公式keyword_search API、純粋関数のTDD（分類/選別/合成/状態）とネットワークI/Oの分離、日次上限・著者上限・連投禁止のスロットル、環境変数キルスイッチ、GitHub Actionsで状態をキャッシュ＋コミット永続化 |
+| 6/15 | skin_reels_engine.py | 既存カルーセル画像からffmpegで縦型Reelsを自動生成・投稿（generate→push→publishの2フェーズ） | ffmpegコマンドのlist組み立てとsubprocess実行、9:16/5〜90秒のReels要件、media_type=REELSの3ステップ公開、動画をgit pushして公開URLを生やす設計、wait_for_urlで配信待ち、既存publish関数の遅延import再利用 |
 
 ---
 
