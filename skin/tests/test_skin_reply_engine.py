@@ -44,6 +44,17 @@ def test_record_reply_recent_replyはwindow件に保つ():
         record_reply(state, f"p{i}", f"u{i}", f"返信{i}", REC_CONFIG)
     assert state["recent_replies"] == ["返信2", "返信3", "返信4"]  # 直近3件だけ残る
 
+# 選別系テストで共有するヘルパー（参照より前に定義する）
+CONFIG = {"max_per_author_per_day": 1, "min_post_length": 15, "max_urls": 1}
+
+def _fresh_state():
+    return {"date": "2026-06-15", "count_today": 0, "replied_post_ids": [], "author_counts": {}, "recent_replies": []}
+
+def _post(**kw):
+    base = {"id": "p1", "text": "腸活を始めて肌が変わってきた気がします", "author": "someone", "timestamp": "2026-06-15T00:00:00+0000"}
+    base.update(kw)
+    return base
+
 SELECT_CONFIG = {"max_per_author_per_day": 1, "min_post_length": 15, "max_urls": 1, "daily_cap": 25, "per_run": 2}
 
 def test_select_targets_新しい順にper_run件まで返す():
@@ -70,16 +81,6 @@ def test_select_targets_日次残量で頭打ち():
     result = select_targets(posts, "skin_reset_jp", state, SELECT_CONFIG, rng)
     assert len(result) == 1
 
-CONFIG = {"max_per_author_per_day": 1, "min_post_length": 15, "max_urls": 1}
-
-def _fresh_state():
-    return {"date": "2026-06-15", "count_today": 0, "replied_post_ids": [], "author_counts": {}, "recent_replies": []}
-
-def _post(**kw):
-    base = {"id": "p1", "text": "腸活を始めて肌が変わってきた気がします", "author": "someone", "timestamp": "2026-06-15T00:00:00+0000"}
-    base.update(kw)
-    return base
-
 def test_is_repliable_通常はTrue():
     assert is_repliable(_post(), "skin_reset_jp", _fresh_state(), CONFIG) is True
 
@@ -104,6 +105,9 @@ def test_is_repliable_日本語なしはFalse():
 
 def test_is_repliable_URL過多はFalse():
     assert is_repliable(_post(text="腸活いいよ https://a.com https://b.com 見て"), "skin_reset_jp", _fresh_state(), CONFIG) is False
+
+def test_is_repliable_著者不明はFalse():
+    assert is_repliable(_post(author=None), "skin_reset_jp", _fresh_state(), CONFIG) is False
 
 
 def _all_combos(pool):
