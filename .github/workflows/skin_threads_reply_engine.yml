@@ -1,0 +1,71 @@
+# skin_threads_reply_engine.yml
+# skin Threads 自動リプライ・エンジン
+# JST 日中に1日6回起動し、1回あたり数件だけ自動返信する（合計が日次上限25の下に収まる設計）
+
+name: skin Threads リプライ・エンジン
+
+on:
+  schedule:
+    - cron: '15 23 * * *'  # JST 08:15
+    - cron: '15 2 * * *'   # JST 11:15
+    - cron: '15 5 * * *'   # JST 14:15
+    - cron: '15 8 * * *'   # JST 17:15
+    - cron: '15 11 * * *'  # JST 20:15
+    - cron: '15 13 * * *'  # JST 22:15
+  workflow_dispatch:  # 手動実行（テスト用）
+
+concurrency:
+  group: skin-threads-reply-engine  # 二重起動・push競合を防ぐ専用グループ
+  cancel-in-progress: false
+
+jobs:
+  reply-engine:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 状態ファイルのpushに必要
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ライブラリをインストール
+        run: pip install requests
+
+      - name: 状態ファイルをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_reply_history.json
+          key: skin-reply-history-${{ github.run_id }}
+          restore-keys: |
+            skin-reply-history-
+
+      - name: リプライ・エンジンを実行
+        env:
+          SKIN_REPLY_ENGINE_ENABLED: ${{ vars.SKIN_REPLY_ENGINE_ENABLED }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: cd skin && python skin_reply_engine.py
+
+      - name: 状態ファイルをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: skin/skin_reply_history.json
+          key: skin-reply-history-${{ github.run_id }}
+
+      - name: 状態ファイルをGitにコミット＆プッシュ
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add skin/skin_reply_history.json
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: skin リプライ・エンジン状態更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
