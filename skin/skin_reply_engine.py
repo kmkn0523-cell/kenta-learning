@@ -99,3 +99,25 @@ def select_targets(posts, my_username, state, config, rng):
     remaining_today = config["daily_cap"] - state["count_today"]  # 今日あと何件送れるか
     limit = max(0, min(config["per_run"], remaining_today))
     return unique[:limit]
+
+
+def new_state(today):
+    """その日の空っぽの状態を作る"""
+    return {"date": today, "count_today": 0, "replied_post_ids": [], "author_counts": {}, "recent_replies": []}
+
+
+def reset_if_new_day(state, today):
+    """日付が変わっていたら状態を初期化して返す。同じ日ならそのまま返す。"""
+    if state.get("date") != today:
+        return new_state(today)
+    return state
+
+
+def record_reply(state, post_id, author, reply_text, config):
+    """1件返信したことを状態に記録する（重複防止・著者上限・連投禁止の材料）。"""
+    state["replied_post_ids"].append(post_id)
+    state["author_counts"][author] = state["author_counts"].get(author, 0) + 1
+    state["count_today"] += 1
+    state["recent_replies"].append(reply_text)
+    state["recent_replies"] = state["recent_replies"][-config["recent_window"]:]  # 直近だけ保持
+    return state

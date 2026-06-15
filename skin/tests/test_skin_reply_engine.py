@@ -14,6 +14,35 @@ from skin_reply_engine import compose_reply, OPENERS
 from skin_comment_templates import COMMENT_TEMPLATES, GENERIC_TEMPLATES
 from skin_reply_engine import is_repliable
 from skin_reply_engine import select_targets
+from skin_reply_engine import new_state, reset_if_new_day, record_reply
+
+REC_CONFIG = {"recent_window": 3}
+
+def test_new_state_初期値():
+    state = new_state("2026-06-15")
+    assert state == {"date": "2026-06-15", "count_today": 0, "replied_post_ids": [], "author_counts": {}, "recent_replies": []}
+
+def test_reset_if_new_day_日付が違えば初期化():
+    old = {"date": "2026-06-14", "count_today": 5, "replied_post_ids": ["x"], "author_counts": {"u": 1}, "recent_replies": ["a"]}
+    assert reset_if_new_day(old, "2026-06-15") == new_state("2026-06-15")
+
+def test_reset_if_new_day_同じ日付はそのまま():
+    same = {"date": "2026-06-15", "count_today": 5, "replied_post_ids": ["x"], "author_counts": {"u": 1}, "recent_replies": ["a"]}
+    assert reset_if_new_day(same, "2026-06-15") is same
+
+def test_record_reply_カウントと履歴が増える():
+    state = new_state("2026-06-15")
+    record_reply(state, "p1", "u1", "返信文A", REC_CONFIG)
+    assert state["count_today"] == 1
+    assert state["replied_post_ids"] == ["p1"]
+    assert state["author_counts"] == {"u1": 1}
+    assert state["recent_replies"] == ["返信文A"]
+
+def test_record_reply_recent_replyはwindow件に保つ():
+    state = new_state("2026-06-15")
+    for i in range(5):
+        record_reply(state, f"p{i}", f"u{i}", f"返信{i}", REC_CONFIG)
+    assert state["recent_replies"] == ["返信2", "返信3", "返信4"]  # 直近3件だけ残る
 
 SELECT_CONFIG = {"max_per_author_per_day": 1, "min_post_length": 15, "max_urls": 1, "daily_cap": 25, "per_run": 2}
 
