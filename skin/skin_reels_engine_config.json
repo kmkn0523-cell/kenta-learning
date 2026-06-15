@@ -1,0 +1,12 @@
+{
+  "total_themes": 20,
+  "seconds_per_slide": 3.5,
+  "max_slides": 7,
+  "min_total_seconds": 5,
+  "max_total_seconds": 60,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "video_filename": "latest_reel.mp4",
+  "raw_video_base": "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/skin/skin_instagram_reels"
+}
