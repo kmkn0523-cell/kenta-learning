@@ -68,6 +68,8 @@ def compose_reply(category_key, recent_replies, rng):
 
 def is_repliable(post, my_username, state, config):
     """この投稿に返信して良いかを判定する（除外フィルタ）。"""
+    if not post.get("author"):  # 著者名が取れない投稿はスキップ（連投・記録の事故防止）
+        return False
     if post.get("author") == my_username:  # 自分の投稿には返信しない
         return False
     if post.get("id") in state["replied_post_ids"]:  # 既に返信済み
