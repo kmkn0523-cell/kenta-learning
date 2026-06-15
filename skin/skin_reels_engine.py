@@ -67,3 +67,15 @@ def build_ffmpeg_command(image_paths, audio_path, output_path, seconds_per_slide
         output_path,
     ]
     return command
+
+
+def build_caption(theme):
+    """テーマのフック文＋ハッシュタグでReelsキャプションを組み立てる。"""
+    tags = theme.get("fixed_hashtags", []) + theme.get("theme_hashtags", []) + theme.get("size_mix_hashtags", [])
+    hashtag_line = " ".join(f"#{tag}" for tag in tags)
+    return f"{theme.get('hook', '')}\n\n{hashtag_line}"
+
+
+def build_raw_video_url(raw_video_base, filename):
+    """動画のraw公開URLを組み立てる。"""
+    return f"{raw_video_base}/{filename}"
