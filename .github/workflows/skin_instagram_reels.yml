@@ -31,7 +31,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
       - name: ライブラリをインストール
-        run: pip install requests
+        run: pip install requests python-dotenv
 
       - name: 動画を生成
         env:
