@@ -93,3 +93,72 @@ def save_json(path, data):
     """JSONファイルを書き出す（日本語そのまま・読みやすいインデント）。"""
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+# -----------------------------------------------
+# ファイルの場所・定数（このスクリプトと同じ skin/ にある前提）
+# -----------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent
+CONFIG_PATH = BASE_DIR / "skin_reels_engine_config.json"
+CAROUSEL_DIR = BASE_DIR / "skin_instagram_carousels"
+CAROUSEL_CONTENT_PATH = BASE_DIR / "carousel_content.json"
+AUDIO_PATH = BASE_DIR / "skin_reels_assets" / "bgm.mp3"
+REELS_DIR = BASE_DIR / "skin_instagram_reels"
+PENDING_PATH = BASE_DIR / "skin_reels_pending.json"
+PROGRESS_PATH = BASE_DIR / "skin_reels_progress.json"
+DAILY_LOG_PATH = BASE_DIR / "skin_daily_log.md"
+JST = timezone(timedelta(hours=9))
+
+
+def load_themes():
+    """carousel_content.json からテーマ一覧（リスト）を取り出す。"""
+    data = load_json(str(CAROUSEL_CONTENT_PATH), default={})
+    return data.get("themes", data if isinstance(data, list) else [])
+
+
+def generate():
+    """動画を生成して pending.json に公開情報を書き出す。"""
+    if os.environ.get("SKIN_REELS_ENGINE_ENABLED") != "true":
+        print("SKIN_REELS_ENGINE_ENABLED が true でないため停止します。")
+        return
+    if not AUDIO_PATH.exists():  # 音源が無ければ著作権事故防止のため明確に停止
+        print(f"音源が見つかりません: {AUDIO_PATH}（CC0音源を置いてください）")
+        return
+
+    config = load_json(str(CONFIG_PATH), default={})
+    themes = load_themes()
+    if not themes:
+        print("テーマが読み込めませんでした。")
+        return
+
+    progress = load_json(str(PROGRESS_PATH), default={"reels_index": -1, "history": []})
+    index = next_theme_index(progress, min(config["total_themes"], len(themes)))
+    theme = themes[index]
+    theme_id = theme.get("id", index + 1)
+
+    n_slides = slides_to_use(
+        theme.get("slide_count", len(theme.get("slides", []))),
+        config["seconds_per_slide"], config["max_slides"], config["max_total_seconds"],
+    )
+    image_paths = build_local_slide_paths(theme_id, n_slides, str(CAROUSEL_DIR))
+
+    REELS_DIR.mkdir(exist_ok=True)  # 出力先フォルダを用意
+    output_path = str(REELS_DIR / config["video_filename"])
+    command = build_ffmpeg_command(
+        image_paths, str(AUDIO_PATH), output_path,
+        config["seconds_per_slide"], config["fps"], config["width"], config["height"],
+    )
+    print("ffmpeg実行:", " ".join(command))
+    result = subprocess.run(command, capture_output=True, text=True)
+    if result.returncode != 0:  # 生成失敗なら中身を出して停止
+        print("ffmpeg失敗:", result.stderr[-1000:])
+        return
+
+    caption = build_caption(theme)
+    save_json(str(PENDING_PATH), {
+        "theme_id": theme_id,
+        "theme_index": index,
+        "caption": caption,
+        "video_filename": config["video_filename"],
+    })
+    print(f"生成完了: theme_id={theme_id}, slides={n_slides} → {output_path}")
