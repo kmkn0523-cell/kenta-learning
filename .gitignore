@@ -38,6 +38,10 @@
 !skin/skin_instagram_images/*.png
 !skin/skin_instagram_carousels/
 !skin/skin_instagram_carousels/*.png
+!skin/skin_reels_assets/
+!skin/skin_reels_assets/*.mp3
+!skin/skin_instagram_reels/
+!skin/skin_instagram_reels/*.mp4
 !skin/links.html
 !skin/profile/
 !skin/profile/*.md
