@@ -121,3 +121,65 @@ def record_reply(state, post_id, author, reply_text, config):
     state["recent_replies"].append(reply_text)
     state["recent_replies"] = state["recent_replies"][-config["recent_window"]:]  # 直近だけ保持
     return state
+
+
+# -----------------------------------------------
+# ファイルの場所・定数（このスクリプトと同じ skin/ にある前提）
+# -----------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent
+CONFIG_PATH = BASE_DIR / "skin_reply_engine_config.json"  # キーワード・上限設定（読むだけ）
+STATE_PATH = BASE_DIR / "skin_reply_history.json"          # 状態（読み書き・無ければ初回作成）
+DAILY_LOG_PATH = BASE_DIR / "skin_daily_log.md"            # 日次ログ（追記）
+JST = timezone(timedelta(hours=9))                         # 日本時間
+
+
+def load_config():
+    """設定ファイルを読み込んで辞書で返す"""
+    with open(CONFIG_PATH, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load_state(path, today):
+    """状態ファイルを読み込む。無ければ空。日付が変わっていれば初期化して返す。"""
+    if not os.path.exists(path):
+        return new_state(today)
+    with open(path, encoding="utf-8") as f:
+        state = json.load(f)
+    return reset_if_new_day(state, today)
+
+
+def save_state(path, state):
+    """状態ファイルを書き出す"""
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(state, f, ensure_ascii=False, indent=2)
+
+
+def search_recent_posts(keyword, token):
+    """keyword_search で直近の公開投稿を取得し、正規化した辞書のリストで返す。
+    返るキー: id / text / author / timestamp（Task 0 Step 5 で実機確認済みの形）。"""
+    url = "https://graph.threads.net/v1.0/keyword_search"
+    params = {
+        "q": keyword,
+        "search_type": "RECENT",
+        "fields": "id,text,username,timestamp",
+        "access_token": token,
+    }
+    response = requests.get(url, params=params, timeout=30)
+    response.raise_for_status()
+    data = response.json().get("data", [])
+    posts = []
+    for item in data:
+        posts.append({
+            "id": item.get("id"),
+            "text": item.get("text") or "",
+            "author": item.get("username"),
+            "timestamp": item.get("timestamp") or "",
+        })
+    return posts
+
+
+def append_daily_log(count, today):
+    """その回の返信件数を日次ログに1行追記する"""
+    line = f"\n- {today} リプライ・エンジン: {count}件自動返信"
+    with open(DAILY_LOG_PATH, "a", encoding="utf-8") as f:
+        f.write(line)
