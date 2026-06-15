@@ -12,6 +12,42 @@ from skin_reply_engine import contains_japanese, count_urls, classify_category
 import random as _random  # テスト内で決定的な乱数を作るため
 from skin_reply_engine import compose_reply, OPENERS
 from skin_comment_templates import COMMENT_TEMPLATES, GENERIC_TEMPLATES
+from skin_reply_engine import is_repliable
+
+CONFIG = {"max_per_author_per_day": 1, "min_post_length": 15, "max_urls": 1}
+
+def _fresh_state():
+    return {"date": "2026-06-15", "count_today": 0, "replied_post_ids": [], "author_counts": {}, "recent_replies": []}
+
+def _post(**kw):
+    base = {"id": "p1", "text": "腸活を始めて肌が変わってきた気がします", "author": "someone", "timestamp": "2026-06-15T00:00:00+0000"}
+    base.update(kw)
+    return base
+
+def test_is_repliable_通常はTrue():
+    assert is_repliable(_post(), "skin_reset_jp", _fresh_state(), CONFIG) is True
+
+def test_is_repliable_自分の投稿はFalse():
+    assert is_repliable(_post(author="skin_reset_jp"), "skin_reset_jp", _fresh_state(), CONFIG) is False
+
+def test_is_repliable_返信済みはFalse():
+    state = _fresh_state()
+    state["replied_post_ids"].append("p1")
+    assert is_repliable(_post(), "skin_reset_jp", state, CONFIG) is False
+
+def test_is_repliable_同一著者が上限到達はFalse():
+    state = _fresh_state()
+    state["author_counts"]["someone"] = 1
+    assert is_repliable(_post(), "skin_reset_jp", state, CONFIG) is False
+
+def test_is_repliable_短すぎる投稿はFalse():
+    assert is_repliable(_post(text="短い"), "skin_reset_jp", _fresh_state(), CONFIG) is False
+
+def test_is_repliable_日本語なしはFalse():
+    assert is_repliable(_post(text="this is an english only post about skin"), "skin_reset_jp", _fresh_state(), CONFIG) is False
+
+def test_is_repliable_URL過多はFalse():
+    assert is_repliable(_post(text="腸活いいよ https://a.com https://b.com 見て"), "skin_reset_jp", _fresh_state(), CONFIG) is False
 
 
 def _all_combos(pool):

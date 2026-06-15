@@ -64,3 +64,21 @@ def compose_reply(category_key, recent_replies, rng):
     combos = [opener + body for body in pool for opener in OPENERS]
     fresh = [combo for combo in combos if combo not in recent_replies]
     return rng.choice(fresh) if fresh else rng.choice(combos)
+
+
+def is_repliable(post, my_username, state, config):
+    """この投稿に返信して良いかを判定する（除外フィルタ）。"""
+    if post.get("author") == my_username:  # 自分の投稿には返信しない
+        return False
+    if post.get("id") in state["replied_post_ids"]:  # 既に返信済み
+        return False
+    if state["author_counts"].get(post.get("author"), 0) >= config["max_per_author_per_day"]:  # 同一著者の上限
+        return False
+    text = post.get("text") or ""
+    if len(text) < config["min_post_length"]:  # 短すぎる投稿は中身が薄い
+        return False
+    if not contains_japanese(text):  # 日本語以外（ターゲット外）
+        return False
+    if count_urls(text) > config["max_urls"]:  # 宣伝色が強い投稿
+        return False
+    return True
