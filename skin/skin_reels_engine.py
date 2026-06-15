@@ -162,3 +162,95 @@ def generate():
         "video_filename": config["video_filename"],
     })
     print(f"生成完了: theme_id={theme_id}, slides={n_slides} → {output_path}")
+
+
+def wait_for_url(url, max_wait=180):
+    """動画のraw URLが配信され始める（HTTP 200）まで待つ。"""
+    waited = 0
+    while waited < max_wait:
+        try:
+            response = requests.get(url, timeout=30)
+            if response.status_code == 200:
+                return True
+        except Exception as error:
+            print(f"URL確認エラー: {error}")
+        time.sleep(15)
+        waited += 15
+    return False
+
+
+def create_reels_container(video_url, caption, user_id, token):
+    """media_type=REELS でコンテナ（下書き）を作り、creation_id を返す。"""
+    url = f"https://graph.facebook.com/v19.0/{user_id}/media"
+    params = {
+        "media_type": "REELS",
+        "video_url": video_url,
+        "caption": caption,
+        "access_token": token,
+    }
+    response = requests.post(url, params=params, timeout=60)
+    data = response.json()
+    if "id" in data:
+        return data["id"]
+    print(f"Reelsコンテナ作成失敗: {data}")
+    return ""
+
+
+def publish():
+    """pending.json を読み、動画URLの配信を待ってから Reels を公開する。"""
+    if os.environ.get("SKIN_REELS_ENGINE_ENABLED") != "true":
+        print("SKIN_REELS_ENGINE_ENABLED が true でないため停止します。")
+        return
+
+    config = load_json(str(CONFIG_PATH), default={})
+    pending = load_json(str(PENDING_PATH), default={})
+    if not pending:
+        print("公開対象（pending.json）がありません。")
+        return
+
+    token = os.environ["SKIN_INSTAGRAM_ACCESS_TOKEN"]
+    user_id = os.environ["SKIN_INSTAGRAM_USER_ID"]
+    video_url = build_raw_video_url(config["raw_video_base"], pending["video_filename"])
+
+    if not wait_for_url(video_url):  # URLが生えるまで待つ
+        print(f"動画URLが配信されませんでした: {video_url}")
+        return
+
+    creation_id = create_reels_container(video_url, pending["caption"], user_id, token)
+    if not creation_id:
+        return
+
+    # 公開処理は既存スクリプトを再利用（env必須なので遅延import）
+    from skin_instagram_auto_post import wait_for_container_ready, publish_media
+    if not wait_for_container_ready(creation_id):
+        print("動画の処理が完了しませんでした。")
+        return
+    result = publish_media(creation_id)
+    if not result.get("id"):
+        print(f"公開失敗: {result}")
+        return
+
+    # 進捗を進める・ログに記録する
+    progress = load_json(str(PROGRESS_PATH), default={"reels_index": -1, "history": []})
+    today = datetime.now(JST).strftime("%Y-%m-%d")
+    progress["reels_index"] = pending["theme_index"]
+    progress.setdefault("history", []).append(today)
+    save_json(str(PROGRESS_PATH), progress)
+    with open(DAILY_LOG_PATH, "a", encoding="utf-8") as f:
+        f.write(f"\n- {today} Reels自動投稿: theme_id={pending['theme_id']}")
+    print(f"公開完了: post_id={result['id']}")
+
+
+def main():
+    """引数 generate / publish でサブコマンドを振り分ける。"""
+    command = sys.argv[1] if len(sys.argv) > 1 else ""
+    if command == "generate":
+        generate()
+    elif command == "publish":
+        publish()
+    else:
+        print("使い方: python skin_reels_engine.py [generate|publish]")
+
+
+if __name__ == "__main__":
+    main()

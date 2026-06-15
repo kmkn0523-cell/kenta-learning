@@ -1,0 +1,72 @@
+# skin_instagram_reels.yml
+# skin Instagram Reels 量産エンジン
+# 1日1回 JST 19:00 に起動し、縦型スライド動画を生成→push→Reels公開する
+
+name: skin Instagram Reels
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # JST 19:00 = UTC 10:00
+  workflow_dispatch:
+
+concurrency:
+  group: skin-instagram-reels
+  cancel-in-progress: false
+
+jobs:
+  reels:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ffmpeg をインストール
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: ライブラリをインストール
+        run: pip install requests
+
+      - name: 動画を生成
+        env:
+          SKIN_REELS_ENGINE_ENABLED: ${{ vars.SKIN_REELS_ENGINE_ENABLED }}
+        run: cd skin && python skin_reels_engine.py generate
+
+      - name: 動画と受け渡しファイルをコミット＆プッシュ（公開URLを生やす）
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add skin/skin_instagram_reels/latest_reel.mp4 skin/skin_reels_pending.json
+          if ! git diff --staged --quiet; then
+            git commit -m "自動生成: skin Reels動画更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
+
+      - name: Reels を公開
+        env:
+          SKIN_REELS_ENGINE_ENABLED: ${{ vars.SKIN_REELS_ENGINE_ENABLED }}
+          SKIN_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.SKIN_INSTAGRAM_ACCESS_TOKEN }}
+          SKIN_INSTAGRAM_USER_ID: ${{ secrets.SKIN_INSTAGRAM_USER_ID }}
+        run: cd skin && python skin_reels_engine.py publish
+
+      - name: 進捗をコミット＆プッシュ
+        run: |
+          git add skin/skin_reels_progress.json skin/skin_daily_log.md
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: skin Reels進捗更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
