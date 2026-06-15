@@ -27,7 +27,11 @@
       "Bash(rm -rf /tmp/note_artifacts_v2)",
       "Bash(mkdir /tmp/note_artifacts_v2)",
       "Read(//tmp/note_artifacts_v2/**)",
-      "Bash(ffprobe -v error -show_entries format=duration,format_name -of default=noprint_wrappers=1 skin/skin_reels_assets/bgm.mp3)"
+      "Bash(ffprobe -v error -show_entries format=duration,format_name -of default=noprint_wrappers=1 skin/skin_reels_assets/bgm.mp3)",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)",
+      "Bash(gh variable *)",
+      "Bash(gh secret *)"
     ],
     "additionalDirectories": [
       "/mnt/c/Users/kenta_kamijyo",
