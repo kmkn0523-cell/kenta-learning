@@ -1,5 +1,5 @@
 {
-  "daily_index": 302,
+  "daily_index": 303,
   "launch_index": 0,
   "history": [
     {
@@ -4855,6 +4855,14 @@
       "variant": "A",
       "post_id": "17910356655419086",
       "seed_id": "18090229394622209"
+    },
+    {
+      "date": "2026/06/15 03:00",
+      "theme": "体温と肌",
+      "theme_id": 47,
+      "variant": "A",
+      "post_id": "18021072224837300",
+      "seed_id": "18005742287939767"
     }
   ],
   "ab_next": "A",
@@ -4954,7 +4962,7 @@
     "44": "B",
     "45": "B",
     "46": "B",
-    "47": "A",
+    "47": "B",
     "48": "A",
     "49": "A",
     "50": "A",
@@ -5537,7 +5545,7 @@
     "47": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "48": {
@@ -5619,7 +5627,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-14T22:02:08.431082+00:00",
+  "last_posted_at": "2026-06-15T03:02:07.060710+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n2f1b6631ec38",
   "last_note_promo_date": "2026/06/13",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
