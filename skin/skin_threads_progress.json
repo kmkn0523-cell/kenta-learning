@@ -1,5 +1,5 @@
 {
-  "daily_index": 303,
+  "daily_index": 304,
   "launch_index": 0,
   "history": [
     {
@@ -4863,6 +4863,14 @@
       "variant": "A",
       "post_id": "18021072224837300",
       "seed_id": "18005742287939767"
+    },
+    {
+      "date": "2026/06/15 08:00",
+      "theme": "添加物・加工食品と肌",
+      "theme_id": 48,
+      "variant": "A",
+      "post_id": "18393688903088325",
+      "seed_id": "18136182307562565"
     }
   ],
   "ab_next": "A",
@@ -4963,7 +4971,7 @@
     "45": "B",
     "46": "B",
     "47": "B",
-    "48": "A",
+    "48": "B",
     "49": "A",
     "50": "A",
     "51": "A",
@@ -5551,7 +5559,7 @@
     "48": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "49": {
@@ -5627,7 +5635,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-15T03:02:07.060710+00:00",
+  "last_posted_at": "2026-06-15T08:02:01.033767+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n2f1b6631ec38",
   "last_note_promo_date": "2026/06/13",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
