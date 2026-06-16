@@ -54,6 +54,8 @@ COMMENT_TEMPLATES = {
             "The mind is the dojo. What you rehearse there, you become out here.",
             "You can't still the waves, but you can stop being surprised by them. Wisdom.",
             "Mono no aware — feel it fully, then let it pass. Holding on is the only suffering.",
+            "What helped you find calm in the middle of it?",
+            "How do you remind yourself to control the grip, not the storm?",
         ],
     },
     "5": {
@@ -65,6 +67,8 @@ COMMENT_TEMPLATES = {
             "Shu-ha-ri: keep the form, break the form, become the form. You're on the path.",
             "The craft doesn't reward the loud. It rewards the one who shows up again.",
             "Skill is just patience that refused to quit. Keep grinding the stone.",
+            "What basic did you polish longest before it finally clicked?",
+            "How many quiet reps in before you felt the edge sharpen?",
         ],
     },
     "6": {
@@ -76,6 +80,8 @@ COMMENT_TEMPLATES = {
             "The empty path is the loud one. The chosen path is quiet and yours.",
             "Live like ichi-go ichi-e — this moment won't return. Spend it on what matters.",
             "Purpose isn't a feeling you wait for. It's a decision you keep making. Well put.",
+            "What's the 'why' that aims your blade these days?",
+            "How did you find the direction you keep choosing?",
         ],
     },
 }
