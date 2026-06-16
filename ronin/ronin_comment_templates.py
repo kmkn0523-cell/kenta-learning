@@ -15,6 +15,8 @@ COMMENT_TEMPLATES = {
             "Small reps, repeated past the point of boredom. That's where it's forged.",
             "Consistency is just discipline that stopped needing applause. Well said.",
             "The bushido way: the standard doesn't move on the days you don't feel like it.",
+            "What's the one habit you refuse to skip, even on your worst days?",
+            "Curious how you made discipline stick after the motivation wore off?",
         ],
     },
     "2": {
@@ -26,6 +28,8 @@ COMMENT_TEMPLATES = {
             "Scars are proof the lesson landed. Carry it, don't hide it.",
             "Seven times down, eight times up — nana korobi ya oki. You're living it.",
             "Hard seasons don't ask permission. They just sharpen whoever stays standing.",
+            "What got you back on your feet the last time you were knocked down?",
+            "How do you tell the difference between bending and breaking?",
         ],
     },
     "3": {
@@ -37,6 +41,8 @@ COMMENT_TEMPLATES = {
             "Most 'busy' is just fear wearing a costume. Choosing one cut is courage.",
             "Distraction is a thousand small surrenders. One focused hour answers them all.",
             "Single-task like a swordsman: one target, one breath, one strike.",
+            "What's the one thing you're cutting everything else for right now?",
+            "How do you guard your attention when the noise gets loud?",
         ],
     },
     "4": {
