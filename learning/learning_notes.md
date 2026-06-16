@@ -38,6 +38,7 @@
 | 6/7 | ronin_comment_seeder.py | 投稿直後に付ける「1コメ目」の文章生成（純粋関数） | 早期リプライでreachを伸ばす考え方、本文とリンクの分離、500字丸め |
 | 6/15 | skin_reply_engine.py | skin Threads自動リプライ・エンジン（keyword_searchで見つけた投稿にテンプレ返信） | 公式keyword_search API、純粋関数のTDD（分類/選別/合成/状態）とネットワークI/Oの分離、日次上限・著者上限・連投禁止のスロットル、環境変数キルスイッチ、GitHub Actionsで状態をキャッシュ＋コミット永続化 |
 | 6/16 | skin_reply_review_ui.py | skin リプライ運用者ビュー（keyword_search結果を一覧表示し人が確認して返信するローカルWeb UI・App Review用） | 標準ライブラリhttp.serverだけでWeb UI（新ライブラリ無し）、エンジンの純粋関数を再利用（DRY）、--demoモードでトークン無しでも動作確認・スクリーンキャスト録画、HTMLエスケープでXSS対策、送信は人の確認後に1件ずつ |
+| 6/16 | ronin/ronin_reply_engine.py | @RoninWords Threads自動リプライ・エンジン（skin版の英語アカウント移植） | skin_reply_engineと同構造を英語アカウントに移植、日本語判定→英語判定(contains_english)に差し替え、自己投稿除外を大小無視に、ronin専用トークン(RONIN_THREADS_ACCESS_TOKEN)、英語キーワード15件、テスト27件、別キルスイッチ(RONIN_REPLY_ENGINE_ENABLED) |
 | 6/15 | skin_reels_engine.py | 既存カルーセル画像からffmpegで縦型Reelsを自動生成・投稿（generate→push→publishの2フェーズ） | ffmpegコマンドのlist組み立てとsubprocess実行、9:16/5〜90秒のReels要件、media_type=REELSの3ステップ公開、動画をgit pushして公開URLを生やす設計、wait_for_urlで配信待ち、既存publish関数の遅延import再利用 |
 
 ---

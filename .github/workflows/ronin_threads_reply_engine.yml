@@ -1,0 +1,74 @@
+# ronin_threads_reply_engine.yml
+# @RoninWords Threads 自動リプライ・エンジン
+# JST 日中に1日6回起動し、1回あたり数件だけ自動返信する（合計が日次上限25の下に収まる設計）
+# ★skin版と同じ構造。トークンは ronin 専用（RONIN_THREADS_ACCESS_TOKEN）。
+
+name: ronin Threads リプライ・エンジン
+
+on:
+  schedule:
+    - cron: '35 23 * * *'  # JST 08:35
+    - cron: '35 2 * * *'   # JST 11:35
+    - cron: '35 5 * * *'   # JST 14:35
+    - cron: '35 8 * * *'   # JST 17:35
+    - cron: '35 11 * * *'  # JST 20:35
+    - cron: '35 13 * * *'  # JST 22:35
+  workflow_dispatch:  # 手動実行（テスト用）
+
+concurrency:
+  group: ronin-threads-reply-engine  # 二重起動・push競合を防ぐ専用グループ
+  cancel-in-progress: false
+
+jobs:
+  reply-engine:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 状態ファイルのpushに必要
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ライブラリをインストール
+        run: pip install requests
+
+      - name: 状態ファイルをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: ronin/ronin_reply_history.json
+          key: ronin-reply-history-${{ github.run_id }}
+          restore-keys: |
+            ronin-reply-history-
+
+      - name: リプライ・エンジンを実行
+        env:
+          RONIN_REPLY_ENGINE_ENABLED: ${{ vars.RONIN_REPLY_ENGINE_ENABLED }}
+          RONIN_THREADS_ACCESS_TOKEN: ${{ secrets.RONIN_THREADS_ACCESS_TOKEN }}
+          RONIN_THREADS_USER_ID: ${{ secrets.RONIN_THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.RONIN_THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.RONIN_THREADS_USER_ID }}
+        run: cd ronin && python ronin_reply_engine.py
+
+      - name: 状態ファイルをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: ronin/ronin_reply_history.json
+          key: ronin-reply-history-${{ github.run_id }}
+
+      - name: 状態ファイルをGitにコミット＆プッシュ
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ronin/ronin_reply_history.json
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: ronin リプライ・エンジン状態更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
