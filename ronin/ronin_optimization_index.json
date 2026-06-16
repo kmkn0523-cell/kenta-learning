@@ -1,10 +1,617 @@
 {
-  "last_analyzed": "2026/05/07",
-  "analysis_phase": "learning",
+  "last_analyzed": "2026-06-16T11:00:48.073809",
+  "analysis_phase": "optimizing",
   "days_accumulated": 0,
-  "status": "Initialization (Day 0/20 in learning phase)",
-  "pattern_ranking": [],
+  "status": "最適化フェーズ：215日分のデータをもとに投稿パターンを最適化しています",
+  "pattern_ranking": [
+    {
+      "day": 29,
+      "score": 14.1,
+      "priority": 1
+    },
+    {
+      "day": 124,
+      "score": 13.3,
+      "priority": 2
+    },
+    {
+      "day": 123,
+      "score": 8.6,
+      "priority": 3
+    },
+    {
+      "day": 121,
+      "score": 7.6,
+      "priority": 4
+    },
+    {
+      "day": 122,
+      "score": 7.1,
+      "priority": 5
+    },
+    {
+      "day": 100,
+      "score": 6.8,
+      "priority": 6
+    },
+    {
+      "day": 41,
+      "score": 6.6,
+      "priority": 7
+    },
+    {
+      "day": 99,
+      "score": 6.3,
+      "priority": 8
+    },
+    {
+      "day": 75,
+      "score": 6.2,
+      "priority": 9
+    },
+    {
+      "day": 103,
+      "score": 5.4,
+      "priority": 10
+    },
+    {
+      "day": 108,
+      "score": 5.4,
+      "priority": 11
+    },
+    {
+      "day": 40,
+      "score": 5.0,
+      "priority": 12
+    },
+    {
+      "day": 83,
+      "score": 5.0,
+      "priority": 13
+    },
+    {
+      "day": 92,
+      "score": 4.8,
+      "priority": 14
+    },
+    {
+      "day": 113,
+      "score": 4.7,
+      "priority": 15
+    },
+    {
+      "day": 94,
+      "score": 4.4,
+      "priority": 16
+    },
+    {
+      "day": 84,
+      "score": 4.3,
+      "priority": 17
+    },
+    {
+      "day": 115,
+      "score": 4.2,
+      "priority": 18
+    },
+    {
+      "day": 114,
+      "score": 4.1,
+      "priority": 19
+    },
+    {
+      "day": 76,
+      "score": 3.7,
+      "priority": 20
+    },
+    {
+      "day": 112,
+      "score": 3.6,
+      "priority": 21
+    },
+    {
+      "day": 119,
+      "score": 3.6,
+      "priority": 22
+    },
+    {
+      "day": 34,
+      "score": 3.5,
+      "priority": 23
+    },
+    {
+      "day": 87,
+      "score": 3.4,
+      "priority": 24
+    },
+    {
+      "day": 86,
+      "score": 3.4,
+      "priority": 25
+    },
+    {
+      "day": 97,
+      "score": 3.4,
+      "priority": 26
+    },
+    {
+      "day": 95,
+      "score": 3.4,
+      "priority": 27
+    },
+    {
+      "day": 70,
+      "score": 2.9,
+      "priority": 28
+    },
+    {
+      "day": 88,
+      "score": 2.9,
+      "priority": 29
+    },
+    {
+      "day": 104,
+      "score": 2.9,
+      "priority": 30
+    },
+    {
+      "day": 85,
+      "score": 2.8,
+      "priority": 31
+    },
+    {
+      "day": 105,
+      "score": 2.7,
+      "priority": 32
+    },
+    {
+      "day": 109,
+      "score": 2.7,
+      "priority": 33
+    },
+    {
+      "day": 118,
+      "score": 2.7,
+      "priority": 34
+    },
+    {
+      "day": 62,
+      "score": 2.6,
+      "priority": 35
+    },
+    {
+      "day": 90,
+      "score": 2.6,
+      "priority": 36
+    },
+    {
+      "day": 98,
+      "score": 2.6,
+      "priority": 37
+    },
+    {
+      "day": 116,
+      "score": 2.6,
+      "priority": 38
+    },
+    {
+      "day": 61,
+      "score": 2.5,
+      "priority": 39
+    },
+    {
+      "day": 21,
+      "score": 2.5,
+      "priority": 40
+    },
+    {
+      "day": 96,
+      "score": 2.5,
+      "priority": 41
+    },
+    {
+      "day": 71,
+      "score": 2.4,
+      "priority": 42
+    },
+    {
+      "day": 101,
+      "score": 2.4,
+      "priority": 43
+    },
+    {
+      "day": 110,
+      "score": 2.4,
+      "priority": 44
+    },
+    {
+      "day": 56,
+      "score": 2.3,
+      "priority": 45
+    },
+    {
+      "day": 38,
+      "score": 2.3,
+      "priority": 46
+    },
+    {
+      "day": 32,
+      "score": 2.3,
+      "priority": 47
+    },
+    {
+      "day": 117,
+      "score": 2.2,
+      "priority": 48
+    },
+    {
+      "day": 37,
+      "score": 2.1,
+      "priority": 49
+    },
+    {
+      "day": 52,
+      "score": 2.0,
+      "priority": 50
+    },
+    {
+      "day": 27,
+      "score": 2.0,
+      "priority": 51
+    },
+    {
+      "day": 106,
+      "score": 2.0,
+      "priority": 52
+    },
+    {
+      "day": 44,
+      "score": 1.9,
+      "priority": 53
+    },
+    {
+      "day": 91,
+      "score": 1.9,
+      "priority": 54
+    },
+    {
+      "day": 120,
+      "score": 1.9,
+      "priority": 55
+    },
+    {
+      "day": 59,
+      "score": 1.8,
+      "priority": 56
+    },
+    {
+      "day": 42,
+      "score": 1.8,
+      "priority": 57
+    },
+    {
+      "day": 35,
+      "score": 1.8,
+      "priority": 58
+    },
+    {
+      "day": 31,
+      "score": 1.8,
+      "priority": 59
+    },
+    {
+      "day": 93,
+      "score": 1.8,
+      "priority": 60
+    },
+    {
+      "day": 55,
+      "score": 1.7,
+      "priority": 61
+    },
+    {
+      "day": 78,
+      "score": 1.7,
+      "priority": 62
+    },
+    {
+      "day": 111,
+      "score": 1.7,
+      "priority": 63
+    },
+    {
+      "day": 23,
+      "score": 1.4,
+      "priority": 64
+    },
+    {
+      "day": 82,
+      "score": 1.4,
+      "priority": 65
+    },
+    {
+      "day": 51,
+      "score": 1.3,
+      "priority": 66
+    },
+    {
+      "day": 24,
+      "score": 1.3,
+      "priority": 67
+    },
+    {
+      "day": 47,
+      "score": 1.2,
+      "priority": 68
+    },
+    {
+      "day": 30,
+      "score": 1.2,
+      "priority": 69
+    },
+    {
+      "day": 81,
+      "score": 1.2,
+      "priority": 70
+    },
+    {
+      "day": 89,
+      "score": 1.2,
+      "priority": 71
+    },
+    {
+      "day": 48,
+      "score": 1.1,
+      "priority": 72
+    },
+    {
+      "day": 36,
+      "score": 1.1,
+      "priority": 73
+    },
+    {
+      "day": 53,
+      "score": 1.0,
+      "priority": 74
+    },
+    {
+      "day": 102,
+      "score": 1.0,
+      "priority": 75
+    },
+    {
+      "day": 63,
+      "score": 0.9,
+      "priority": 76
+    },
+    {
+      "day": 28,
+      "score": 0.9,
+      "priority": 77
+    },
+    {
+      "day": 22,
+      "score": 0.9,
+      "priority": 78
+    },
+    {
+      "day": 107,
+      "score": 0.9,
+      "priority": 79
+    },
+    {
+      "day": 50,
+      "score": 0.8,
+      "priority": 80
+    },
+    {
+      "day": 49,
+      "score": 0.8,
+      "priority": 81
+    },
+    {
+      "day": 57,
+      "score": 0.7,
+      "priority": 82
+    },
+    {
+      "day": 64,
+      "score": 0.6,
+      "priority": 83
+    },
+    {
+      "day": 58,
+      "score": 0.6,
+      "priority": 84
+    },
+    {
+      "day": 39,
+      "score": 0.6,
+      "priority": 85
+    },
+    {
+      "day": 33,
+      "score": 0.6,
+      "priority": 86
+    },
+    {
+      "day": 25,
+      "score": 0.6,
+      "priority": 87
+    },
+    {
+      "day": 18,
+      "score": 0.5,
+      "priority": 88
+    },
+    {
+      "day": 43,
+      "score": 0.4,
+      "priority": 89
+    },
+    {
+      "day": 26,
+      "score": 0.4,
+      "priority": 90
+    },
+    {
+      "day": 19,
+      "score": 0.4,
+      "priority": 91
+    },
+    {
+      "day": 67,
+      "score": 0.0,
+      "priority": 92
+    },
+    {
+      "day": 66,
+      "score": 0.0,
+      "priority": 93
+    },
+    {
+      "day": 65,
+      "score": 0.0,
+      "priority": 94
+    },
+    {
+      "day": 60,
+      "score": 0.0,
+      "priority": 95
+    },
+    {
+      "day": 54,
+      "score": 0.0,
+      "priority": 96
+    },
+    {
+      "day": 46,
+      "score": 0.0,
+      "priority": 97
+    },
+    {
+      "day": 45,
+      "score": 0.0,
+      "priority": 98
+    },
+    {
+      "day": 20,
+      "score": 0.0,
+      "priority": 99
+    },
+    {
+      "day": 68,
+      "score": 0.0,
+      "priority": 100
+    },
+    {
+      "day": 72,
+      "score": 0.0,
+      "priority": 101
+    },
+    {
+      "day": 69,
+      "score": 0.0,
+      "priority": 102
+    },
+    {
+      "day": 77,
+      "score": 0.0,
+      "priority": 103
+    },
+    {
+      "day": 74,
+      "score": 0.0,
+      "priority": 104
+    },
+    {
+      "day": 73,
+      "score": 0.0,
+      "priority": 105
+    },
+    {
+      "day": 80,
+      "score": 0.0,
+      "priority": 106
+    },
+    {
+      "day": 79,
+      "score": 0.0,
+      "priority": 107
+    }
+  ],
   "time_optimization": {},
   "hashtag_optimization": {},
-  "next_post_queue": []
+  "next_post_queue": [
+    {
+      "day": 29,
+      "priority": 1,
+      "reason": "優先度1：高反応パターン"
+    },
+    {
+      "day": 29,
+      "priority": 1,
+      "reason": "優先度1：高反応パターン"
+    },
+    {
+      "day": 124,
+      "priority": 2,
+      "reason": "優先度2：次点パターン"
+    },
+    {
+      "day": 124,
+      "priority": 2,
+      "reason": "優先度2：次点パターン"
+    },
+    {
+      "day": 123,
+      "priority": 3,
+      "reason": "優先度3：中程度パターン"
+    },
+    {
+      "day": 121,
+      "priority": 4,
+      "reason": "優先度4：参考パターン"
+    },
+    {
+      "day": 122,
+      "priority": 5,
+      "reason": "優先度5：参考パターン"
+    },
+    {
+      "day": 100,
+      "priority": 6,
+      "reason": "優先度6：参考パターン"
+    },
+    {
+      "day": 41,
+      "priority": 7,
+      "reason": "優先度7：参考パターン"
+    },
+    {
+      "day": 99,
+      "priority": 8,
+      "reason": "優先度8：参考パターン"
+    },
+    {
+      "day": 75,
+      "priority": 9,
+      "reason": "優先度9：参考パターン"
+    },
+    {
+      "day": 103,
+      "priority": 10,
+      "reason": "優先度10：参考パターン"
+    },
+    {
+      "day": 108,
+      "priority": 11,
+      "reason": "優先度11：参考パターン"
+    },
+    {
+      "day": 40,
+      "priority": 12,
+      "reason": "優先度12：参考パターン"
+    }
+  ]
 }
