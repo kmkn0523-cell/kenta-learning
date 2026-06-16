@@ -5226,8 +5226,14 @@
       "kind": "teaching",
       "label": "Day123 morning",
       "post_id": "17869752705544932"
+    },
+    {
+      "date": "2026/06/16 02:54",
+      "kind": "engagement",
+      "label": "engagement eng027",
+      "post_id": "17880853557605467"
     }
   ],
-  "last_posted_at": "2026-06-16T01:02:11.423078+00:00",
-  "engagement_index": 26
+  "last_posted_at": "2026-06-16T02:55:23.842362+00:00",
+  "engagement_index": 27
 }
