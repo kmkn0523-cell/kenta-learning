@@ -5250,8 +5250,14 @@
       "kind": "teaching",
       "label": "Day124 evening",
       "post_id": "17876565594485767"
+    },
+    {
+      "date": "2026/06/16 11:00",
+      "kind": "engagement",
+      "label": "engagement eng028",
+      "post_id": "18367622359234331"
     }
   ],
-  "last_posted_at": "2026-06-16T09:02:14.325199+00:00",
-  "engagement_index": 27
+  "last_posted_at": "2026-06-16T11:02:09.475504+00:00",
+  "engagement_index": 28
 }
