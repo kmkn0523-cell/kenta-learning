@@ -1,5 +1,5 @@
 {
-  "next_day": 31,
+  "next_day": 32,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -180,6 +180,12 @@
       "day": 30,
       "post_id": 202186057,
       "title": "生き死に一如 — Life and death are one."
+    },
+    {
+      "date": "2026/06/17 04:50",
+      "day": 31,
+      "post_id": 202336668,
+      "title": "聞くは一時の恥 — The shame of asking lasts a moment."
     }
   ]
 }
