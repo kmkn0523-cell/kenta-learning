@@ -1,8 +1,8 @@
 {
-  "last_analyzed": "2026-06-16T11:20:54.115840",
+  "last_analyzed": "2026-06-17T11:06:04.872133",
   "analysis_phase": "optimizing",
   "days_accumulated": 0,
-  "status": "最適化フェーズ：212日分のデータをもとに投稿パターンを最適化しています",
+  "status": "最適化フェーズ：216日分のデータをもとに投稿パターンを最適化しています",
   "pattern_ranking": [
     {
       "day": 37,
@@ -76,7 +76,7 @@
     },
     {
       "day": 56,
-      "score": 56.0,
+      "score": 59.3,
       "priority": 15
     },
     {
@@ -160,48 +160,48 @@
       "priority": 31
     },
     {
+      "day": 55,
+      "score": 41.3,
+      "priority": 32
+    },
+    {
       "day": 49,
       "score": 41.1,
-      "priority": 32
+      "priority": 33
     },
     {
       "day": 4,
       "score": 41.0,
-      "priority": 33
-    },
-    {
-      "day": 55,
-      "score": 40.7,
       "priority": 34
-    },
-    {
-      "day": 54,
-      "score": 40.7,
-      "priority": 35
     },
     {
       "day": 92,
       "score": 40.0,
-      "priority": 36
+      "priority": 35
     },
     {
       "day": 91,
       "score": 39.0,
-      "priority": 37
+      "priority": 36
     },
     {
       "day": 102,
       "score": 38.0,
-      "priority": 38
+      "priority": 37
     },
     {
       "day": 78,
       "score": 36.0,
-      "priority": 39
+      "priority": 38
     },
     {
       "day": 82,
       "score": 35.0,
+      "priority": 39
+    },
+    {
+      "day": 54,
+      "score": 34.1,
       "priority": 40
     },
     {
@@ -315,53 +315,53 @@
       "priority": 62
     },
     {
+      "day": 53,
+      "score": 24.9,
+      "priority": 63
+    },
+    {
       "day": 22,
       "score": 24.3,
-      "priority": 63
+      "priority": 64
     },
     {
       "day": 2,
       "score": 24.0,
-      "priority": 64
+      "priority": 65
     },
     {
       "day": 47,
       "score": 23.7,
-      "priority": 65
+      "priority": 66
     },
     {
       "day": 27,
       "score": 23.0,
-      "priority": 66
+      "priority": 67
     },
     {
       "day": 26,
       "score": 23.0,
-      "priority": 67
+      "priority": 68
     },
     {
       "day": 84,
       "score": 23.0,
-      "priority": 68
+      "priority": 69
     },
     {
       "day": 72,
       "score": 23.0,
-      "priority": 69
+      "priority": 70
     },
     {
       "day": 6,
       "score": 22.8,
-      "priority": 70
+      "priority": 71
     },
     {
       "day": 5,
       "score": 22.8,
-      "priority": 71
-    },
-    {
-      "day": 53,
-      "score": 22.0,
       "priority": 72
     },
     {

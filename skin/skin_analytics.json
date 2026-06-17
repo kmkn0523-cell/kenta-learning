@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-16T11:20:54.068253",
+  "last_updated": "2026-06-17T11:06:04.842069",
   "posts_history": [
     {
       "day": 28,
@@ -2332,6 +2332,50 @@
       "shares": 0,
       "views": 97,
       "engagement_rate": 1.03
+    },
+    {
+      "day": 56,
+      "type": "ニキビ跡を消す方法",
+      "post_id": "17932136580298688",
+      "posted_at": "2026-06-17T08:01:23+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 66,
+      "engagement_rate": 1.52
+    },
+    {
+      "day": 55,
+      "type": "腸活夜ごはん",
+      "post_id": "18231362479315518",
+      "posted_at": "2026-06-17T03:01:25+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 38,
+      "engagement_rate": 2.63
+    },
+    {
+      "day": 54,
+      "type": "ビタミンDと肌",
+      "post_id": "18009104084876341",
+      "posted_at": "2026-06-16T22:01:30+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 13,
+      "engagement_rate": 7.69
+    },
+    {
+      "day": 53,
+      "type": "塩分と肌",
+      "post_id": "17935860813259423",
+      "posted_at": "2026-06-16T13:01:39+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 29,
+      "engagement_rate": 3.45
     }
   ],
   "pattern_performance": {
@@ -2767,44 +2811,44 @@
     },
     "day_56": {
       "ニキビ跡を消す方法": {
-        "total_posts": 3,
+        "total_posts": 4,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 56.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.2,
+        "avg_views": 58.0,
+        "avg_engagement_rate": 0.38,
         "best_hour": 7,
         "best_hashtag_set": "A"
       }
     },
     "day_55": {
       "腸活夜ごはん": {
-        "total_posts": 3,
-        "avg_likes": 0.3,
-        "avg_comments": 0.0,
+        "total_posts": 4,
+        "avg_likes": 0.2,
+        "avg_comments": 0.2,
         "avg_views": 39.0,
-        "avg_engagement_rate": 0.78,
+        "avg_engagement_rate": 1.24,
         "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_54": {
       "ビタミンDと肌": {
-        "total_posts": 3,
-        "avg_likes": 0.3,
-        "avg_comments": 0.0,
-        "avg_views": 39.0,
-        "avg_engagement_rate": 0.71,
-        "best_hour": 7,
+        "total_posts": 4,
+        "avg_likes": 0.2,
+        "avg_comments": 0.2,
+        "avg_views": 32.0,
+        "avg_engagement_rate": 2.46,
+        "best_hour": 22,
         "best_hashtag_set": "A"
       }
     },
     "day_53": {
       "塩分と肌": {
-        "total_posts": 3,
+        "total_posts": 4,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 22.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.2,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 0.86,
         "best_hour": 8,
         "best_hashtag_set": "A"
       }
