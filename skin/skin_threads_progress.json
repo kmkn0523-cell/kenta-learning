@@ -1,5 +1,5 @@
 {
-  "daily_index": 311,
+  "daily_index": 312,
   "launch_index": 0,
   "history": [
     {
@@ -4934,6 +4934,14 @@
       "variant": "A",
       "post_id": "18231362479315518",
       "seed_id": "18101781959471290"
+    },
+    {
+      "date": "2026/06/17 08:00",
+      "theme": "ニキビ跡を消す方法",
+      "theme_id": 56,
+      "variant": "A",
+      "post_id": "17932136580298688",
+      "seed_id": "17995195859976110"
     }
   ],
   "ab_next": "A",
@@ -5042,7 +5050,7 @@
     "53": "B",
     "54": "B",
     "55": "B",
-    "56": "A",
+    "56": "B",
     "57": "A",
     "58": "A",
     "59": "A",
@@ -5670,7 +5678,7 @@
     "56": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "57": {
@@ -5698,7 +5706,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-17T03:02:05.165702+00:00",
+  "last_posted_at": "2026-06-17T08:02:05.283429+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n688396a1a5b9",
   "last_note_promo_date": "2026/06/15",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
