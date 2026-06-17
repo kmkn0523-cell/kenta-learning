@@ -1,5 +1,5 @@
 {
-  "daily_index": 312,
+  "daily_index": 313,
   "launch_index": 0,
   "history": [
     {
@@ -4942,6 +4942,14 @@
       "variant": "A",
       "post_id": "17932136580298688",
       "seed_id": "17995195859976110"
+    },
+    {
+      "date": "2026/06/17 13:00",
+      "theme": "敏感肌の正体",
+      "theme_id": 57,
+      "variant": "A",
+      "post_id": "18062290130487114",
+      "seed_id": "18059323850501752"
     }
   ],
   "ab_next": "A",
@@ -5051,7 +5059,7 @@
     "54": "B",
     "55": "B",
     "56": "B",
-    "57": "A",
+    "57": "B",
     "58": "A",
     "59": "A",
     "60": "A"
@@ -5684,7 +5692,7 @@
     "57": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "58": {
@@ -5706,7 +5714,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-17T08:02:05.283429+00:00",
+  "last_posted_at": "2026-06-17T13:02:10.168074+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n688396a1a5b9",
   "last_note_promo_date": "2026/06/15",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
