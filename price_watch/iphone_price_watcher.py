@@ -59,10 +59,30 @@ def parse_max_price(model_text: str, row_text: str) -> int | None:
     return max(prices)
 
 
+def parse_list_price(model_text: str, row_text: str) -> int | None:
+    """1行分のテキストから、定価（¥付き数値・整数）を取り出す。
+
+    model_text: その行の機種名。row_text: その行の表示テキスト全体。
+    対象機種・容量に合わない行や、定価が見つからない行は None を返す。
+    定価は「¥229,800」のように ¥ 記号付きで書かれている。
+    """
+    # 対象の機種・容量でなければ無視する
+    if TARGET_MODEL not in model_text or TARGET_CAPACITY not in model_text:
+        return None
+    # 「¥数字」の形（カンマ区切りでもなくてもOK）を定価として拾う
+    matches = re.findall(r"¥\s*([0-9]{1,3}(?:,[0-9]{3})*)", row_text)
+    prices = [int(m.replace(",", "")) for m in matches]
+    if not prices:
+        return None
+    # 定価は1機種につき1つの想定。複数あれば最大を採用（保険）
+    return max(prices)
+
+
 def fetch_highest_price() -> dict:
     """ログインして価格ページを開き、対象機種の最高買取価格を返す。
 
-    戻り値: {"price": int, "label": str}（labelは最高値だった行の機種名）。
+    戻り値: {"price": int, "label": str, "list_price": int | None}
+    （labelは最高値だった行の機種名、list_priceはその行の定価。定価が無ければ None）。
     取得できなければ ValueError を投げる。
     """
     from playwright.sync_api import sync_playwright
@@ -117,17 +137,19 @@ def fetch_highest_price() -> dict:
     # 対象機種の各行から最高値を集め、その中の最大を「最高買取価格」とする
     best_price = None
     best_label = ""
+    best_list_price = None  # 最高値だった行の定価（取れなければ None）
     for row in rows:
         price = parse_max_price(row["model"], row["text"])
         if price is not None and (best_price is None or price > best_price):
             best_price = price
             best_label = row["model"]
+            best_list_price = parse_list_price(row["model"], row["text"])
 
     if best_price is None:
         raise ValueError(
             f"{TARGET_MODEL} {TARGET_CAPACITY} の価格が見つかりませんでした。ページ構造が変わった可能性があります。"
         )
-    return {"price": best_price, "label": best_label}
+    return {"price": best_price, "label": best_label, "list_price": best_list_price}
 
 
 def load_last_price() -> int | None:
@@ -141,12 +163,26 @@ def load_last_price() -> int | None:
         return None
 
 
-def save_price(price: int, label: str) -> None:
+def format_vs_list_price(price: int, list_price: int | None) -> str:
+    """買取価格が定価からプラスマイナスいくらかを表す文字列を返す。
+
+    例: 定価¥229,800・買取230,000円 → '定価 ¥229,800 から +200円'。
+    定価が取れていなければ '定価: 不明' を返す。
+    """
+    if list_price is None:
+        return "定価: 不明"
+    diff = price - list_price  # 買取 − 定価（ふつうはマイナス＝定価より安い）
+    sign = "+" if diff >= 0 else ""  # マイナスは数値側に符号が付く
+    return f"定価 ¥{list_price:,} から {sign}{diff:,}円"
+
+
+def save_price(price: int, label: str, list_price: int | None = None) -> None:
     """今回価格を記録ファイルに保存する。"""
     data = {
         "model": f"{TARGET_MODEL} {TARGET_CAPACITY}",
         "price": price,
         "label": label,
+        "list_price": list_price,
         "updated_at": now_jst_text(),
     }
     STATE_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
@@ -186,12 +222,14 @@ def main() -> None:
 
     price = result["price"]
     label = result["label"]
+    list_price = result["list_price"]  # 定価（取れなければ None）
+    vs_list = format_vs_list_price(price, list_price)  # 定価からの差額の文章
     last = load_last_price()
-    print(f"今回価格: {price:,}円 / 前回価格: {last if last is None else format(last, ',') + '円'}")
+    print(f"今回価格: {price:,}円（{vs_list}） / 前回価格: {last if last is None else format(last, ',') + '円'}")
 
     if last is None:
         # 初回は通知せず、記録だけする
-        save_price(price, label)
+        save_price(price, label, list_price)
         print("初回のため記録のみ（通知なし）")
         return
 
@@ -201,17 +239,18 @@ def main() -> None:
         sign = "+" if diff > 0 else ""
         subject = f"【値動き】iPhone17ProMax 512GB 買取 {sign}{diff:,}円"
         body = (
-            f"前回 {last:,}円 → 今回 {price:,}円（差額 {sign}{diff:,}円）\n"
+            f"前回 {last:,}円 → 今回 {price:,}円（前回差 {sign}{diff:,}円）\n"
+            f"{vs_list}\n"
             f"対象: {label}\n"
             f"確認: {TOOL_URL}\n"
             f"取得時刻: {now_jst_text()}\n"
         )
         send_email(subject, body)
-        save_price(price, label)
-        print(f"値動きあり → メール送信（{sign}{diff:,}円）")
+        save_price(price, label, list_price)
+        print(f"値動きあり → メール送信（{sign}{diff:,}円 / {vs_list}）")
     else:
         # 変わっていなければ何もしない（記録の時刻だけ更新）
-        save_price(price, label)
+        save_price(price, label, list_price)
         print("変化なし（通知なし）")
 
 
