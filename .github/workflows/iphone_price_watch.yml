@@ -1,0 +1,67 @@
+# iphone_price_watch.yml
+# りんごの奴隷の iPhone 17 Pro Max 512GB 買取最高価格を監視し、
+# 前回から値が変わっていたらメール通知するワークフロー。1日3回（JST 7時/13時/21時）。
+
+name: iPhone買取価格 値動き監視
+
+on:
+  schedule:
+    # GitHub Actionsのcronは数分〜数十分遅れることがある（多少前後してOK）
+    - cron: '0 22 * * *'  # JST 07:00（= 前日UTC 22:00）
+    - cron: '0 4 * * *'   # JST 13:00（= UTC 04:00）
+    - cron: '0 12 * * *'  # JST 21:00（= UTC 12:00）
+  workflow_dispatch:  # 手動でも実行できるようにする（テスト用）
+
+# 同じグループ名のジョブは同時に1つだけ動かす（push競合を防ぐ）
+concurrency:
+  group: iphone-price-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest  # GitHubのサーバーで動かす
+    permissions:
+      contents: write  # 状態ファイルのコミットに必要
+
+    steps:
+      # Step 1: リポジトリのファイルをダウンロードする
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      # Step 2: Pythonをセットアップする
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step 3: 必要なライブラリをインストールする
+      - name: ライブラリをインストール
+        run: pip install playwright python-dotenv
+
+      # Step 4: ブラウザ（Chromium）と依存ライブラリを入れる
+      - name: Chromiumをインストール
+        run: python -m playwright install --with-deps chromium
+
+      # Step 5: 価格をチェックして、値が動いていればメール通知する
+      - name: 価格チェック
+        env:
+          RINGONODOREI_EMAIL: ${{ secrets.RINGONODOREI_EMAIL }}
+          RINGONODOREI_PASSWORD: ${{ secrets.RINGONODOREI_PASSWORD }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python price_watch/iphone_price_watcher.py
+
+      # Step 6: 更新した状態ファイルをGitにコミット＆プッシュする
+      - name: 状態ファイルをGitにコミット＆プッシュ
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add price_watch/iphone_price_state.json
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: iPhone買取価格の状態更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
