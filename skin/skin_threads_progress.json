@@ -4982,6 +4982,13 @@
       "variant": "B",
       "post_id": "18021281852846737",
       "seed_id": "17903980848444029"
+    },
+    {
+      "date": "2026/06/18 13:55",
+      "theme": "note宣伝: 肌荒れを悪化させる洗顔・保湿の間違い",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18089695838071842"
     }
   ],
   "ab_next": "A",
@@ -5746,9 +5753,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-18T12:39:41.236631+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n688396a1a5b9",
-  "last_note_promo_date": "2026/06/15",
+  "last_posted_at": "2026-06-18T13:56:32.721250+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n901a917a0d96",
+  "last_note_promo_date": "2026/06/18",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/05"
 }
