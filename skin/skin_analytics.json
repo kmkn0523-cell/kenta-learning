@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-17T11:06:04.842069",
+  "last_updated": "2026-06-18T10:37:58.936468",
   "posts_history": [
     {
       "day": 28,
@@ -2376,6 +2376,50 @@
       "shares": 0,
       "views": 29,
       "engagement_rate": 3.45
+    },
+    {
+      "day": 60,
+      "type": "ビタミンB群と肌",
+      "post_id": "18077913806293185",
+      "posted_at": "2026-06-18T08:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 50,
+      "engagement_rate": 2.0
+    },
+    {
+      "day": 59,
+      "type": "洗顔料の選び方",
+      "post_id": "17971808262098624",
+      "posted_at": "2026-06-18T03:01:25+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 8,
+      "engagement_rate": 12.5
+    },
+    {
+      "day": 58,
+      "type": "黒ずみ毛穴の対策",
+      "post_id": "18127750510619980",
+      "posted_at": "2026-06-17T22:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 61,
+      "engagement_rate": 1.64
+    },
+    {
+      "day": 57,
+      "type": "敏感肌の正体",
+      "post_id": "18062290130487114",
+      "posted_at": "2026-06-17T13:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 90,
+      "engagement_rate": 1.11
     }
   ],
   "pattern_performance": {
@@ -3119,33 +3163,33 @@
     },
     "day_59": {
       "洗顔料の選び方": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 28.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 18,
+        "avg_comments": 0.3,
+        "avg_views": 22.0,
+        "avg_engagement_rate": 4.17,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_58": {
       "黒ずみ毛穴の対策": {
-        "total_posts": 2,
-        "avg_likes": 0.5,
-        "avg_comments": 0.0,
-        "avg_views": 76.0,
-        "avg_engagement_rate": 0.57,
-        "best_hour": 16,
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.3,
+        "avg_views": 71.0,
+        "avg_engagement_rate": 0.93,
+        "best_hour": 22,
         "best_hashtag_set": "A"
       }
     },
     "day_57": {
       "敏感肌の正体": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 30.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.3,
+        "avg_views": 50.0,
+        "avg_engagement_rate": 0.37,
         "best_hour": 12,
         "best_hashtag_set": "A"
       }
@@ -3262,11 +3306,11 @@
     },
     "day_60": {
       "ビタミンB群と肌": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 45.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 48.0,
+        "avg_engagement_rate": 1.0,
         "best_hour": 8,
         "best_hashtag_set": "A"
       }
