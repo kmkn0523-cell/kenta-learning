@@ -41,6 +41,7 @@
 | 6/16 | ronin/ronin_reply_engine.py | @RoninWords Threads自動リプライ・エンジン（skin版の英語アカウント移植） | skin_reply_engineと同構造を英語アカウントに移植、日本語判定→英語判定(contains_english)に差し替え、自己投稿除外を大小無視に、ronin専用トークン(RONIN_THREADS_ACCESS_TOKEN)、英語キーワード15件、テスト27件、別キルスイッチ(RONIN_REPLY_ENGINE_ENABLED) |
 | 6/16 | ronin/ronin_reply_review_ui.py | ronin リプライ運用者ビュー（skin UIの@RoninWords版・英語・App Review用） | 標準ライブラリhttp.serverのみ、ronin_reply_engineの純粋関数を再利用、--demoで英語サンプル表示、ポート8766でskin版と非衝突、HTMLエスケープでXSS対策 |
 | 6/15 | skin_reels_engine.py | 既存カルーセル画像からffmpegで縦型Reelsを自動生成・投稿（generate→push→publishの2フェーズ） | ffmpegコマンドのlist組み立てとsubprocess実行、9:16/5〜90秒のReels要件、media_type=REELSの3ステップ公開、動画をgit pushして公開URLを生やす設計、wait_for_urlで配信待ち、既存publish関数の遅延import再利用 |
+| 6/18 | price_watch/iphone_price_watcher.py | りんごの奴隷のiPhone17ProMax512GB買取最高価格を監視し、前回から変わったらGmail通知（GitHub Actionsで1日3回） | Playwrightでログイン要のFilament/Livewire画面を操作、純粋関数parse_max_priceを抽出ロジックとして分離しTDD（円付き数値の最大＝差額や¥定価を自然除外）、smtplib+Gmailアプリパスワードで自分宛メール、状態JSONをコミットで永続化、取得失敗も黙らず通知 |
 
 ---
 
