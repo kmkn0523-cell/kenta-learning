@@ -31,7 +31,8 @@
       "Bash(gh auth *)",
       "Bash(gh repo *)",
       "Bash(gh variable *)",
-      "Bash(gh secret *)"
+      "Bash(gh secret *)",
+      "mcp__claude_ai_Gmail__search_threads"
     ],
     "additionalDirectories": [
       "/mnt/c/Users/kenta_kamijyo",
