@@ -96,7 +96,7 @@ def fetch_highest_price() -> dict:
         page.set_default_timeout(30000)  # 各操作30秒待ち
         try:
             # ログイン画面を開いてメール・パスワードを入力（Tabでblurし、Livewireへ反映）
-            page.goto(LOGIN_URL, wait_until="networkidle")
+            page.goto(LOGIN_URL, wait_until="domcontentloaded")
             page.query_selector("input[type=email]").fill(email)
             page.keyboard.press("Tab")
             page.query_selector("input[type=password]").fill(password)
