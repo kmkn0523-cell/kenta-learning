@@ -1,5 +1,5 @@
 {
-  "daily_index": 320,
+  "daily_index": 321,
   "launch_index": 0,
   "history": [
     {
@@ -5013,6 +5013,14 @@
       "variant": "B",
       "post_id": "18335396971269207",
       "seed_id": "18037892957803001"
+    },
+    {
+      "date": "2026/06/19 12:59",
+      "theme": "間食と肌荒れ",
+      "theme_id": 65,
+      "variant": "B",
+      "post_id": "18101547629113363",
+      "seed_id": "18121112152742365"
     }
   ],
   "ab_next": "A",
@@ -5022,7 +5030,7 @@
     "62": "A",
     "63": "A",
     "64": "A",
-    "65": "B",
+    "65": "A",
     "66": "B",
     "67": "B",
     "68": "A",
@@ -5156,7 +5164,7 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 2,
-      "b_posts": 1
+      "b_posts": 2
     },
     "66": {
       "a_score": 0.0,
@@ -5777,7 +5785,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-19T08:02:01.630321+00:00",
+  "last_posted_at": "2026-06-19T13:01:09.935092+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n901a917a0d96",
   "last_note_promo_date": "2026/06/18",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
