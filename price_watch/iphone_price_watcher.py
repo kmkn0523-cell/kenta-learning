@@ -249,9 +249,19 @@ def main() -> None:
         save_price(price, label, list_price)
         print(f"値動きあり → メール送信（{sign}{diff:,}円 / {vs_list}）")
     else:
-        # 変わっていなければ何もしない（記録の時刻だけ更新）
+        # 変わっていなくても、毎回チェック結果を通知する（設定B）
+        subject = f"【変化なし】iPhone17ProMax 512GB 買取 {price:,}円"
+        body = (
+            f"今日も価格は変わっていません。\n"
+            f"現在の買取最高価格 {price:,}円（前回と同じ）\n"
+            f"{vs_list}\n"
+            f"対象: {label}\n"
+            f"確認: {TOOL_URL}\n"
+            f"取得時刻: {now_jst_text()}\n"
+        )
+        send_email(subject, body)
         save_price(price, label, list_price)
-        print("変化なし（通知なし）")
+        print("変化なし → チェック結果メール送信")
 
 
 if __name__ == "__main__":
