@@ -1,5 +1,5 @@
 {
-  "next_day": 34,
+  "next_day": 35,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -198,6 +198,12 @@
       "day": 33,
       "post_id": 202651180,
       "title": "継続は力なり — Consistency is strength."
+    },
+    {
+      "date": "2026/06/20 08:19",
+      "day": 34,
+      "post_id": 202784132,
+      "title": "塵も積もれば山となる — Dust, piled up, becomes a mountain."
     }
   ]
 }
