@@ -60,6 +60,11 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          # 履歴ファイルが無い場合（キルスイッチOFFで停止した等）はコミット不要なので静かに終了する
+          if [ ! -f skin/skin_reply_history.json ]; then
+            echo "履歴ファイルが無いためコミットをスキップします。"
+            exit 0
+          fi
           git add skin/skin_reply_history.json
           if ! git diff --staged --quiet; then
             git commit -m "自動同期: skin リプライ・エンジン状態更新"
