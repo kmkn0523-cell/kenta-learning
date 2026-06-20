@@ -38,6 +38,14 @@ SEARCH_TARGETS = [
 ]
 NUM_RESULTS = 20  # 取得数の既定値（個別指定が無いとき用）
 SEARCH_WINDOW_DAYS = 14  # 何日前までの投稿を対象にするか
+# 宣伝・販売っぽい投稿を除外するためのNGワード（含まれていたら落とす。後で調整可）
+SALES_NG_WORDS = [
+    "送料無料", "税込", "税抜", "通販", "在庫", "セール", "クーポン", "割引",
+    "お買い得", "買取", "質屋", "メルカリ", "ラクマ", "楽天", "ヤフオク",
+    "オンラインブティック", "公式通販", "ご予約", "入荷", "予約受付",
+    "ポイント還元", "%off", "円引き", "値下げ", "新品未使用", "アフィリエイト",
+    "for sale", "shop now", "buy now", "discount", "coupon", "在庫あり",
+]
 STATE_RETENTION_DAYS = 60  # 記録を残す日数（これより古いURL記録は捨てる）
 STATE_FILE = Path(__file__).with_name("jewelry_watch_state.json")  # 送信済みURLの記録先
 JST = timezone(timedelta(hours=9))  # 日本時間
@@ -229,8 +237,14 @@ def send_email(subject: str, html_body: str) -> None:
         server.sendmail(gmail_address, [notify_to], message.as_string())  # 送信
 
 
+def is_promotional(post: dict) -> bool:
+    """宣伝・販売っぽい投稿かどうかを判定する（NGワードを含むか）。"""
+    text = f"{post.get('title', '')} {post.get('snippet', '')} {post.get('url', '')}".lower()
+    return any(word.lower() in text for word in SALES_NG_WORDS)  # 1つでも含めば宣伝とみなす
+
+
 def _search_all_targets(api_key: str, start_published_date, already_seen: set[str]) -> list[dict]:
-    """全キーワード×全対象を1周検索して、パース済み投稿のリストを返す（件数をログ出力）。"""
+    """全キーワード×全対象を1周検索して、宣伝を除いたパース済み投稿のリストを返す（件数をログ出力）。"""
     all_posts = []  # 集めた投稿をためる
     for keyword in KEYWORDS:  # キーワードごと
         for target in SEARCH_TARGETS:  # 検索対象ごと
@@ -240,8 +254,10 @@ def _search_all_targets(api_key: str, start_published_date, already_seen: set[st
                     target.get("max_results", NUM_RESULTS)  # 対象ごとの取得数（Xは多め）
                 )
                 posts = parse_exa_results(response_json, keyword)  # 結果を変換
-                print(f"取得（{keyword} / {target['name']}）: {len(posts)}件")  # 件数をログに出す
-                all_posts.extend(posts)  # 結果を足す
+                kept = [p for p in posts if not is_promotional(p)]  # 宣伝っぽいものを除外
+                dropped = len(posts) - len(kept)  # 落とした件数
+                print(f"取得（{keyword} / {target['name']}）: {len(kept)}件（宣伝除外 {dropped}件）")
+                all_posts.extend(kept)  # 残った分を足す
             except Exception as error:  # 1クエリ失敗しても止めない
                 print(f"検索失敗（{keyword} / {target['name']}）: {error}")
     return all_posts

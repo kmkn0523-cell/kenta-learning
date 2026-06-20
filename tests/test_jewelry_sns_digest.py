@@ -219,3 +219,28 @@ def test_collect_new_posts_falls_back_without_date():
         posts = digest.collect_new_posts("KEY", "2026-06-14T00:00:00Z", set())
     assert [p["url"] for p in posts] == ["https://x.com/fresh"]
     assert None in calls  # フォールバック（日付なし）が呼ばれたこと
+
+
+def test_is_promotional_detects_sales_words():
+    # 宣伝・販売ワードを含む投稿は宣伝と判定し、普通の感想投稿は通すこと
+    promo = {"title": "サントスネックレス 送料無料でセール中", "snippet": "", "url": "https://x.com/shop/1"}
+    normal = {"title": "サントスネックレス つけてみた感想", "snippet": "毎日着けてる", "url": "https://x.com/u/1"}
+    assert digest.is_promotional(promo) is True
+    assert digest.is_promotional(normal) is False
+
+
+def test_collect_new_posts_filters_promotional():
+    # 検索結果のうち宣伝投稿が除外され、感想投稿だけ残ること
+    from unittest.mock import patch
+
+    def fake_search(query, domains, start, key, num):
+        return {"results": [
+            {"title": "サントス 買取強化中", "url": "https://x.com/buy", "text": "", "publishedDate": "2026-06-20"},
+            {"title": "サントス着けてみた", "url": "https://x.com/real", "text": "良い", "publishedDate": "2026-06-20"},
+        ]}
+
+    with patch.object(digest, "search_exa", side_effect=fake_search):
+        posts = digest.collect_new_posts("KEY", "2026-06-14T00:00:00Z", set())
+    urls = [p["url"] for p in posts]
+    assert "https://x.com/real" in urls
+    assert "https://x.com/buy" not in urls
