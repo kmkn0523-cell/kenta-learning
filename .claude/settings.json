@@ -170,7 +170,7 @@
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "spinnerTipsEnabled": false,
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "autoCompactWindow": 100000,
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
