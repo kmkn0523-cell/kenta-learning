@@ -147,3 +147,20 @@ def test_search_exa_omits_domains_when_empty():
         digest.search_exa("テスト", [], "2026-06-14T00:00:00Z", "KEY", 20)
     _, kwargs = mock_post.call_args
     assert "includeDomains" not in kwargs["json"]
+
+
+def test_collect_new_posts_aggregates_and_filters():
+    # 全クエリの結果を集め、送信済みを除外して返すこと。1クエリ失敗でも止まらないこと
+    def fake_search(query, domains, start, key, num):
+        # X対象のときだけ1件返し、他は失敗させる
+        if domains == ["x.com", "twitter.com"]:
+            return {"results": [{"title": "t", "url": "https://x.com/seen", "text": "", "publishedDate": "2026-06-18"},
+                                 {"title": "t2", "url": "https://x.com/fresh", "text": "", "publishedDate": "2026-06-18"}]}
+        raise RuntimeError("boom")  # 他の対象は失敗
+
+    with patch.object(digest, "search_exa", side_effect=fake_search):
+        posts = digest.collect_new_posts("KEY", "2026-06-14T00:00:00Z", {"https://x.com/seen"})
+    urls = [p["url"] for p in posts]
+    # 送信済みのseenは除外、freshだけ残る（キーワード2つで同じURLが来るので重複も1件に）
+    assert "https://x.com/fresh" in urls
+    assert "https://x.com/seen" not in urls

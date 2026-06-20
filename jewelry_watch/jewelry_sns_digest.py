@@ -216,3 +216,47 @@ def send_email(subject: str, html_body: str) -> None:
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:  # GmailにSSL接続
         server.login(gmail_address, gmail_app_password)  # ログイン
         server.sendmail(gmail_address, [notify_to], message.as_string())  # 送信
+
+
+def collect_new_posts(api_key: str, start_published_date: str, already_seen: set[str]) -> list[dict]:
+    """全キーワード×全対象を検索し、パースして新規投稿だけ返す。"""
+    all_posts = []  # 集めた投稿をためる
+    for keyword in KEYWORDS:  # キーワードごと
+        for target in SEARCH_TARGETS:  # 検索対象ごと
+            try:
+                response_json = search_exa(  # Exaに問い合わせる
+                    keyword, target["domains"], start_published_date, api_key, NUM_RESULTS
+                )
+                all_posts.extend(parse_exa_results(response_json, keyword))  # 結果を足す
+            except Exception as error:  # 1クエリ失敗しても止めない
+                print(f"検索失敗（{keyword} / {target['name']}）: {error}")
+    return filter_new(all_posts, already_seen)  # 新規分だけ残す
+
+
+def main() -> None:
+    """全体の処理を実行する。"""
+    api_key = os.environ["EXA_API_KEY"]  # Exaのキー（無ければ例外で止まる）
+    today = datetime.now(JST).date()  # 今日（JST）
+    # 直近7日より後の投稿だけを対象にする（UTC ISO8601文字列）
+    start_published_date = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    state = load_state(STATE_FILE)  # 過去の送信済み記録を読む
+    already_seen = seen_urls(state)  # 送信済みURL集合
+
+    new_posts = collect_new_posts(api_key, start_published_date, already_seen)  # 新規収集
+
+    today_text = today.strftime("%Y-%m-%d")  # 件名用の日付
+    subject = build_subject(len(new_posts), today_text)  # 件名
+    html_body = build_email_html(new_posts, now_jst_text())  # 本文
+    send_email(subject, html_body)  # 送信
+    print(f"送信完了: 新規{len(new_posts)}件")
+
+    # state更新: 今回の新規URLを first_seen 付きで追加し、古い記録は掃除して保存
+    new_entries = [{"url": post["url"], "first_seen": today_text} for post in new_posts]
+    merged = state.get("seen", []) + new_entries  # 既存＋今回
+    kept = prune_old(merged, today, STATE_RETENTION_DAYS)  # 古いものを捨てる
+    save_state(STATE_FILE, kept)  # 保存
+
+
+if __name__ == "__main__":
+    main()  # スクリプトとして実行されたらmainを動かす
