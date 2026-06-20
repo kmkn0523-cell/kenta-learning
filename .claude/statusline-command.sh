@@ -35,50 +35,6 @@ get_mtime() {
 today_raw=$(TZ=Asia/Tokyo date '+%Y/%m/%d(%a) %H:%M')
 today=$(echo "$today_raw" | sed 's|/0\([0-9]\)|/\1|g')  # /04/ → /4/ のように変換
 
-# --- 天気情報（1時間ごとに更新）---
-# 都市を変えたい場合は CITY を変更（例: Osaka, Sapporo, Fukuoka）
-WEATHER_CACHE="$HOME/.claude/weather-cache.json"
-CITY="Tokyo"
-
-# キャッシュが存在しない、または1時間（3600秒）以上古ければ wttr.in から再取得する
-if [ ! -f "$WEATHER_CACHE" ] || [ $(($(date +%s) - $(get_mtime "$WEATHER_CACHE"))) -ge 3600 ]; then
-  # JSON形式で取得（現在気温・最高・最低・天気コードをまとめて取れる）
-  weather_json=$(curl -s --max-time 5 "wttr.in/${CITY}?format=j1" 2>/dev/null)
-  # 正しいJSONが取得できた場合のみキャッシュを更新する
-  if [ -n "$weather_json" ] && echo "$weather_json" | jq -e '.current_condition[0]' >/dev/null 2>&1; then
-    echo "$weather_json" > "${WEATHER_CACHE}.tmp" && mv "${WEATHER_CACHE}.tmp" "$WEATHER_CACHE"
-  fi
-fi
-
-# 天気コードから絵文字アイコンを返す関数
-get_weather_icon() {
-  local code=$1
-  case $code in
-    113) echo "☀️" ;;                                                          # 快晴
-    116) echo "⛅" ;;                                                           # 一部曇り
-    119|122) echo "☁️" ;;                                                      # 曇り
-    143|248|260) echo "🌫️" ;;                                                 # 霧
-    200|386|389|392|395) echo "⛈️" ;;                                         # 雷雨
-    179|182|185|227|230|323|326|329|332|335|338|350|368|371) echo "❄️" ;;     # 雪
-    *) echo "🌧️" ;;                                                           # その他（雨）
-  esac
-}
-
-# キャッシュから天気情報を読み込む
-weather_info=""
-if [ -f "$WEATHER_CACHE" ] && [ -s "$WEATHER_CACHE" ]; then
-  w=$(cat "$WEATHER_CACHE")
-  if echo "$w" | jq -e '.current_condition[0]' >/dev/null 2>&1; then
-    cur_temp=$(echo "$w" | jq -r '.current_condition[0].temp_C')
-    max_temp=$(echo "$w" | jq -r '.weather[0].maxtempC')
-    min_temp=$(echo "$w" | jq -r '.weather[0].mintempC')
-    w_code=$(echo "$w"  | jq -r '.current_condition[0].weatherCode')
-    icon=$(get_weather_icon "$w_code")
-    # 例: ⛅18°C(↑22↓12)
-    weather_info="${icon}${cur_temp}°C(↑${max_temp}↓${min_temp})"
-  fi
-fi
-
 # モデル表示名（このセッション自身のモデルを使う）
 model=$(echo "$input" | jq -r '.model.display_name // empty')
 
@@ -270,7 +226,6 @@ if [ -f "$SYNC_LOG" ]; then
 fi
 
 [ -n "$today" ] && line1="${CYAN}${today}${RESET}"
-[ -n "$weather_info" ] && line1="$line1 | ${CITY}: ${weather_info}"
 [ -n "$last_sync" ] && line1="$line1 | Sync: ${last_sync}"
 
 [ -n "$model" ] && line2="$model"
