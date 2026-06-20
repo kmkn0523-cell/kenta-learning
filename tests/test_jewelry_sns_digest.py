@@ -255,6 +255,24 @@ def test_keep_non_promotional_drops_flagged():
     assert kept == ["https://ameblo.jp/b", "https://ameblo.jp/c"]
 
 
+def test_keep_relevant_drops_off_topic_titles():
+    # タイトルにジュエリー関連語が無い投稿（カメラ・靴等）を落とすこと
+    posts = [
+        {"title": "F8は特別な数字｜レンズを絞る意味", "url": "https://note.com/a"},     # 無関係
+        {"title": "実はそこまでカルティエに惹かれなかった", "url": "https://note.com/b"},  # 関連
+        {"title": "サントスネックレス着用レビュー", "url": "https://ameblo.jp/c"},        # 関連
+    ]
+    kept = [p["url"] for p in digest.keep_relevant(posts)]
+    assert kept == ["https://note.com/b", "https://ameblo.jp/c"]
+
+
+def test_is_promotional_detects_used_and_replica():
+    # 中古EC・偽物・買取店のタイトルを宣伝として弾くこと
+    assert digest.is_promotional({"title": "中古 カルティエ サントス 美品", "url": "https://x/1"}) is True
+    assert digest.is_promotional({"title": "ジュストアンクル スーパーコピー", "url": "https://x/2"}) is True
+    assert digest.is_promotional({"title": "高価買取いたします", "url": "https://x/3"}) is True
+
+
 def test_is_promotional_ignores_snippet_chrome():
     # 抜粋(snippet)にUI文言が混じっても、タイトル/URLが綺麗なら宣伝としないこと
     post = {"title": "サントスネックレス 着用レビュー", "snippet": "在庫 予約受付 ポイント還元",

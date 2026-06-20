@@ -34,11 +34,14 @@ except Exception:
 # ===== 設定 =====
 # 監視するキーワード（「カルティエ」を足すと精度が上がる＝同名の別物を避けられる）
 KEYWORDS = ["サントスネックレス カルティエ", "ジュストアンクル ブレスレット カルティエ"]
-# 検索対象（名前・絞り込むドメイン・取得数）。アメブロ一本に絞る。
-# 2026-06-21のドライランで、noteは神経検索が脱線して無関係な投稿（カメラ・靴・旅行等）を、
-# はてなは修理店・レプリカブログを多く拾うと判明。アメブロは生の声がほぼ全部で最も高品質だった。
+# 検索対象（名前・絞り込むドメイン・取得数）。アメブロを主軸に、Web各所のレビューも足す。
+# オープンWeb検索は中古EC・買取・詐欺ドメインだらけで使えないため、信頼できる
+# 個人ブログ媒体だけをホワイトリスト指定する（includeDomainsでEC詐欺を構造的に避ける）。
 SEARCH_TARGETS = [
-    {"name": "アメブロ", "domains": ["ameblo.jp", "ameba.jp"], "max_results": 25},  # 生の声が一番多い唯一の主軸
+    {"name": "アメブロ", "domains": ["ameblo.jp", "ameba.jp"], "max_results": 25},  # 主軸（生の声が一番多い）
+    {"name": "note", "domains": ["note.com"], "max_results": 10},  # 補助（関連性フィルタで脱線を弾く）
+    {"name": "ブログ各所", "domains": ["hatenablog.com", "hatenablog.jp", "hateblo.jp", "livedoor.jp", "blog.jp", "fc2.com"], "max_results": 10},  # はてな/livedoor/FC2
+    {"name": "レビューblog", "domains": ["momoko-tree.com"], "max_results": 5},  # 良質な個人レビューblog（目視で確認済）
 ]
 # 個別投稿ではない集約ページ（タグまとめ等）は除外する。ホスト名で弾く
 EXCLUDE_HOSTS = ["blogtag.ameba.jp"]  # アメブロのタグ集約ページ（個人の投稿ではない）
@@ -47,10 +50,17 @@ SEARCH_WINDOW_DAYS = 14  # 何日前までの投稿を対象にするか
 # 宣伝・販売っぽい投稿を除外するためのNGワード（含まれていたら落とす。後で調整可）
 SALES_NG_WORDS = [
     "送料無料", "税込", "税抜", "通販", "在庫", "セール", "クーポン", "割引",
-    "お買い得", "買取", "質屋", "メルカリ", "ラクマ", "楽天", "ヤフオク",
+    "お買い得", "買取", "質屋", "質店", "メルカリ", "ラクマ", "楽天", "ヤフオク",
     "オンラインブティック", "公式通販", "ご予約", "入荷", "予約受付",
     "ポイント還元", "%off", "円引き", "値下げ", "新品未使用", "アフィリエイト",
     "for sale", "shop now", "buy now", "discount", "coupon", "在庫あり",
+    "中古", "レプリカ", "スーパーコピー", "コピー品", "高価買取", "査定",  # 中古EC・偽物・買取店対策
+]
+# タイトルにこのいずれかが入っていない投稿は、検索が脱線した無関係記事として弾く
+# （noteの神経検索がカメラ・靴・旅行などを拾う対策）
+RELEVANCE_WORDS = [
+    "カルティエ", "cartier", "サントス", "ジュスト", "アンクル", "ネックレス",
+    "ブレス", "バングル", "ジュエリー", "リング", "指輪", "ピアス", "ダイヤ",
 ]
 STATE_RETENTION_DAYS = 60  # 記録を残す日数（これより古いURL記録は捨てる）
 STATE_FILE = Path(__file__).with_name("jewelry_watch_state.json")  # 送信済みURLの記録先
@@ -72,7 +82,7 @@ def detect_platform(url: str) -> str:
         return "note"
     if "hatenablog" in host or "hateblo.jp" in host:  # はてなブログ
         return "はてなブログ"
-    if "livedoor.jp" in host:  # livedoorブログ
+    if "livedoor.jp" in host or "blog.jp" in host:  # livedoorブログ（blog.jpもlivedoor系）
         return "livedoorブログ"
     if "fc2.com" in host:  # FC2ブログ
         return "FC2ブログ"
@@ -276,6 +286,17 @@ def keep_non_promotional(posts: list[dict]) -> list[dict]:
     return [p for p in posts if not p.get("promotional")]  # promotionalの印が無いものだけ
 
 
+def is_relevant(post: dict) -> bool:
+    """タイトルにジュエリー関連語が入っているか（検索が脱線した無関係記事を弾く）。"""
+    title = (post.get("title", "") or "").lower()  # タイトルを小文字化
+    return any(word.lower() in title for word in RELEVANCE_WORDS)  # 1つでも入っていればOK
+
+
+def keep_relevant(posts: list[dict]) -> list[dict]:
+    """タイトルが無関係な投稿（カメラ・靴・旅行など）を落とす。"""
+    return [p for p in posts if is_relevant(p)]  # 関連語を含むものだけ
+
+
 def _search_all_targets(api_key: str, start_published_date, already_seen: set[str]) -> list[dict]:
     """全キーワード×全対象を1周検索して、宣伝を除いたパース済み投稿のリストを返す（件数をログ出力）。"""
     all_posts = []  # 集めた投稿をためる
@@ -325,6 +346,7 @@ def main() -> None:
 
     new_posts = collect_new_posts(api_key, start_published_date, already_seen)  # 新規収集
     new_posts = keep_non_promotional(new_posts)  # 買取/通販などの宣伝を落として人の声だけにする
+    new_posts = keep_relevant(new_posts)  # タイトルが無関係な脱線記事を落とす
 
     today_text = today.strftime("%Y-%m-%d")  # 件名用の日付
     subject = build_subject(len(new_posts), today_text)  # 件名
