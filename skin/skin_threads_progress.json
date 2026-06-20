@@ -1,5 +1,5 @@
 {
-  "daily_index": 319,
+  "daily_index": 322,
   "launch_index": 0,
   "history": [
     {
@@ -5005,6 +5005,37 @@
       "variant": "B",
       "post_id": "18358304017212099",
       "seed_id": "18120208417686273"
+    },
+    {
+      "date": "2026/06/19 08:00",
+      "theme": "肌のバリア機能",
+      "theme_id": 64,
+      "variant": "B",
+      "post_id": "18335396971269207",
+      "seed_id": "18037892957803001"
+    },
+    {
+      "date": "2026/06/19 12:59",
+      "theme": "間食と肌荒れ",
+      "theme_id": 65,
+      "variant": "B",
+      "post_id": "18101547629113363",
+      "seed_id": "18121112152742365"
+    },
+    {
+      "date": "2026/06/19 15:09",
+      "theme": "有料note宣伝: 内側から肌荒れを治す完全マニュアル",
+      "theme_id": 0,
+      "variant": "paid_note_promo",
+      "post_id": "18019396862850431"
+    },
+    {
+      "date": "2026/06/19 22:00",
+      "theme": "仕事のストレスと肌",
+      "theme_id": 66,
+      "variant": "B",
+      "post_id": "18560879662064768",
+      "seed_id": "18084671039450512"
     }
   ],
   "ab_next": "A",
@@ -5013,9 +5044,9 @@
     "61": "A",
     "62": "A",
     "63": "A",
-    "64": "B",
-    "65": "B",
-    "66": "B",
+    "64": "A",
+    "65": "A",
+    "66": "A",
     "67": "B",
     "68": "A",
     "69": "A",
@@ -5142,19 +5173,19 @@
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 2,
-      "b_posts": 1
+      "b_posts": 2
     },
     "65": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 2,
-      "b_posts": 1
+      "b_posts": 2
     },
     "66": {
       "a_score": 0.0,
       "b_score": 0.0,
       "a_posts": 2,
-      "b_posts": 1
+      "b_posts": 2
     },
     "67": {
       "a_score": 0.0,
@@ -5769,9 +5800,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-19T03:02:02.556368+00:00",
+  "last_posted_at": "2026-06-19T22:02:08.954282+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n901a917a0d96",
   "last_note_promo_date": "2026/06/18",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
-  "last_paid_note_promo_date": "2026/06/05"
+  "last_paid_note_promo_date": "2026/06/19"
 }

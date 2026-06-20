@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-18T10:37:58.936468",
+  "last_updated": "2026-06-19T10:45:30.065581",
   "posts_history": [
     {
       "day": 28,
@@ -2420,6 +2420,50 @@
       "shares": 0,
       "views": 90,
       "engagement_rate": 1.11
+    },
+    {
+      "day": 64,
+      "type": "肌のバリア機能",
+      "post_id": "18335396971269207",
+      "posted_at": "2026-06-19T08:01:23+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 50,
+      "engagement_rate": 2.0
+    },
+    {
+      "day": 63,
+      "type": "スキンケアのやりすぎ問題",
+      "post_id": "18358304017212099",
+      "posted_at": "2026-06-19T03:01:20+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 33,
+      "engagement_rate": 3.03
+    },
+    {
+      "day": 62,
+      "type": "肌に良いお茶",
+      "post_id": "18106145894289653",
+      "posted_at": "2026-06-18T22:01:29+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 40,
+      "engagement_rate": 2.5
+    },
+    {
+      "day": 61,
+      "type": "抗糖化と美肌",
+      "post_id": "18021281852846737",
+      "posted_at": "2026-06-18T12:39:01+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 46,
+      "engagement_rate": 2.17
     }
   ],
   "pattern_performance": {
@@ -3130,34 +3174,34 @@
     },
     "day_64": {
       "肌のバリア機能": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 31.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 4,
+        "avg_comments": 0.3,
+        "avg_views": 37.0,
+        "avg_engagement_rate": 0.67,
+        "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
     "day_63": {
       "スキンケアのやりすぎ問題": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 16.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 2,
+        "avg_comments": 0.3,
+        "avg_views": 22.0,
+        "avg_engagement_rate": 1.01,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_61": {
       "抗糖化と美肌": {
-        "total_posts": 2,
-        "avg_likes": 0.5,
-        "avg_comments": 0.0,
-        "avg_views": 51.0,
-        "avg_engagement_rate": 0.64,
-        "best_hour": 13,
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.3,
+        "avg_views": 49.0,
+        "avg_engagement_rate": 1.15,
+        "best_hour": 12,
         "best_hashtag_set": "A"
       }
     },
@@ -3520,6 +3564,17 @@
         "avg_comments": 1.0,
         "avg_views": 26.0,
         "avg_engagement_rate": 3.85,
+        "best_hour": 22,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_62": {
+      "肌に良いお茶": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 40.0,
+        "avg_engagement_rate": 2.5,
         "best_hour": 22,
         "best_hashtag_set": "A"
       }
