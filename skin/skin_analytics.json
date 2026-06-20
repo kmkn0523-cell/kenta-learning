@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-19T10:45:30.065581",
+  "last_updated": "2026-06-20T09:25:25.884629",
   "posts_history": [
     {
       "day": 28,
@@ -2464,6 +2464,50 @@
       "shares": 0,
       "views": 46,
       "engagement_rate": 2.17
+    },
+    {
+      "day": 68,
+      "type": "体内時計と肌修復",
+      "post_id": "18106410388988569",
+      "posted_at": "2026-06-20T07:36:56+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 86,
+      "engagement_rate": 1.16
+    },
+    {
+      "day": 67,
+      "type": "タンパク質不足と肌",
+      "post_id": "17961300222121314",
+      "posted_at": "2026-06-20T03:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 22,
+      "engagement_rate": 4.55
+    },
+    {
+      "day": 66,
+      "type": "仕事のストレスと肌",
+      "post_id": "18560879662064768",
+      "posted_at": "2026-06-19T22:01:26+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 34,
+      "engagement_rate": 2.94
+    },
+    {
+      "day": 65,
+      "type": "間食と肌荒れ",
+      "post_id": "18101547629113363",
+      "posted_at": "2026-06-19T13:00:30+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 27,
+      "engagement_rate": 3.7
     }
   ],
   "pattern_performance": {
@@ -3130,44 +3174,44 @@
     },
     "day_68": {
       "体内時計と肌修復": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 14.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 50.0,
+        "avg_engagement_rate": 0.58,
         "best_hour": 12,
         "best_hashtag_set": "A"
       }
     },
     "day_67": {
       "タンパク質不足と肌": {
-        "total_posts": 2,
-        "avg_likes": 0.5,
-        "avg_comments": 0.0,
-        "avg_views": 28.0,
-        "avg_engagement_rate": 2.0,
-        "best_hour": 10,
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.3,
+        "avg_views": 26.0,
+        "avg_engagement_rate": 2.85,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_66": {
       "仕事のストレスと肌": {
-        "total_posts": 2,
+        "total_posts": 3,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 14.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 8,
+        "avg_comments": 0.3,
+        "avg_views": 21.0,
+        "avg_engagement_rate": 0.98,
+        "best_hour": 22,
         "best_hashtag_set": "A"
       }
     },
     "day_65": {
       "間食と肌荒れ": {
-        "total_posts": 2,
-        "avg_likes": 0.5,
-        "avg_comments": 0.0,
-        "avg_views": 50.0,
-        "avg_engagement_rate": 0.9,
+        "total_posts": 3,
+        "avg_likes": 0.3,
+        "avg_comments": 0.3,
+        "avg_views": 42.0,
+        "avg_engagement_rate": 1.83,
         "best_hour": 12,
         "best_hashtag_set": "A"
       }
