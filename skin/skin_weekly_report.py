@@ -9,7 +9,11 @@
 import json     # JSONを読む道具
 import os       # ファイルの場所を組み立てる道具
 import re       # 日時の "+0000" を直す道具
+import smtplib  # メールを送る道具（週次レポートをGmailで通知）
 from datetime import datetime, timezone, timedelta  # 日時を扱う道具
+from email.mime.text import MIMEText  # メール本文を作る道具
+
+MAIL_ADDR = "kmkn0523@gmail.com"  # 送信元・送信先（どちらも自分のGmail）
 
 # A/B判定は既存スクリプトの関数を再利用する（直接実行でもpytest経由でも動くよう2通り試す）
 try:
@@ -144,6 +148,22 @@ def build_report(history, today, ab_results=None):
     return "\n".join(lines)
 
 
+def send_report_email(report_text, today):
+    """週次レポートをGmailで自分宛に送る。パスワード未設定なら静かにスキップ。"""
+    password = os.environ.get("GMAIL_APP_PASSWORD", "")
+    if not password:  # ローカル実行時はパスワードが無いので送らない（既存スクリプトと同じ作法）
+        print("GMAIL_APP_PASSWORD が未設定のため、メール送信はスキップします。")
+        return
+    msg = MIMEText(report_text, "plain", "utf-8")  # レポート本文をそのままメールにする
+    msg["From"] = MAIL_ADDR
+    msg["To"] = MAIL_ADDR
+    msg["Subject"] = f"【skin週次レポート】{today.strftime('%Y-%m-%d')}"
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:  # Gmailの安全な送信口
+        server.login(MAIL_ADDR, password)
+        server.send_message(msg)
+    print("週次レポートをメール送信しました。")
+
+
 def main():
     """実データを読んでレポートを画面とファイルに出す。"""
     with open(ANALYTICS_PATH, encoding="utf-8") as f:
@@ -160,6 +180,7 @@ def main():
     with open(REPORT_PATH, "w", encoding="utf-8") as f:
         f.write(report + "\n")
     print(f"\n→ 書き出し: {REPORT_PATH}")
+    send_report_email(report, today)  # GMAIL_APP_PASSWORD があればメール通知
 
 
 if __name__ == "__main__":
