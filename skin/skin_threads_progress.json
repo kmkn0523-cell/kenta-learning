@@ -1,5 +1,5 @@
 {
-  "daily_index": 323,
+  "daily_index": 324,
   "launch_index": 0,
   "history": [
     {
@@ -5044,6 +5044,14 @@
       "variant": "B",
       "post_id": "17961300222121314",
       "seed_id": "18134921995569866"
+    },
+    {
+      "date": "2026/06/20 07:36",
+      "theme": "体内時計と肌修復",
+      "theme_id": 68,
+      "variant": "A",
+      "post_id": "18106410388988569",
+      "seed_id": "18132155068594160"
     }
   ],
   "ab_next": "A",
@@ -5056,7 +5064,7 @@
     "65": "A",
     "66": "A",
     "67": "A",
-    "68": "A",
+    "68": "B",
     "69": "A",
     "70": "A",
     "71": "A",
@@ -5204,7 +5212,7 @@
     "68": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "69": {
@@ -5808,7 +5816,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-20T03:02:04.792152+00:00",
+  "last_posted_at": "2026-06-20T07:37:35.261442+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n901a917a0d96",
   "last_note_promo_date": "2026/06/18",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
