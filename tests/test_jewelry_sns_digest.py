@@ -229,8 +229,8 @@ def test_is_promotional_detects_sales_words():
     assert digest.is_promotional(normal) is False
 
 
-def test_collect_new_posts_filters_promotional():
-    # 検索結果のうち宣伝投稿が除外され、感想投稿だけ残ること
+def test_collect_new_posts_flags_promotional():
+    # 検索結果は消さず全部残し、宣伝投稿には promotional の印が付くこと
     from unittest.mock import patch
 
     def fake_search(query, domains, start, key, num):
@@ -241,6 +241,7 @@ def test_collect_new_posts_filters_promotional():
 
     with patch.object(digest, "search_exa", side_effect=fake_search):
         posts = digest.collect_new_posts("KEY", "2026-06-14T00:00:00Z", set())
-    urls = [p["url"] for p in posts]
-    assert "https://x.com/real" in urls
-    assert "https://x.com/buy" not in urls
+    by_url = {p["url"]: p for p in posts}
+    assert "https://x.com/buy" in by_url and "https://x.com/real" in by_url  # 両方残る
+    assert by_url["https://x.com/buy"]["promotional"] is True  # 宣伝に印
+    assert by_url["https://x.com/real"]["promotional"] is False  # 感想は印なし
