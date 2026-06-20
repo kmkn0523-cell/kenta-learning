@@ -20,23 +20,17 @@
 
 ---
 
-## ステップ0: プライバシーポリシーを公開する（必須ブロッカー・5分）
+## ステップ0: プライバシーポリシーを公開する（✅完了済み）
 
-`docs/privacy_policy.html` は作成済み。GitHub Pages で公開する：
+GitHub Pages は既に有効（公開元: main / ルート）。`docs/privacy_policy.html` を
+`.gitignore` の許可漏れで未pushだったのを修正し、コミット＆pushで公開済み。
+申請フォームに貼る公開URLはこれ（`/docs/` が付く点に注意）:
+```
+https://kmkn0523-cell.github.io/kenta-learning/docs/privacy_policy.html
+```
+ブラウザで開いて表示されることを確認するだけでOK。
 
-1. ブラウザで開く:
-```
-https://github.com/kmkn0523-cell/kenta-learning/settings/pages
-```
-2. 「Build and deployment」→ Source を **Deploy from a branch**
-3. Branch を **main** ／ フォルダを **/docs** に設定して **Save**
-4. 1〜2分待つと、この公開URLが生きる（申請フォームに貼る）:
-```
-https://kmkn0523-cell.github.io/kenta-learning/privacy_policy.html
-```
-5. URLを開いて表示されることを確認する。
-
-> ※ /docs を公開すると docs フォルダ内の他ファイルもURLで読める状態になる（リポジトリは元々Publicなので新たな漏えいは無いが、気になる秘密が docs に無いことだけ確認）。
+> ※ ルート公開なのでリポジトリ内の他ファイルもURLで読める状態（元々Publicなので新たな漏えいは無い）。
 
 ---
 
