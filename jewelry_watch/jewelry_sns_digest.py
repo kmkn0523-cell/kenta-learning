@@ -11,6 +11,7 @@
 """
 import os
 import json
+import requests  # Exa APIを叩くためのHTTPライブラリ
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
@@ -178,3 +179,40 @@ def build_email_html(posts: list[dict], generated_at: str) -> str:
                 )
             parts.append("</ul>")  # 箇条書き終了
     return "\n".join(parts)
+
+
+def search_exa(query, include_domains, start_published_date, api_key, num_results=NUM_RESULTS):
+    """Exa（Web検索API）に問い合わせて、生のJSONレスポンスを返す。"""
+    payload = {
+        "query": query,  # 検索キーワード
+        "numResults": num_results,  # 取得件数
+        "startPublishedDate": start_published_date,  # この日時より後の投稿だけ
+        "contents": {"text": True},  # 抜粋テキストも取得する
+    }
+    if include_domains:  # ドメイン指定があるとき（Web全般のときは付けない）
+        payload["includeDomains"] = include_domains
+    headers = {"x-api-key": api_key}  # 認証ヘッダー
+    response = requests.post(  # ExaにPOSTする
+        "https://api.exa.ai/search",
+        json=payload,
+        headers=headers,
+        timeout=30,  # 30秒で諦める
+    )
+    response.raise_for_status()  # エラーなら例外を投げる（握りつぶさない）
+    return response.json()  # JSONを辞書にして返す
+
+
+def send_email(subject: str, html_body: str) -> None:
+    """GmailでHTMLメールを自分宛に送る（アプリパスワードを使う）。"""
+    gmail_address = os.environ["GMAIL_ADDRESS"]  # 送信元Gmail
+    gmail_app_password = os.environ["GMAIL_APP_PASSWORD"]  # アプリパスワード
+    notify_to = os.environ.get("NOTIFY_TO", gmail_address)  # 通知先（既定は自分宛）
+
+    message = MIMEText(html_body, "html", "utf-8")  # HTMLメールとして作る
+    message["Subject"] = Header(subject, "utf-8")  # 件名
+    message["From"] = gmail_address  # 差出人
+    message["To"] = notify_to  # 宛先
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:  # GmailにSSL接続
+        server.login(gmail_address, gmail_app_password)  # ログイン
+        server.sendmail(gmail_address, [notify_to], message.as_string())  # 送信

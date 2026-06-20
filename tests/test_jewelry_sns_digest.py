@@ -115,3 +115,35 @@ def test_build_email_html_handles_zero():
     # 新規ゼロのときは「新しい言及なし」の文面になること
     html = digest.build_email_html([], "2026-06-21 07:30 JST")
     assert "新しい言及" in html
+
+
+from unittest.mock import patch, MagicMock
+
+
+def test_search_exa_posts_expected_payload():
+    # Exaへ正しいエンドポイント・ヘッダー・本文で投げ、JSONを返すこと
+    fake_response = MagicMock()
+    fake_response.json.return_value = {"results": []}
+    fake_response.raise_for_status.return_value = None
+    with patch.object(digest.requests, "post", return_value=fake_response) as mock_post:
+        result = digest.search_exa(
+            "サントスネックレス", ["x.com", "twitter.com"], "2026-06-14T00:00:00Z", "KEY", 20
+        )
+    assert result == {"results": []}
+    args, kwargs = mock_post.call_args
+    assert args[0] == "https://api.exa.ai/search"          # エンドポイント
+    assert kwargs["headers"]["x-api-key"] == "KEY"          # 認証ヘッダー
+    assert kwargs["json"]["query"] == "サントスネックレス"  # クエリ
+    assert kwargs["json"]["includeDomains"] == ["x.com", "twitter.com"]
+    assert kwargs["json"]["numResults"] == 20
+
+
+def test_search_exa_omits_domains_when_empty():
+    # Web全般（ドメイン空）のときは includeDomains を送らないこと
+    fake_response = MagicMock()
+    fake_response.json.return_value = {"results": []}
+    fake_response.raise_for_status.return_value = None
+    with patch.object(digest.requests, "post", return_value=fake_response) as mock_post:
+        digest.search_exa("テスト", [], "2026-06-14T00:00:00Z", "KEY", 20)
+    _, kwargs = mock_post.call_args
+    assert "includeDomains" not in kwargs["json"]
