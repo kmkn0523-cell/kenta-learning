@@ -17,6 +17,21 @@ def test_detect_platform_judges_domain():
     assert digest.detect_platform("https://example.com/blog/123") == "Web"
 
 
+def test_detect_platform_judges_blog_domains():
+    # 個人ブログ各社を正しく判定できること（2026-06-21の検索対象変更分）
+    assert digest.detect_platform("https://ameblo.jp/user/entry-1.html") == "アメブロ"
+    assert digest.detect_platform("https://note.com/user/n/abc") == "note"
+    assert digest.detect_platform("https://user.hatenablog.com/entry/1") == "はてなブログ"
+    assert digest.detect_platform("https://blog.livedoor.jp/user/archives/1.html") == "livedoorブログ"
+    assert digest.detect_platform("https://user.blog.fc2.com/blog-entry-1.html") == "FC2ブログ"
+
+
+def test_is_excluded_host_drops_aggregation_pages():
+    # 集約ページ（タグまとめ）は除外し、個別投稿は通すこと
+    assert digest.is_excluded_host("https://blogtag.ameba.jp/news/foo") is True
+    assert digest.is_excluded_host("https://ameblo.jp/user/entry-1.html") is False
+
+
 def test_parse_exa_results_extracts_fields():
     # Exaの生レスポンスから必要な項目を取り出し、keywordとplatformを付けること
     response_json = {
@@ -152,18 +167,18 @@ def test_search_exa_omits_domains_when_empty():
 def test_collect_new_posts_aggregates_and_filters():
     # 全クエリの結果を集め、送信済みを除外して返すこと。1クエリ失敗でも止まらないこと
     def fake_search(query, domains, start, key, num):
-        # X対象のときだけ1件返し、他は失敗させる
-        if domains == ["x.com", "twitter.com"]:
-            return {"results": [{"title": "t", "url": "https://x.com/seen", "text": "", "publishedDate": "2026-06-18"},
-                                 {"title": "t2", "url": "https://x.com/fresh", "text": "", "publishedDate": "2026-06-18"}]}
+        # アメブロ対象のときだけ1件返し、他は失敗させる
+        if domains == ["ameblo.jp", "ameba.jp"]:
+            return {"results": [{"title": "t", "url": "https://ameblo.jp/u/seen", "text": "", "publishedDate": "2026-06-18"},
+                                 {"title": "t2", "url": "https://ameblo.jp/u/fresh", "text": "", "publishedDate": "2026-06-18"}]}
         raise RuntimeError("boom")  # 他の対象は失敗
 
     with patch.object(digest, "search_exa", side_effect=fake_search):
-        posts = digest.collect_new_posts("KEY", "2026-06-14T00:00:00Z", {"https://x.com/seen"})
+        posts = digest.collect_new_posts("KEY", "2026-06-14T00:00:00Z", {"https://ameblo.jp/u/seen"})
     urls = [p["url"] for p in posts]
     # 送信済みのseenは除外、freshだけ残る（キーワード2つで同じURLが来るので重複も1件に）
-    assert "https://x.com/fresh" in urls
-    assert "https://x.com/seen" not in urls
+    assert "https://ameblo.jp/u/fresh" in urls
+    assert "https://ameblo.jp/u/seen" not in urls
 
 
 def test_build_email_html_escapes_quotes_and_blocks_bad_url():
@@ -227,6 +242,24 @@ def test_is_promotional_detects_sales_words():
     normal = {"title": "サントスネックレス つけてみた感想", "snippet": "毎日着けてる", "url": "https://x.com/u/1"}
     assert digest.is_promotional(promo) is True
     assert digest.is_promotional(normal) is False
+
+
+def test_keep_non_promotional_drops_flagged():
+    # promotionalの印が付いた投稿は落とし、印の無い投稿だけ残すこと
+    posts = [
+        {"url": "https://ameblo.jp/a", "promotional": True},
+        {"url": "https://ameblo.jp/b", "promotional": False},
+        {"url": "https://ameblo.jp/c"},  # 印キー自体が無い場合も残す
+    ]
+    kept = [p["url"] for p in digest.keep_non_promotional(posts)]
+    assert kept == ["https://ameblo.jp/b", "https://ameblo.jp/c"]
+
+
+def test_is_promotional_ignores_snippet_chrome():
+    # 抜粋(snippet)にUI文言が混じっても、タイトル/URLが綺麗なら宣伝としないこと
+    post = {"title": "サントスネックレス 着用レビュー", "snippet": "在庫 予約受付 ポイント還元",
+            "url": "https://ameblo.jp/u/entry-1.html"}
+    assert digest.is_promotional(post) is False
 
 
 def test_collect_new_posts_flags_promotional():

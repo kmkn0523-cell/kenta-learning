@@ -1,11 +1,15 @@
-"""「サントスネックレス」「ジュストアンクルブレスレット」のSNS言及を週1回集めてメールするスクリプト。
+"""「サントスネックレス」「ジュストアンクルブレスレット」の個人ブログ言及を週1回集めてメールするスクリプト。
 
 やること（おおまかな流れ）:
-1. Exa（Web検索API）で各SNSドメインを直近7日で横断検索する
+1. Exa（Web検索API）で個人ブログ（アメブロ）を直近N日で検索する
 2. 結果からタイトル・URL・抜粋・投稿日・プラットフォームを取り出す
 3. 送信済みURL（jewelry_watch_state.json）と照合して新規分だけ残す
 4. キーワード別・プラットフォーム別にまとめたHTMLメールをGmailで自分宛に送る
 5. 今回拾ったURLを記録ファイルに追記する
+
+【2026-06-21 設計変更】当初はX/Instagram等のSNSを狙っていたが、ExaがX・IGをインデックスから
+外しており（403 SOURCE_NOT_AVAILABLE）、Threadsもほぼ空で成立しなかった。日本のジュエリー購入者の
+生の声はアメブロ等の個人ブログに集中しており、そこはExaが持っているため、検索対象をブログへ変更した。
 
 ローカルでもGitHub Actionsでも動く。秘密情報はすべて環境変数（.env または Secrets）から読む。
 """
@@ -28,14 +32,16 @@ except Exception:
     pass
 
 # ===== 設定 =====
-# 監視するキーワード（この2つの言及を集める）
-KEYWORDS = ["サントスネックレス", "ジュストアンクルブレスレット"]
-# 検索対象（名前・絞り込むドメイン・取得数）。SNSのみ。X中心でIG/Threadsは補助
+# 監視するキーワード（「カルティエ」を足すと精度が上がる＝同名の別物を避けられる）
+KEYWORDS = ["サントスネックレス カルティエ", "ジュストアンクル ブレスレット カルティエ"]
+# 検索対象（名前・絞り込むドメイン・取得数）。アメブロ一本に絞る。
+# 2026-06-21のドライランで、noteは神経検索が脱線して無関係な投稿（カメラ・靴・旅行等）を、
+# はてなは修理店・レプリカブログを多く拾うと判明。アメブロは生の声がほぼ全部で最も高品質だった。
 SEARCH_TARGETS = [
-    {"name": "X", "domains": ["x.com", "twitter.com"], "max_results": 20},  # 主軸
-    {"name": "Instagram", "domains": ["instagram.com"], "max_results": 10},  # 補助
-    {"name": "Threads", "domains": ["threads.net", "threads.com"], "max_results": 10},  # 補助
+    {"name": "アメブロ", "domains": ["ameblo.jp", "ameba.jp"], "max_results": 25},  # 生の声が一番多い唯一の主軸
 ]
+# 個別投稿ではない集約ページ（タグまとめ等）は除外する。ホスト名で弾く
+EXCLUDE_HOSTS = ["blogtag.ameba.jp"]  # アメブロのタグ集約ページ（個人の投稿ではない）
 NUM_RESULTS = 20  # 取得数の既定値（個別指定が無いとき用）
 SEARCH_WINDOW_DAYS = 14  # 何日前までの投稿を対象にするか
 # 宣伝・販売っぽい投稿を除外するためのNGワード（含まれていたら落とす。後で調整可）
@@ -60,7 +66,24 @@ def detect_platform(url: str) -> str:
         return "Instagram"
     if "threads.net" in host or "threads.com" in host:  # Threads
         return "Threads"
+    if "ameblo.jp" in host or "ameba.jp" in host:  # アメブロ
+        return "アメブロ"
+    if "note.com" in host:  # note
+        return "note"
+    if "hatenablog" in host or "hateblo.jp" in host:  # はてなブログ
+        return "はてなブログ"
+    if "livedoor.jp" in host:  # livedoorブログ
+        return "livedoorブログ"
+    if "fc2.com" in host:  # FC2ブログ
+        return "FC2ブログ"
     return "Web"  # どれにも当てはまらなければWeb全般
+
+
+def is_excluded_host(url: str) -> bool:
+    """集約ページなど除外対象のホストかどうかを返す（個別投稿でないものを弾く）。"""
+    host = urlparse(url or "").netloc.lower()  # URLからドメイン部分を取り出す
+    # 完全一致 or サブドメイン一致（例: blogtag.ameba.jp）を弾く
+    return any(host == h or host.endswith("." + h) for h in EXCLUDE_HOSTS)
 
 
 def parse_exa_results(response_json: dict, keyword: str) -> list[dict]:
@@ -186,7 +209,8 @@ def build_email_html(posts: list[dict], generated_at: str) -> str:
             parts.append(f"<h3>{_escape(platform)}（{len(items)}件）</h3>")  # 小見出し
             parts.append("<ul>")  # 箇条書き開始
             for post in items:  # 投稿1件ずつ
-                title = _escape(post["title"] or post["url"])  # タイトル（無ければURL）
+                mark = "🏷️[宣伝かも] " if post.get("promotional") else ""  # 宣伝っぽい投稿に印
+                title = mark + _escape(post["title"] or post["url"])  # タイトル（無ければURL）
                 snippet = _escape(post["snippet"])  # 抜粋
                 published = _escape(post["published_date"])  # 投稿日
                 url = _escape(_safe_url(post["url"]))  # スキーム検証してから属性用にエスケープ
@@ -238,9 +262,18 @@ def send_email(subject: str, html_body: str) -> None:
 
 
 def is_promotional(post: dict) -> bool:
-    """宣伝・販売っぽい投稿かどうかを判定する（NGワードを含むか）。"""
-    text = f"{post.get('title', '')} {post.get('snippet', '')} {post.get('url', '')}".lower()
+    """宣伝・販売っぽい投稿かどうかを判定する（NGワードを含むか）。
+
+    注意: 抜粋(snippet)はExaがページ全文を返すため、ブログのサイドバー等のUI文言
+    （在庫/予約/通販など）を拾って誤検出する。判定はタイトルとURLだけに絞る。
+    """
+    text = f"{post.get('title', '')} {post.get('url', '')}".lower()
     return any(word.lower() in text for word in SALES_NG_WORDS)  # 1つでも含めば宣伝とみなす
+
+
+def keep_non_promotional(posts: list[dict]) -> list[dict]:
+    """宣伝・販売っぽい投稿を除いて、人の声だけ残す。"""
+    return [p for p in posts if not p.get("promotional")]  # promotionalの印が無いものだけ
 
 
 def _search_all_targets(api_key: str, start_published_date, already_seen: set[str]) -> list[dict]:
@@ -254,6 +287,7 @@ def _search_all_targets(api_key: str, start_published_date, already_seen: set[st
                     target.get("max_results", NUM_RESULTS)  # 対象ごとの取得数（Xは多め）
                 )
                 posts = parse_exa_results(response_json, keyword)  # 結果を変換
+                posts = [p for p in posts if not is_excluded_host(p["url"])]  # 集約ページを除外
                 for p in posts:  # 宣伝かどうかの印を付ける（消さずに残す）
                     p["promotional"] = is_promotional(p)
                 promo_count = sum(1 for p in posts if p["promotional"])  # 宣伝っぽい件数
@@ -290,6 +324,7 @@ def main() -> None:
     already_seen = seen_urls(state)  # 送信済みURL集合
 
     new_posts = collect_new_posts(api_key, start_published_date, already_seen)  # 新規収集
+    new_posts = keep_non_promotional(new_posts)  # 買取/通販などの宣伝を落として人の声だけにする
 
     today_text = today.strftime("%Y-%m-%d")  # 件名用の日付
     subject = build_subject(len(new_posts), today_text)  # 件名
