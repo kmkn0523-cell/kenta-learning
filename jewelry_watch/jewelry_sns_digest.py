@@ -11,6 +11,7 @@
 """
 import os
 import json
+import html  # HTMLエスケープ用（引用符まで安全にする標準ライブラリ）
 import requests  # Exa APIを叩くためのHTTPライブラリ
 import smtplib
 from email.mime.text import MIMEText
@@ -134,8 +135,16 @@ def now_jst_text() -> str:
 
 
 def _escape(text: str) -> str:
-    """HTMLに埋め込むとき危ない文字をエスケープする。"""
-    return (text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+    """HTMLに埋め込むとき危ない文字をエスケープする（引用符 " ' も含む）。"""
+    return html.escape(text or "", quote=True)  # quote=Trueで属性内も安全になる
+
+
+def _safe_url(url: str) -> str:
+    """href に出して安全なURLだけ通す。http/https以外は無効化する。"""
+    scheme = urlparse(url or "").scheme.lower()  # URLのスキーム部分を取り出す
+    if scheme not in ("http", "https"):  # javascript: などの危ないスキームを弾く
+        return "#"  # 無効なリンク先に置き換える
+    return url
 
 
 def group_for_email(posts: list[dict]) -> dict:
@@ -172,7 +181,7 @@ def build_email_html(posts: list[dict], generated_at: str) -> str:
                 title = _escape(post["title"] or post["url"])  # タイトル（無ければURL）
                 snippet = _escape(post["snippet"])  # 抜粋
                 published = _escape(post["published_date"])  # 投稿日
-                url = _escape(post["url"])  # リンク（属性用にエスケープ）
+                url = _escape(_safe_url(post["url"]))  # スキーム検証してから属性用にエスケープ
                 parts.append(
                     f'<li><a href="{url}">{title}</a>'  # クリック可能なリンク
                     f"<br><small>{published}</small><br>{snippet}</li>"  # 日付と抜粋

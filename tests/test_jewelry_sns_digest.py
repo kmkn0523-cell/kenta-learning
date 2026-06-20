@@ -164,3 +164,17 @@ def test_collect_new_posts_aggregates_and_filters():
     # 送信済みのseenは除外、freshだけ残る（キーワード2つで同じURLが来るので重複も1件に）
     assert "https://x.com/fresh" in urls
     assert "https://x.com/seen" not in urls
+
+
+def test_build_email_html_escapes_quotes_and_blocks_bad_url():
+    # 引用符を含むタイトルで属性を抜け出せないこと、危険なスキームのURLが無効化されること
+    posts = [
+        {"keyword": "k", "title": '" onmouseover="alert(1)', "url": "javascript:alert(1)",
+         "snippet": "s", "published_date": "2026-06-20", "platform": "Web"},
+    ]
+    html_out = digest.build_email_html(posts, "2026-06-21 07:30 JST")
+    # 生の二重引用符＋onmouseover の属性注入が成立していないこと
+    assert 'onmouseover="alert(1)"' not in html_out
+    assert "&quot;" in html_out  # 引用符がエスケープされている
+    assert 'href="javascript:alert(1)"' not in html_out  # 危険スキームは出さない
+    assert 'href="#"' in html_out  # 無効リンクに置き換わっている
