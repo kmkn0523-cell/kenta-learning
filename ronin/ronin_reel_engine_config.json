@@ -1,0 +1,10 @@
+{
+  "total_proverbs": 100,
+  "seconds_per_frame": 2.6,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "fade_duration": 0.5,
+  "video_filename": "latest_reel.mp4",
+  "raw_video_base": "https://raw.githubusercontent.com/kmkn0523-cell/kenta-learning/main/ronin/ronin_instagram_reels"
+}
