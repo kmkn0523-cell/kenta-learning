@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-19T10:17:36.657034",
+  "last_updated": "2026-06-20T08:46:18.173475",
   "posts_history": [
     {
       "day": 67,
@@ -2673,6 +2673,94 @@
       "shares": 0,
       "views": 11,
       "engagement_rate": 9.09
+    },
+    {
+      "day": 142,
+      "type": "morning",
+      "post_id": "18333773758302196",
+      "posted_at": "2026-06-20T07:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 3,
+      "engagement_rate": 33.33
+    },
+    {
+      "day": 141,
+      "type": "evening",
+      "post_id": "17862777657636812",
+      "posted_at": "2026-06-20T05:01:25+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 3,
+      "engagement_rate": 33.33
+    },
+    {
+      "day": 141,
+      "type": "morning",
+      "post_id": "18062439896710110",
+      "posted_at": "2026-06-20T01:01:25+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 9,
+      "engagement_rate": 11.11
+    },
+    {
+      "day": 140,
+      "type": "evening",
+      "post_id": "18134697811584424",
+      "posted_at": "2026-06-19T23:01:23+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 2,
+      "engagement_rate": 50.0
+    },
+    {
+      "day": 140,
+      "type": "morning",
+      "post_id": "18107943176055478",
+      "posted_at": "2026-06-19T21:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 14,
+      "engagement_rate": 7.14
+    },
+    {
+      "day": 139,
+      "type": "evening",
+      "post_id": "18343033000171702",
+      "posted_at": "2026-06-19T17:01:22+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 24,
+      "engagement_rate": 4.17
+    },
+    {
+      "day": 139,
+      "type": "morning",
+      "post_id": "17862846945600415",
+      "posted_at": "2026-06-19T14:43:49+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 1,
+      "views": 35,
+      "engagement_rate": 5.71
+    },
+    {
+      "day": 138,
+      "type": "evening",
+      "post_id": "18095705417599623",
+      "posted_at": "2026-06-19T13:01:23+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 9,
+      "engagement_rate": 11.11
     }
   ],
   "pattern_performance": {
@@ -5005,6 +5093,15 @@
         "avg_engagement_rate": 14.29,
         "best_hour": 9,
         "best_hashtag_set": "A"
+      },
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 9.0,
+        "avg_engagement_rate": 11.11,
+        "best_hour": 13,
+        "best_hashtag_set": "A"
       }
     },
     "day_137": {
@@ -5084,6 +5181,77 @@
         "avg_views": 11.0,
         "avg_engagement_rate": 9.09,
         "best_hour": 13,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_142": {
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 3.0,
+        "avg_engagement_rate": 33.33,
+        "best_hour": 7,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_141": {
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 3.0,
+        "avg_engagement_rate": 33.33,
+        "best_hour": 5,
+        "best_hashtag_set": "A"
+      },
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 9.0,
+        "avg_engagement_rate": 11.11,
+        "best_hour": 1,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_140": {
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 2.0,
+        "avg_engagement_rate": 50.0,
+        "best_hour": 23,
+        "best_hashtag_set": "A"
+      },
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 14.0,
+        "avg_engagement_rate": 7.14,
+        "best_hour": 21,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_139": {
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 4.17,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      },
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 35.0,
+        "avg_engagement_rate": 5.71,
+        "best_hour": 14,
         "best_hashtag_set": "A"
       }
     }
