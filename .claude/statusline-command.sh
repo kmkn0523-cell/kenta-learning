@@ -38,6 +38,9 @@ today=$(echo "$today_raw" | sed 's|/0\([0-9]\)|/\1|g')  # /04/ → /4/ のよう
 # モデル表示名（このセッション自身のモデルを使う）
 model=$(echo "$input" | jq -r '.model.display_name // empty')
 
+# エフォート（推論にかける労力。low/medium/high など）
+effort=$(echo "$input" | jq -r '.effort.level // empty')
+
 # --- 使用量データを共有キャッシュに書き出す（値がある場合のみ上書き）---
 # rate_limits や context_window に値がある場合はキャッシュを更新する
 new_five_used=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
@@ -229,6 +232,7 @@ fi
 [ -n "$last_sync" ] && line1="$line1 | Sync: ${last_sync}"
 
 [ -n "$model" ] && line2="$model"
+[ -n "$effort" ] && line2="$line2 | $effort"
 [ -n "$ctx_info" ] && line2="$line2 | $ctx_info"
 
 [ -n "$rate_info" ] && line3="$rate_info"
