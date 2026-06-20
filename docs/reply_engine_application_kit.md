@@ -40,7 +40,7 @@ Meta開発者コンソール:
 ```
 https://developers.facebook.com/apps/
 ```
-skinアプリ（APP_ID=3099670596894574）を開き、以下が埋まっているか確認：
+**RoninWordsアプリ（APP_ID=1173361818193107）** を開く。skinとroninは同じMetaアプリを共用しており、skin専用アプリは存在しない（トークン更新手順書 `docs/threads_token_renewal.md` 参照）。以下が埋まっているか確認：
 - [ ] アプリ名（例: `skin_reset_jp content tool`）
 - [ ] アプリアイコン（正方形画像。無ければ簡単なものでOK）
 - [ ] カテゴリ
@@ -79,7 +79,7 @@ http://127.0.0.1:8765
 
 ## ステップ3: 申請フォーム提出（20分・貼り付け文あり）
 
-Meta開発者コンソール → skinアプリ → **App Review → Permissions and Features** →
+Meta開発者コンソール → **RoninWordsアプリ（1173361818193107）** → **App Review → Permissions and Features** →
 `threads_keyword_search` の **Advanced Access** を Request。
 
 ### 「How will your app use this permission?」に貼る（日本語）
