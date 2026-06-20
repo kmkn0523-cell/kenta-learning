@@ -254,10 +254,11 @@ def _search_all_targets(api_key: str, start_published_date, already_seen: set[st
                     target.get("max_results", NUM_RESULTS)  # 対象ごとの取得数（Xは多め）
                 )
                 posts = parse_exa_results(response_json, keyword)  # 結果を変換
-                kept = [p for p in posts if not is_promotional(p)]  # 宣伝っぽいものを除外
-                dropped = len(posts) - len(kept)  # 落とした件数
-                print(f"取得（{keyword} / {target['name']}）: {len(kept)}件（宣伝除外 {dropped}件）")
-                all_posts.extend(kept)  # 残った分を足す
+                for p in posts:  # 宣伝かどうかの印を付ける（消さずに残す）
+                    p["promotional"] = is_promotional(p)
+                promo_count = sum(1 for p in posts if p["promotional"])  # 宣伝っぽい件数
+                print(f"取得（{keyword} / {target['name']}）: {len(posts)}件（うち宣伝かも {promo_count}件）")
+                all_posts.extend(posts)  # 全部足す（メールで印を付けて見せる）
             except Exception as error:  # 1クエリ失敗しても止めない
                 print(f"検索失敗（{keyword} / {target['name']}）: {error}")
     return all_posts
