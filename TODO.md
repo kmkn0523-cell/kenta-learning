@@ -156,6 +156,16 @@
   - スクリプト（skin_x_action.py）・ワークフロー（skin_x_post.yml）は作成済み
   - チャージ後、GitHubにX_API_KEY等のSecretsを追加してpushするだけ
 
+#### 自動リプライ・エンジン稼働（コード完成・申請待ちで停止中）
+> 手順書: `docs/reply_engine_manual_steps.md` / 申請文: `docs/threads_app_review_keyword_search.md`
+> 現状: `SKIN_REPLY_ENGINE_ENABLED` 未設定で停止中。`keyword_search`（他人投稿の検索）は Meta審査の承認が必須なので、変数をtrueにする前に申請が要る
+- [x] 停止時にworkflowがfailureになるバグ修正（2026/06/20・履歴ファイル無しならコミットskip・commit ff36acf）
+- [ ] **Phase A: 画面録画**（トークン不要・今すぐ可）`cd skin && python3 skin_reply_review_ui.py --demo` → `http://127.0.0.1:8765` で「検索→一覧→選択→送信」を録画
+- [ ] **Phase B: Meta App Review 申請**（★審査に数日〜数週）developers.facebook.com → skinアプリ → `threads_keyword_search` の Advanced Access 申請（説明文＋プライバシーポリシーURL＋録画）
+- [ ] **Phase C: 承認後**トークン再発行（keyword_search込み）→ `.env`＋GitHub Secret `THREADS_ACCESS_TOKEN` 更新
+- [ ] **Phase D: 稼働**`gh variable set SKIN_REPLY_ENGINE_ENABLED --body true` → 手動テスト（`gh workflow run skin_threads_reply_engine.yml`）で誤爆確認 → 本稼働（1日6回）
+- [ ] ronin も別Metaアプリで同じ申請が別途必要（`RONIN_REPLY_ENGINE_ENABLED`）
+
 #### Threadsリライト（A/B構造化・216セット 6バッチ計画）
 - [x] Batch 1（テーマ1-20、40セット）リリース完了（2026/05/18・コミット 38cf4da）
   - [x] A/B選択ロジック実装（skin_threads_action.py・15テストPASS）
