@@ -43,6 +43,10 @@
 !skin/skin_reels_assets/*.mp3
 !skin/skin_instagram_reels/
 !skin/skin_instagram_reels/*.mp4
+!ronin/ronin_reel_assets/
+!ronin/ronin_reel_assets/*.mp3
+!ronin/ronin_instagram_reels/
+!ronin/ronin_instagram_reels/*.mp4
 !skin/links.html
 !skin/profile/
 !skin/profile/*.md
