@@ -30,12 +30,11 @@ except Exception:
 # ===== 設定 =====
 # 監視するキーワード（この2つの言及を集める）
 KEYWORDS = ["サントスネックレス", "ジュストアンクルブレスレット"]
-# 検索対象（名前と、絞り込むドメイン。Web全般は空リスト＝ドメイン指定なし）
+# 検索対象（名前と、絞り込むドメイン）。SNSのみ。Web全般は販売ページが多いので外した
 SEARCH_TARGETS = [
     {"name": "X", "domains": ["x.com", "twitter.com"]},
     {"name": "Instagram", "domains": ["instagram.com"]},
     {"name": "Threads", "domains": ["threads.net", "threads.com"]},
-    {"name": "Web", "domains": []},
 ]
 NUM_RESULTS = 20  # キーワード×対象ごとの最大取得件数
 STATE_RETENTION_DAYS = 60  # 記録を残す日数（これより古いURL記録は捨てる）
