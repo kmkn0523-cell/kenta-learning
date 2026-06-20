@@ -97,6 +97,9 @@ finance_web/.env.local
 !price_watch/
 !price_watch/*.py
 !price_watch/*.json
+!jewelry_watch/
+!jewelry_watch/*.py
+!jewelry_watch/*.json
 
 # LinkedIn: Exclude credentials file（認証情報ファイルを除外）
 linkedin/linkedin_config.json
