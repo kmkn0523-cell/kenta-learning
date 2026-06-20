@@ -37,6 +37,7 @@ SEARCH_TARGETS = [
     {"name": "Threads", "domains": ["threads.net", "threads.com"], "max_results": 10},  # 補助
 ]
 NUM_RESULTS = 20  # 取得数の既定値（個別指定が無いとき用）
+SEARCH_WINDOW_DAYS = 14  # 何日前までの投稿を対象にするか
 STATE_RETENTION_DAYS = 60  # 記録を残す日数（これより古いURL記録は捨てる）
 STATE_FILE = Path(__file__).with_name("jewelry_watch_state.json")  # 送信済みURLの記録先
 JST = timezone(timedelta(hours=9))  # 日本時間
@@ -193,12 +194,13 @@ def search_exa(query, include_domains, start_published_date, api_key, num_result
     """Exa（Web検索API）に問い合わせて、生のJSONレスポンスを返す。"""
     payload = {
         "query": query,  # 検索キーワード
-        "type": "keyword",  # キーワード一致検索（販売・公式カタログページの巻き込みを減らす）
+        "type": "auto",  # Exaに検索方式を任せる（神経検索中心でSNS投稿を拾いやすい）
         "numResults": num_results,  # 取得件数
-        "startPublishedDate": start_published_date,  # この日時より後の投稿だけ
         "contents": {"text": True},  # 抜粋テキストも取得する
     }
-    if include_domains:  # ドメイン指定があるとき（Web全般のときは付けない）
+    if start_published_date:  # 日付指定があるときだけ付ける（Noneなら期間で絞らない）
+        payload["startPublishedDate"] = start_published_date
+    if include_domains:  # ドメイン指定があるとき
         payload["includeDomains"] = include_domains
     headers = {"x-api-key": api_key}  # 認証ヘッダー
     response = requests.post(  # ExaにPOSTする
@@ -227,8 +229,8 @@ def send_email(subject: str, html_body: str) -> None:
         server.sendmail(gmail_address, [notify_to], message.as_string())  # 送信
 
 
-def collect_new_posts(api_key: str, start_published_date: str, already_seen: set[str]) -> list[dict]:
-    """全キーワード×全対象を検索し、パースして新規投稿だけ返す。"""
+def _search_all_targets(api_key: str, start_published_date, already_seen: set[str]) -> list[dict]:
+    """全キーワード×全対象を1周検索して、パース済み投稿のリストを返す（件数をログ出力）。"""
     all_posts = []  # 集めた投稿をためる
     for keyword in KEYWORDS:  # キーワードごと
         for target in SEARCH_TARGETS:  # 検索対象ごと
@@ -237,18 +239,35 @@ def collect_new_posts(api_key: str, start_published_date: str, already_seen: set
                     keyword, target["domains"], start_published_date, api_key,
                     target.get("max_results", NUM_RESULTS)  # 対象ごとの取得数（Xは多め）
                 )
-                all_posts.extend(parse_exa_results(response_json, keyword))  # 結果を足す
+                posts = parse_exa_results(response_json, keyword)  # 結果を変換
+                print(f"取得（{keyword} / {target['name']}）: {len(posts)}件")  # 件数をログに出す
+                all_posts.extend(posts)  # 結果を足す
             except Exception as error:  # 1クエリ失敗しても止めない
                 print(f"検索失敗（{keyword} / {target['name']}）: {error}")
-    return filter_new(all_posts, already_seen)  # 新規分だけ残す
+    return all_posts
+
+
+def collect_new_posts(api_key: str, start_published_date: str, already_seen: set[str]) -> list[dict]:
+    """全キーワード×全対象を検索し、パースして新規投稿だけ返す。
+
+    まず期間（直近N日）で検索し、1件も取れなければ期間条件を外して再検索する。
+    SNSページは投稿日が取れず日付フィルタで全部落ちることがあるため。
+    """
+    all_posts = _search_all_targets(api_key, start_published_date, already_seen)  # まず期間付き
+    new_posts = filter_new(all_posts, already_seen)  # 新規分だけ残す
+    if not new_posts:  # 期間付きでゼロなら
+        print("期間付き検索で0件 → 期間条件を外して再検索します")
+        all_posts = _search_all_targets(api_key, None, already_seen)  # 日付なしで再検索
+        new_posts = filter_new(all_posts, already_seen)
+    return new_posts
 
 
 def main() -> None:
     """全体の処理を実行する。"""
     api_key = os.environ["EXA_API_KEY"]  # Exaのキー（無ければ例外で止まる）
     today = datetime.now(JST).date()  # 今日（JST）
-    # 直近7日より後の投稿だけを対象にする（UTC ISO8601文字列）
-    start_published_date = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # 直近N日より後の投稿だけを対象にする（UTC ISO8601文字列）
+    start_published_date = (datetime.now(timezone.utc) - timedelta(days=SEARCH_WINDOW_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     state = load_state(STATE_FILE)  # 過去の送信済み記録を読む
     already_seen = seen_urls(state)  # 送信済みURL集合

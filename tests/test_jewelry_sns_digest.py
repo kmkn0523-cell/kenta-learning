@@ -180,8 +180,8 @@ def test_build_email_html_escapes_quotes_and_blocks_bad_url():
     assert 'href="#"' in html_out  # 無効リンクに置き換わっている
 
 
-def test_search_exa_uses_keyword_type():
-    # 販売ページ巻き込みを減らすため type=keyword を送ること
+def test_search_exa_uses_auto_type():
+    # SNS投稿を拾いやすい auto 検索を使うこと
     from unittest.mock import patch, MagicMock
     fake_response = MagicMock()
     fake_response.json.return_value = {"results": []}
@@ -189,4 +189,33 @@ def test_search_exa_uses_keyword_type():
     with patch.object(digest.requests, "post", return_value=fake_response) as mock_post:
         digest.search_exa("テスト", ["x.com"], "2026-06-14T00:00:00Z", "KEY", 20)
     _, kwargs = mock_post.call_args
-    assert kwargs["json"]["type"] == "keyword"
+    assert kwargs["json"]["type"] == "auto"
+
+
+def test_search_exa_omits_date_when_none():
+    # 日付がNoneのときは startPublishedDate を送らないこと（期間で絞らない）
+    from unittest.mock import patch, MagicMock
+    fake_response = MagicMock()
+    fake_response.json.return_value = {"results": []}
+    fake_response.raise_for_status.return_value = None
+    with patch.object(digest.requests, "post", return_value=fake_response) as mock_post:
+        digest.search_exa("テスト", ["x.com"], None, "KEY", 20)
+    _, kwargs = mock_post.call_args
+    assert "startPublishedDate" not in kwargs["json"]
+
+
+def test_collect_new_posts_falls_back_without_date():
+    # 期間付きで0件なら、日付なしで再検索して拾うこと
+    from unittest.mock import patch
+    calls = []
+
+    def fake_search(query, domains, start, key, num):
+        calls.append(start)  # start が None かどうかを記録
+        if start is None:  # 日付なし（フォールバック）のときだけ1件返す
+            return {"results": [{"title": "t", "url": "https://x.com/fresh", "text": "", "publishedDate": ""}]}
+        return {"results": []}  # 期間付きは0件
+
+    with patch.object(digest, "search_exa", side_effect=fake_search):
+        posts = digest.collect_new_posts("KEY", "2026-06-14T00:00:00Z", set())
+    assert [p["url"] for p in posts] == ["https://x.com/fresh"]
+    assert None in calls  # フォールバック（日付なし）が呼ばれたこと
