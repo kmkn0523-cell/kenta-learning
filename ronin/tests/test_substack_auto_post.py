@@ -5,7 +5,11 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # ronin/ をimport可能にする
 
-from substack_auto_post import posted_japanese_set, find_next_unposted_day
+from substack_auto_post import (
+    posted_japanese_set,
+    find_next_unposted_day,
+    japanese_from_titles,
+)
 
 
 # テスト用の諺データ（day番号 → 諺）。day32が day16 と同じ諺＝データ重複を再現
@@ -49,6 +53,24 @@ def test_重複でなければnext_dayをそのまま返す():
         "history": [{"day": 14, "title": "継続は力なり — Consistency is strength."}],
     }
     assert find_next_unposted_day(progress, SAMPLE_PROVERBS) == 15
+
+
+def test_公開記事タイトルから日本語諺だけ取り出す():
+    titles = [
+        "千里の道も一歩から — A thousand miles begins with one step.",  # カード（日本語あり）
+        "The First Step of a Thousand Miles",                          # deep-dive（英語のみ）→無視
+        "塵も積もれば山となる — Dust, piled up, becomes a mountain.",
+        "",                                                            # 空→無視
+    ]
+    assert japanese_from_titles(titles) == {"千里の道も一歩から", "塵も積もれば山となる"}
+
+
+def test_ライブ公開済みの諺もスキップする():
+    # progress.jsonの履歴は空（巻き戻った想定）でも、ライブ公開済みを渡せば重複を防ぐ
+    progress = {"next_day": 14, "history": []}
+    live_posted = {"継続は力なり", "以心伝心", "千里の道も一歩から"}
+    # day14,15,16はライブ公開済み、day32,33も同諺→day34まで飛ぶ
+    assert find_next_unposted_day(progress, SAMPLE_PROVERBS, also_posted=live_posted) == 34
 
 
 def test_投稿できる諺がもう無ければNoneを返す():

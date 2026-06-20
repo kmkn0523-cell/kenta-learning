@@ -79,6 +79,34 @@ def save_progress(progress):
         json.dump(progress, f, ensure_ascii=False, indent=2)
 
 
+def fetch_published_titles(session):
+    """Substackの公開記事一覧を全件取得し、公開済みタイトルの集合を返す
+
+    deep-dive記事のタイトルは英語。progress.json（自動同期cron等で巻き戻ることがある）に
+    頼らず、Substack本体という確実な情報源で「もう公開した記事」を確認する最終防壁。
+    取得に失敗したら例外を投げる（呼び出し側で投稿を見送る判断をする）。
+    """
+    titles = set()
+    offset = 0
+    while True:
+        resp = session.get(
+            f"{PUBLICATION_URL}/api/v1/archive?sort=new&limit=50&offset={offset}"
+        )
+        if resp.status_code != 200:
+            raise RuntimeError(
+                f"公開記事一覧の取得失敗 [{resp.status_code}]: {resp.text[:200]}"
+            )
+        batch = resp.json()
+        if not batch:
+            break
+        for post in batch:
+            titles.add(post.get("title", "").strip())
+        offset += len(batch)
+        if len(batch) < 50:
+            break
+    return titles
+
+
 # =============================
 # 書道カード画像のアップロード
 # =============================
@@ -300,6 +328,17 @@ def main():
         "Origin":  "https://substack.com",
         "Referer": "https://substack.com/publish/post",
     })
+
+    # Substackの公開記事一覧（確実な情報源）で、この記事タイトルが既出ならスキップする
+    # progress.jsonが巻き戻っても二重投稿しないための最終防壁。確認できなければ投稿を見送る
+    try:
+        published_titles = fetch_published_titles(session)
+        if article["title"].strip() in published_titles:
+            print(f"[Card Day {card_day}] 記事「{article['title']}」はSubstackに公開済みのためスキップします。", flush=True)
+            return
+    except Exception as error:
+        print(f"公開記事一覧を確認できなかったため、今回は投稿を見送ります: {error}", flush=True)
+        return
 
     post_id = create_and_publish_post(session, article, card_day)
     print(f"  公開完了! Post ID: {post_id}", flush=True)

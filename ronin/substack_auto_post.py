@@ -65,13 +65,17 @@ def posted_japanese_set(progress):
     return posted
 
 
-def find_next_unposted_day(progress, proverbs):
+def find_next_unposted_day(progress, proverbs, also_posted=None):
     """next_day から順番に見ていき、まだ投稿していない諺の最初のday番号を返す
 
     過去に別のday番号で投稿済みの諺（データ重複）は飛ばす。
+    also_posted には「progress.json以外で投稿済みと分かっている諺」（例: Substackの
+    公開記事一覧から取得した諺）を渡せる。progress.jsonが巻き戻っても二重投稿しないための引数。
     これ以上投稿できる諺が無ければ None を返す。
     """
-    posted = posted_japanese_set(progress)              # 投稿済みの諺（日本語）の集合
+    posted = posted_japanese_set(progress)              # progress.json上で投稿済みの諺の集合
+    if also_posted:
+        posted = posted | set(also_posted)              # ライブ公開済みの諺も「投稿済み」に含める
     day = progress.get("next_day", 1)                   # どのday番号から探し始めるか
     while day <= MAX_DAY:
         proverb = proverbs.get(day)                     # そのday番号の諺データ
@@ -80,6 +84,63 @@ def find_next_unposted_day(progress, proverbs):
             return day
         day += 1                                        # 重複や欠番なら次のdayへ進む
     return None                                          # もう投稿できる諺が無い
+
+
+def japanese_from_titles(titles):
+    """記事タイトルのリストから、日本語の諺だけを取り出して集合で返す
+
+    カード記事のタイトルは「日本語 — English」の形。最初の「 — 」より前を取り出し、
+    そこに日本語（ひらがな・カタカナ・漢字）が含まれるものだけを諺として拾う。
+    deep-dive記事は英語タイトルなので自然に除外される。
+    """
+    result = set()
+    for title in titles:
+        head = title.split(" — ")[0].strip()
+        # ひらがな(3040-309F)・カタカナ(30A0-30FF)・漢字(4E00-9FFF)のいずれかを含むか
+        if head and any("぀" <= c <= "鿿" for c in head):
+            result.add(head)
+    return result
+
+
+def build_session():
+    """Substackへリクエストする curl_cffi セッション（Chrome偽装）を作って返す"""
+    if not SUBSTACK_SID:
+        raise ValueError("SUBSTACK_SID が .env に設定されていません")
+    sid_decoded = unquote(SUBSTACK_SID)                 # クッキーのURLエンコードを解除する
+    session = cf.Session(impersonate="chrome131")       # ChromeのTLSフィンガープリントを偽装
+    session.cookies.set("substack.sid", sid_decoded, domain=".substack.com")
+    session.headers.update({                            # ブラウザ風ヘッダーでBot検知を回避
+        "Origin":  "https://substack.com",
+        "Referer": "https://substack.com/publish/post",
+    })
+    return session
+
+
+def fetch_published_japanese(session):
+    """Substackの公開記事一覧を全件取得し、投稿済みの日本語諺の集合を返す
+
+    progress.json（自動同期cron等で巻き戻ることがある）に頼らず、Substack本体という
+    確実な情報源で「もう公開した諺」を確認するための最終防壁。
+    取得に失敗したら例外を投げる（呼び出し側で「確認できないなら投稿を見送る」判断をする）。
+    """
+    titles = []
+    offset = 0
+    while True:
+        resp = session.get(
+            f"{PUBLICATION_URL}/api/v1/archive?sort=new&limit=50&offset={offset}"
+        )
+        if resp.status_code != 200:
+            raise RuntimeError(
+                f"公開記事一覧の取得失敗 [{resp.status_code}]: {resp.text[:200]}"
+            )
+        batch = resp.json()
+        if not batch:
+            break
+        titles.extend(post.get("title", "") for post in batch)
+        offset += len(batch)
+        if len(batch) < 50:                             # 50件未満なら最後のページ
+            break
+    return japanese_from_titles(titles)
 
 
 # =============================
@@ -241,31 +302,17 @@ def upload_image_to_substack(session, image_path):
     return cdn_url
 
 
-def create_and_publish_post(proverb, image_path):
+def create_and_publish_post(proverb, image_path, session=None):
     """curl_cffi（Chrome TLSフィンガープリント偽装）でSubstackに記事を作成・公開する
 
     curl_cffi は requests ライクなAPIで curl-impersonate をバックエンドに使う。
-    impersonate="chrome124" でTLSハンドシェイク・HTTP/2フレームをChromeと完全一致させ、
+    impersonate="chrome131" でTLSハンドシェイク・HTTP/2フレームをChromeと完全一致させ、
     Cloudflare のフィンガープリント検知を回避する。
+    session を渡せば重複チェックで使ったものを再利用する（無ければここで作る）。
     """
-    if not SUBSTACK_SID:
-        raise ValueError("SUBSTACK_SID が .env に設定されていません")
-
-    # substack.sid クッキーのURLエンコードを解除する
-    sid_decoded = unquote(SUBSTACK_SID)
-
-    # ChromeのTLSフィンガープリントを使ってリクエストを送るセッションを作る
-    # chrome131: CloudflareのBot検知ルール更新に対応するため最新バージョンを使う
-    session = cf.Session(impersonate="chrome131")
-
-    # substack.sid クッキーをセットする
-    session.cookies.set("substack.sid", sid_decoded, domain=".substack.com")
-
-    # ブラウザから送られるヘッダーを追加してCloudflareのBot検知を回避する
-    session.headers.update({
-        "Origin":  "https://substack.com",
-        "Referer": "https://substack.com/publish/post",
-    })
+    # セッションが渡されなければ新しく作る（archiveチェックで作ったものを使い回せる）
+    if session is None:
+        session = build_session()
 
     # 画像をSubstack CDNにアップロードしてCDN URLを取得する
     image_url = upload_image_to_substack(session, image_path)
@@ -333,9 +380,20 @@ def main():
     # 諺データを読み込む
     proverbs = parse_proverbs()
 
+    # Substackの公開記事一覧（確実な情報源）から、すでに公開済みの諺を取得する
+    # progress.jsonが自動同期cron等で巻き戻っても、ここで二重投稿を防ぐ最終防壁
+    # 取得に失敗したら「確認できないので投稿を見送る」（重複を出すより安全側に倒す）
+    session = build_session()
+    try:
+        live_posted = fetch_published_japanese(session)
+        print(f"  ライブ公開済みの諺: {len(live_posted)}件 を確認", flush=True)
+    except Exception as error:
+        print(f"公開記事一覧を確認できなかったため、今回は投稿を見送ります: {error}", flush=True)
+        return
+
     # next_day から順に見て、まだ投稿していない諺の最初のday番号を探す
-    # （データに同じ諺が別day番号で重複登録されていても、既出諺は飛ばして二重投稿を防ぐ）
-    day = find_next_unposted_day(progress, proverbs)
+    # （データ重複・progress.json巻き戻り・ライブ公開済みのいずれも飛ばして二重投稿を防ぐ）
+    day = find_next_unposted_day(progress, proverbs, also_posted=live_posted)
     if day is None:
         print("まだ投稿していない諺がありません（全て投稿済み）。スキップします。")
         return
@@ -366,7 +424,7 @@ def main():
     # 記事を作成して公開する（curl_cffi経由・画像はCDNにアップロード）
     title = f"{proverb['japanese']} — {proverb['english']}"
     print(f"  記事を公開中: {title}", flush=True)
-    post_id = create_and_publish_post(proverb, image_path)
+    post_id = create_and_publish_post(proverb, image_path, session=session)
     print(f"  公開完了! Post ID: {post_id}", flush=True)
 
     # 進捗を保存する（次回は day+1 から投稿する）
