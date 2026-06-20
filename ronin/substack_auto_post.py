@@ -49,6 +49,39 @@ def save_progress(progress):
         json.dump(progress, f, ensure_ascii=False, indent=2)
 
 
+def posted_japanese_set(progress):
+    """これまでに投稿した日本語の諺を集合（重複なしのまとまり）にして返す
+
+    データ（generate_ronin_cards.py）には同じ諺が別のday番号で複数登録されている箇所がある。
+    day番号だけで重複チェックすると、別day番号の同じ諺をはじけず二重投稿になる。
+    そこで「諺の日本語そのもの」で投稿済みかを判定するために、過去の履歴から日本語を集める。
+    """
+    posted = set()
+    for record in progress.get("history", []):
+        # title は「日本語 — English」の形。最初の「 — 」より前が日本語の諺
+        japanese = record.get("title", "").split(" — ")[0].strip()
+        if japanese:
+            posted.add(japanese)
+    return posted
+
+
+def find_next_unposted_day(progress, proverbs):
+    """next_day から順番に見ていき、まだ投稿していない諺の最初のday番号を返す
+
+    過去に別のday番号で投稿済みの諺（データ重複）は飛ばす。
+    これ以上投稿できる諺が無ければ None を返す。
+    """
+    posted = posted_japanese_set(progress)              # 投稿済みの諺（日本語）の集合
+    day = progress.get("next_day", 1)                   # どのday番号から探し始めるか
+    while day <= MAX_DAY:
+        proverb = proverbs.get(day)                     # そのday番号の諺データ
+        # データがあって、まだその諺を投稿していなければ、それが次に投稿するday
+        if proverb and proverb["japanese"] not in posted:
+            return day
+        day += 1                                        # 重複や欠番なら次のdayへ進む
+    return None                                          # もう投稿できる諺が無い
+
+
 # =============================
 # 諺データの解析
 # =============================
@@ -292,16 +325,20 @@ def create_and_publish_post(proverb, image_path):
 # =============================
 def main():
     progress = load_progress()
-    day = progress["next_day"]
 
-    if day > MAX_DAY:
+    if progress.get("next_day", 1) > MAX_DAY:
         print(f"全{MAX_DAY}日分の投稿が完了しています。")
         return
 
     # 諺データを読み込む
     proverbs = parse_proverbs()
-    if day not in proverbs:
-        raise RuntimeError(f"Day {day} のデータが見つかりません")
+
+    # next_day から順に見て、まだ投稿していない諺の最初のday番号を探す
+    # （データに同じ諺が別day番号で重複登録されていても、既出諺は飛ばして二重投稿を防ぐ）
+    day = find_next_unposted_day(progress, proverbs)
+    if day is None:
+        print("まだ投稿していない諺がありません（全て投稿済み）。スキップします。")
+        return
 
     proverb    = proverbs[day]
     image_path = os.path.join(IMAGES_DIR, f"day{day:02d}.png")

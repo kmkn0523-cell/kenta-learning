@@ -284,6 +284,12 @@ def main():
         print(f"[Card Day {card_day}] はすでに投稿済みのためスキップします。", flush=True)
         return
 
+    # 内容ベースの重複防止（同じ諺の記事をすでに別 card_day で投稿していればスキップ）
+    # データに同じ諺が別day番号で重複登録されている対策（day番号だけでは弾けないため）
+    if any(h.get("japanese") == japanese for h in progress.get("history", [])):
+        print(f"[Card Day {card_day}] 諺「{japanese}」は別dayで投稿済みのためスキップします。", flush=True)
+        return
+
     if not SUBSTACK_SID:
         raise ValueError("SUBSTACK_SID が .env に設定されていません")
 
