@@ -30,13 +30,13 @@ except Exception:
 # ===== 設定 =====
 # 監視するキーワード（この2つの言及を集める）
 KEYWORDS = ["サントスネックレス", "ジュストアンクルブレスレット"]
-# 検索対象（名前と、絞り込むドメイン）。SNSのみ。Web全般は販売ページが多いので外した
+# 検索対象（名前・絞り込むドメイン・取得数）。SNSのみ。X中心でIG/Threadsは補助
 SEARCH_TARGETS = [
-    {"name": "X", "domains": ["x.com", "twitter.com"]},
-    {"name": "Instagram", "domains": ["instagram.com"]},
-    {"name": "Threads", "domains": ["threads.net", "threads.com"]},
+    {"name": "X", "domains": ["x.com", "twitter.com"], "max_results": 20},  # 主軸
+    {"name": "Instagram", "domains": ["instagram.com"], "max_results": 10},  # 補助
+    {"name": "Threads", "domains": ["threads.net", "threads.com"], "max_results": 10},  # 補助
 ]
-NUM_RESULTS = 20  # キーワード×対象ごとの最大取得件数
+NUM_RESULTS = 20  # 取得数の既定値（個別指定が無いとき用）
 STATE_RETENTION_DAYS = 60  # 記録を残す日数（これより古いURL記録は捨てる）
 STATE_FILE = Path(__file__).with_name("jewelry_watch_state.json")  # 送信済みURLの記録先
 JST = timezone(timedelta(hours=9))  # 日本時間
@@ -193,6 +193,7 @@ def search_exa(query, include_domains, start_published_date, api_key, num_result
     """Exa（Web検索API）に問い合わせて、生のJSONレスポンスを返す。"""
     payload = {
         "query": query,  # 検索キーワード
+        "type": "keyword",  # キーワード一致検索（販売・公式カタログページの巻き込みを減らす）
         "numResults": num_results,  # 取得件数
         "startPublishedDate": start_published_date,  # この日時より後の投稿だけ
         "contents": {"text": True},  # 抜粋テキストも取得する
@@ -233,7 +234,8 @@ def collect_new_posts(api_key: str, start_published_date: str, already_seen: set
         for target in SEARCH_TARGETS:  # 検索対象ごと
             try:
                 response_json = search_exa(  # Exaに問い合わせる
-                    keyword, target["domains"], start_published_date, api_key, NUM_RESULTS
+                    keyword, target["domains"], start_published_date, api_key,
+                    target.get("max_results", NUM_RESULTS)  # 対象ごとの取得数（Xは多め）
                 )
                 all_posts.extend(parse_exa_results(response_json, keyword))  # 結果を足す
             except Exception as error:  # 1クエリ失敗しても止めない

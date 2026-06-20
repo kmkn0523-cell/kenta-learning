@@ -178,3 +178,15 @@ def test_build_email_html_escapes_quotes_and_blocks_bad_url():
     assert "&quot;" in html_out  # 引用符がエスケープされている
     assert 'href="javascript:alert(1)"' not in html_out  # 危険スキームは出さない
     assert 'href="#"' in html_out  # 無効リンクに置き換わっている
+
+
+def test_search_exa_uses_keyword_type():
+    # 販売ページ巻き込みを減らすため type=keyword を送ること
+    from unittest.mock import patch, MagicMock
+    fake_response = MagicMock()
+    fake_response.json.return_value = {"results": []}
+    fake_response.raise_for_status.return_value = None
+    with patch.object(digest.requests, "post", return_value=fake_response) as mock_post:
+        digest.search_exa("テスト", ["x.com"], "2026-06-14T00:00:00Z", "KEY", 20)
+    _, kwargs = mock_post.call_args
+    assert kwargs["json"]["type"] == "keyword"
