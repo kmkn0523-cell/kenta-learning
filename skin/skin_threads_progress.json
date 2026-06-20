@@ -1,5 +1,5 @@
 {
-  "daily_index": 325,
+  "daily_index": 326,
   "launch_index": 0,
   "history": [
     {
@@ -5067,6 +5067,14 @@
       "theme_id": 0,
       "variant": "note_promo",
       "post_id": "18119361427699244"
+    },
+    {
+      "date": "2026/06/20 22:00",
+      "theme": "唇荒れの原因と対策",
+      "theme_id": 70,
+      "variant": "A",
+      "post_id": "17876324769655219",
+      "seed_id": "17887864497576302"
     }
   ],
   "ab_next": "A",
@@ -5081,7 +5089,7 @@
     "67": "A",
     "68": "B",
     "69": "B",
-    "70": "A",
+    "70": "B",
     "71": "A",
     "72": "A",
     "73": "A",
@@ -5239,7 +5247,7 @@
     "70": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "71": {
@@ -5831,7 +5839,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-20T12:23:37.437633+00:00",
+  "last_posted_at": "2026-06-20T22:02:08.602601+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
