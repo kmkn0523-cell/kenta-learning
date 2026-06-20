@@ -125,3 +125,56 @@ def save_state(state_file: Path, seen_entries: list[dict]) -> None:
     """送信済みURL記録をファイルに書き出す。"""
     data = {"seen": seen_entries}  # 保存する形に整える
     state_file.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+
+
+def now_jst_text() -> str:
+    """今の日本時間を読みやすい文字列で返す。"""
+    return datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
+
+
+def _escape(text: str) -> str:
+    """HTMLに埋め込むとき危ない文字をエスケープする。"""
+    return (text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def group_for_email(posts: list[dict]) -> dict:
+    """投稿を {キーワード: {プラットフォーム: [投稿...]}} の形にまとめる。"""
+    grouped = {}  # まとめ先
+    for post in posts:
+        keyword = post["keyword"]  # キーワード
+        platform = post["platform"]  # プラットフォーム
+        grouped.setdefault(keyword, {})  # キーワードの箱を用意
+        grouped[keyword].setdefault(platform, [])  # プラットフォームの箱を用意
+        grouped[keyword][platform].append(post)  # 投稿を入れる
+    return grouped
+
+
+def build_subject(new_count: int, today_text: str) -> str:
+    """メール件名を作る。"""
+    return f"【ジュエリーSNS週報】{today_text} 新規{new_count}件"
+
+
+def build_email_html(posts: list[dict], generated_at: str) -> str:
+    """投稿一覧からHTMLメール本文を作る。新規ゼロにも対応する。"""
+    parts = []  # HTMLの断片をためる
+    parts.append(f"<p>生成日時: {_escape(generated_at)}</p>")  # いつ作ったか
+    if not posts:  # 新規が1件も無いとき
+        parts.append("<p>今週は新しい言及はありませんでした。</p>")
+        return "\n".join(parts)
+    grouped = group_for_email(posts)  # キーワード→プラットフォームでまとめる
+    for keyword, by_platform in grouped.items():  # キーワードごと
+        parts.append(f"<h2>{_escape(keyword)}</h2>")  # キーワード見出し
+        for platform, items in by_platform.items():  # プラットフォームごと
+            parts.append(f"<h3>{_escape(platform)}（{len(items)}件）</h3>")  # 小見出し
+            parts.append("<ul>")  # 箇条書き開始
+            for post in items:  # 投稿1件ずつ
+                title = _escape(post["title"] or post["url"])  # タイトル（無ければURL）
+                snippet = _escape(post["snippet"])  # 抜粋
+                published = _escape(post["published_date"])  # 投稿日
+                url = _escape(post["url"])  # リンク（属性用にエスケープ）
+                parts.append(
+                    f'<li><a href="{url}">{title}</a>'  # クリック可能なリンク
+                    f"<br><small>{published}</small><br>{snippet}</li>"  # 日付と抜粋
+                )
+            parts.append("</ul>")  # 箇条書き終了
+    return "\n".join(parts)

@@ -87,3 +87,31 @@ def test_save_and_load_state_roundtrip(tmp_path):
     digest.save_state(state_file, entries)
     loaded = digest.load_state(state_file)
     assert loaded["seen"] == entries
+
+
+def test_build_subject_shows_count():
+    # 件名に新規件数が入ること
+    subject = digest.build_subject(3, "2026-06-21")
+    assert "3" in subject
+    assert "2026-06-21" in subject
+
+
+def test_build_email_html_groups_and_links():
+    # キーワード見出し・プラットフォーム見出し・クリック可能なリンクが入ること
+    posts = [
+        {"keyword": "サントスネックレス", "title": "投稿A", "url": "https://x.com/a",
+         "snippet": "抜粋A", "published_date": "2026-06-18", "platform": "X"},
+        {"keyword": "サントスネックレス", "title": "投稿B", "url": "https://www.instagram.com/p/b",
+         "snippet": "抜粋B", "published_date": "2026-06-19", "platform": "Instagram"},
+    ]
+    html = digest.build_email_html(posts, "2026-06-21 07:30 JST")
+    assert "サントスネックレス" in html       # キーワード見出し
+    assert "X" in html and "Instagram" in html  # プラットフォーム見出し
+    assert 'href="https://x.com/a"' in html      # クリック可能なリンク
+    assert "投稿A" in html and "抜粋A" in html   # タイトルと抜粋
+
+
+def test_build_email_html_handles_zero():
+    # 新規ゼロのときは「新しい言及なし」の文面になること
+    html = digest.build_email_html([], "2026-06-21 07:30 JST")
+    assert "新しい言及" in html
