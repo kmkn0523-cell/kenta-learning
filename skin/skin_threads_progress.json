@@ -5060,6 +5060,13 @@
       "variant": "A",
       "post_id": "17853288171696878",
       "seed_id": "18061503614717448"
+    },
+    {
+      "date": "2026/06/20 12:22",
+      "theme": "note宣伝: 夜遅くに食べると肌が荒れる。「食べる時間」と肌の関係。",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18119361427699244"
     }
   ],
   "ab_next": "A",
@@ -5824,9 +5831,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-20T12:02:06.531647+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n901a917a0d96",
-  "last_note_promo_date": "2026/06/18",
+  "last_posted_at": "2026-06-20T12:23:37.437633+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
+  "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/19"
 }
