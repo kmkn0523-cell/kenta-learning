@@ -42,6 +42,7 @@
 | 6/16 | ronin/ronin_reply_review_ui.py | ronin リプライ運用者ビュー（skin UIの@RoninWords版・英語・App Review用） | 標準ライブラリhttp.serverのみ、ronin_reply_engineの純粋関数を再利用、--demoで英語サンプル表示、ポート8766でskin版と非衝突、HTMLエスケープでXSS対策 |
 | 6/15 | skin_reels_engine.py | 既存カルーセル画像からffmpegで縦型Reelsを自動生成・投稿（generate→push→publishの2フェーズ） | ffmpegコマンドのlist組み立てとsubprocess実行、9:16/5〜90秒のReels要件、media_type=REELSの3ステップ公開、動画をgit pushして公開URLを生やす設計、wait_for_urlで配信待ち、既存publish関数の遅延import再利用 |
 | 6/18 | price_watch/iphone_price_watcher.py | りんごの奴隷のiPhone17ProMax512GB買取最高価格を監視し、前回から変わったらGmail通知（GitHub Actionsで1日3回） | Playwrightでログイン要のFilament/Livewire画面を操作、純粋関数parse_max_priceを抽出ロジックとして分離しTDD（円付き数値の最大＝差額や¥定価を自然除外）、smtplib+Gmailアプリパスワードで自分宛メール、状態JSONをコミットで永続化、取得失敗も黙らず通知 |
+| 6/21 | jewelry_watch/jewelry_sns_digest.py | 「サントスネックレス」「ジュストアンクルブレスレット」のSNS言及をExa検索でX/Instagram/Threads/Web横断収集し、新規分だけHTMLメールで週1回(土曜7:30 JST)通知 | Exa Web検索APIでSNSドメイン横断（無料運用）、純粋関数（パース/重複除外/HTML生成）とAPI/メールI/Oを分離しTDD（14件）、URL単位の重複防止＋60日でstate掃除、html.escape(quote=True)＋hrefスキーム検証でXSS対策、1クエリ失敗でも他は継続、状態JSONをコミットで永続化 |
 
 ---
 
