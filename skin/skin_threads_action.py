@@ -730,9 +730,10 @@ def main(dry_run=False):
     # human_post（タグ内蔵の完結型）はそのまま、通常はposts[0]（フック＋質問）＋ローテタグ
     if thread_set.get("human_post"):
         post_text = thread_set["human_post"]
+        # 1コメ目の問いかけをテーマ連動に（合わなければ汎用にフォールバック）
         seed_text = skin_comment_seeder.build_seed_comment(
-            skin_comment_seeder.pick_generic_seed(history_count), cta=cta_line)
-        print("  📝 human_post を使用（1コメ目は汎用問いかけ＋CTA）")
+            skin_comment_seeder.pick_seed_question(history_count, thread_set.get("theme", "")), cta=cta_line)
+        print("  📝 human_post を使用（1コメ目はテーマ連動の問いかけ＋CTA）")
     else:
         post_text = thread_set["posts"][0] + "\n\n" + hashtags
         seed_text = skin_comment_seeder.build_seed_comment(

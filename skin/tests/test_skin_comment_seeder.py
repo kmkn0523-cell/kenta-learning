@@ -15,9 +15,11 @@ from skin_comment_seeder import (
     DEEP_DIVE_LEAD,
     GENERIC_SEED_QUESTIONS,
     MAX_LEN,
+    THEME_SEED_QUESTIONS,
     build_seed_comment,
     cta_line_for_cycle,
     pick_generic_seed,
+    pick_seed_question,
 )
 
 
@@ -71,3 +73,24 @@ def test_build_seed_comment_truncates_at_max_len():
     long_text = "あ" * 600
     result = build_seed_comment(long_text)
     assert len(result) == MAX_LEN
+
+
+def test_pick_seed_question_uses_theme_category():
+    # テーマにキーワードが当たれば、そのカテゴリの問いかけを返すこと
+    gut = THEME_SEED_QUESTIONS["腸活"]["questions"]
+    assert pick_seed_question(0, "腸活の始め方") in gut
+    sleep = THEME_SEED_QUESTIONS["睡眠"]["questions"]
+    assert pick_seed_question(0, "睡眠と肌") in sleep
+
+
+def test_pick_seed_question_falls_back_to_generic():
+    # どのカテゴリにも当たらないテーマ・空テーマは汎用にフォールバックすること
+    assert pick_seed_question(0, "問いかけ型") == pick_generic_seed(0)
+    assert pick_seed_question(0, "") == pick_generic_seed(0)
+
+
+def test_pick_seed_question_rotates_within_category():
+    # 同じカテゴリ内でカウント順に回ること
+    gut = THEME_SEED_QUESTIONS["腸活"]["questions"]
+    assert pick_seed_question(0, "腸活の始め方") == gut[0]
+    assert pick_seed_question(len(gut), "腸活の始め方") == gut[0]
