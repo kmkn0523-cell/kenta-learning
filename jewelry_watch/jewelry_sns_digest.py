@@ -68,3 +68,60 @@ def parse_exa_results(response_json: dict, keyword: str) -> list[dict]:
             "platform": detect_platform(url),  # SNS種別を判定
         })
     return posts
+
+
+def load_state(state_file: Path) -> dict:
+    """記録ファイルを読む。無ければ空のseenを返す。"""
+    if not state_file.exists():  # ファイルがまだ無いとき
+        return {"seen": []}
+    try:
+        data = json.loads(state_file.read_text())  # JSONを読み込む
+        if "seen" not in data:  # 想定キーが無ければ補う
+            data["seen"] = []
+        return data
+    except Exception:
+        return {"seen": []}  # 壊れていても落ちないよう空で返す
+
+
+def seen_urls(state: dict) -> set[str]:
+    """state内の送信済みURLの集合を返す。"""
+    return {entry.get("url", "") for entry in state.get("seen", [])}
+
+
+def filter_new(posts: list[dict], already_seen: set[str]) -> list[dict]:
+    """送信済みでなく、まだ出ていないURLの投稿だけを残す。"""
+    new_posts = []  # 残すものをためる
+    seen_in_this_run = set()  # この実行内で既に拾ったURL
+    for post in posts:
+        url = post.get("url", "")  # この投稿のURL
+        if not url:  # URLが無いものは捨てる
+            continue
+        if url in already_seen:  # 過去に送信済み
+            continue
+        if url in seen_in_this_run:  # 同じ実行内で重複
+            continue
+        seen_in_this_run.add(url)  # 拾ったと記録
+        new_posts.append(post)  # 残す
+    return new_posts
+
+
+def prune_old(seen_entries: list[dict], today: date, retention_days: int) -> list[dict]:
+    """first_seen が保持日数より古い記録を捨てる。"""
+    kept = []  # 残すものをためる
+    for entry in seen_entries:
+        first_seen_text = entry.get("first_seen", "")  # 最初に見た日
+        try:
+            first_seen = date.fromisoformat(first_seen_text)  # 文字列を日付に変換
+        except ValueError:
+            kept.append(entry)  # 日付が読めないものは念のため残す
+            continue
+        age_days = (today - first_seen).days  # 何日前か
+        if age_days <= retention_days:  # 保持日数以内なら残す
+            kept.append(entry)
+    return kept
+
+
+def save_state(state_file: Path, seen_entries: list[dict]) -> None:
+    """送信済みURL記録をファイルに書き出す。"""
+    data = {"seen": seen_entries}  # 保存する形に整える
+    state_file.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")

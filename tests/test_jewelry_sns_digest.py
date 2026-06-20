@@ -2,6 +2,7 @@
 # テスト対象モジュールを読み込めるようにパスを通す
 import sys
 from pathlib import Path
+from datetime import date  # prune_old のテストで日付を作るために使う
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "jewelry_watch"))
 
 import jewelry_sns_digest as digest  # 本体モジュール
@@ -47,3 +48,42 @@ def test_parse_exa_results_handles_missing_fields():
     assert posts[0]["snippet"] == ""
     assert posts[0]["published_date"] == ""
     assert posts[0]["platform"] == "Web"
+
+
+def test_filter_new_removes_seen_and_dedupes():
+    # 送信済みURLは除外し、同一実行内の重複URLも1件にすること
+    posts = [
+        {"url": "https://x.com/a", "keyword": "k", "title": "", "snippet": "", "published_date": "", "platform": "X"},
+        {"url": "https://x.com/a", "keyword": "k", "title": "", "snippet": "", "published_date": "", "platform": "X"},
+        {"url": "https://x.com/b", "keyword": "k", "title": "", "snippet": "", "published_date": "", "platform": "X"},
+    ]
+    new_posts = digest.filter_new(posts, {"https://x.com/b"})
+    urls = [p["url"] for p in new_posts]
+    assert urls == ["https://x.com/a"]  # bは送信済みで除外、aは1件だけ
+
+
+def test_prune_old_drops_entries_older_than_retention():
+    # first_seen が保持日数より古いエントリだけ捨てること
+    today = date(2026, 6, 21)
+    seen = [
+        {"url": "https://x.com/old", "first_seen": "2026-04-01"},  # 81日前 → 捨てる
+        {"url": "https://x.com/new", "first_seen": "2026-06-10"},  # 11日前 → 残す
+    ]
+    kept = digest.prune_old(seen, today, 60)
+    kept_urls = [e["url"] for e in kept]
+    assert kept_urls == ["https://x.com/new"]
+
+
+def test_load_state_returns_empty_when_missing(tmp_path):
+    # ファイルが無いときは空のseenを返すこと
+    missing = tmp_path / "nope.json"
+    assert digest.load_state(missing) == {"seen": []}
+
+
+def test_save_and_load_state_roundtrip(tmp_path):
+    # 保存したものを読み戻せること
+    state_file = tmp_path / "state.json"
+    entries = [{"url": "https://x.com/a", "first_seen": "2026-06-21"}]
+    digest.save_state(state_file, entries)
+    loaded = digest.load_state(state_file)
+    assert loaded["seen"] == entries
