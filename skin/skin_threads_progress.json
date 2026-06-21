@@ -1,5 +1,5 @@
 {
-  "daily_index": 326,
+  "daily_index": 327,
   "launch_index": 0,
   "history": [
     {
@@ -5075,6 +5075,14 @@
       "variant": "A",
       "post_id": "17876324769655219",
       "seed_id": "17887864497576302"
+    },
+    {
+      "date": "2026/06/21 03:00",
+      "theme": "外食が多い人の肌ケア",
+      "theme_id": 71,
+      "variant": "A",
+      "post_id": "18404719603152836",
+      "seed_id": "18084262178170537"
     }
   ],
   "ab_next": "A",
@@ -5090,7 +5098,7 @@
     "68": "B",
     "69": "B",
     "70": "B",
-    "71": "A",
+    "71": "B",
     "72": "A",
     "73": "A",
     "74": "A",
@@ -5253,7 +5261,7 @@
     "71": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "72": {
@@ -5839,7 +5847,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-20T22:02:08.602601+00:00",
+  "last_posted_at": "2026-06-21T03:02:02.441249+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
