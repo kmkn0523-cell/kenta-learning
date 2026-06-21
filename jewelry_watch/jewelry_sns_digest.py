@@ -220,12 +220,10 @@ def build_email_html(posts: list[dict], generated_at: str) -> str:
             for post in items:  # 投稿1件ずつ
                 mark = "🏷️[宣伝かも] " if post.get("promotional") else ""  # 宣伝っぽい投稿に印
                 title = mark + _escape(post["title"] or post["url"])  # タイトル（無ければURL）
-                snippet = _escape(post["snippet"])  # 抜粋
                 published = _escape(post["published_date"])  # 投稿日
                 url = _escape(_safe_url(post["url"]))  # スキーム検証してから属性用にエスケープ
                 parts.append(
-                    f'<li><a href="{url}">{title}</a>'  # クリック可能なリンク
-                    f"<br><small>{published}</small><br>{snippet}</li>"  # 日付と抜粋
+                    f'<li><a href="{url}">{title}</a> <small>{published}</small></li>'  # タイトル＋リンク＋日付だけ
                 )
             parts.append("</ul>")  # 箇条書き終了
     return "\n".join(parts)
@@ -286,14 +284,23 @@ def keep_non_promotional(posts: list[dict]) -> list[dict]:
 
 
 def is_relevant(post: dict) -> bool:
-    """タイトルにジュエリー関連語が入っているか（検索が脱線した無関係記事を弾く）。"""
+    """対象2商品（サントスネックレス／ジュストアンクル）の投稿だけTrueを返す。
+
+    - サントス: タイトルに「サントス」があり、時計ワードを含まなければネックレスとみなす
+    - ジュスト: タイトルに「ジュスト」「juste」があればジュストアンクル系とみなす
+    どちらにも当てはまらない投稿（カルティエ全般・無関係記事）は弾く。
+    """
     title = (post.get("title", "") or "").lower()  # タイトルを小文字化
-    return any(word.lower() in title for word in RELEVANCE_WORDS)  # 1つでも入っていればOK
+    is_santos_necklace = "サントス" in title and not any(  # サントスがあり…
+        word.lower() in title for word in SANTOS_WATCH_WORDS  # …時計ワードを含まない
+    )
+    is_juste = any(word.lower() in title for word in JUSTE_WORDS)  # ジュストアンクル系
+    return is_santos_necklace or is_juste  # どちらかに該当すれば対象
 
 
 def keep_relevant(posts: list[dict]) -> list[dict]:
-    """タイトルが無関係な投稿（カメラ・靴・旅行など）を落とす。"""
-    return [p for p in posts if is_relevant(p)]  # 関連語を含むものだけ
+    """対象2商品以外の投稿（カルティエ全般・サントス時計・無関係記事）を落とす。"""
+    return [p for p in posts if is_relevant(p)]  # 対象2商品だけ
 
 
 def _search_all_targets(api_key: str, start_published_date, already_seen: set[str]) -> list[dict]:

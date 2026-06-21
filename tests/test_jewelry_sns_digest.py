@@ -123,7 +123,7 @@ def test_build_email_html_groups_and_links():
     assert "サントスネックレス" in html       # キーワード見出し
     assert "X" in html and "Instagram" in html  # プラットフォーム見出し
     assert 'href="https://x.com/a"' in html      # クリック可能なリンク
-    assert "投稿A" in html and "抜粋A" in html   # タイトルと抜粋
+    assert "投稿A" in html                       # タイトル（抜粋はメールに出さない仕様）
 
 
 def test_build_email_html_handles_zero():
@@ -255,15 +255,18 @@ def test_keep_non_promotional_drops_flagged():
     assert kept == ["https://ameblo.jp/b", "https://ameblo.jp/c"]
 
 
-def test_keep_relevant_drops_off_topic_titles():
-    # タイトルにジュエリー関連語が無い投稿（カメラ・靴等）を落とすこと
+def test_keep_relevant_keeps_only_two_products():
+    # 対象はサントスネックレスとジュストアンクルの2商品だけ。
+    # 無関係記事・カルティエ全般・サントスの時計は落とすこと
     posts = [
-        {"title": "F8は特別な数字｜レンズを絞る意味", "url": "https://note.com/a"},     # 無関係
-        {"title": "実はそこまでカルティエに惹かれなかった", "url": "https://note.com/b"},  # 関連
-        {"title": "サントスネックレス着用レビュー", "url": "https://ameblo.jp/c"},        # 関連
+        {"title": "F8は特別な数字｜レンズを絞る意味", "url": "https://note.com/a"},          # 無関係 → 落とす
+        {"title": "実はそこまでカルティエに惹かれなかった", "url": "https://note.com/b"},       # 全般 → 落とす
+        {"title": "サントスネックレス着用レビュー", "url": "https://ameblo.jp/c"},            # 対象 → 残す
+        {"title": "ジュストアンクル ブレスレット 購入レビュー", "url": "https://ameblo.jp/d"},  # 対象 → 残す
+        {"title": "サントス ドゥ カルティエ クロノグラフ徹底解説", "url": "https://ameblo.jp/e"},# サントス時計 → 落とす
     ]
     kept = [p["url"] for p in digest.keep_relevant(posts)]
-    assert kept == ["https://note.com/b", "https://ameblo.jp/c"]
+    assert kept == ["https://ameblo.jp/c", "https://ameblo.jp/d"]
 
 
 def test_is_promotional_detects_used_and_replica():
