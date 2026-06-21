@@ -5610,8 +5610,14 @@
       "kind": "teaching",
       "label": "Day147 morning",
       "post_id": "17954841009160757"
+    },
+    {
+      "date": "2026/06/21 11:00",
+      "kind": "engagement",
+      "label": "engagement eng011",
+      "post_id": "17868747435626220"
     }
   ],
-  "last_posted_at": "2026-06-21T09:02:01.210681+00:00",
-  "engagement_index": 42
+  "last_posted_at": "2026-06-21T11:02:06.113702+00:00",
+  "engagement_index": 43
 }
