@@ -9,6 +9,7 @@ export interface Tx {
   amount: number;
   memo: string;
   accountId?: string;  // 紐づく口座ID（任意）
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // 固定費1件の形
@@ -22,6 +23,7 @@ export interface FixedExpense {
   active?: boolean;     // false にすると一時停止
   autoTrack?: boolean;  // true: 毎月変動支出として transactions に自動追加する
   lastAutoAdded?: string; // 自動追加した最後の月 "YYYY-MM"（重複防止に使う）
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // ローン1件の形
@@ -35,6 +37,7 @@ export interface Loan {
   payDay: string;
   lastAutoPaid?: string;
   autoMode?: boolean;
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // 収入1件の形
@@ -45,6 +48,7 @@ export interface Income {
   amount: number;
   memo: string;
   accountId?: string;  // 紐づく口座ID（任意）
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // 口座残高1件の形
@@ -53,6 +57,7 @@ export interface Account {
   name: string;
   balance: number;
   color?: string;  // 口座を区別するためのカラーラベル（例: "#22c55e"）
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // 口座間振替1件の形（例：財布→銀行 に2000円移動）
@@ -63,6 +68,7 @@ export interface Transfer {
   toAccountId: string;    // 振替先の口座ID
   amount: number;         // 金額（円）
   memo?: string;          // 任意のメモ
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // カテゴリ別予算の形（{食費: 30000, ...} など）
@@ -93,6 +99,7 @@ export interface SavingGoal {
   startAmount: number;   // 目標設定時の貯金額（達成率計算のベースライン）
   deadline: string;      // 達成期限 "YYYY-MM-DD"
   createdAt: string;     // 作成日 "YYYY-MM-DD"
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // 定期収入1件の形（給与・副業など毎月一定額が入る収入を登録する）
@@ -104,6 +111,7 @@ export interface RecurringIncome {
   payDay: string;         // 振込日（"1日" 〜 "31日" または "未設定"）
   lastAutoAdded?: string; // 最後に自動追加した月 "YYYY-MM"（重複防止に使う）
   active?: boolean;       // false にすると自動追加を一時停止
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // 繰り返し支出1件の形（毎月一定額が出ていく変動費を自動追加するための設定）
@@ -116,6 +124,7 @@ export interface RecurringExpense {
   payDay: string;          // 引落日（"1日" 〜 "31日" または "未設定"）
   lastAutoAdded?: string;  // 最後に自動追加した月 "YYYY-MM"（重複防止に使う）
   active?: boolean;        // false にすると自動追加を一時停止
+  updatedAt?: string;  // 同期用：最終更新時刻（ISO8601）
 }
 
 // トースト通知の形
