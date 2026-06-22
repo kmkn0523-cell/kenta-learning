@@ -172,6 +172,152 @@ export function isEncrypted(stored: unknown): boolean {
   return typeof stored === "string" && stored.startsWith("enc:");
 }
 
+// ════════════════════════════════════════════════════════════
+// 複数端末同期：復元キー(Recovery Key) 関連
+// 設計書: docs/finance_web_sync_design_v2.md
+// パスワード＝端末ローカルの鍵／復元キー(RK)＝同期・復号・課金のルート
+// RK から「サーバの置き場所ID(accountId)」と「データ暗号鍵(DEK)」を決定的に導出する
+// ════════════════════════════════════════════════════════════
+
+// 復元キーの長さ（20バイト＝160ビット。総当たり不可・base32でちょうど32文字になり書き写しやすい）
+const RECOVERY_KEY_BYTES = 20;
+
+// base32（RFC4648）の文字テーブル。0/1/8/Oなどの紛らわしさを避けるためA-Z2-7のみ
+const BASE32_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+
+// バイト列を base32 文字列にする（パディングなし）
+function bytesToBase32(bytes: Uint8Array): string {
+  let bits = 0;       // 今ためているビット
+  let value = 0;      // ビットをためる入れ物
+  let output = "";
+  for (let i = 0; i < bytes.length; i++) {
+    value = (value << 8) | bytes[i];
+    bits += 8;
+    // 5ビットたまるごとに1文字に変換する
+    while (bits >= 5) {
+      output += BASE32_ALPHABET[(value >>> (bits - 5)) & 31];
+      bits -= 5;
+    }
+  }
+  // 余ったビットがあれば最後の1文字を出す
+  if (bits > 0) output += BASE32_ALPHABET[(value << (5 - bits)) & 31];
+  return output;
+}
+
+// base32 文字列をバイト列に戻す（区切りのハイフン・空白・小文字は許容して正規化）
+function base32ToBytes(str: string): Uint8Array {
+  // ハイフンや空白を取り除き、大文字化する
+  const clean = str.toUpperCase().replace(/[^A-Z2-7]/g, "");
+  let bits = 0;
+  let value = 0;
+  const out: number[] = [];
+  for (let i = 0; i < clean.length; i++) {
+    const idx = BASE32_ALPHABET.indexOf(clean[i]);
+    if (idx === -1) continue; // 不正文字は無視
+    value = (value << 5) | idx;
+    bits += 5;
+    // 8ビットたまるごとに1バイト取り出す
+    if (bits >= 8) {
+      out.push((value >>> (bits - 8)) & 0xff);
+      bits -= 8;
+    }
+  }
+  return new Uint8Array(out);
+}
+
+// base64 を URL安全な形に変える（+→- /→_ 末尾の=を削除）
+function b64ToB64Url(b64: string): string {
+  return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+// 復元キーを新規生成する。raw=バイト列・display=ユーザーに見せる "XXXX-XXXX-..." 形式
+export function generateRecoveryKey(): { raw: Uint8Array; display: string } {
+  const raw = crypto.getRandomValues(new Uint8Array(RECOVERY_KEY_BYTES));
+  const base32 = bytesToBase32(raw);
+  // 4文字ごとにハイフンで区切って読みやすくする
+  const display = (base32.match(/.{1,4}/g) || []).join("-");
+  return { raw, display };
+}
+
+// ユーザーが入力した復元キー文字列をバイト列に戻す（長さが合わなければ null）
+export function parseRecoveryKey(display: string): Uint8Array | null {
+  const bytes = base32ToBytes(display);
+  if (bytes.length !== RECOVERY_KEY_BYTES) return null;
+  return bytes;
+}
+
+// HKDF で RK から用途別のビット列を導出する内部ヘルパー
+// info（用途ラベル）を変えると別々の鍵になる＝1つのRKから複数の鍵を安全に作れる
+async function hkdfBits(rk: Uint8Array, info: string, lengthBits: number): Promise<Uint8Array> {
+  const baseKey = await crypto.subtle.importKey("raw", rk as BufferSource, "HKDF", false, ["deriveBits"]);
+  const bits = await crypto.subtle.deriveBits(
+    { name: "HKDF", hash: "SHA-256", salt: new Uint8Array(0), info: new TextEncoder().encode(info) },
+    baseKey,
+    lengthBits
+  );
+  return new Uint8Array(bits);
+}
+
+// RK から accountId（サーバ上のデータの置き場所ID）を導出する
+// 256ビット乱数由来＝推測不可。同じRKなら必ず同じIDになる（端末非依存）
+export async function deriveAccountId(rk: Uint8Array): Promise<string> {
+  const bits = await hkdfBits(rk, "byb-account-id", 256);
+  return b64ToB64Url(bytesToB64(bits));
+}
+
+// RK からデータ暗号鍵(DEK)を導出する。AES-GCM 256bit・端末非依存
+// → どの端末でも同じRKから同じ鍵が出るので、サーバの暗号文を別端末で復号できる
+export async function deriveDataKey(rk: Uint8Array): Promise<CryptoKey> {
+  const keyBits = await hkdfBits(rk, "byb-data-enc", 256);
+  return crypto.subtle.importKey("raw", keyBits as BufferSource, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+}
+
+// RK をパスワード派生鍵で包んで(wrap)ローカル保存用の文字列にする
+// 形式: "rkw:v1:イテレーション数:saltB64:ivB64:暗号文B64"
+export async function wrapRecoveryKey(rk: Uint8Array, password: string): Promise<string> {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const enc = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey("raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveKey"]);
+  const wrapKey = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: PBKDF2_ENC_ITERATIONS, hash: "SHA-256" },
+    baseKey,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt"]
+  );
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, wrapKey, rk as BufferSource);
+  return `rkw:v1:${PBKDF2_ENC_ITERATIONS}:${bytesToB64(salt)}:${bytesToB64(iv)}:${bytesToB64(new Uint8Array(ct))}`;
+}
+
+// 包まれたRK文字列とパスワードから元のRKバイト列を取り戻す
+// パスワードが違う・形式が壊れている場合は null を返す（例外で落とさない）
+export async function unwrapRecoveryKey(wrapped: string, password: string): Promise<Uint8Array | null> {
+  const parts = wrapped.split(":");
+  if (parts[0] !== "rkw" || parts[1] !== "v1" || parts.length !== 6) return null;
+  const iterations = Number(parts[2]);
+  if (!Number.isInteger(iterations) || iterations < 1_000) return null;
+  try {
+    const salt = b64ToBytes(parts[3]);
+    const iv = b64ToBytes(parts[4]);
+    const ct = b64ToBytes(parts[5]);
+    const enc = new TextEncoder();
+    const baseKey = await crypto.subtle.importKey("raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveKey"]);
+    const wrapKey = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations, hash: "SHA-256" },
+      baseKey,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["decrypt"]
+    );
+    const rk = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, wrapKey, ct as BufferSource);
+    return new Uint8Array(rk);
+  } catch (_) {
+    // パスワード違いなどは復号失敗で例外→null扱い
+    return null;
+  }
+}
+
 // 重複しないユニークなIDを作る（crypto.randomUUID() または予備の方法）
 export function newId(): string {
   if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
