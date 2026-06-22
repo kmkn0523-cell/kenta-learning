@@ -5131,13 +5131,6 @@
       "variant": "A",
       "post_id": "18322463377259957",
       "seed_id": "18125743558644268"
-    },
-    {
-      "date": "2026/06/22 15:46",
-      "theme": "note宣伝: 肌荒れが治らない人の多くに、亜鉛不足があった。",
-      "theme_id": 0,
-      "variant": "note_promo",
-      "post_id": "17880002181609166"
     }
   ],
   "ab_next": "A",
@@ -5902,9 +5895,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-22T15:47:56.201030+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n5f339b9fb059",
-  "last_note_promo_date": "2026/06/22",
+  "last_posted_at": "2026-06-22T13:02:11.847390+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
+  "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/19"
 }
