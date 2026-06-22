@@ -30,6 +30,7 @@ import BudgetSection from "../components/BudgetSection";
 import WeeklyBreakdown from "../components/WeeklyBreakdown";
 import DayOfWeekBreakdown from "../components/DayOfWeekBreakdown";
 import MonthNav from "../components/MonthNav";
+import SubscriptionInventory from "../components/SubscriptionInventory";
 
 // ── スタイル定数 ──────────────────────────────────────────
 
@@ -330,6 +331,9 @@ export default function ExpenseView({
           </div>
         )}
       </div>
+
+      {/* ────────── サブスク棚卸し（年間コストで見える化・登録があるときだけ表示） ────────── */}
+      <SubscriptionInventory recurringExpenses={recurringExpenses} icons={expenseCategoryIcons} />
 
       {/* ────────── クイックテンプレート一覧 ────────── */}
       {tpls.length>0&&<div style={{marginBottom:12}}>
