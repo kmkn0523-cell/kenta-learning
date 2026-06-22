@@ -110,7 +110,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -c \"[console]::beep(1200,120); Start-Sleep -Milliseconds 80; [console]::beep(1200,120); Start-Sleep -Milliseconds 80; [console]::beep(1200,120)\" 2>/dev/null || true",
+            "command": "powershell.exe -c \"(New-Object Media.SoundPlayer 'C:\\\\Users\\\\kenta kamijyo\\\\claude_permission.wav').PlaySync()\" 2>/dev/null || true",
             "async": true
           }
         ]
@@ -121,7 +121,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "start=$(cat /tmp/claude_task_start 2>/dev/null || echo 0); elapsed=$(( $(date +%s) - start )); [ $elapsed -ge 30 ] && powershell.exe -c \"[console]::beep(523,90); [console]::beep(659,140)\" 2>/dev/null || true",
+            "command": "start=$(cat /tmp/claude_task_start 2>/dev/null || echo 0); elapsed=$(( $(date +%s) - start )); [ $elapsed -ge 30 ] && powershell.exe -c \"(New-Object Media.SoundPlayer 'C:\\\\Users\\\\kenta kamijyo\\\\claude_done.wav').PlaySync()\" 2>/dev/null || true",
             "async": true
           },
           {
