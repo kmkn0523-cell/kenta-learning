@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-21T09:56:47.886161",
+  "last_updated": "2026-06-22T12:13:19.825821",
   "posts_history": [
     {
       "day": 28,
@@ -2552,6 +2552,50 @@
       "shares": 0,
       "views": 45,
       "engagement_rate": 2.22
+    },
+    {
+      "day": 76,
+      "type": "頭皮と肌の関係",
+      "post_id": "18058532372724435",
+      "posted_at": "2026-06-22T08:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 48,
+      "engagement_rate": 2.08
+    },
+    {
+      "day": 75,
+      "type": "ダイエットと肌荒れ",
+      "post_id": "18087221312437507",
+      "posted_at": "2026-06-22T03:01:25+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 37,
+      "engagement_rate": 2.7
+    },
+    {
+      "day": 74,
+      "type": "エアコンと乾燥肌",
+      "post_id": "18106672892075690",
+      "posted_at": "2026-06-21T22:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 16,
+      "engagement_rate": 6.25
+    },
+    {
+      "day": 73,
+      "type": "タオルと肌荒れ",
+      "post_id": "18115839116499592",
+      "posted_at": "2026-06-21T13:01:28+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 63,
+      "engagement_rate": 1.59
     }
   ],
   "pattern_performance": {
@@ -3152,45 +3196,45 @@
     },
     "day_76": {
       "頭皮と肌の関係": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 19.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 4,
+        "avg_comments": 0.5,
+        "avg_views": 34.0,
+        "avg_engagement_rate": 1.04,
+        "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
     "day_75": {
       "ダイエットと肌荒れ": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 21.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 29.0,
+        "avg_engagement_rate": 1.35,
         "best_hour": 2,
         "best_hashtag_set": "A"
       }
     },
     "day_74": {
       "エアコンと乾燥肌": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 20.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 23,
+        "avg_comments": 0.5,
+        "avg_views": 18.0,
+        "avg_engagement_rate": 3.12,
+        "best_hour": 22,
         "best_hashtag_set": "A"
       }
     },
     "day_73": {
       "タオルと肌荒れ": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 11.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 22,
+        "avg_comments": 0.5,
+        "avg_views": 37.0,
+        "avg_engagement_rate": 0.8,
+        "best_hour": 13,
         "best_hashtag_set": "A"
       }
     },
