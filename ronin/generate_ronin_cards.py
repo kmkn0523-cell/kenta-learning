@@ -190,56 +190,56 @@ proverbs = [
 
     # ── 武士語録・名言（Day151〜175）─────────────────────────────────
     {"day":151, "jp": "我事において後悔せず",  "roma": "Wagakoto ni oite kokai sezu",  "en": "I do not regret what I have done."},
-    {"day":152, "jp": "今日の我に昨日の我を斬れ", "roma": "Kyo no ware ni kino no ware o kire", "en": "Cut down yesterday's self with today's blade."},
+    {"day": 152, "jp": "道は無し、歩むところに道は開ける", "roma": "Michi wa nashi, ayumu tokoro ni michi wa hirakeru", "en": "There is no path. The path opens where you walk."},
     {"day":153, "jp": "剣は心なり",           "roma": "Ken wa kokoro nari",           "en": "The sword is the mind."},
-    {"day":154, "jp": "風林火山",             "roma": "Fu-rin-ka-zan",                "en": "Swift as wind. Silent as forest. Fierce as fire. Immovable as mountain."},
-    {"day":155, "jp": "死ぬ事と見つけたり",   "roma": "Shinu koto to mitsuke tari",   "en": "I have found the way — it is to die fully."},
-    {"day":156, "jp": "鋼も鍛えずば剣とならず","roma": "Hagane mo kitaezuba ken to narazu","en": "Even steel must be forged to become a sword."},
-    {"day":157, "jp": "武士は食わねど高楊枝", "roma": "Bushi wa kuwanedo takayoji",    "en": "A samurai bears hunger with dignity."},
-    {"day":158, "jp": "七生報国",             "roma": "Shichisho hokoku",             "en": "Seven lives — all devoted to what matters."},
-    {"day":159, "jp": "重荷を負うて遠き道",   "roma": "Omoni o oute toki michi",      "en": "Carry the weight. Walk the long road."},
-    {"day":160, "jp": "功は急がず",           "roma": "Ko wa isogazu",                "en": "Achievement cannot be rushed."},
-    {"day":161, "jp": "一騎当千",             "roma": "Ikki tosen",                   "en": "One warrior worth a thousand."},
-    {"day":162, "jp": "義を見てせざるは勇なきなり","roma": "Gi o mite sezaru wa yu naki nari","en": "To see what is right and not do it — that is cowardice."},
-    {"day":163, "jp": "生は重く死は軽し",     "roma": "Sei wa omoku shi wa karushi",   "en": "Life is heavy. Death is light."},
-    {"day":164, "jp": "己を磨け",             "roma": "Onore o migake",               "en": "Polish yourself."},
-    {"day":165, "jp": "身を捨ててこそ",       "roma": "Mi o sutete koso",             "en": "Only by letting go do you find what holds you."},
-    {"day":166, "jp": "天知る地知る我知る",   "roma": "Ten shiru, chi shiru, ware shiru","en": "Heaven knows. Earth knows. You know."},
-    {"day":167, "jp": "一剣に天地を截断す",   "roma": "Ikken ni tenchi o setsudan su", "en": "One sword cuts through heaven and earth."},
-    {"day":168, "jp": "信は力なり",           "roma": "Shin wa chikara nari",          "en": "Belief is power."},
-    {"day":169, "jp": "問わず語りは無用",     "roma": "Towazu gatari wa muyo",         "en": "Words unasked for are rarely needed."},
-    {"day":170, "jp": "何事も一人前になれ",   "roma": "Nani goto mo ichininmae ni nare","en": "In all things, master your craft fully."},
-    {"day":171, "jp": "生ある限り、鍛えよ",   "roma": "Sei aru kagiri, kitaeyo",       "en": "As long as there is life, forge yourself."},
-    {"day":172, "jp": "一瞬の刃",             "roma": "Isshun no yaiba",              "en": "The edge of a single moment."},
-    {"day":173, "jp": "弓矢も心の先から出でたり","roma": "Yumi ya mo kokoro no saki kara idetari","en": "Every arrow begins with the mind."},
-    {"day":174, "jp": "黙して語らず",         "roma": "Mokushite katarazu",           "en": "Silence speaks what words cannot."},
-    {"day":175, "jp": "武士道は死ぬことと見つけたり","roma": "Bushido wa shinu koto to mitsuke tari","en": "The way of the warrior is found in death."},
+    {"day": 154, "jp": "敵なし", "roma": "Teki nashi", "en": "The true warrior has no enemy."},
+    {"day": 155, "jp": "心頭滅却すれば火もまた涼し", "roma": "Shinto mekkyaku sureba hi mo mata suzushi", "en": "When the mind is extinguished, even fire is cool."},
+    {"day": 156, "jp": "武士道とは死ぬことと見つけたり", "roma": "Bushido to wa shinu koto to mitsuketari", "en": "The way of the warrior is to be found in dying."},
+    {"day": 157, "jp": "迷わず行けよ、行けばわかるさ", "roma": "Mayowazu yuke yo, yukeba wakaru sa", "en": "Go without hesitation. You'll understand once you move."},
+    {"day": 158, "jp": "七転び八起き", "roma": "Nana korobi ya oki", "en": "Fall seven times. Rise eight."},
+    {"day": 159, "jp": "鍛えた刃は折れない", "roma": "Kitaeta ha wa orenai", "en": "The blade that has been forged does not break."},
+    {"day": 160, "jp": "続けることが最強の武器", "roma": "Tsuzukeru koto ga saikyo no buki", "en": "Continuity is the most powerful weapon."},
+    {"day": 161, "jp": "今この瞬間に全力を尽くせ", "roma": "Ima kono shunkan ni zenryoku o tsukuse", "en": "Give everything to this moment."},
+    {"day": 162, "jp": "諫言は武士の誠", "roma": "Kangen wa bushi no makoto", "en": "Honest counsel is the samurai's true loyalty."},
+    {"day": 163, "jp": "縁の下の力持ち", "roma": "En no shita no chikaramochi", "en": "The strong one beneath the floor."},
+    {"day": 164, "jp": "文武両道", "roma": "Bunbu ryodo", "en": "The dual path: learning and action."},
+    {"day": 165, "jp": "一人は万人のために、万人は一人のために", "roma": "Hitori wa bannin no tame ni, bannin wa hitori no tame ni", "en": "One for all. All for one."},
+    {"day": 166, "jp": "泰然自若", "roma": "Taizen jijaku", "en": "Unmoved by circumstance. Calm at the center."},
+    {"day": 167, "jp": "武士に二言なし", "roma": "Bushi ni nigon nashi", "en": "A samurai's word is spoken once."},
+    {"day": 168, "jp": "己に勝つ", "roma": "Onore ni katsu", "en": "Conquer yourself."},
+    {"day": 169, "jp": "失敗は成功の母", "roma": "Shippai wa seiko no haha", "en": "Failure is the mother of success."},
+    {"day": 170, "jp": "他山の石以って玉を攻むべし", "roma": "Tazan no ishi motte tama o osamu beshi", "en": "The stones of another mountain can polish your jade."},
+    {"day": 171, "jp": "死ぬまで働け、死んでも働け", "roma": "Shinu made hatarake, shinde mo hatarake", "en": "Work until you die. Work even after you die."},
+    {"day": 172, "jp": "男は泣かない", "roma": "Otoko wa nakanai", "en": "A man does not cry."},
+    {"day": 173, "jp": "弓を引く者は射る", "roma": "Yumi o hiku mono wa iru", "en": "He who draws the bow must release the arrow."},
+    {"day": 174, "jp": "素直な心", "roma": "Sunao na kokoro", "en": "A straight and honest heart."},
+    {"day": 175, "jp": "武士道は生きることと見つけたり", "roma": "Bushido wa ikiru koto to mitsuketari", "en": "The way of the warrior is to be found in living."},
 
     # ── 自然・季節の言葉（Day176〜200）───────────────────────────────
     {"day":176, "jp": "花鳥風月",             "roma": "Kacho fugetsu",            "en": "Flower, bird, wind, moon — beauty in all things."},
-    {"day":177, "jp": "雪月花",               "roma": "Setsu getsu ka",           "en": "Snow, moon, blossom — the three beauties."},
-    {"day":178, "jp": "物の哀れ",             "roma": "Mono no aware",            "en": "The gentle sorrow of passing things."},
-    {"day":179, "jp": "侘び寂び",             "roma": "Wabi-sabi",                "en": "Beauty in imperfection. Peace in impermanence."},
-    {"day":180, "jp": "木漏れ日",             "roma": "Komorebi",                 "en": "The light that filters through leaves."},
-    {"day":181, "jp": "木枯らし",             "roma": "Kogarashi",                "en": "The first cold wind that strips the trees bare."},
-    {"day":182, "jp": "初雪",                 "roma": "Hatsuyuki",                "en": "The first snow. Everything begins again."},
-    {"day":183, "jp": "春暁",                 "roma": "Shungyo",                  "en": "Dawn in spring — the world barely awake."},
-    {"day":184, "jp": "夏の終わり",           "roma": "Natsu no owari",           "en": "The end of summer — bittersweet and vast."},
-    {"day":185, "jp": "秋の空",               "roma": "Aki no sora",              "en": "The autumn sky — endlessly, piercingly clear."},
-    {"day":186, "jp": "冬枯れ",               "roma": "Fuyugare",                 "en": "Winter bareness — the beauty of what remains."},
-    {"day":187, "jp": "朝露",                 "roma": "Asatsuyu",                 "en": "Morning dew — gone before you notice it."},
-    {"day":188, "jp": "夕焼け",               "roma": "Yuyake",                   "en": "The evening sky burns — and then it is dark."},
-    {"day":189, "jp": "山は静かなり",         "roma": "Yama wa shizuka nari",     "en": "The mountain is silent. It does not explain itself."},
-    {"day":190, "jp": "川の流れのように",     "roma": "Kawa no nagare no yo ni",  "en": "Like the flow of a river — always moving, never forced."},
-    {"day":191, "jp": "大地は語らず",         "roma": "Daichi wa katarazu",       "en": "The earth does not speak. Yet everything grows from it."},
-    {"day":192, "jp": "風は見えず",           "roma": "Kaze wa miezu",            "en": "You cannot see the wind. But you know when it has passed."},
-    {"day":193, "jp": "桜散る",               "roma": "Sakura chiru",             "en": "The cherry blossoms fall — and we love them more for it."},
-    {"day":194, "jp": "月夜に佇む",           "roma": "Tsukiyo ni tatazumu",      "en": "Standing still in the moonlight."},
-    {"day":195, "jp": "霧の中",               "roma": "Kiri no naka",             "en": "In the mist — you see only what is right before you."},
-    {"day":196, "jp": "波は繰り返す",         "roma": "Nami wa kurikaesu",        "en": "The waves return — again and again, without complaint."},
-    {"day":197, "jp": "天地自然",             "roma": "Tenchi shizen",            "en": "Heaven, earth, and nature — the great teacher."},
-    {"day":198, "jp": "一粒万倍",             "roma": "Ichiryu manbai",           "en": "One seed becomes ten thousand."},
-    {"day":199, "jp": "草木も眠る",           "roma": "Kusaki mo nemuru",         "en": "Even the grass and trees fall asleep."},
+    {"day": 177, "jp": "桜の時", "roma": "Sakura no toki", "en": "There is a time for the cherry blossom."},
+    {"day": 178, "jp": "嵐の後の静けさ", "roma": "Arashi no ato no shizukesa", "en": "After the storm, stillness."},
+    {"day": 179, "jp": "海の如く", "roma": "Umi no gotoku", "en": "Be as the ocean — deep, vast, unhurried."},
+    {"day": 180, "jp": "山は動かず", "roma": "Yama wa ugokazu", "en": "The mountain does not move."},
+    {"day": 181, "jp": "竹の節", "roma": "Take no fushi", "en": "The bamboo has joints — it bends but does not break."},
+    {"day": 182, "jp": "松の緑", "roma": "Matsu no midori", "en": "The pine stays green through winter."},
+    {"day": 183, "jp": "雨は降る", "roma": "Ame wa furu", "en": "The rain falls. Accept it."},
+    {"day": 184, "jp": "火は燃える", "roma": "Hi wa moeru", "en": "Fire burns. Be the fire."},
+    {"day": 185, "jp": "川は流れる", "roma": "Kawa wa nagareru", "en": "The river flows — giving all it has."},
+    {"day": 186, "jp": "種は知らずして育つ", "roma": "Tane wa shirazu shite sodatsu", "en": "The seed grows without knowing the tree."},
+    {"day": 187, "jp": "月の満ち欠け", "roma": "Tsuki no michikake", "en": "The moon waxes and wanes."},
+    {"day": 188, "jp": "朝霧晴れて", "roma": "Asagiri harete", "en": "When the morning mist clears, the path appears."},
+    {"day": 189, "jp": "石の如く", "roma": "Ishi no gotoku", "en": "Be as stone — patient, enduring."},
+    {"day": 190, "jp": "風は形なし", "roma": "Kaze wa katachi nashi", "en": "The wind has no form. Yet nothing escapes it."},
+    {"day": 191, "jp": "静水明鏡", "roma": "Seisui meikyo", "en": "Still water reflects like a clear mirror."},
+    {"day": 192, "jp": "森の知恵", "roma": "Mori no chie", "en": "The wisdom of the forest: diversity creates resilience."},
+    {"day": 193, "jp": "地平線の向こう", "roma": "Chiheisen no muko", "en": "Beyond the horizon — something is there."},
+    {"day": 194, "jp": "木は季節に従う", "roma": "Ki wa kisetsu ni shitagau", "en": "The tree follows the season."},
+    {"day": 195, "jp": "大空の如く", "roma": "Oozora no gotoku", "en": "Be as the great sky — vast, open, containing all."},
+    {"day": 196, "jp": "水は低きに就く", "roma": "Mizu wa hikuki ni tsuku", "en": "Water seeks the lowest place."},
+    {"day": 197, "jp": "昼と夜", "roma": "Hiru to yoru", "en": "Day and night — each needs the other."},
+    {"day": 198, "jp": "鶴の一声", "roma": "Tsuru no hitokoe", "en": "The crane speaks once. And is heard."},
+    {"day": 199, "jp": "波は来ては返す", "roma": "Nami wa kite wa kaesu", "en": "Waves come and go. The ocean remains."},
     {"day":200, "jp": "道は続く",             "roma": "Michi wa tsuzuku",         "en": "The path continues. Keep walking."},
 ]
 
@@ -335,52 +335,82 @@ def draw_h_rule(draw, y, x0=RULE_PAD, x1=W - RULE_PAD, alpha=0.10):
                   fill=(*SEPIA, a), width=1)
 
 
-def calc_jp_font_size(text):
-    """漢字のフォントサイズを文字数に応じて決める"""
+# 1列に入れる最大文字数（これを超えると複数列に分けて縦書きする）
+MAX_CHARS_PER_COLUMN = 8
+
+
+def split_into_columns(text, max_per_col=MAX_CHARS_PER_COLUMN):
+    """
+    長い格言を複数の縦列に分割する（できるだけ均等な文字数に割る）
+    戻り値: 列ごとの文字列リスト（先頭が一番右の列＝読む順）
+    """
     n = len(text)
+    if n <= max_per_col:
+        return [text]
+    # 必要な列数を求めて、文字数を均等に振り分ける
+    num_cols = math.ceil(n / max_per_col)
+    per_col = math.ceil(n / num_cols)
+    cols = [text[i:i + per_col] for i in range(0, n, per_col)]
+    return cols
+
+
+def calc_jp_font_size(text):
+    """漢字のフォントサイズを「1列の最大文字数」に応じて決める"""
+    cols = split_into_columns(text)
+    longest = max(len(c) for c in cols)  # 一番長い列の文字数で決める
     # 使える縦スペース（上下ルール間）
     area = BOT_RULE_Y - TOP_RULE_Y - 60
     # 1文字あたりの高さ = area / 文字数（間隔込み）
-    per_char = area / max(n, 1)
+    per_char = area / max(longest, 1)
     size = int(per_char * 0.82)
     return max(60, min(180, size))
 
 
 def draw_vertical_kanji(img, draw, text, font_jp, x_center):
     """
-    漢字を縦書きで描画する
-    文字数に応じてフォントサイズを調整し、テキストエリアの中央に配置する
+    漢字を縦書きで描画する（長い格言は複数列に分けて右→左に並べる）
+    1列の最大文字数に応じてフォントサイズを調整し、テキストエリアの中央に配置する
     戻り値: 漢字列の左端X座標（ローマ字の配置に使う）
     """
-    n = len(text)
+    cols = split_into_columns(text)          # 列ごとに分割（cols[0]が一番右の列）
     font_size = calc_jp_font_size(text)
     font = ImageFont.truetype(FONT_JP, font_size)
 
-    char_heights = []
-    char_widths  = []
-    for ch in text:
-        bb = draw.textbbox((0, 0), ch, font=font)
-        char_heights.append(bb[3] - bb[1])
-        char_widths.append(bb[2] - bb[0])
-
-    spacing = max(6, font_size // 8)
-    total_h = sum(char_heights) + spacing * (n - 1)
-
     text_area_center = (TOP_RULE_Y + BOT_RULE_Y) // 2
-    start_y = text_area_center - total_h // 2
+    spacing = max(6, font_size // 8)         # 縦の字間
+    col_gap = int(font_size * 1.15)          # 列と列の間隔（中心間）
 
-    # 最大文字幅を使って左端X座標を求める（ローマ字配置に渡す）
-    max_w = max(char_widths) if char_widths else 0
-    kanji_left_x = x_center - max_w // 2
+    # 各文字の寸法をまとめて測る（列をまたいで最大幅も求める）
+    max_w = 0
+    col_metrics = []  # 列ごとに [(ch, w, h), ...] を持つ
+    for col in cols:
+        metrics = []
+        for ch in col:
+            bb = draw.textbbox((0, 0), ch, font=font)
+            w = bb[2] - bb[0]
+            h = bb[3] - bb[1]
+            metrics.append((ch, w, h))
+            max_w = max(max_w, w)
+        col_metrics.append(metrics)
 
-    current_y = start_y
-    for i, ch in enumerate(text):
-        ch_w = char_widths[i]
-        ch_h = char_heights[i]
-        x = x_center - ch_w // 2
-        draw.text((x, current_y), ch, font=font, fill=INK)
-        current_y += ch_h + spacing
+    num_cols = len(cols)
+    # 列全体のブロックを x_center を中心に置く。cols[0]を一番右の列にする
+    block_width = (num_cols - 1) * col_gap
+    rightmost_x = x_center + block_width // 2  # 一番右の列の中心X
 
+    for ci, metrics in enumerate(col_metrics):
+        col_x = rightmost_x - ci * col_gap     # 右の列から左へ
+        # この列の高さを求めて縦中央に配置する
+        total_h = sum(h for _, _, h in metrics) + spacing * (len(metrics) - 1)
+        current_y = text_area_center - total_h // 2
+        for ch, w, h in metrics:
+            x = col_x - w // 2
+            draw.text((x, current_y), ch, font=font, fill=INK)
+            current_y += h + spacing
+
+    # 一番左の列の左端X座標を返す（ローマ字をその左に置くため）
+    leftmost_col_x = rightmost_x - (num_cols - 1) * col_gap
+    kanji_left_x = leftmost_col_x - max_w // 2
     return kanji_left_x
 
 
@@ -401,6 +431,15 @@ def draw_vertical_romaji(img, roma, kanji_left_x):
     bb = tmp_draw.textbbox((0, 0), roma, font=font)
     text_w = bb[2] - bb[0]
     text_h = bb[3] - bb[1]
+
+    # ローマ字が長いと回転後に上下へはみ出すので、収まるまでフォントを縮める
+    max_roma_len = BOT_RULE_Y - TOP_RULE_Y - 20  # 回転後の高さ（=横幅）の上限
+    if text_w > max_roma_len:
+        font_size = max(22, int(font_size * max_roma_len / text_w))
+        font = ImageFont.truetype(FONT_ROMAN, font_size)
+        bb = tmp_draw.textbbox((0, 0), roma, font=font)
+        text_w = bb[2] - bb[0]
+        text_h = bb[3] - bb[1]
 
     pad = 6
     tmp = Image.new('RGBA', (text_w + pad * 2, text_h + pad * 2), (0, 0, 0, 0))
