@@ -23,6 +23,7 @@ import {
   SYNC_KEYS,
   type SyncState,
   type SyncValues,
+  type ConflictDetail,
 } from "../utils/syncState";
 import type { Tombstone } from "../utils/syncMerge";
 
@@ -63,6 +64,8 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
   const [status, setStatus] = useState<SyncStatus>("off");
   const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(null);
   const [conflicts, setConflicts] = useState<string[]>([]);
+  // 競合した単一値の候補（この端末の値・別端末の値）。ユーザーが選んで解決する。
+  const [conflictDetails, setConflictDetails] = useState<ConflictDetail[]>([]);
 
   // RK由来の秘密はメモリ上のrefに持つ（再レンダーで作り直さない）
   const accountIdRef = useRef<string | null>(null);
@@ -117,8 +120,9 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
       const local = buildSyncState(currentValues, prevBase, tombstones, now);
 
       // 4) マージ
-      const { merged, conflicts: conf } = mergeSyncState(local, remote, prevBase);
+      const { merged, conflicts: conf, conflictDetails: details } = mergeSyncState(local, remote, prevBase);
       setConflicts(conf);
+      setConflictDetails(details);
 
       // 5) マージ結果をローカルへ反映（各セッターを呼ぶ）
       for (const { key } of SYNC_KEYS) {
@@ -192,6 +196,26 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
     setLastSyncedAt(null);
   }, []);
 
+  // 競合した単一値を「この端末(local)/別端末(remote)」のどちらかに決めて反映する。
+  // 選んだ値をセッターで書き戻すと、App側の変更検知が走り debounce で push される
+  // （新しい updatedAt が付くので次回マージで確実に勝つ）。
+  const resolveConflict = useCallback((key: string, choice: "local" | "remote") => {
+    setConflictDetails(prev => {
+      const detail = prev.find(d => d.key === key);
+      if (detail && setters[key]) {
+        setters[key](choice === "local" ? detail.local : detail.remote);
+      }
+      const rest = prev.filter(d => d.key !== key);
+      if (rest.length === 0) {
+        setConflicts([]);
+        setStatus(s => (s === "conflict" ? "idle" : s));
+      } else {
+        setConflicts(rest.map(d => d.key));
+      }
+      return rest;
+    });
+  }, [setters]);
+
   // ローカル変更を検知して 5秒 debounce で push（呼び出し側が変更時にこれを叩く）
   const notifyChange = useCallback(() => {
     if (!enabledRef.current) return;
@@ -212,6 +236,8 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
     status,
     lastSyncedAt,
     conflicts,
+    conflictDetails,
+    resolveConflict,
     isEnabled: enabledRef.current,
     activate,
     unlock,

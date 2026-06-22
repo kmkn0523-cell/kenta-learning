@@ -79,6 +79,14 @@ describe("mergeSyncState 単一値", () => {
     const { conflicts } = mergeSyncState(local, remote, base);
     expect(conflicts).not.toContain("kk_budget");
   });
+
+  it("競合時は conflictDetails に両端末の値が載る", () => {
+    const base = { ...emptySyncState(), singletonMeta: { kk_budget: EARLIER } };
+    const local = { ...emptySyncState(), values: { kk_budget: { food: 100 } }, singletonMeta: { kk_budget: NOW } };
+    const remote = { ...emptySyncState(), values: { kk_budget: { food: 200 } }, singletonMeta: { kk_budget: LATER } };
+    const { conflictDetails } = mergeSyncState(local, remote, base);
+    expect(conflictDetails).toEqual([{ key: "kk_budget", local: { food: 100 }, remote: { food: 200 } }]);
+  });
 });
 
 describe("detectTombstones", () => {

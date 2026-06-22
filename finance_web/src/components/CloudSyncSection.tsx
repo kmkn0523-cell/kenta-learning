@@ -17,6 +17,21 @@ import {
 } from "../utils/styles";
 import { generateRecoveryKey } from "../utils/crypto";
 import type { SyncStatus } from "../hooks/useCloudSync";
+import type { ConflictDetail } from "../utils/syncState";
+
+// 競合した単一値キーを日本語名にする
+const CONFLICT_KEY_LABEL: Record<string, string> = {
+  kk_budget: "予算設定",
+  kk_categories: "カテゴリ設定",
+  kk_savingGoal: "貯金目標",
+};
+
+// 値を短い読みやすい文字列にまとめる（中身は任意の形なのでJSONを要約）
+function summarizeValue(value: unknown): string {
+  if (value === null || value === undefined) return "未設定";
+  const json = JSON.stringify(value);
+  return json.length > 90 ? json.slice(0, 90) + "…" : json;
+}
 
 const STYLE_LABEL: CSSProperties = { fontSize: 13, color: COLOR_TEXT_SECONDARY, marginBottom: 6 };
 const STYLE_RK_BOX: CSSProperties = {
@@ -64,10 +79,13 @@ interface CloudSyncSectionProps {
   onUnlock: (password: string) => Promise<boolean>;
   onDeactivate: () => void;
   onSyncNow: () => void;
+  // 競合した単一値の候補と、解決（どちらを残すか）ハンドラ
+  conflictDetails: ConflictDetail[];
+  onResolveConflict: (key: string, choice: "local" | "remote") => void;
 }
 
 export default function CloudSyncSection(props: CloudSyncSectionProps) {
-  const { status, lastSyncedAt, onActivate, onUnlock, onDeactivate, onSyncNow } = props;
+  const { status, lastSyncedAt, onActivate, onUnlock, onDeactivate, onSyncNow, conflictDetails, onResolveConflict } = props;
   // 画面のモード: "view"=状態表示 / "show-rk"=生成したRK表示 / "restore"=RK入力
   const [mode, setMode] = useState<"view" | "show-rk" | "restore">("view");
   const [generatedRk, setGeneratedRk] = useState("");
@@ -157,6 +175,36 @@ export default function CloudSyncSection(props: CloudSyncSectionProps) {
               <span style={{ fontSize: 13, color: COLOR_TEXT_PRIMARY }}>
                 {new Date(lastSyncedAt).toLocaleString("ja-JP")}
               </span>
+            </div>
+          )}
+
+          {/* 競合解決：この端末と別端末で食い違った設定をどちらに揃えるか選ぶ */}
+          {conflictDetails.length > 0 && (
+            <div style={{ border: `1px solid ${COLOR_NEGATIVE}`, borderRadius: 10, padding: 12, marginBottom: 12 }}>
+              <div style={{ fontSize: 13, color: COLOR_NEGATIVE, fontWeight: 600, marginBottom: 8 }}>
+                ⚠️ 設定が別端末と食い違っています。残す方を選んでください
+              </div>
+              {conflictDetails.map(d => (
+                <div key={d.key} style={{ marginBottom: 12 }}>
+                  <div style={{ fontSize: 13, color: COLOR_TEXT_PRIMARY, fontWeight: 600, marginBottom: 6 }}>
+                    {CONFLICT_KEY_LABEL[d.key] ?? d.key}
+                  </div>
+                  <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, marginBottom: 4, wordBreak: "break-all" }}>
+                    この端末: {summarizeValue(d.local)}
+                  </div>
+                  <div style={{ fontSize: 11, color: COLOR_TEXT_SECONDARY, marginBottom: 8, wordBreak: "break-all" }}>
+                    別端末: {summarizeValue(d.remote)}
+                  </div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <button type="button" style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }} onClick={() => onResolveConflict(d.key, "local")}>
+                      この端末を残す
+                    </button>
+                    <button type="button" style={{ ...STYLE_BUTTON_OUTLINE, flex: 1 }} onClick={() => onResolveConflict(d.key, "remote")}>
+                      別端末を残す
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 

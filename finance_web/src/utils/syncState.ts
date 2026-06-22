@@ -55,6 +55,13 @@ export interface SyncState {
   singletonMeta: SingletonMeta; // 単一値の最終更新時刻
 }
 
+// 競合した単一値の「この端末の値」と「別端末の値」。ユーザーがどちらを残すか選ぶのに使う。
+export interface ConflictDetail {
+  key: string;     // kk_budget など
+  local: unknown;  // この端末の値
+  remote: unknown; // 別端末の値
+}
+
 // 空の同期ステート
 export function emptySyncState(): SyncState {
   return { values: {}, tombstones: [], singletonMeta: {} };
@@ -112,10 +119,11 @@ export function mergeSyncState(
   local: SyncState,
   remote: SyncState,
   base?: SyncState | null
-): { merged: SyncState; conflicts: string[] } {
+): { merged: SyncState; conflicts: string[]; conflictDetails: ConflictDetail[] } {
   const tombstones = mergeTombstones(local.tombstones, remote.tombstones);
   const values: SyncValues = {};
   const conflicts: string[] = [];
+  const conflictDetails: ConflictDetail[] = [];
 
   // 配列系：id＋updatedAtでユニオンマージ
   for (const key of ARRAY_KEYS) {
@@ -137,8 +145,11 @@ export function mergeSyncState(
     );
     values[key] = res.merged.value;
     singletonMeta[key] = res.merged.updatedAt;
-    if (res.conflict) conflicts.push(key);
+    if (res.conflict) {
+      conflicts.push(key);
+      conflictDetails.push({ key, local: local.values[key], remote: remote.values[key] });
+    }
   }
 
-  return { merged: { values, tombstones, singletonMeta }, conflicts };
+  return { merged: { values, tombstones, singletonMeta }, conflicts, conflictDetails };
 }

@@ -569,6 +569,8 @@ function AppInner(){
         onUnlock={cloudSync.unlock}
         onDeactivate={cloudSync.deactivate}
         onSyncNow={cloudSync.syncNow}
+        conflictDetails={cloudSync.conflictDetails}
+        onResolveConflict={cloudSync.resolveConflict}
       />}
       </Suspense>
     </div>
