@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-20T08:46:18.173475",
+  "last_updated": "2026-06-21T09:41:31.773838",
   "posts_history": [
     {
       "day": 67,
@@ -2761,6 +2761,116 @@
       "shares": 0,
       "views": 9,
       "engagement_rate": 11.11
+    },
+    {
+      "day": 147,
+      "type": "morning",
+      "post_id": "17954841009160757",
+      "posted_at": "2026-06-21T09:01:23+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 7,
+      "engagement_rate": 14.29
+    },
+    {
+      "day": 146,
+      "type": "evening",
+      "post_id": "17967203808089901",
+      "posted_at": "2026-06-21T07:01:22+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 7,
+      "engagement_rate": 14.29
+    },
+    {
+      "day": 146,
+      "type": "morning",
+      "post_id": "17877671877671837",
+      "posted_at": "2026-06-21T05:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 18,
+      "engagement_rate": 5.56
+    },
+    {
+      "day": 145,
+      "type": "evening",
+      "post_id": "17891954955556538",
+      "posted_at": "2026-06-21T01:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 10,
+      "engagement_rate": 10.0
+    },
+    {
+      "day": 145,
+      "type": "morning",
+      "post_id": "18091546583631196",
+      "posted_at": "2026-06-20T23:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 13,
+      "engagement_rate": 7.69
+    },
+    {
+      "day": 144,
+      "type": "evening",
+      "post_id": "18077124287460257",
+      "posted_at": "2026-06-20T21:01:23+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 16,
+      "engagement_rate": 6.25
+    },
+    {
+      "day": 144,
+      "type": "morning",
+      "post_id": "17978324535022562",
+      "posted_at": "2026-06-20T17:01:29+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 13,
+      "engagement_rate": 7.69
+    },
+    {
+      "day": 143,
+      "type": "evening",
+      "post_id": "18079424702655502",
+      "posted_at": "2026-06-20T15:01:31+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 14,
+      "engagement_rate": 7.14
+    },
+    {
+      "day": 143,
+      "type": "morning",
+      "post_id": "18105960476018478",
+      "posted_at": "2026-06-20T13:01:26+0000",
+      "likes": 0,
+      "comments": 2,
+      "shares": 1,
+      "views": 34,
+      "engagement_rate": 8.82
+    },
+    {
+      "day": 142,
+      "type": "evening",
+      "post_id": "18559618000069792",
+      "posted_at": "2026-06-20T09:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 10,
+      "engagement_rate": 10.0
     }
   ],
   "pattern_performance": {
@@ -5193,6 +5303,15 @@
         "avg_engagement_rate": 33.33,
         "best_hour": 7,
         "best_hashtag_set": "A"
+      },
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 10.0,
+        "avg_engagement_rate": 10.0,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
       }
     },
     "day_141": {
@@ -5252,6 +5371,97 @@
         "avg_views": 35.0,
         "avg_engagement_rate": 5.71,
         "best_hour": 14,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_147": {
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 7.0,
+        "avg_engagement_rate": 14.29,
+        "best_hour": 9,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_146": {
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 7.0,
+        "avg_engagement_rate": 14.29,
+        "best_hour": 7,
+        "best_hashtag_set": "A"
+      },
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 18.0,
+        "avg_engagement_rate": 5.56,
+        "best_hour": 5,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_145": {
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 10.0,
+        "avg_engagement_rate": 10.0,
+        "best_hour": 1,
+        "best_hashtag_set": "A"
+      },
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 13.0,
+        "avg_engagement_rate": 7.69,
+        "best_hour": 23,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_144": {
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 16.0,
+        "avg_engagement_rate": 6.25,
+        "best_hour": 21,
+        "best_hashtag_set": "A"
+      },
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 13.0,
+        "avg_engagement_rate": 7.69,
+        "best_hour": 17,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_143": {
+      "evening": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 14.0,
+        "avg_engagement_rate": 7.14,
+        "best_hour": 15,
+        "best_hashtag_set": "A"
+      },
+      "morning": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 2.0,
+        "avg_views": 34.0,
+        "avg_engagement_rate": 8.82,
+        "best_hour": 13,
         "best_hashtag_set": "A"
       }
     }
