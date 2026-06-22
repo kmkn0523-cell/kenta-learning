@@ -1,5 +1,5 @@
 {
-  "daily_index": 333,
+  "daily_index": 334,
   "launch_index": 0,
   "history": [
     {
@@ -5131,6 +5131,14 @@
       "variant": "A",
       "post_id": "18322463377259957",
       "seed_id": "18125743558644268"
+    },
+    {
+      "date": "2026/06/22 22:00",
+      "theme": "肌荒れ改善の3ヶ月ルール",
+      "theme_id": 78,
+      "variant": "A",
+      "post_id": "17971670234907823",
+      "seed_id": "18096595439264740"
     }
   ],
   "ab_next": "A",
@@ -5153,7 +5161,7 @@
     "75": "B",
     "76": "B",
     "77": "B",
-    "78": "A",
+    "78": "B",
     "79": "A",
     "80": "A",
     "81": "A",
@@ -5351,7 +5359,7 @@
     "78": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "79": {
@@ -5895,7 +5903,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-22T13:02:11.847390+00:00",
+  "last_posted_at": "2026-06-22T22:02:05.198494+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
