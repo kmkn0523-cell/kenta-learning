@@ -12,6 +12,8 @@ import {
   deriveDataKey,
   encryptValue,
   decryptValue,
+  wrapRecoveryKey,
+  unwrapRecoveryKey,
 } from "../utils/crypto";
 import {
   buildSyncState,
@@ -25,7 +27,8 @@ import {
 import type { Tombstone } from "../utils/syncMerge";
 
 // 同期状態を画面に出すためのステータス
-export type SyncStatus = "off" | "idle" | "syncing" | "error" | "conflict";
+// - locked: RKは端末に保存済みだが、パスワード未入力で再開待ち（リロード直後など）
+export type SyncStatus = "off" | "locked" | "idle" | "syncing" | "error" | "conflict";
 
 // localStorage に同期メタを置くキー
 const LS_RK_WRAPPED = "kk_sync_rk_wrapped"; // パスワードで包んだRK（端末ローカル保存）
@@ -67,9 +70,10 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const enabledRef = useRef(false);
 
-  // 起動時：RKがwrap保存されていれば「同期ON」とみなす（解錠は activate で行う）
+  // 起動時：RKがwrap保存されていれば「ロック中（パスワード待ち）」にする。
+  // 実際の解錠（パスワードでRKを取り戻して同期再開）は unlock() で行う。
   useEffect(() => {
-    if (localStorage.getItem(LS_RK_WRAPPED)) setStatus(s => (s === "off" ? "idle" : s));
+    if (localStorage.getItem(LS_RK_WRAPPED)) setStatus(s => (s === "off" ? "locked" : s));
   }, []);
 
   // RK(Uint8Array)から accountId と DEK を導出してメモリに載せる
@@ -149,13 +153,31 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
     }
   }, [getValues, setters]);
 
-  // 同期を有効化（RK文字列＋パスワードで解錠して保存）
-  const activate = useCallback(async (rkDisplay: string) => {
+  // 同期を有効化（RK文字列＋この端末用パスワード）。
+  // RKをパスワードで包んで端末に保存するので、次回起動時はパスワードだけで再開できる。
+  const activate = useCallback(async (rkDisplay: string, password: string) => {
     const rk = parseRecoveryKey(rkDisplay);
     if (!rk) throw new Error("復元キーの形式が正しくありません");
+    if (!password || password.length < 4) throw new Error("パスワードは4文字以上にしてください");
+    await loadKeys(rk);
+    // RKをパスワードで暗号化して保存（パスワードが無いと取り出せない）
+    const wrapped = await wrapRecoveryKey(rk, password);
+    localStorage.setItem(LS_RK_WRAPPED, wrapped);
+    setStatus("idle");
+    await syncOnce();
+  }, [loadKeys, syncOnce]);
+
+  // 保存済みRKをパスワードで解錠して同期を再開する（リロード後の復帰用）。
+  // パスワードが違えば false を返す（保存は消さない＝入れ直せる）。
+  const unlock = useCallback(async (password: string): Promise<boolean> => {
+    const wrapped = localStorage.getItem(LS_RK_WRAPPED);
+    if (!wrapped) return false;
+    const rk = await unwrapRecoveryKey(wrapped, password);
+    if (!rk) return false; // パスワード違い
     await loadKeys(rk);
     setStatus("idle");
     await syncOnce();
+    return true;
   }, [loadKeys, syncOnce]);
 
   // 同期を停止（ローカルの鍵・メタを消す。サーバのデータは残す）
@@ -192,6 +214,7 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
     conflicts,
     isEnabled: enabledRef.current,
     activate,
+    unlock,
     deactivate,
     notifyChange,
     syncNow: syncOnce,

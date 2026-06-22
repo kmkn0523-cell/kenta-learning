@@ -566,6 +566,7 @@ function AppInner(){
         status={cloudSync.status}
         lastSyncedAt={cloudSync.lastSyncedAt}
         onActivate={cloudSync.activate}
+        onUnlock={cloudSync.unlock}
         onDeactivate={cloudSync.deactivate}
         onSyncNow={cloudSync.syncNow}
       />}

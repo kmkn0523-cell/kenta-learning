@@ -47,6 +47,7 @@ const STYLE_INPUT: CSSProperties = {
 function statusLabel(status: SyncStatus): { text: string; color: string } {
   switch (status) {
     case "off": return { text: "オフ", color: COLOR_TEXT_SECONDARY };
+    case "locked": return { text: "ロック中（パスワード入力で再開）", color: COLOR_ACCENT };
     case "idle": return { text: "同期中（待機）", color: COLOR_POSITIVE };
     case "syncing": return { text: "同期しています…", color: COLOR_ACCENT };
     case "conflict": return { text: "競合あり（要確認）", color: COLOR_NEGATIVE };
@@ -57,24 +58,29 @@ function statusLabel(status: SyncStatus): { text: string; color: string } {
 interface CloudSyncSectionProps {
   status: SyncStatus;
   lastSyncedAt: string | null;
-  // RK文字列を渡して同期に参加する（生成直後・復元の両方で使う）
-  onActivate: (recoveryKey: string) => Promise<void>;
+  // RK文字列＋この端末用パスワードを渡して同期に参加する（生成直後・復元の両方で使う）
+  onActivate: (recoveryKey: string, password: string) => Promise<void>;
+  // 保存済みRKをパスワードで解錠して再開する（リロード後）。成功でtrue
+  onUnlock: (password: string) => Promise<boolean>;
   onDeactivate: () => void;
   onSyncNow: () => void;
 }
 
 export default function CloudSyncSection(props: CloudSyncSectionProps) {
-  const { status, lastSyncedAt, onActivate, onDeactivate, onSyncNow } = props;
+  const { status, lastSyncedAt, onActivate, onUnlock, onDeactivate, onSyncNow } = props;
   // 画面のモード: "view"=状態表示 / "show-rk"=生成したRK表示 / "restore"=RK入力
   const [mode, setMode] = useState<"view" | "show-rk" | "restore">("view");
   const [generatedRk, setGeneratedRk] = useState("");
   const [rkSaved, setRkSaved] = useState(false);   // 「保管した」チェック
   const [restoreInput, setRestoreInput] = useState("");
+  const [password, setPassword] = useState("");    // この端末用パスワード（RKを包む鍵）
+  const [unlockInput, setUnlockInput] = useState(""); // ロック解除用パスワード入力
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
   const sl = statusLabel(status);
   const isOn = status !== "off";
+  const isLocked = status === "locked";
 
   // 新しいRKを生成して表示する
   function startNew() {
@@ -84,14 +90,15 @@ export default function CloudSyncSection(props: CloudSyncSectionProps) {
     setMode("show-rk");
   }
 
-  // 生成したRKで同期を開始する
+  // 生成したRKで同期を開始する（パスワードでRKを包んで保存）
   async function confirmNew() {
     setBusy(true);
     setError("");
     try {
-      await onActivate(generatedRk);
+      await onActivate(generatedRk, password);
       setMode("view");
       setGeneratedRk("");
+      setPassword("");
     } catch (e) {
       setError(e instanceof Error ? e.message : "同期の開始に失敗しました");
     } finally {
@@ -99,16 +106,32 @@ export default function CloudSyncSection(props: CloudSyncSectionProps) {
     }
   }
 
-  // 入力したRKで別端末から復元する
+  // 入力したRKで別端末から復元する（パスワードでRKを包んで保存）
   async function confirmRestore() {
     setBusy(true);
     setError("");
     try {
-      await onActivate(restoreInput.trim());
+      await onActivate(restoreInput.trim(), password);
       setMode("view");
       setRestoreInput("");
+      setPassword("");
     } catch (e) {
       setError(e instanceof Error ? e.message : "復元に失敗しました");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  // 保存済みRKをパスワードで解錠して同期を再開する
+  async function confirmUnlock() {
+    setBusy(true);
+    setError("");
+    try {
+      const ok = await onUnlock(unlockInput);
+      if (!ok) { setError("パスワードが違います"); return; }
+      setUnlockInput("");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "解錠に失敗しました");
     } finally {
       setBusy(false);
     }
@@ -137,7 +160,35 @@ export default function CloudSyncSection(props: CloudSyncSectionProps) {
             </div>
           )}
 
-          {!isOn ? (
+          {isLocked ? (
+            // リロード後：保存済みRKをパスワードで解錠して再開
+            <>
+              <div style={STYLE_LABEL}>この端末のパスワードを入力して同期を再開</div>
+              <input
+                style={STYLE_INPUT}
+                type="password"
+                value={unlockInput}
+                onChange={e => setUnlockInput(e.target.value)}
+                placeholder="パスワード"
+                autoComplete="current-password"
+                onKeyDown={e => { if (e.key === "Enter" && unlockInput && !busy) void confirmUnlock(); }}
+              />
+              {error && <p style={{ fontSize: 12, color: COLOR_NEGATIVE, margin: "0 0 10px" }}>{error}</p>}
+              <div style={{ display: "flex", gap: 8 }}>
+                <button
+                  type="button"
+                  style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, opacity: unlockInput && !busy ? 1 : 0.5 }}
+                  disabled={!unlockInput || busy}
+                  onClick={confirmUnlock}
+                >
+                  {busy ? "解錠しています…" : "同期を再開する"}
+                </button>
+                <button type="button" style={STYLE_BUTTON_OUTLINE} disabled={busy} onClick={onDeactivate}>
+                  解除
+                </button>
+              </div>
+            </>
+          ) : !isOn ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <button type="button" style={STYLE_BUTTON_PRIMARY} onClick={startNew}>
                 同期を始める（新しい復元キーを作る）
@@ -179,12 +230,21 @@ export default function CloudSyncSection(props: CloudSyncSectionProps) {
             <input type="checkbox" checked={rkSaved} onChange={e => setRkSaved(e.target.checked)} />
             復元キーを安全な場所に保管しました
           </label>
+          <div style={STYLE_LABEL}>この端末用のパスワード（次回起動時の再開に使う・4文字以上）</div>
+          <input
+            style={STYLE_INPUT}
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="パスワード"
+            autoComplete="new-password"
+          />
           {error && <p style={{ fontSize: 12, color: COLOR_NEGATIVE, margin: "0 0 10px" }}>{error}</p>}
           <div style={{ display: "flex", gap: 8 }}>
             <button
               type="button"
-              style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, opacity: rkSaved && !busy ? 1 : 0.5 }}
-              disabled={!rkSaved || busy}
+              style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, opacity: rkSaved && password.length >= 4 && !busy ? 1 : 0.5 }}
+              disabled={!rkSaved || password.length < 4 || busy}
               onClick={confirmNew}
             >
               {busy ? "開始しています…" : "この端末で同期を開始"}
@@ -207,12 +267,21 @@ export default function CloudSyncSection(props: CloudSyncSectionProps) {
             placeholder="XXXX-XXXX-XXXX-..."
             autoComplete="off"
           />
+          <div style={STYLE_LABEL}>この端末用のパスワード（次回起動時の再開に使う・4文字以上）</div>
+          <input
+            style={STYLE_INPUT}
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="パスワード"
+            autoComplete="new-password"
+          />
           {error && <p style={{ fontSize: 12, color: COLOR_NEGATIVE, margin: "0 0 10px" }}>{error}</p>}
           <div style={{ display: "flex", gap: 8 }}>
             <button
               type="button"
-              style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, opacity: restoreInput.trim() && !busy ? 1 : 0.5 }}
-              disabled={!restoreInput.trim() || busy}
+              style={{ ...STYLE_BUTTON_PRIMARY, flex: 1, opacity: restoreInput.trim() && password.length >= 4 && !busy ? 1 : 0.5 }}
+              disabled={!restoreInput.trim() || password.length < 4 || busy}
               onClick={confirmRestore}
             >
               {busy ? "復元しています…" : "復元する"}
