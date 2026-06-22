@@ -1,5 +1,5 @@
 {
-  "next_day": 38,
+  "next_day": 40,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -216,6 +216,12 @@
       "day": 37,
       "post_id": 203070921,
       "title": "花鳥風月 — Flowers. Birds. Wind. Moon."
+    },
+    {
+      "date": "2026/06/23 07:29",
+      "day": 39,
+      "post_id": 203165113,
+      "title": "月に叢雲、花に風 — Clouds gather around the moon. Wind scatters the flowers."
     }
   ]
 }
