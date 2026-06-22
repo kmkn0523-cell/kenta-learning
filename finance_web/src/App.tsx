@@ -144,6 +144,55 @@ function AppInner(){
   // 口座フォームの入力値（name: 口座名、balance: 残高、color: カラーラベル）
   const [accF,setAccF]=useState({name:"",balance:"",color:""}),[showAccF,setShowAccF]=useState(false),[editAccId,setEditAccId]=useState<string | null>(null);
   const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady&&recIncReady&&recExpReady;
+
+  // ────────── クラウド同期の配線 ──────────
+  // 同期対象14種(kk_*)の「今の値」を1つの箱にまとめて返す関数（呼ぶたび最新値を返す）
+  const syncGetValues = useCallback((): SyncValues => ({
+    kk_tx: transactions,           // 取引
+    kk_inc: incomes,               // 収入
+    kk_fx: fixedExpenses,          // 固定費
+    kk_lo: loans,                  // ローン
+    kk_cf: cashFlow,               // キャッシング
+    kk_bl: balance,                // 銀行ローン
+    kk_accounts: accounts,         // 口座
+    kk_transfers: transfers,       // 振替
+    kk_tpls: tpls,                 // テンプレート
+    kk_rec_inc: recurringIncomes,  // 定期収入
+    kk_rec_exp: recurringExpenses, // 定期支出
+    kk_budget: budget,             // 予算（単一値）
+    kk_categories: categoryConfig, // カテゴリ設定（単一値）
+    kk_savingGoal: savingGoal,     // 貯金目標（単一値）
+  }), [transactions, incomes, fixedExpenses, loans, cashFlow, balance, accounts, transfers, tpls, recurringIncomes, recurringExpenses, budget, categoryConfig, savingGoal]);
+
+  // マージ結果を各ストアへ書き戻すセッター表（key→setter）。型はunknownで受けてキャストする
+  const syncSetters = useMemo<Record<string, (value: unknown) => void>>(() => ({
+    kk_tx: setTransactions as (v: unknown) => void,
+    kk_inc: setIncomes as (v: unknown) => void,
+    kk_fx: setFixedExpenses as (v: unknown) => void,
+    kk_lo: setLoans as (v: unknown) => void,
+    kk_cf: setCashFlow as (v: unknown) => void,
+    kk_bl: setBalance as (v: unknown) => void,
+    kk_accounts: setAccounts as (v: unknown) => void,
+    kk_transfers: setTransfers as (v: unknown) => void,
+    kk_tpls: setTpls as (v: unknown) => void,
+    kk_rec_inc: setRecurringIncomes as (v: unknown) => void,
+    kk_rec_exp: setRecurringExpenses as (v: unknown) => void,
+    kk_budget: setBudget as (v: unknown) => void,
+    kk_categories: setCategoryConfig as (v: unknown) => void,
+    kk_savingGoal: setSavingGoal as (v: unknown) => void,
+  }), []);
+
+  // 同期フック本体。allOk（全データ読込済）になったら稼働できる
+  const cloudSync = useCloudSync({ getValues: syncGetValues, setters: syncSetters, ready: allOk });
+
+  // 同期対象のどれかが変わったら、5秒debounceでサーバへ送る（変更検知）
+  const notifyChange = cloudSync.notifyChange;
+  useEffect(() => {
+    if (!allOk) return;
+    notifyChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions, incomes, fixedExpenses, loans, cashFlow, balance, accounts, transfers, tpls, recurringIncomes, recurringExpenses, budget, categoryConfig, savingGoal]);
+
   // ローン・キャッシング・銀行ローンをまとめた配列（月別集計フックに渡す）
   const allL=useMemo(()=>[...loans,...cashFlow,...balance],[loans,cashFlow,balance]);
   // 月別データ集計フック：選択月のフィルタ済みリストと各合計値を取得
@@ -511,6 +560,14 @@ function AppInner(){
         importBackup={importBackup}
         transfers={transfers}
         setTransfers={setTransfers}
+      />}
+      {/* 設定タブの末尾にクラウド同期カードを表示する */}
+      {tab==="set"&&<CloudSyncSection
+        status={cloudSync.status}
+        lastSyncedAt={cloudSync.lastSyncedAt}
+        onActivate={cloudSync.activate}
+        onDeactivate={cloudSync.deactivate}
+        onSyncNow={cloudSync.syncNow}
       />}
       </Suspense>
     </div>
