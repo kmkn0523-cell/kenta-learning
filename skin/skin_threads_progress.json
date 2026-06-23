@@ -1,5 +1,5 @@
 {
-  "daily_index": 334,
+  "daily_index": 335,
   "launch_index": 0,
   "history": [
     {
@@ -5139,6 +5139,14 @@
       "variant": "A",
       "post_id": "17971670234907823",
       "seed_id": "18096595439264740"
+    },
+    {
+      "date": "2026/06/23 03:00",
+      "theme": "免疫力と肌荒れ",
+      "theme_id": 79,
+      "variant": "A",
+      "post_id": "18064980707687834",
+      "seed_id": "17943159591214528"
     }
   ],
   "ab_next": "A",
@@ -5162,7 +5170,7 @@
     "76": "B",
     "77": "B",
     "78": "B",
-    "79": "A",
+    "79": "B",
     "80": "A",
     "81": "A",
     "82": "A",
@@ -5365,7 +5373,7 @@
     "79": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "80": {
@@ -5903,7 +5911,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-22T22:02:05.198494+00:00",
+  "last_posted_at": "2026-06-23T03:02:13.674115+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
