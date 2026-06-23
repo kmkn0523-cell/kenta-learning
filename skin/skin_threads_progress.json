@@ -1,5 +1,5 @@
 {
-  "daily_index": 335,
+  "daily_index": 336,
   "launch_index": 0,
   "history": [
     {
@@ -5147,6 +5147,14 @@
       "variant": "A",
       "post_id": "18064980707687834",
       "seed_id": "17943159591214528"
+    },
+    {
+      "date": "2026/06/23 07:04",
+      "theme": "貧血と肌荒れ",
+      "theme_id": 80,
+      "variant": "A",
+      "post_id": "18103431190852126",
+      "seed_id": "18110421496811786"
     }
   ],
   "ab_next": "A",
@@ -5171,7 +5179,7 @@
     "77": "B",
     "78": "B",
     "79": "B",
-    "80": "A",
+    "80": "B",
     "81": "A",
     "82": "A",
     "83": "A",
@@ -5379,7 +5387,7 @@
     "80": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "81": {
@@ -5911,7 +5919,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-23T03:02:13.674115+00:00",
+  "last_posted_at": "2026-06-23T07:05:30.169127+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
