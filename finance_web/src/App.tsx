@@ -20,6 +20,7 @@ import { migrateTransactions, migrateIncomes, migrateFixedExpenses, migrateLoans
 import { useCloudSync } from "./hooks/useCloudSync";
 import type { SyncValues } from "./utils/syncState";
 import CloudSyncSection from "./components/CloudSyncSection";
+import OverspendNotifySettings from "./components/OverspendNotifySettings";
 import { Transfer, CategoryConfig, SavingGoal, RecurringIncome, RecurringExpense, SummaryStats } from "./types";
 import { computeSavingRate } from "./utils/summaryExport";
 import { makeDefaultCategoryConfig } from "./utils/defaultCategories";
@@ -81,6 +82,7 @@ import TutorialModal from "./components/TutorialModal";
 import MonthlyReportModal from "./components/MonthlyReportModal";
 // ブラウザ通知フック（予算超過・自動収入追加などのローカル通知）
 import { useNotification } from "./hooks/useNotification";
+import { useOverspendAlerts } from "./hooks/useOverspendAlerts";
 // それ以外のビューは初回ロードを軽くするためタブを開いた時に動的ロード（コード分割）
 const IncomeView = lazy(() => import("./views/IncomeView"));
 const FixedExpenseView = lazy(() => import("./views/FixedExpenseView"));
@@ -131,6 +133,8 @@ function AppInner(){
   const { toast, dlg, setDlg, showT, ask, delItem } = useToast();
   // ブラウザ通知フック（予算超過・自動収入などのローカル通知）
   const { permission: notifPermission, requestPermission, notify } = useNotification();
+  // 使いすぎ通知のオン/オフ（端末ローカル・同期しない）
+  const [overspendNotifyEnabled, setOverspendNotifyEnabled] = usePersist("kk_notify_overspend_enabled", false);
   // 月次レポートモーダルの表示状態とデータ
   const [showMonthlyReport, setShowMonthlyReport] = useState(false);
   const [reportData, setReportData] = useState<{
@@ -208,6 +212,27 @@ function AppInner(){
     net,
   } = useMonthlyData({ transactions, incomes, fixedExpenses, loans: allL, selectedYear, selectedMonth });
   const expByCat=useMemo(()=>{const m: Record<string,number>={};monthlyTransactions.forEach(t=>{if(t.category)m[t.category]=(m[t.category]||0)+Number(t.amount||0);});return Object.entries(m).sort((a,b)=>b[1]-a[1]);},[monthlyTransactions]);
+  // 当月（実際の今月）のカテゴリ別変動支出。閲覧中の月タブとは無関係に常に今月を見る。
+  const currentMonthExpByCategory = useMemo(() => {
+    const thisMonth = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0");
+    const map: Record<string, number> = {};
+    transactions.forEach(t => {
+      // t.date は "YYYY-MM-DD"。先頭7文字が当月なら集計する
+      if (t.category && typeof t.date === "string" && t.date.slice(0, 7) === thisMonth) {
+        map[t.category] = (map[t.category] || 0) + Number(t.amount || 0);
+      }
+    });
+    return map;
+  }, [transactions]);
+  // 当月の使いすぎを監視して通知する
+  useOverspendAlerts({
+    enabled: overspendNotifyEnabled,
+    permission: notifPermission,
+    actualByCategory: currentMonthExpByCategory,
+    budget,
+    notify,
+    ready: allOk,
+  });
   // 前月の年月文字列（前月比較カードで使う）
   const prevMs=useMemo(()=>{const pm=selectedMonth===0?11:selectedMonth-1,py=selectedMonth===0?selectedYear-1:selectedYear;return py+"-"+String(pm+1).padStart(2,"0");},[selectedMonth,selectedYear]);
   const prevTVar=useMemo(()=>transactions.filter(t=>t.date?.startsWith(prevMs)).reduce((s,t)=>s+Number(t.amount||0),0),[transactions,prevMs]);
@@ -507,6 +532,12 @@ function AppInner(){
         addTx={addTx}
         budget={budget}
         setBudget={setBudget}
+        notifySettings={{
+          enabled: overspendNotifyEnabled,
+          onToggle: setOverspendNotifyEnabled,
+          permission: notifPermission,
+          onRequestPermission: requestPermission,
+        }}
         monthlyTransactions={monthlyTransactions}
         prevMonthlyTransactions={prevMonthlyTransactions}
         selectedYear={selectedYear}
@@ -571,6 +602,12 @@ function AppInner(){
         onSyncNow={cloudSync.syncNow}
         conflictDetails={cloudSync.conflictDetails}
         onResolveConflict={cloudSync.resolveConflict}
+      />}
+      {tab==="set"&&<OverspendNotifySettings
+        enabled={overspendNotifyEnabled}
+        onToggle={setOverspendNotifyEnabled}
+        permission={notifPermission}
+        onRequestPermission={requestPermission}
       />}
       </Suspense>
     </div>

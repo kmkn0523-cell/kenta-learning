@@ -82,6 +82,13 @@ interface ExpenseViewProps {
   // カテゴリ別予算と更新関数
   budget: Budget;
   setBudget: (u: Budget | ((prev: Budget) => Budget)) => void;
+  // 使いすぎ通知の設定（任意。予算の下に通知設定カードを出すため BudgetSection に渡す）
+  notifySettings?: {
+    enabled: boolean;
+    onToggle: (value: boolean) => void;
+    permission: NotificationPermission | "unsupported";
+    onRequestPermission: () => void;
+  };
   // 表示中の月の支出一覧
   monthlyTransactions: Tx[];
   // 前月の支出一覧（カテゴリ別前月比バッジに使う）
@@ -126,6 +133,7 @@ export default function ExpenseView({
   addTx,
   budget,
   setBudget,
+  notifySettings,
   monthlyTransactions,
   prevMonthlyTransactions = [],
   selectedYear,
@@ -393,7 +401,7 @@ export default function ExpenseView({
           </div>
       }
       {/* ────────── 予算管理：カテゴリ別の月予算を設定・追跡 ────────── */}
-      <BudgetSection budget={budget} setBudget={setBudget} mTx={monthlyTransactions} prevMTx={prevMonthlyTransactions}/>
+      <BudgetSection budget={budget} setBudget={setBudget} mTx={monthlyTransactions} prevMTx={prevMonthlyTransactions} notifySettings={notifySettings}/>
       {/* ────────── 週別支出内訳 ────────── */}
       <WeeklyBreakdown mTx={monthlyTransactions} selectedYear={selectedYear} selectedMonth={selectedMonth}/>
       {/* ────────── 曜日別支出内訳 ────────── */}

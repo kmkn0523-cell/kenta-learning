@@ -46,7 +46,7 @@ export function useNotification(): UseNotificationReturn {
       new Notification(title, {
         body,
         // PWAのアイコンを使う（存在しなくてもエラーにならない）
-        icon: "/icons/icon-192x192.png",
+        icon: "/icons/icon-192.png",
       });
     } catch {
       // 通知送信に失敗しても何もしない（通知はあくまで補助機能）

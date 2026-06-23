@@ -6,6 +6,7 @@ import { useState, CSSProperties } from "react";
 import { EXPENSE_CATEGORIES, EXPENSE_CATEGORY_ICONS, formatYen } from "../utils/format";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_ACCENT } from "../utils/styles";
 import { Input } from "./ui";
+import OverspendNotifySettings from "./OverspendNotifySettings";
 
 // ── スタイル定数 ──────────────────────────────────────────
 
@@ -30,13 +31,20 @@ interface BudgetSectionProps {
   mTx: TxEntry[];
   // 前月の変動支出配列（省略可。前月比バッジの計算に使う）
   prevMTx?: TxEntry[];
+  // 使いすぎ通知の設定（任意。渡された時だけ予算の下に表示する）
+  notifySettings?: {
+    enabled: boolean;
+    onToggle: (value: boolean) => void;
+    permission: NotificationPermission | "unsupported";
+    onRequestPermission: () => void;
+  };
 }
 
 // budget: {食費: 30000, ...} のオブジェクト
 // setBudget: budget の更新関数
 // mTx: 今月の変動支出配列（日付フィルタ済み）
 // prevMTx: 前月の変動支出配列（前月比バッジ用）
-export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: BudgetSectionProps) {
+export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [], notifySettings }: BudgetSectionProps) {
   const [editing, setEditing] = useState(false);                  // 予算設定フォームの表示フラグ
   const [draft, setDraft] = useState<Record<string, string>>({});  // 編集中の仮の予算値（文字列として管理）
 
@@ -275,6 +283,15 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [] }: 
             </button>
           </div>
         </div>
+      )}
+      {/* 使いすぎ通知の設定（App から渡された時だけ表示） */}
+      {notifySettings && (
+        <OverspendNotifySettings
+          enabled={notifySettings.enabled}
+          onToggle={notifySettings.onToggle}
+          permission={notifySettings.permission}
+          onRequestPermission={notifySettings.onRequestPermission}
+        />
       )}
     </div>
   );
