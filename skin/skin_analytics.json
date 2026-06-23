@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T12:13:19.825821",
+  "last_updated": "2026-06-23T09:51:42.699123",
   "posts_history": [
     {
       "day": 28,
@@ -2596,6 +2596,50 @@
       "shares": 0,
       "views": 63,
       "engagement_rate": 1.59
+    },
+    {
+      "day": 80,
+      "type": "貧血と肌荒れ",
+      "post_id": "18103431190852126",
+      "posted_at": "2026-06-23T07:04:51+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 30,
+      "engagement_rate": 3.33
+    },
+    {
+      "day": 79,
+      "type": "免疫力と肌荒れ",
+      "post_id": "18064980707687834",
+      "posted_at": "2026-06-23T03:01:33+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 45,
+      "engagement_rate": 2.22
+    },
+    {
+      "day": 78,
+      "type": "肌荒れ改善の3ヶ月ルール",
+      "post_id": "17971670234907823",
+      "posted_at": "2026-06-22T22:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 144,
+      "engagement_rate": 0.69
+    },
+    {
+      "day": 77,
+      "type": "旅行中の肌荒れ対策",
+      "post_id": "18322463377259957",
+      "posted_at": "2026-06-22T13:01:31+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 63,
+      "engagement_rate": 1.59
     }
   ],
   "pattern_performance": {
@@ -3174,22 +3218,22 @@
     },
     "day_80": {
       "貧血と肌荒れ": {
-        "total_posts": 1,
-        "avg_likes": 1.0,
-        "avg_comments": 0.0,
-        "avg_views": 104.0,
-        "avg_engagement_rate": 0.96,
+        "total_posts": 2,
+        "avg_likes": 0.5,
+        "avg_comments": 0.5,
+        "avg_views": 67.0,
+        "avg_engagement_rate": 2.15,
         "best_hour": 12,
         "best_hashtag_set": "A"
       }
     },
     "day_78": {
       "肌荒れ改善の3ヶ月ルール": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 36.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 90.0,
+        "avg_engagement_rate": 0.34,
         "best_hour": 8,
         "best_hashtag_set": "A"
       }
@@ -3730,6 +3774,28 @@
         "avg_views": 55.0,
         "avg_engagement_rate": 1.82,
         "best_hour": 22,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_79": {
+      "免疫力と肌荒れ": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 45.0,
+        "avg_engagement_rate": 2.22,
+        "best_hour": 3,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_77": {
+      "旅行中の肌荒れ対策": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 63.0,
+        "avg_engagement_rate": 1.59,
+        "best_hour": 13,
         "best_hashtag_set": "A"
       }
     }
