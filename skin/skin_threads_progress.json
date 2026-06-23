@@ -1,5 +1,5 @@
 {
-  "daily_index": 336,
+  "daily_index": 337,
   "launch_index": 0,
   "history": [
     {
@@ -5155,6 +5155,14 @@
       "variant": "A",
       "post_id": "18103431190852126",
       "seed_id": "18110421496811786"
+    },
+    {
+      "date": "2026/06/23 12:00",
+      "theme": "化粧品の使用期限と肌荒れ",
+      "theme_id": 81,
+      "variant": "A",
+      "post_id": "18155889613473673",
+      "seed_id": "18147582964448353"
     }
   ],
   "ab_next": "A",
@@ -5180,7 +5188,7 @@
     "78": "B",
     "79": "B",
     "80": "B",
-    "81": "A",
+    "81": "B",
     "82": "A",
     "83": "A",
     "84": "A",
@@ -5393,7 +5401,7 @@
     "81": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "82": {
@@ -5919,7 +5927,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-23T07:05:30.169127+00:00",
+  "last_posted_at": "2026-06-23T12:02:10.309660+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n919a2bcadbe6",
   "last_note_promo_date": "2026/06/20",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
