@@ -1,5 +1,5 @@
 {
-  "daily_index": 340,
+  "daily_index": 341,
   "launch_index": 0,
   "history": [
     {
@@ -5194,6 +5194,14 @@
       "variant": "A",
       "post_id": "18105083644834009",
       "seed_id": "18124976110729923"
+    },
+    {
+      "date": "2026/06/24 12:06",
+      "theme": "朝のスキンケアルーティン",
+      "theme_id": 85,
+      "variant": "A",
+      "post_id": "18095530592523984",
+      "seed_id": "18112514608906968"
     }
   ],
   "ab_next": "A",
@@ -5223,7 +5231,7 @@
     "82": "B",
     "83": "B",
     "84": "B",
-    "85": "A",
+    "85": "B",
     "86": "A",
     "87": "A",
     "88": "A",
@@ -5456,7 +5464,7 @@
     "85": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "86": {
@@ -5958,7 +5966,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-24T08:02:09.119067+00:00",
+  "last_posted_at": "2026-06-24T12:07:39.710303+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
   "last_note_promo_date": "2026/06/23",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
