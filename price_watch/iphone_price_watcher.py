@@ -104,9 +104,23 @@ def fetch_highest_price() -> dict:
         browser = p.chromium.launch(headless=True)  # 画面なしブラウザ
         page = browser.new_page()
         page.set_default_timeout(30000)  # 各操作30秒待ち
+        page.set_default_navigation_timeout(60000)  # ページ移動だけは60秒まで待つ（サーバが遅い時の保険）
+
+        def goto_with_retry(url, attempts=3):
+            # ページ移動はサーバが時々遅くて時間切れになるので、数回まで再挑戦する
+            for i in range(attempts):
+                try:
+                    page.goto(url, wait_until="domcontentloaded")
+                    return
+                except Exception as goto_error:
+                    if i == attempts - 1:
+                        raise
+                    print(f"[WARN] ページ移動が時間切れ（{i + 1}回目）。少し待って再挑戦: {goto_error}")
+                    page.wait_for_timeout(5000)
+
         try:
             # ログイン画面を開いてメール・パスワードを入力（Tabでblurし、Livewireへ反映）
-            page.goto(LOGIN_URL, wait_until="domcontentloaded")
+            goto_with_retry(LOGIN_URL)
             page.query_selector("input[type=email]").fill(email)
             page.keyboard.press("Tab")
             page.query_selector("input[type=password]").fill(password)
@@ -117,7 +131,7 @@ def fetch_highest_price() -> dict:
             page.wait_for_url(lambda u: "/admin/login" not in u, timeout=25000)
 
             # 価格ツールを開いて動的描画を待つ
-            page.goto(TOOL_URL, wait_until="domcontentloaded")
+            goto_with_retry(TOOL_URL)
             page.wait_for_timeout(4000)
 
             # 各行（tr）から「機種名」と「行テキスト」を取り出す
