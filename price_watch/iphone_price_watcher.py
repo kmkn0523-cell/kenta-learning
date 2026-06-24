@@ -31,6 +31,7 @@ LOGIN_URL = "https://ringonodorei.com/admin/login"  # ログイン画面
 TOOL_URL = "https://ringonodorei.com/admin/purchase-price-tool"  # 価格ツール
 TARGET_MODEL = "iPhone 17 Pro Max"  # 監視する機種名
 TARGET_CAPACITY = "512GB"  # 監視する容量
+TARGET_COLOR = "シルバー"  # 監視する色（色で買取価格が違うので1色に限定する）
 STATE_FILE = Path(__file__).with_name("iphone_price_state.json")  # 前回価格の記録先
 JST = timezone(timedelta(hours=9))  # 日本時間
 
@@ -40,20 +41,28 @@ def now_jst_text() -> str:
     return datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
 
 
-def parse_max_price(model_text: str, row_text: str) -> int | None:
-    """1行分のテキストから、店舗買取価格の最高値（円・整数）を取り出す。
+def parse_prices(model_text: str, row_text: str) -> list[int]:
+    """1行分のテキストから、店舗買取価格（円・整数）をすべて取り出してリストで返す。
 
     model_text: その行の機種名（例 'iPhone 17 Pro Max 512GB シルバー'）。
     row_text:   その行の表示テキスト全体（店舗価格や差額を含む）。
-    対象機種・容量に合わない行は None を返す。
-    定価（¥付き）や差額（円の前に空白なし）は最大値計算に影響しないので自然に除外される。
+    対象機種・容量・色に合わない行は空リストを返す。
+    定価（¥付き）や差額（円の前に空白なし）は店舗価格ではないので自然に除外される。
     """
-    # 対象の機種・容量でなければ無視する
-    if TARGET_MODEL not in model_text or TARGET_CAPACITY not in model_text:
-        return None
+    # 対象の機種・容量・色でなければ無視する（空リストを返す）
+    if TARGET_MODEL not in model_text or TARGET_CAPACITY not in model_text or TARGET_COLOR not in model_text:
+        return []
     # 「数字 円」（円の直前に空白あり）の形だけを店舗価格として拾う。定価は ¥ 記号なので除外。
     matches = re.findall(r"([0-9]{1,3}(?:,[0-9]{3})+)\s+円", row_text)
-    prices = [int(m.replace(",", "")) for m in matches]
+    return [int(m.replace(",", "")) for m in matches]
+
+
+def parse_max_price(model_text: str, row_text: str) -> int | None:
+    """1行分のテキストから、店舗買取価格の最高値（円・整数）を取り出す。
+
+    対象機種・容量・色に合わない行や、価格が無い行は None を返す。
+    """
+    prices = parse_prices(model_text, row_text)  # その行の店舗価格をすべて取得
     if not prices:
         return None
     return max(prices)
@@ -63,11 +72,11 @@ def parse_list_price(model_text: str, row_text: str) -> int | None:
     """1行分のテキストから、定価（¥付き数値・整数）を取り出す。
 
     model_text: その行の機種名。row_text: その行の表示テキスト全体。
-    対象機種・容量に合わない行や、定価が見つからない行は None を返す。
+    対象機種・容量・色に合わない行や、定価が見つからない行は None を返す。
     定価は「¥229,800」のように ¥ 記号付きで書かれている。
     """
-    # 対象の機種・容量でなければ無視する
-    if TARGET_MODEL not in model_text or TARGET_CAPACITY not in model_text:
+    # 対象の機種・容量・色でなければ無視する
+    if TARGET_MODEL not in model_text or TARGET_CAPACITY not in model_text or TARGET_COLOR not in model_text:
         return None
     # 「¥数字」の形（カンマ区切りでもなくてもOK）を定価として拾う
     matches = re.findall(r"¥\s*([0-9]{1,3}(?:,[0-9]{3})*)", row_text)
@@ -79,10 +88,11 @@ def parse_list_price(model_text: str, row_text: str) -> int | None:
 
 
 def fetch_highest_price() -> dict:
-    """ログインして価格ページを開き、対象機種の最高買取価格を返す。
+    """ログインして価格ページを開き、対象機種の買取価格（最高値・平均）を返す。
 
-    戻り値: {"price": int, "label": str, "list_price": int | None}
-    （labelは最高値だった行の機種名、list_priceはその行の定価。定価が無ければ None）。
+    戻り値: {"price": int, "average": int, "label": str, "list_price": int | None}
+    （priceは最高値、averageは対象店舗価格の平均、labelは最高値だった行の機種名、
+    list_priceはその行の定価。定価が無ければ None）。
     取得できなければ ValueError を投げる。
     """
     from playwright.sync_api import sync_playwright
@@ -134,22 +144,34 @@ def fetch_highest_price() -> dict:
         finally:
             browser.close()
 
-    # 対象機種の各行から最高値を集め、その中の最大を「最高買取価格」とする
+    # 対象機種の各行から店舗価格を集める。最高値はその中の最大、平均は全店舗価格の平均にする
+    all_prices = []  # 対象行に出てきた店舗価格をすべてためる箱（平均の計算に使う）
     best_price = None
     best_label = ""
     best_list_price = None  # 最高値だった行の定価（取れなければ None）
     for row in rows:
-        price = parse_max_price(row["model"], row["text"])
-        if price is not None and (best_price is None or price > best_price):
-            best_price = price
+        prices = parse_prices(row["model"], row["text"])  # その行の店舗価格一覧
+        if not prices:
+            continue
+        all_prices.extend(prices)  # 平均用にためる
+        row_max = max(prices)  # その行の最高値
+        if best_price is None or row_max > best_price:
+            best_price = row_max
             best_label = row["model"]
             best_list_price = parse_list_price(row["model"], row["text"])
 
     if best_price is None:
         raise ValueError(
-            f"{TARGET_MODEL} {TARGET_CAPACITY} の価格が見つかりませんでした。ページ構造が変わった可能性があります。"
+            f"{TARGET_MODEL} {TARGET_CAPACITY} {TARGET_COLOR} の価格が見つかりませんでした。ページ構造が変わった可能性があります。"
         )
-    return {"price": best_price, "label": best_label, "list_price": best_list_price}
+    # 平均価格（小数は四捨五入して円単位の整数にする）
+    average_price = round(sum(all_prices) / len(all_prices))
+    return {
+        "price": best_price,
+        "average": average_price,
+        "label": best_label,
+        "list_price": best_list_price,
+    }
 
 
 def load_last_price() -> int | None:
@@ -172,15 +194,33 @@ def format_vs_list_price(price: int, list_price: int | None) -> str:
     if list_price is None:
         return "定価: 不明"
     diff = price - list_price  # 買取 − 定価（ふつうはマイナス＝定価より安い）
-    sign = "+" if diff >= 0 else ""  # マイナスは数値側に符号が付く
+    if diff == 0:
+        # 買取が定価ピッタリ＝いちばん高い水準。分かりやすく「同額」と出す
+        return f"定価 ¥{list_price:,} と同額"
+    sign = "+" if diff > 0 else ""  # マイナスは数値側に符号が付く
     return f"定価 ¥{list_price:,} から {sign}{diff:,}円"
 
 
-def save_price(price: int, label: str, list_price: int | None = None) -> None:
+def short_vs_list(price: int, list_price: int | None) -> str:
+    """定価からの差額を短く表す（メールタイトル用）。
+
+    例: 買取230,000円・定価229,800円 → '定価+200'。定価ピッタリ→'定価ぴったり'。定価不明→'定価不明'。
+    """
+    if list_price is None:
+        return "定価不明"
+    diff = price - list_price  # 買取 − 定価
+    if diff == 0:
+        return "定価ぴったり"
+    sign = "+" if diff > 0 else ""  # マイナスは数値側に符号が付く
+    return f"定価{sign}{diff:,}"
+
+
+def save_price(price: int, label: str, list_price: int | None = None, average: int | None = None) -> None:
     """今回価格を記録ファイルに保存する。"""
     data = {
-        "model": f"{TARGET_MODEL} {TARGET_CAPACITY}",
+        "model": f"{TARGET_MODEL} {TARGET_CAPACITY} {TARGET_COLOR}",
         "price": price,
+        "average": average,
         "label": label,
         "list_price": list_price,
         "updated_at": now_jst_text(),
@@ -221,15 +261,23 @@ def main() -> None:
         raise
 
     price = result["price"]
+    average = result["average"]  # 平均買取価格
     label = result["label"]
     list_price = result["list_price"]  # 定価（取れなければ None）
-    vs_list = format_vs_list_price(price, list_price)  # 定価からの差額の文章
+    vs_list = format_vs_list_price(price, list_price)  # 最高値の定価からの差額（詳しい文章）
+    vs_avg = format_vs_list_price(average, list_price)  # 平均値の定価からの差額（詳しい文章）
+    short_list = short_vs_list(price, list_price)  # 最高値の定価差（タイトル用の短い形）
+    short_avg = short_vs_list(average, list_price)  # 平均値の定価差（タイトル用の短い形）
+    # タイトル末尾に毎回つける「最高・平均＋定価差」のまとめ
+    price_tag = f"最高{price:,}円({short_list}) 平均{average:,}円({short_avg})"
+    # 万が一、買取の最高が定価を超えたら「事件」として件名の先頭で目立たせる（通常は起きない想定）
+    incident_prefix = "【事件】" if (list_price is not None and price > list_price) else ""
     last = load_last_price()
-    print(f"今回価格: {price:,}円（{vs_list}） / 前回価格: {last if last is None else format(last, ',') + '円'}")
+    print(f"今回 最高{price:,}円（{vs_list}） / 平均{average:,}円（{vs_avg}） / 前回最高: {last if last is None else format(last, ',') + '円'}")
 
     if last is None:
         # 初回は通知せず、記録だけする
-        save_price(price, label, list_price)
+        save_price(price, label, list_price, average)
         print("初回のため記録のみ（通知なし）")
         return
 
@@ -237,30 +285,31 @@ def main() -> None:
         # 値が変わっていれば通知する
         diff = price - last
         sign = "+" if diff > 0 else ""
-        subject = f"【値動き】iPhone17ProMax 512GB 買取 {sign}{diff:,}円"
+        subject = f"{incident_prefix}【値動き{sign}{diff:,}円】17ProMax512GB銀 {price_tag}"
         body = (
             f"前回 {last:,}円 → 今回 {price:,}円（前回差 {sign}{diff:,}円）\n"
-            f"{vs_list}\n"
+            f"最高 {price:,}円（{vs_list}）\n"
+            f"平均 {average:,}円（{vs_avg}）\n"
             f"対象: {label}\n"
             f"確認: {TOOL_URL}\n"
             f"取得時刻: {now_jst_text()}\n"
         )
         send_email(subject, body)
-        save_price(price, label, list_price)
+        save_price(price, label, list_price, average)
         print(f"値動きあり → メール送信（{sign}{diff:,}円 / {vs_list}）")
     else:
         # 変わっていなくても、毎回チェック結果を通知する（設定B）
-        subject = f"【変化なし】iPhone17ProMax 512GB 買取 {price:,}円"
+        subject = f"{incident_prefix}【変化なし】17ProMax512GB銀 {price_tag}"
         body = (
-            f"今日も価格は変わっていません。\n"
-            f"現在の買取最高価格 {price:,}円（前回と同じ）\n"
-            f"{vs_list}\n"
+            f"今日も最高価格は変わっていません。\n"
+            f"最高 {price:,}円（前回と同じ・{vs_list}）\n"
+            f"平均 {average:,}円（{vs_avg}）\n"
             f"対象: {label}\n"
             f"確認: {TOOL_URL}\n"
             f"取得時刻: {now_jst_text()}\n"
         )
         send_email(subject, body)
-        save_price(price, label, list_price)
+        save_price(price, label, list_price, average)
         print("変化なし → チェック結果メール送信")
 
 
