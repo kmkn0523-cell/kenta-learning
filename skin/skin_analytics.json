@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T09:51:42.699123",
+  "last_updated": "2026-06-24T09:39:09.561243",
   "posts_history": [
     {
       "day": 28,
@@ -2640,6 +2640,50 @@
       "shares": 0,
       "views": 63,
       "engagement_rate": 1.59
+    },
+    {
+      "day": 84,
+      "type": "汗と肌の関係",
+      "post_id": "18105083644834009",
+      "posted_at": "2026-06-24T08:01:29+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 87,
+      "engagement_rate": 1.15
+    },
+    {
+      "day": 83,
+      "type": "腸内フローラを整える",
+      "post_id": "18083887274645247",
+      "posted_at": "2026-06-24T03:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 32,
+      "engagement_rate": 3.12
+    },
+    {
+      "day": 82,
+      "type": "脂質と肌の関係",
+      "post_id": "18120620725751576",
+      "posted_at": "2026-06-23T22:01:32+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 14,
+      "engagement_rate": 7.14
+    },
+    {
+      "day": 81,
+      "type": "化粧品の使用期限と肌荒れ",
+      "post_id": "18155889613473673",
+      "posted_at": "2026-06-23T12:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 36,
+      "engagement_rate": 2.78
     }
   ],
   "pattern_performance": {
@@ -3174,44 +3218,44 @@
     },
     "day_84": {
       "汗と肌の関係": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 23.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 23,
+        "avg_comments": 0.5,
+        "avg_views": 55.0,
+        "avg_engagement_rate": 0.57,
+        "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
     "day_83": {
       "腸内フローラを整える": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 45.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 21,
+        "avg_comments": 0.5,
+        "avg_views": 38.0,
+        "avg_engagement_rate": 1.56,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_82": {
       "脂質と肌の関係": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 35.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 24.0,
+        "avg_engagement_rate": 3.57,
         "best_hour": 19,
         "best_hashtag_set": "A"
       }
     },
     "day_81": {
       "化粧品の使用期限と肌荒れ": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 22.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 29.0,
+        "avg_engagement_rate": 1.39,
         "best_hour": 17,
         "best_hashtag_set": "A"
       }
