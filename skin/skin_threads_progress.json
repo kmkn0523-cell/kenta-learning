@@ -1,5 +1,5 @@
 {
-  "daily_index": 344,
+  "daily_index": 345,
   "launch_index": 0,
   "history": [
     {
@@ -5226,6 +5226,14 @@
       "variant": "A",
       "post_id": "17970821871099911",
       "seed_id": "18103945832040786"
+    },
+    {
+      "date": "2026/06/25 12:02",
+      "theme": "首・デコルテのケア",
+      "theme_id": 89,
+      "variant": "A",
+      "post_id": "18117896746829859",
+      "seed_id": "18085537913540779"
     }
   ],
   "ab_next": "A",
@@ -5512,7 +5520,7 @@
     "89": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "90": {
@@ -5990,7 +5998,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-25T08:02:05.039562+00:00",
+  "last_posted_at": "2026-06-25T12:04:07.230213+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
   "last_note_promo_date": "2026/06/23",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
