@@ -114,6 +114,7 @@
   - [x] バッチ進行管理ファイル（skin_threads_batch_progress.json）作成
 - [x] **A/B検証の配線切れを修正（2026/06/25）**：反応スコアが永遠に0だった根本原因（反応収集データを`ab_results`へ反映する処理が未実装）を特定。`skin_ab_report.py`に`aggregate_ab_scores`/`aggregate_format_scores`/`judge_format`を追加（TDD・テスト194件全パス）。設計書: `docs/superpowers/specs/2026-06-25-skin-ab-format-aggregation-design.md`
 - [x] **フォーマット全体A/B判定が出た（2026/06/25）**：テーマ単位は108全ローテーションで1サンプルずつしか溜まらず判定不能と判明 → テーマ横断で「A型 vs B型」を集計する方式に変更。結果 **A型（既存）平均1.69% / B型（新フォーマット）平均0.66% → A型の勝ち（差60.8%）**。確認は `python3 skin/skin_ab_report.py --batch 1` の末尾「フォーマット全体A/B」
+- [x] **運用判断: A型寄りに戻した（2026/06/25）**：`skin_threads_action.py` に `FORCE_A_VARIANT = True` スイッチを追加し、B型（新フォーマット）の投稿を停止。A型固定で投稿する。再びA/Bを回したくなったら `FORCE_A_VARIANT = False` に戻すだけ（dry-run確認済み・テスト13件パス）
 
 #### Instagram自動投稿
 - [x] GitHub Actions有効化・稼働中（2026/05/12）

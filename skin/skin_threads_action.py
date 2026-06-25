@@ -27,6 +27,11 @@ THREADS_USER_ID      = os.environ["THREADS_USER_ID"]
 # GitHub Pagesの画像ベースURL
 GITHUB_BASE = "https://kmkn0523-cell.github.io/kenta-learning/skin/skin_images"
 
+# A型（既存フォーマット）だけで投稿するスイッチ。
+# 2026/06/25のA/B検証でB型（新フォーマット）がA型に負けた（A型1.69% vs B型0.66%）ため、
+# B型を止めてA型寄りに戻している。再びA/Bを回したくなったら False にするだけで元に戻る。
+FORCE_A_VARIANT = True
+
 
 def get_image_url(thread_id):
     """スレッドIDに対応するカード画像のURLを返す（GitHub Pages）"""
@@ -712,7 +717,8 @@ def main(dry_run=False):
     # テーマ総数はthreads_aの件数から動的に求める（109〜128が回らなかったバグの修正）
     theme_count = len(posts.get("threads_a", [])) or 108
     theme_id   = pick_today_theme(progress["daily_index"], theme_count)
-    variant    = select_ab_variant(progress, theme_id)
+    # FORCE_A_VARIANTがTrueの間はA型固定（B型を停止中）。Falseに戻すとA/B交互に復帰する
+    variant    = "A" if FORCE_A_VARIANT else select_ab_variant(progress, theme_id)
     thread_set = load_posts_for_variant(posts, theme_id, variant)
 
     print(f"投稿セット: {thread_set['theme']}")
@@ -766,8 +772,9 @@ def main(dry_run=False):
     except Exception as e:
         print(f"  ⚠️ 1コメ目シード失敗（本投稿は成功済み・スキップ）: {e}")
 
-    # A/B選択状態を反転して次回に備える
-    flip_ab_variant(progress, theme_id)
+    # A/B選択状態を反転して次回に備える（A型固定中は反転しない）
+    if not FORCE_A_VARIANT:
+        flip_ab_variant(progress, theme_id)
     # A/B結果集計用のpost数カウントもインクリメント
     results = progress.setdefault("ab_results", {})
     theme_key = str(theme_id)
