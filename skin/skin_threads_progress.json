@@ -1,5 +1,5 @@
 {
-  "daily_index": 342,
+  "daily_index": 343,
   "launch_index": 0,
   "history": [
     {
@@ -5210,6 +5210,14 @@
       "variant": "A",
       "post_id": "18082914455368693",
       "seed_id": "18085758050637088"
+    },
+    {
+      "date": "2026/06/25 03:00",
+      "theme": "喫煙と肌老化",
+      "theme_id": 87,
+      "variant": "A",
+      "post_id": "18087693230434693",
+      "seed_id": "18079155458271643"
     }
   ],
   "ab_next": "A",
@@ -5241,7 +5249,7 @@
     "84": "B",
     "85": "B",
     "86": "B",
-    "87": "A",
+    "87": "B",
     "88": "A",
     "89": "A",
     "90": "A",
@@ -5484,7 +5492,7 @@
     "87": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "88": {
@@ -5974,7 +5982,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-24T22:02:13.550172+00:00",
+  "last_posted_at": "2026-06-25T03:02:13.235865+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
   "last_note_promo_date": "2026/06/23",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
