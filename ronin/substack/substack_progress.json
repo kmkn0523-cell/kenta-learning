@@ -1,5 +1,5 @@
 {
-  "next_day": 47,
+  "next_day": 48,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -234,6 +234,12 @@
       "day": 46,
       "post_id": 203486167,
       "title": "損して得取れ — Take the loss now. Claim the gain later."
+    },
+    {
+      "date": "2026/06/26 07:33",
+      "day": 47,
+      "post_id": 203622918,
+      "title": "急いては事を仕損じる — Haste makes waste."
     }
   ]
 }
