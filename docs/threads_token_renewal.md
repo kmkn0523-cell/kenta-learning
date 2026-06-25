@@ -1,17 +1,27 @@
 # Threadsトークン更新手順（60日ごと）
 
 ## 次回期限
-**2026/06/26頃**（リマインド予約済み）
+**2026/08/24頃**（2026/06/25にリフレッシュ更新済み・60日有効）
 
-## 更新手順
-1. Meta for Developers（developers.facebook.com）にログイン
-2. アプリ → Threadsアクセストークン → 長期トークン取得
-3. `.env` の `THREADS_ACCESS_TOKEN` を新しいトークンに書き換え
-4. GitHub の Secrets（Settings → Secrets）も同様に更新
+## 更新手順（推奨：リフレッシュ方式）
+今の長期トークンが有効なうちは、再生成不要でリフレッシュするだけで60日延長できる。
+Claude Code に「Threadsトークンをリフレッシュして」と頼めば以下を自動でやる。
 
-## 対象アカウント
-- @RoninWords: `THREADS_ACCESS_TOKEN`
-- skin（肌荒れ）: 同じトークンを使用
+```
+GET https://graph.threads.net/refresh_access_token?grant_type=th_refresh_token&access_token=（今のトークン）
+```
+
+1. `.env` の各トークンでリフレッシュAPIを叩き、新60日トークンを取得
+2. `.env` を新トークンに書き換え
+3. GitHub Secrets も同様に更新
+4. `https://graph.threads.net/v1.0/me` で疎通確認
+
+※ 期限切れ後はリフレッシュ不可。その場合は Meta for Developers でアプリ→Threads→
+「Generate access token」で短期トークンを取り、`grant_type=th_exchange_token` で長期変換する。
+
+## 対象アカウント（skinとroninは別トークン）
+- skin（肌荒れ・`skin_reset_jp`）: `.env`＝`THREADS_ACCESS_TOKEN` / Secret＝`THREADS_ACCESS_TOKEN`
+- @RoninWords（`ronin_words111`）: `.env`＝`RONIN_THREADS_ACCESS_TOKEN` / Secret＝`RONIN_THREADS_ACCESS_TOKEN`
 
 ---
 
