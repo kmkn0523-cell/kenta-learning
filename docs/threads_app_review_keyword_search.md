@@ -91,7 +91,44 @@ send intervals, and a no-repeat rule for templated text.
 5. **スパム抑制の説明テロップ**：「1日◯件まで／同一ユーザー1日1件／送信間隔ランダム」を字幕で補足。
 
 > ポイント：全自動cronの裏側ではなく、**人が確認して送る前段のUI**を見せること。
-> このUIは現状エンジンに無いので、申請用に最小の検索結果ビューを別途用意する必要がある（下記「申請のために追加実装が要るもの」）。
+> このUIは `skin/skin_reply_review_ui.py`（`--demo`）に用意済み。これを録画する。
+
+---
+
+## レビュアー再現手順ドラフト（Test Instructions・コピペ用）
+
+申請フォームの「Step-by-step instructions to test the integration」に貼る想定。
+レビュアーが手元で同じ画面を再現できるよう、UIの操作手順をそのまま書く。
+
+### English
+```
+This permission is used through an operator-facing review UI.
+
+1. Start the review tool:
+   cd skin && python3 skin_reply_review_ui.py
+2. Open http://127.0.0.1:8765 in a browser.
+3. Enter a keyword related to skincare / inner care (e.g. "gut health")
+   and click Search. The app calls threads_keyword_search and lists the
+   matching public posts (text, author, timestamp).
+4. The operator reviews the listed posts for topical relevance, selects one,
+   reviews the suggested reply text, edits if needed, and clicks Send.
+5. Only the post the operator explicitly selected receives a reply.
+
+A demo mode (add the --demo flag) shows the same flow with sample data and
+does not send any live reply, so reviewers can inspect the UI without posting.
+```
+
+### 日本語（補足用）
+```
+本権限は、運用者向けの確認UIを通じて使用します。
+1. ツール起動: cd skin && python3 skin_reply_review_ui.py
+2. ブラウザで http://127.0.0.1:8765 を開く
+3. スキンケア／インナーケア関連のキーワード（例「腸活」）で検索 →
+   threads_keyword_search が公開投稿を一覧表示
+4. 運用者が関連性を確認し1件選択 → 返信文を確認・編集 → 送信
+5. 運用者が選んだ投稿にのみ返信が送られる
+（--demo を付けるとサンプルデータで同じ流れを実送信なしで確認できる）
+```
 
 ---
 
@@ -101,8 +138,8 @@ send intervals, and a no-repeat rule for templated text.
 
 | 抑制策 | 設定キー / 実装 | 値 |
 |---|---|---|
-| 1日の返信上限 | `daily_cap` | 25 |
-| 1回の実行あたり上限 | `per_run` | 4 |
+| 1日の返信上限 | `daily_cap` | 10 |
+| 1回の実行あたり上限 | `per_run` | 2 |
 | 同一著者への上限/日 | `max_per_author_per_day` | 1 |
 | 短すぎる投稿を除外 | `min_post_length` | 15 |
 | 宣伝投稿を除外（URL過多） | `max_urls` | 1 |
@@ -115,17 +152,22 @@ send intervals, and a no-repeat rule for templated text.
 
 ---
 
-## 申請のために追加実装が要るもの（PCに触れる時の作業候補）
+## 申請のために必要なもの（すべて準備完了）
 
-App Review を「投稿モニタリング＋運用者補助」として通すなら、最低限これが要る。
-（現状エンジンは全自動でUIが無いため）
+App Review を「投稿モニタリング＋運用者補助」として通すための準備物は、3点とも完成済み。
 
-1. **検索結果ビュー**（最小UI）：keyword_search の結果を一覧表示し、運用者が選んで返信できる簡易画面。
-   - 案: ローカルで動く軽量な確認用スクリプト or 簡易Webページ。スクリーンキャスト用に最小限でよい。
-2. **プライバシーポリシーの公開ページ**：1枚の静的ページで可。
-3. （任意）申請文・台本の最終版を `docs/` に確定保存。
+1. ✅ **検索結果ビュー（運用者補助UI）**：`skin/skin_reply_review_ui.py`。`--demo` で起動すると、キーワード検索→結果一覧→運用者が1件選んで返信→送信、までを画面で操作できる。スクリーンキャストはこのUIを録画する。
+   ```
+   cd skin && python3 skin_reply_review_ui.py --demo
+   ```
+   ブラウザ: `http://127.0.0.1:8765`（動作確認済み 2026-06-25）
+2. ✅ **プライバシーポリシーの公開ページ**：`privacy.html` を GitHub Pages で公開済み（HTTP 200 確認済み 2026-06-25）。
+   ```
+   https://kmkn0523-cell.github.io/kenta-learning/privacy.html
+   ```
+3. ✅ **申請文・台本**：このファイル（説明文ドラフト・スクリーンキャスト台本・レビュアー再現手順）に確定保存済み。
 
-> ※これらは「審査を通すため」の作業。標準アクセス検証で空振りを確認してから着手するのが順序として正しい。
+> 準備は完了。あとは Phase A（録画）→ Phase B（フォーム提出）を実行するだけ。手順は `docs/reply_engine_manual_steps.md`。
 
 ---
 
