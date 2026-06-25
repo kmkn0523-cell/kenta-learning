@@ -1,6 +1,6 @@
 # TODO リスト
 
-最終更新: 2026/06/15（skinアフィリのASP方針を修正: A8→楽天/afb。A8はThreads投稿掲載が公式非推奨のため）
+最終更新: 2026/06/25（Threadsトークン更新・IG insights権限完了反映・Batch日付の棚卸し）
 
 ---
 
@@ -172,9 +172,8 @@
   - [x] skin_ab_report.py（A/B勝者判定スクリプト）作成
   - [x] テーマ1-20 のA/B 全40セット制作（薬機法準拠：辞書形＋活用形NG 0件）
   - [x] バッチ進行管理ファイル（skin_threads_batch_progress.json）作成
-- [ ] 2026/05/31: Batch 1 中間レポート確認（`python3 skin/skin_ab_report.py --batch 1`）
-- [ ] 2026/06/06: Batch 1 最終レポート → status を `validated` に更新
-- [ ] 2026/06/07〜: Batch 2（テーマ21-40）制作開始・新計画書作成
+- [ ] Batch 1: 検証期間は終了済み（〜6/06）が勝者判定が未実施 → `python3 skin/skin_ab_report.py --batch 1` を実行し winner決定・status を `validated` に（batch_progress.jsonは released/winner_decided:false のまま）
+- [ ] 上記の後: Batch 2（テーマ21-40）制作開始・新計画書作成
 - [ ] Batch 3〜6（テーマ41-108）順次制作・リリース
 
 #### Instagram自動投稿
@@ -189,7 +188,7 @@
   - 5投稿に1回 v2 を挟む。progress.json を {v1_index, v2_index, post_count} に拡張
 - [x] 投稿頻度を1日4回→2回に削減（2026/05/20・commit 1cea40e）
   - 7:00 / 19:00 JST に集約。1周5日→10日に伸ばしてネタ切れ防止
-- [ ] **Batch 2 制作（2026/06/07予定）**：v1 16テーマを v2（8スライド）化 or 新規追加
+- [ ] **Batch 2 制作（未着手・日付目安切れ）**：v1 16テーマを v2（8スライド）化 or 新規追加
 - [ ] **投稿内容ブラッシュアップ（プロ目線、新セッションでbrainstormingから）**
   - アカウント: https://www.instagram.com/skin_reset_jp/
   - 既存ファイル: skin/carousel_content.json（themes配列）、skin/skin_instagram_image_gen_v3.py（v1画像）、skin/skin_instagram_image_gen_v4.py（v2画像）、skin/skin_instagram_auto_post.py（投稿）
