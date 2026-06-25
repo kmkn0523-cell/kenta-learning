@@ -5,7 +5,53 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from skin_ab_report import judge_theme, generate_report
+from skin_ab_report import judge_theme, generate_report, aggregate_ab_scores
+
+
+def test_aggregate_sums_engagement_rate_per_variant():
+    # テーマ5でA投稿1件(rate=10)・B投稿1件(rate=4) → a_score=10, b_score=4
+    history = [
+        {"theme_id": 5, "variant": "A", "post_id": "111"},
+        {"theme_id": 5, "variant": "B", "post_id": "222"},
+    ]
+    posts_history = [
+        {"post_id": "111", "engagement_rate": 10.0},
+        {"post_id": "222", "engagement_rate": 4.0},
+    ]
+    results = aggregate_ab_scores(history, posts_history)
+    assert results["5"]["a_score"] == 10.0
+    assert results["5"]["b_score"] == 4.0
+    assert results["5"]["a_posts"] == 1
+    assert results["5"]["b_posts"] == 1
+
+
+def test_aggregate_skips_posts_without_reaction_data():
+    # analyticsに反応が無いpost_idは集計対象外（投稿カウントもしない）
+    history = [
+        {"theme_id": 7, "variant": "A", "post_id": "333"},
+        {"theme_id": 7, "variant": "A", "post_id": "999"},  # analyticsに無い
+    ]
+    posts_history = [
+        {"post_id": "333", "engagement_rate": 6.0},
+    ]
+    results = aggregate_ab_scores(history, posts_history)
+    assert results["7"]["a_score"] == 6.0
+    assert results["7"]["a_posts"] == 1
+
+
+def test_aggregate_ignores_incomplete_history_entries():
+    # theme_id や variant が欠けたエントリは無視する
+    history = [
+        {"variant": "A", "post_id": "444"},          # theme_id無し
+        {"theme_id": 8, "post_id": "555"},            # variant無し
+        {"theme_id": 8, "variant": "A"},              # post_id無し
+    ]
+    posts_history = [
+        {"post_id": "444", "engagement_rate": 5.0},
+        {"post_id": "555", "engagement_rate": 5.0},
+    ]
+    results = aggregate_ab_scores(history, posts_history)
+    assert results == {}
 
 
 def test_judge_theme_returns_no_data_when_posts_below_threshold():

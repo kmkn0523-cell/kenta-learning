@@ -15,6 +15,7 @@ from typing import Iterable
 ROOT = Path(__file__).resolve().parent
 PROGRESS_PATH = ROOT / "skin_threads_progress.json"
 BATCH_PATH = ROOT / "skin_threads_batch_progress.json"
+ANALYTICS_PATH = ROOT / "skin_analytics.json"
 
 
 def judge_theme(
@@ -62,6 +63,42 @@ def judge_theme(
         "b_avg": b_avg,
         "lead_pct": lead_pct,
     }
+
+
+def aggregate_ab_scores(history: Iterable[dict], posts_history: Iterable[dict]) -> dict:
+    # 投稿履歴(history)と反応データ(posts_history)を突き合わせてA/Bスコアを集計する
+    # post_id ごとのエンゲージメント率を引けるように辞書を作る
+    rate_by_id = {
+        str(p["post_id"]): p.get("engagement_rate", 0.0)
+        for p in posts_history
+        if p.get("post_id") is not None
+    }
+
+    results = {}
+    for entry in history:
+        post_id = entry.get("post_id")
+        theme_id = entry.get("theme_id")
+        variant = entry.get("variant")
+        # 必須項目が欠けている履歴は集計しない
+        if post_id is None or theme_id is None or variant not in ("A", "B"):
+            continue
+        # 反応データが取れていない投稿（API未反映）は集計対象外にする
+        if str(post_id) not in rate_by_id:
+            continue
+
+        rate = rate_by_id[str(post_id)]
+        theme_key = str(theme_id)
+        bucket = results.setdefault(
+            theme_key, {"a_score": 0.0, "b_score": 0.0, "a_posts": 0, "b_posts": 0}
+        )
+        if variant == "A":
+            bucket["a_score"] += rate
+            bucket["a_posts"] += 1
+        else:
+            bucket["b_score"] += rate
+            bucket["b_posts"] += 1
+
+    return results
 
 
 def generate_report(progress: dict, themes: Iterable[int]) -> str:
@@ -113,12 +150,25 @@ def main():
     progress = json.loads(PROGRESS_PATH.read_text(encoding="utf-8"))
     batch_data = json.loads(BATCH_PATH.read_text(encoding="utf-8"))
 
+    # 反応データ(skin_analytics.json)を読む。無ければ空で続行する
+    try:
+        analytics = json.loads(ANALYTICS_PATH.read_text(encoding="utf-8"))
+        posts_history = analytics.get("posts_history", [])
+    except FileNotFoundError:
+        print("⚠️ skin_analytics.json が見つかりません。反応データ無しで集計します")
+        posts_history = []
+
+    # 投稿履歴(history)×反応データ(posts_history)から毎回フレッシュにスコアを集計する
+    # progressには書き戻さない（投稿スクリプトのカウントと衝突させないため）
+    fresh_results = aggregate_ab_scores(progress.get("history", []), posts_history)
+    report_source = {"ab_results": fresh_results}
+
     batch_id = args.batch or batch_data["current_batch"]
     themes_str = batch_data["batches"][str(batch_id)]["themes"]
     themes = parse_theme_range(themes_str)
 
     print(f"Batch {batch_id} (テーマ{themes_str}) のレポート:")
-    print(generate_report(progress, themes))
+    print(generate_report(report_source, themes))
 
 
 if __name__ == "__main__":
