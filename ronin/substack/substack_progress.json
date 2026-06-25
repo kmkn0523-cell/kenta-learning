@@ -1,5 +1,5 @@
 {
-  "next_day": 45,
+  "next_day": 47,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -228,6 +228,12 @@
       "day": 44,
       "post_id": 203330299,
       "title": "一芸は身を助ける — One skill can save your life."
+    },
+    {
+      "date": "2026/06/25 09:29",
+      "day": 46,
+      "post_id": 203486167,
+      "title": "損して得取れ — Take the loss now. Claim the gain later."
     }
   ]
 }
