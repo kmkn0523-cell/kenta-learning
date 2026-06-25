@@ -8,7 +8,8 @@
 
 - [x] Task 8: Instagram Batch 1 初動チェック（v2 8枚カルーセル4件・公開確認済み 2026-05-20）
 - [x] Task 4: Instagram insights 権限申請（`instagram_manage_insights` は両IGトークンに付与済みと2026/06/25確認）
-- [ ] Week 2 (5/25〜) リプ運用準備 — `skin/skin_account_targets.json` の10アカウントの最新投稿を再確認
+- [x] Week 2 (5/25〜) リプ運用準備 — `skin/skin_account_targets.json` の10アカウントを2026/06/25再確認（follower数・最新投稿・営業色を反映）。keep 6件・入替推奨3件(@lii_gohan/@watashino_kohkatsu/@skincarebunnyy)・要観察1件(@skincare_kokun)
+  - [ ] 入替推奨3件をアプリで最終確認し、外すなら新ターゲットを補充（腸活×肌・大人ニキビ系で500〜3万規模）
 - [ ] skinアフィリエイト導線（コード準備済 2026/06/13）— あとは商品リンクを入れるだけ
   - [ ] 楽天アフィリエイト登録（楽天会員なら審査ほぼなしで即発行・Threads認定SNS済）。または afb（Threads原則OK・案件ごと要項確認）
         ※⚠️ A8.netは使わない（公式がThreads投稿への広告掲載を非推奨＝iOSアプリでリンクが正常遷移しない不具合のため。A8はプロフィールリンク欄のみ可）。1コメ目CTAに出す用途には楽天/afbを使う（2026/06/15 リサーチで確認）

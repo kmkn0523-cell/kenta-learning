@@ -9,86 +9,116 @@
     "themes": ["肌荒れ", "大人ニキビ", "腸活", "美肌", "インナーケア", "食事 肌", "睡眠 肌"],
     "exclude": ["商品ブランド公式アカウント", "営業色が強いアカウント"]
   },
-  "_note": "AI が WebSearch で抽出した候補。スマホアプリでフォロワー数・投稿頻度・絡みやすさを確認して、必要なら入れ替える。follower_estimate は未確認なので 0 のまま。",
+  "_note": "2026-06-25にWebFetchで全件を再確認し follower_estimate と last_reviewed/review_note/recommendation を更新。recommendation=replace/hold は基準外の入れ替え候補。最終判断はスマホアプリで投稿頻度・絡みやすさを確認してから。follower数と投稿日はWebFetch取得値で多少ブレる可能性あり。",
   "targets": [
     {
       "handle": "@shiori_wellness_kitchen",
       "url": "https://www.threads.com/@shiori_wellness_kitchen",
       "theme": "腸活アドバイザー・美腸活レシピ",
-      "follower_estimate": 0,
+      "follower_estimate": 12800,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "keep",
+      "review_note": "6/7投稿確認・活発。腸活レシピ充実。初レシピ本(7/21発売)など著書宣伝はやや目立つが内容主軸。基準内。",
       "notes": "はらしおり。腸活レシピ系。料理写真と食物繊維・植物性タンパクの解説が中心。skinペルソナの「食事改善」と親和性高い。"
     },
     {
       "handle": "@humanbioticsacademy",
       "url": "https://www.threads.com/@humanbioticsacademy",
       "theme": "腸活アカデミー・腸質改善",
-      "follower_estimate": 0,
+      "follower_estimate": 885,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "keep",
+      "review_note": "2日前投稿・活発。腸内環境と美肌・便秘・睡眠の教育コンテンツ主軸。講座営業はあるが過度でない。基準内。",
       "notes": "腸活アドバイザー講座運営。食べ過ぎ注意・摂りすぎは逆効果系の啓発投稿。教育コンテンツの参考に。"
     },
     {
       "handle": "@lii_gohan",
       "url": "https://www.threads.com/@lii_gohan",
       "theme": "ゆる腸活×麹ごはん",
-      "follower_estimate": 0,
+      "follower_estimate": 100000,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "replace",
+      "review_note": "フォロワー10万超で基準上限(5万)オーバー＋最新投稿が3/17で約3ヶ月停滞。規模が大きすぎてリプが埋もれる。入れ替え推奨。",
       "notes": "りい。麹・発酵食メインで肌に寄せやすい食生活発信。距離感が近く絡みやすい。"
     },
     {
       "handle": "@choukatsu_jane",
       "url": "https://www.threads.com/@choukatsu_jane",
       "theme": "腸活・マグネシウム・ニキビ",
-      "follower_estimate": 0,
+      "follower_estimate": 986,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "keep",
+      "review_note": "16時間前投稿・非常に活発。腸活×ニキビ・アトピー改善でskinテーマ完全一致。規模も絡みやすい。最優先ターゲット。",
       "notes": "肌バリア・セラミド・マグネシウム系の解説。乾燥肌・ニキビと腸活を結びつける投稿。skinテーマと直接的に重なる。"
     },
     {
       "handle": "@supplemiya",
       "url": "https://www.threads.com/@supplemiya",
       "theme": "サプリ・ビタミンD・腸活",
-      "follower_estimate": 0,
+      "follower_estimate": 6977,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "keep",
+      "review_note": "3日前投稿・活発。栄養学・予防医学・腸活の教育的発信で営業色弱め。基準内・良質ターゲット。",
       "notes": "サプリ知識発信。「善玉菌や食物繊維の前にビタミンD」など切り口がシャープ。"
     },
     {
       "handle": "@watashino_kohkatsu",
       "url": "https://www.threads.com/@watashino_kohkatsu",
       "theme": "酵活・食べるフェムケア",
-      "follower_estimate": 0,
+      "follower_estimate": 364,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "replace",
+      "review_note": "フォロワー364で基準下限(500)未満＋発酵食品の商品販売が主目的（exclude条件「商品ブランド/営業色」に該当）。入れ替え推奨。",
       "notes": "福岡発のフェムケアブランド創業者。素材・無添加にこだわる発信。インナーケア×ジャム系プロダクト。"
     },
     {
       "handle": "@skincarebunnyy",
       "url": "https://www.threads.com/@skincarebunnyy",
       "theme": "スキンケア×食事（糖化）",
-      "follower_estimate": 0,
+      "follower_estimate": 6469,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "replace",
+      "review_note": "5日前投稿。テーマはPCOS体質改善寄り。有料note誘導と製品名連呼「絶対ストック買いすべき」など営業色強め（exclude該当）。入れ替え推奨。",
       "notes": "ジュース・糖化・肌の関係を発信。「食事が肌に与える影響」を強めに言う系。skinの引き算思想とも相性◎"
     },
     {
       "handle": "@skincare_kokun",
       "url": "https://www.threads.com/@skincare_kokun",
       "theme": "肌荒れ・スキンケア（無料で触らない美肌術）",
-      "follower_estimate": 0,
+      "follower_estimate": 6045,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "hold",
+      "review_note": "2/12に「アカウント売却検討」投稿があり運用が不安定の可能性。規模・テーマは基準内だが要観察。アプリで現状を確認してから判断。",
       "notes": "毛穴・肌荒れ系。「無料で触らない美肌術」のコンセプトでプレゼント企画もやる人気アカ。"
     },
     {
       "handle": "@sunaochan_biyou",
       "url": "https://www.threads.com/@sunaochan_biyou",
       "theme": "引き算スキンケア・体験談",
-      "follower_estimate": 0,
+      "follower_estimate": 29800,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "keep",
+      "review_note": "18時間前投稿・非常に活発。夫が皮膚科医の検証姿勢で教育的、営業色抑制的。skinの体験談軸と親和性高い。基準内。",
       "notes": "「美容液を変えるたびに何か違う…」「使い始めてから翌朝の肌がモチモチ」など使用者目線のレビュー。skinの体験談寄り発信と親和性高い。"
     },
     {
       "handle": "@mashimashi_beauty",
       "url": "https://www.threads.com/@mashimashi_beauty",
       "theme": "外側＋内側ケア両立",
-      "follower_estimate": 0,
+      "follower_estimate": 30000,
       "added_at": "2026-05-19",
+      "last_reviewed": "2026-06-25",
+      "recommendation": "keep",
+      "review_note": "1時間前投稿・非常に活発。成分分析の理系的発信。PR明記で透明性あり、教育コンテンツに商品が含まれる形式。基準内。",
       "notes": "「外側のケアだけじゃなくて内側も整え始めたタイミングで変化感じる」と発信。skinの内側軸とほぼ同じ思想。"
     }
   ]
