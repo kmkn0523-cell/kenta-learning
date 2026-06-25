@@ -71,10 +71,40 @@ def test_build_ffmpeg_command_structure():
     filter_complex = cmd[cmd.index("-filter_complex") + 1]
     assert "fade=t=in" in filter_complex
     assert "concat=n=4" in filter_complex
+    # 1枚目だけは黒フェードを掛けない（冒頭とサムネが真っ黒になるのを防ぐ）
+    first_segment = filter_complex.split(";")[0]
+    assert "fade=t=in" not in first_segment
+    # 2枚目以降にはフェードが残る（リビール感を維持）
+    assert "fade=t=in" in filter_complex.split(";")[1]
     # 出力パスは最後
     assert cmd[-1] == "out.mp4"
     # 音源は動画長に合わせて切る
     assert "-shortest" in cmd
+
+
+def test_cover_thumb_offset_points_to_last_frame():
+    # 4フレーム・1枚2.6秒なら、最終フレーム中央(7.8+1.3=9.1秒)=9100msを指す
+    offset = engine.cover_thumb_offset_ms({"seconds_per_frame": 2.6})
+    assert offset == 9100
+
+
+def test_create_reels_container_sends_thumb_offset(monkeypatch):
+    captured = {}
+
+    class FakeResponse:
+        def json(self):
+            return {"id": "creation_456"}
+
+    def fake_post(url, params, timeout):
+        captured["params"] = params
+        return FakeResponse()
+
+    monkeypatch.setattr(engine.requests, "post", fake_post)
+    engine.create_reels_container(
+        "https://raw.example.com/latest_reel.mp4", "caption", "USER1", "TOKEN1", 9100
+    )
+    # カバー位置(thumb_offset)が送られる
+    assert captured["params"]["thumb_offset"] == 9100
 
 
 def test_create_reels_container_sends_reels_params(monkeypatch):

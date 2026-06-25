@@ -60,11 +60,17 @@ def build_ffmpeg_command(image_paths, audio_path, output_path, seconds_per_frame
     # 各フレームを縦型キャンバスに収め、fade-inで柔らかく出す filter を組み立てる
     filters = []
     for index in range(len(image_paths)):
-        filters.append(
+        # 縦型(9:16)キャンバスに収める基本の変換（拡大縮小＋余白＋アスペクト比固定）
+        base = (
             f"[{index}:v]scale={width}:{height}:force_original_aspect_ratio=decrease,"
-            f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2,setsar=1,"
-            f"fade=t=in:st=0:d={fade_duration}[v{index}]"
+            f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2,setsar=1"
         )
+        if index == 0:
+            # 1枚目は黒フェードを掛けない（冒頭とサムネが真っ黒になるのを防ぐ・和紙背景で始める）
+            filters.append(f"{base}[v{index}]")
+        else:
+            # 2枚目以降だけ黒からふわっと出してリビール感を出す
+            filters.append(f"{base},fade=t=in:st=0:d={fade_duration}[v{index}]")
     concat_inputs = "".join(f"[v{i}]" for i in range(len(image_paths)))
     filters.append(f"{concat_inputs}concat=n={len(image_paths)}:v=1:a=0[outv]")
     filter_complex = ";".join(filters)
@@ -175,8 +181,20 @@ def wait_for_url(url, max_wait=180):
     return False
 
 
-def create_reels_container(video_url, caption, user_id, token):
-    """media_type=REELS でコンテナ（下書き）を作り、creation_id を返す。"""
+def cover_thumb_offset_ms(config):
+    """カバー（サムネ）に使う動画内の時刻をミリ秒で返す。
+    最後のフレーム（格言＋ローマ字＋英語が全部出た状態）の中央あたりを指す。
+    黒フェードの後で確実に内容が見える瞬間なので、真っ黒サムネを防げる。"""
+    frame_count = len(frame_reveal_plan())                 # フレーム枚数（=4）
+    seconds_per_frame = config["seconds_per_frame"]         # 1フレームの表示秒数
+    # 最終フレームの開始時刻＋半分 = 全要素が出そろった真ん中
+    seconds = (frame_count - 1) * seconds_per_frame + seconds_per_frame / 2
+    return int(seconds * 1000)
+
+
+def create_reels_container(video_url, caption, user_id, token, thumb_offset_ms=None):
+    """media_type=REELS でコンテナ（下書き）を作り、creation_id を返す。
+    thumb_offset_ms を渡すと、その時刻のフレームをカバー（サムネ）に使う。"""
     url = f"https://graph.facebook.com/v19.0/{user_id}/media"
     params = {
         "media_type": "REELS",
@@ -184,6 +202,8 @@ def create_reels_container(video_url, caption, user_id, token):
         "caption": caption,
         "access_token": token,
     }
+    if thumb_offset_ms is not None:  # カバー位置の指定があれば追加（真っ黒サムネ対策）
+        params["thumb_offset"] = thumb_offset_ms
     response = requests.post(url, params=params, timeout=60)
     data = response.json()
     if "id" in data:
@@ -237,7 +257,10 @@ def publish():
         print(f"動画URLが配信されませんでした: {video_url}")
         return
 
-    creation_id = create_reels_container(video_url, pending["caption"], user_id, token)
+    thumb_offset_ms = cover_thumb_offset_ms(config)  # 全要素が出た最終フレームをカバーに
+    creation_id = create_reels_container(
+        video_url, pending["caption"], user_id, token, thumb_offset_ms
+    )
     if not creation_id:
         return
     if not wait_for_container_ready(creation_id, token):
