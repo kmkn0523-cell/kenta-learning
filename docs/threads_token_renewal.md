@@ -28,11 +28,16 @@ GET https://graph.threads.net/refresh_access_token?grant_type=th_refresh_token&a
 # Instagram トークン更新手順（60日ごと）
 
 ## 次回期限
-**2026/07/07頃**（今回2026/05/09に更新）
+**2026/07/18頃**（debug_tokenで実測。skin・ronin両方ともこの期限）
 
-## ⚠️ 注意：必ず「長期トークン変換」をすること
+## ⚠️ 注意1：必ず「長期トークン変換」をすること
 Graph API ExplorerのUIで生成したトークンは短期（約2時間）で切れる。
 必ず下記の手順で変換すること。
+
+## ⚠️ 注意2：fb_exchange_token では延長されない
+既存の長期トークンを `grant_type=fb_exchange_token` で再変換しても、
+期限は発行日から60日のまま延びない（FB仕様・2026/06/25検証済み）。
+本当に延長するには下記Step1のGraph API Explorerでの再ログインが必須。
 
 ## 更新手順
 

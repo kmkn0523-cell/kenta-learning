@@ -7,7 +7,7 @@
 ## 🔥 今週やること（最優先・3つだけに絞る）
 
 - [x] Task 8: Instagram Batch 1 初動チェック（v2 8枚カルーセル4件・公開確認済み 2026-05-20）
-- [ ] Task 4: Instagram insights 権限申請（Facebook Developer Console で `instagram_manage_insights`）
+- [x] Task 4: Instagram insights 権限申請（`instagram_manage_insights` は両IGトークンに付与済みと2026/06/25確認）
 - [ ] Week 2 (5/25〜) リプ運用準備 — `skin/skin_account_targets.json` の10アカウントの最新投稿を再確認
 - [ ] skinアフィリエイト導線（コード準備済 2026/06/13）— あとは商品リンクを入れるだけ
   - [ ] 楽天アフィリエイト登録（楽天会員なら審査ほぼなしで即発行・Threads認定SNS済）。または afb（Threads原則OK・案件ごと要項確認）
