@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-24T09:39:09.561243",
+  "last_updated": "2026-06-25T09:31:42.933047",
   "posts_history": [
     {
       "day": 28,
@@ -2684,6 +2684,50 @@
       "shares": 0,
       "views": 36,
       "engagement_rate": 2.78
+    },
+    {
+      "day": 88,
+      "type": "セラミドの役割",
+      "post_id": "17970821871099911",
+      "posted_at": "2026-06-25T08:01:26+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 76,
+      "engagement_rate": 1.32
+    },
+    {
+      "day": 87,
+      "type": "喫煙と肌老化",
+      "post_id": "18087693230434693",
+      "posted_at": "2026-06-25T03:01:32+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 103,
+      "engagement_rate": 0.97
+    },
+    {
+      "day": 86,
+      "type": "夜のスキンケアルーティン",
+      "post_id": "18082914455368693",
+      "posted_at": "2026-06-24T22:01:32+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 48,
+      "engagement_rate": 2.08
+    },
+    {
+      "day": 85,
+      "type": "朝のスキンケアルーティン",
+      "post_id": "18095530592523984",
+      "posted_at": "2026-06-24T12:06:59+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 47,
+      "engagement_rate": 2.13
     }
   ],
   "pattern_performance": {
@@ -3196,22 +3240,22 @@
     },
     "day_87": {
       "喫煙と肌老化": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 17.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 5,
+        "avg_comments": 0.5,
+        "avg_views": 60.0,
+        "avg_engagement_rate": 0.48,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_85": {
       "朝のスキンケアルーティン": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 45.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 46.0,
+        "avg_engagement_rate": 1.06,
         "best_hour": 1,
         "best_hashtag_set": "A"
       }
@@ -3840,6 +3884,28 @@
         "avg_views": 63.0,
         "avg_engagement_rate": 1.59,
         "best_hour": 13,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_88": {
+      "セラミドの役割": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 76.0,
+        "avg_engagement_rate": 1.32,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_86": {
+      "夜のスキンケアルーティン": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 48.0,
+        "avg_engagement_rate": 2.08,
+        "best_hour": 22,
         "best_hashtag_set": "A"
       }
     }
