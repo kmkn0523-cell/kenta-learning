@@ -225,7 +225,8 @@ SYNC_LOG="$HOME/sync_log.txt"
 last_sync=""
 if [ -f "$SYNC_LOG" ]; then
   # grep -oP はmacOS非対応のため、-oE（拡張正規表現）で代替する
-  last_sync=$(grep "同期完了" "$SYNC_LOG" | tail -1 | grep -oE '[0-9]{2}:[0-9]{2}' | tail -1)
+  # 「同期完了」だけでなく「スキップ」「プッシュ完了」も含め、最後に同期処理が走った時刻を拾う
+  last_sync=$(grep -E '^\[[0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}\]' "$SYNC_LOG" | tail -1 | grep -oE '[0-9]{2}:[0-9]{2}' | head -1)
 fi
 
 [ -n "$today" ] && line1="${CYAN}${today}${RESET}"
