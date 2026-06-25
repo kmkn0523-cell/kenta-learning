@@ -5234,6 +5234,13 @@
       "variant": "A",
       "post_id": "18117896746829859",
       "seed_id": "18085537913540779"
+    },
+    {
+      "date": "2026/06/25 13:08",
+      "theme": "note宣伝: 「日焼けは肌荒れを悪化させる」を知らない人が多すぎる。",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18203296594315298"
     }
   ],
   "ab_next": "A",
@@ -5998,9 +6005,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-25T12:04:07.230213+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n8dd0a6de39e3",
-  "last_note_promo_date": "2026/06/23",
+  "last_posted_at": "2026-06-25T13:09:58.836877+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n4b4e5b4804fc",
+  "last_note_promo_date": "2026/06/25",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/19"
 }
