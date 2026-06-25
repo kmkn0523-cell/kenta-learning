@@ -5,7 +5,80 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from skin_ab_report import judge_theme, generate_report, aggregate_ab_scores
+from skin_ab_report import (
+    judge_theme,
+    generate_report,
+    aggregate_ab_scores,
+    aggregate_format_scores,
+    judge_format,
+)
+
+
+def test_aggregate_format_collects_across_themes():
+    # テーマをまたいでA型・B型ごとに件数・平均・中央値を出す
+    history = [
+        {"theme_id": 1, "variant": "A", "post_id": "a1"},
+        {"theme_id": 5, "variant": "A", "post_id": "a2"},
+        {"theme_id": 9, "variant": "B", "post_id": "b1"},
+    ]
+    posts_history = [
+        {"post_id": "a1", "engagement_rate": 2.0},
+        {"post_id": "a2", "engagement_rate": 4.0},
+        {"post_id": "b1", "engagement_rate": 10.0},
+    ]
+    stats = aggregate_format_scores(history, posts_history)
+    assert stats["A"]["count"] == 2
+    assert stats["A"]["mean"] == 3.0
+    assert stats["A"]["median"] == 3.0
+    assert stats["B"]["count"] == 1
+    assert stats["B"]["mean"] == 10.0
+
+
+def test_aggregate_format_skips_posts_without_reaction_data():
+    history = [
+        {"theme_id": 1, "variant": "A", "post_id": "a1"},
+        {"theme_id": 2, "variant": "A", "post_id": "missing"},  # analyticsに無い
+    ]
+    posts_history = [{"post_id": "a1", "engagement_rate": 5.0}]
+    stats = aggregate_format_scores(history, posts_history)
+    assert stats["A"]["count"] == 1
+    assert stats["A"]["mean"] == 5.0
+
+
+def test_aggregate_format_handles_empty_variant():
+    # 片方の型が0件でも例外を出さず mean/median=0.0 を返す
+    history = [{"theme_id": 1, "variant": "A", "post_id": "a1"}]
+    posts_history = [{"post_id": "a1", "engagement_rate": 3.0}]
+    stats = aggregate_format_scores(history, posts_history)
+    assert stats["B"]["count"] == 0
+    assert stats["B"]["mean"] == 0.0
+    assert stats["B"]["median"] == 0.0
+
+
+def test_judge_format_insufficient_when_below_min_samples():
+    stats = {
+        "A": {"count": 10, "mean": 5.0, "median": 5.0},
+        "B": {"count": 30, "mean": 2.0, "median": 2.0},
+    }
+    assert judge_format(stats, min_samples=20)["verdict"] == "insufficient_data"
+
+
+def test_judge_format_A_wins_with_20pct_lead():
+    stats = {
+        "A": {"count": 50, "mean": 1.69, "median": 1.0},
+        "B": {"count": 50, "mean": 0.66, "median": 0.0},
+    }
+    result = judge_format(stats, min_samples=20, min_lead=0.2)
+    assert result["verdict"] == "A_wins"
+    assert result["lead_pct"] >= 0.2
+
+
+def test_judge_format_no_diff_when_close():
+    stats = {
+        "A": {"count": 50, "mean": 1.0, "median": 1.0},
+        "B": {"count": 50, "mean": 0.9, "median": 0.9},
+    }
+    assert judge_format(stats, min_samples=20, min_lead=0.2)["verdict"] == "no_significant_diff"
 
 
 def test_aggregate_sums_engagement_rate_per_variant():

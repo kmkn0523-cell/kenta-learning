@@ -172,7 +172,9 @@
   - [x] skin_ab_report.py（A/B勝者判定スクリプト）作成
   - [x] テーマ1-20 のA/B 全40セット制作（薬機法準拠：辞書形＋活用形NG 0件）
   - [x] バッチ進行管理ファイル（skin_threads_batch_progress.json）作成
-- [ ] Batch 1: 検証期間は終了済み（〜6/06）が勝者判定が未実施 → `python3 skin/skin_ab_report.py --batch 1` を実行し winner決定・status を `validated` に（batch_progress.jsonは released/winner_decided:false のまま）
+- [x] **A/B検証の配線切れを修正（2026/06/25）**：反応スコアが永遠に0だった根本原因（反応収集データを`ab_results`へ反映する処理が未実装）を特定。`skin_ab_report.py`に`aggregate_ab_scores`/`aggregate_format_scores`/`judge_format`を追加（TDD・テスト194件全パス）。設計書: `docs/superpowers/specs/2026-06-25-skin-ab-format-aggregation-design.md`
+- [x] **フォーマット全体A/B判定が出た（2026/06/25）**：テーマ単位は108全ローテーションで1サンプルずつしか溜まらず判定不能と判明 → テーマ横断で「A型 vs B型」を集計する方式に変更。結果 **A型（既存）平均1.69% / B型（新フォーマット）平均0.66% → A型の勝ち（差60.8%）**。確認は `python3 skin/skin_ab_report.py --batch 1` の末尾「フォーマット全体A/B」
+- [ ] **運用判断（要検討）**：B型（新フォーマット）の方が反応が低いと出た。新フォーマットを止めてA型寄りに戻すか検討
 - [ ] 上記の後: Batch 2（テーマ21-40）制作開始・新計画書作成
 - [ ] Batch 3〜6（テーマ41-108）順次制作・リリース
 
