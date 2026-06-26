@@ -43,7 +43,6 @@
       "/mnt/c/Users/kenta kamijyo"
     ]
   },
-  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -173,8 +172,9 @@
   "language": "japanese",
   "feedbackSurveyRate": 0,
   "spinnerTipsEnabled": false,
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "autoCompactWindow": 100000,
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "verbose": false,
@@ -183,6 +183,5 @@
   "showTurnDuration": true,
   "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "tui": "fullscreen"
+  "agentPushNotifEnabled": true
 }
