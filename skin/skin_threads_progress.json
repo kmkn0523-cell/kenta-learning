@@ -5273,6 +5273,13 @@
       "variant": "A",
       "post_id": "18114711880780914",
       "seed_id": "18397186858093332"
+    },
+    {
+      "date": "2026/06/26 14:20",
+      "theme": "有料note宣伝: 内側から肌荒れを治す完全マニュアル",
+      "theme_id": 0,
+      "variant": "paid_note_promo",
+      "post_id": "18596626093025236"
     }
   ],
   "ab_next": "A",
@@ -6037,9 +6044,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-26T12:00:41.909701+00:00",
+  "last_posted_at": "2026-06-26T14:21:15.524238+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n4b4e5b4804fc",
   "last_note_promo_date": "2026/06/25",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
-  "last_paid_note_promo_date": "2026/06/19"
+  "last_paid_note_promo_date": "2026/06/26"
 }
