@@ -235,7 +235,8 @@ fi
 # 出力を3行に分けて組み立てる
 line1=""  # 1行目: 日時 + ユーザー名
 line2=""  # 2行目: モデル・コンテキスト
-line3=""  # 3行目: プラン使用量メーター
+line3=""  # 3行目: 5時間プラン使用量メーター
+line4=""  # 4行目: 7日プラン使用量メーター
 
 # --- 最終同期時刻をログから取得 ---
 SYNC_LOG="$HOME/sync_log.txt"
@@ -253,6 +254,8 @@ fi
 [ -n "$effort" ] && line2="$line2 | $effort"
 [ -n "$ctx_info" ] && line2="$line2 | $ctx_info"
 
-[ -n "$rate_info" ] && line3="$rate_info"
+# 5hと7dを別々の行に分ける（横幅が狭い端末でも7dが切れないようにするため）
+[ -n "$five_str" ] && line3="$five_str"
+[ -n "$week_str" ] && line4="$week_str"
 
-printf "%s\n%s\n%s" "$line1" "$line2" "$line3"
+printf "%s\n%s\n%s\n%s" "$line1" "$line2" "$line3" "$line4"
