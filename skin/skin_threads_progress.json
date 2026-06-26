@@ -1,5 +1,5 @@
 {
-  "daily_index": 348,
+  "daily_index": 349,
   "launch_index": 0,
   "history": [
     {
@@ -5265,6 +5265,14 @@
       "variant": "A",
       "post_id": "18194957659374749",
       "seed_id": "17981560962034946"
+    },
+    {
+      "date": "2026/06/26 11:59",
+      "theme": "肌荒れ改善チェックリスト",
+      "theme_id": 93,
+      "variant": "A",
+      "post_id": "18114711880780914",
+      "seed_id": "18397186858093332"
     }
   ],
   "ab_next": "A",
@@ -5575,7 +5583,7 @@
     "93": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "94": {
@@ -6029,7 +6037,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-26T07:09:30.134791+00:00",
+  "last_posted_at": "2026-06-26T12:00:41.909701+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n4b4e5b4804fc",
   "last_note_promo_date": "2026/06/25",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
