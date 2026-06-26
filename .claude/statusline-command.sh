@@ -35,20 +35,23 @@ get_mtime() {
 today_raw=$(TZ=Asia/Tokyo date '+%Y/%m/%d(%a) %H:%M')
 today=$(echo "$today_raw" | sed 's|/0\([0-9]\)|/\1|g')  # /04/ → /4/ のように変換
 
-# モデル表示名（このセッション自身のモデルを使う）
-model=$(echo "$input" | jq -r '.model.display_name // empty')
-
-# エフォート（推論にかける労力。low/medium/high など）
-effort=$(echo "$input" | jq -r '.effort.level // empty')
+# --- stdinのJSONを1回のjqでまとめて解析する（プロセス起動を減らして高速化）---
+# 7項目をタブ区切りで一気に取り出し、readで各変数に分配する
+# 空の項目は "" になるが、@tsv はタブを必ず出すので位置はズレない
+parsed=$(echo "$input" | jq -r '[
+  .model.display_name // "",
+  .effort.level // "",
+  .rate_limits.five_hour.used_percentage // "",
+  .rate_limits.five_hour.resets_at // "",
+  .rate_limits.seven_day.used_percentage // "",
+  .rate_limits.seven_day.resets_at // "",
+  .context_window.used_percentage // ""
+] | @tsv')
+# タブだけで分割（モデル名の空白は壊さない）
+IFS=$'\t' read -r model effort new_five_used new_five_reset new_week_used new_week_reset new_ctx_pct <<< "$parsed"
 
 # --- 使用量データを共有キャッシュに書き出す（値がある場合のみ上書き）---
-# rate_limits や context_window に値がある場合はキャッシュを更新する
-new_five_used=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
-new_five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
-new_week_used=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
-new_week_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
-new_ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
-
+# rate_limits や context_window の値は上で解析済み（new_* 変数）
 if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; then
   # 新しい使用量データがある場合だけキャッシュを更新する
   if [ -f "$CACHE_FILE" ]; then
@@ -183,9 +186,10 @@ make_meter() {
   local width=10      # メーターの幅（文字数）
   local filled=$(echo "$pct $width" | awk '{printf "%d", ($1/100*$2) + 0.5}')
   local empty=$((width - filled))
-  local bar=""
-  for i in $(seq 1 $filled); do bar="${bar}█"; done
-  for i in $(seq 1 $empty); do bar="${bar}░"; done
+  # seqループの代わりに、塗り潰し用・空用の文字列を切り出して結合する（プロセス起動なし）
+  local full_bar="██████████"   # width=10 ぶんの塗り潰し
+  local empty_bar="░░░░░░░░░░"  # width=10 ぶんの空き
+  local bar="${full_bar:0:filled}${empty_bar:0:empty}"
   printf "${GREEN}%s %s%%${RESET}" "$bar" "$pct"
 }
 
