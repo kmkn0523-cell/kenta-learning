@@ -84,6 +84,12 @@ if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; 
   echo "$new_cache" > "${CACHE_FILE}.tmp" && mv "${CACHE_FILE}.tmp" "$CACHE_FILE"
 fi
 
+# ISO 8601 形式の日時を Unix epoch に変換する関数（Linux/macOS 両対応）
+# 取得時（最大60秒に1回）だけ呼ぶ。描画ごとには呼ばない（python起動を毎回しないため）
+iso_to_epoch() {
+  python3 -c "import datetime,sys; s=sys.argv[1].replace('Z','+00:00'); print(int(datetime.datetime.fromisoformat(s).timestamp()))" "$1" 2>/dev/null
+}
+
 # --- OAuth APIから正確な使用量データを取得（claude.aiと同じ値）---
 # Claude Codeのstdin経由のrate_limitsはズレがあるため、本家APIから直接取得する
 oauth_data=""
@@ -108,6 +114,17 @@ elif [ -f "$CREDENTIALS" ]; then
       "https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
     # 正しいJSONが取れた場合のみキャッシュに保存
     if [ -n "$fresh" ] && echo "$fresh" | jq -e '.five_hour' >/dev/null 2>&1; then
+      # ここ（最大60秒に1回）でISO→epochを計算し、キャッシュに resets_epoch として埋め込む
+      # こうすれば描画ごとにpythonを起動せずに済む
+      fh_iso=$(echo "$fresh" | jq -r '.five_hour.resets_at // empty')
+      sd_iso=$(echo "$fresh" | jq -r '.seven_day.resets_at // empty')
+      fh_ep=""; sd_ep=""
+      [ -n "$fh_iso" ] && fh_ep=$(iso_to_epoch "$fh_iso")
+      [ -n "$sd_iso" ] && sd_ep=$(iso_to_epoch "$sd_iso")
+      fresh=$(echo "$fresh" | jq \
+        --arg fh "$fh_ep" --arg sd "$sd_ep" '
+          (if $fh != "" then .five_hour.resets_epoch = ($fh | tonumber) else . end) |
+          (if $sd != "" then .seven_day.resets_epoch = ($sd | tonumber) else . end)')
       echo "$fresh" > "${OAUTH_CACHE}.tmp" && mv "${OAUTH_CACHE}.tmp" "$OAUTH_CACHE"
       oauth_data="$fresh"
     elif [ -f "$OAUTH_CACHE" ]; then
@@ -116,11 +133,6 @@ elif [ -f "$CREDENTIALS" ]; then
     fi
   fi
 fi
-
-# ISO 8601 形式の日時を Unix epoch に変換する関数（Linux/macOS 両対応）
-iso_to_epoch() {
-  python3 -c "import datetime,sys; s=sys.argv[1].replace('Z','+00:00'); print(int(datetime.datetime.fromisoformat(s).timestamp()))" "$1" 2>/dev/null
-}
 
 # --- 表示用の値を決定 ---
 # 優先順位: OAuth API（claude.ai同等の正確な値） > stdin入力 > キャッシュ
@@ -138,12 +150,13 @@ five_reset=""
 week_used=""
 week_reset=""
 if [ -n "$oauth_data" ] && echo "$oauth_data" | jq -e '.five_hour' >/dev/null 2>&1; then
-  five_used=$(echo "$oauth_data" | jq -r '.five_hour.utilization // empty')
-  five_reset_iso=$(echo "$oauth_data" | jq -r '.five_hour.resets_at // empty')
-  [ -n "$five_reset_iso" ] && five_reset=$(iso_to_epoch "$five_reset_iso")
-  week_used=$(echo "$oauth_data" | jq -r '.seven_day.utilization // empty')
-  week_reset_iso=$(echo "$oauth_data" | jq -r '.seven_day.resets_at // empty')
-  [ -n "$week_reset_iso" ] && week_reset=$(iso_to_epoch "$week_reset_iso")
+  # 5h/7dの使用率と、埋め込み済みepochを1回のjqでまとめて取り出す
+  IFS=$'\t' read -r five_used five_reset week_used week_reset <<< "$(echo "$oauth_data" | jq -r '[
+    .five_hour.utilization // "",
+    .five_hour.resets_epoch // "",
+    .seven_day.utilization // "",
+    .seven_day.resets_epoch // ""
+  ] | @tsv')"
 fi
 
 # OAuth取得できなかった項目は stdin入力 → キャッシュの順でフォールバック
