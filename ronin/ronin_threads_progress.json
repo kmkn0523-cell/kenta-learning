@@ -5994,8 +5994,14 @@
       "kind": "teaching",
       "label": "Day171 morning",
       "post_id": "18107433844978777"
+    },
+    {
+      "date": "2026/06/26 19:00",
+      "kind": "engagement",
+      "label": "engagement eng027",
+      "post_id": "17891717271555769"
     }
   ],
-  "last_posted_at": "2026-06-26T17:02:04.859896+00:00",
-  "engagement_index": 58
+  "last_posted_at": "2026-06-26T19:02:03.428487+00:00",
+  "engagement_index": 59
 }
