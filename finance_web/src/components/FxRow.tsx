@@ -110,7 +110,7 @@ export default function FxRow({item,onSave,onDelete,onMoveUp,onMoveDown,onToggle
           <div style={{fontSize:13,fontWeight:600}}>{item.name}</div>
           <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>{item.category}</div>
         </div>
-        <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,flexShrink:0}}>{formatYen(item.amount)}<span style={{fontSize:12,color:COLOR_TEXT_HINT}}>/月</span></div>
+        <div style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700,flexShrink:0}}>{formatYen(item.amount)}<span style={{fontSize:12,color:COLOR_TEXT_HINT}}>/月</span></div>
       </div>
       <div style={{display:"flex",gap:8}}>
         {/* 編集ボタン：クリックで編集フォームを開く */}

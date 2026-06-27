@@ -35,7 +35,7 @@ export default function SubscriptionInventory({ recurringExpenses, icons }: Subs
         <span style={{ fontSize: 11, color: COLOR_TEXT_HINT, letterSpacing: "0.5px" }}>稼働中サブスクの年間コスト</span>
       </div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 14 }}>
-        <span style={{ fontFamily: "monospace", fontSize: 26, fontWeight: 700, color: COLOR_NEGATIVE, letterSpacing: "-0.5px" }}>
+        <span style={{ fontFamily: FONT_NUM, fontSize: 26, fontWeight: 700, color: COLOR_NEGATIVE, letterSpacing: "-0.5px" }}>
           {formatYen(summary.annualTotal)}
         </span>
         <span style={{ fontSize: 12, color: COLOR_TEXT_HINT }}>
@@ -64,7 +64,7 @@ export default function SubscriptionInventory({ recurringExpenses, icons }: Subs
               <span style={{ fontSize: 13, color: item.active ? COLOR_TEXT_PRIMARY : COLOR_TEXT_HINT, fontWeight: 600 }}>
                 {!item.active && "⏸ "}{icons?.[item.category] || ""} {item.name}
               </span>
-              <span style={{ fontFamily: "monospace", fontWeight: 700, color: item.active ? COLOR_TEXT_PRIMARY : COLOR_TEXT_HINT, whiteSpace: "nowrap" }}>
+              <span style={{ fontFamily: FONT_NUM, fontWeight: 700, color: item.active ? COLOR_TEXT_PRIMARY : COLOR_TEXT_HINT, whiteSpace: "nowrap" }}>
                 {formatYen(item.annual)}<span style={{ fontSize: 11, color: COLOR_TEXT_HINT }}>/年</span>
               </span>
             </div>

@@ -49,7 +49,7 @@ function CustomTooltip({ active, payload, label }: TooltipProps) {
       {/* 月ラベル（例: "5月"） */}
       <div style={{ color: COLOR_TEXT_HINT, marginBottom: 4 }}>{label}</div>
       {/* 累積手残り金額（プラスなら水色、マイナスなら赤） */}
-      <div style={{ color: isPositive ? COLOR_ACCENT : "#f87171", fontWeight: 700, fontFamily: "monospace" }}>
+      <div style={{ color: isPositive ? COLOR_ACCENT : "#f87171", fontWeight: 700, fontFamily: FONT_NUM }}>
         {isPositive ? "+" : ""}{formatYen(value)}
       </div>
     </div>
@@ -174,7 +174,7 @@ export default function NetWorthChart({ tx, inc, tFx }: NetWorthChartProps) {
             <span style={{
               fontSize: 15,
               fontWeight: 700,
-              fontFamily: "monospace",
+              fontFamily: FONT_NUM,
               color: isPositive ? COLOR_ACCENT : "#f87171",
             }}>
               {isPositive ? "+" : ""}{formatYen(latest.cumulative)}

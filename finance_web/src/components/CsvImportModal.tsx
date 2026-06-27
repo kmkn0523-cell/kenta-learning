@@ -576,7 +576,7 @@ export default function CsvImportModal({
                     </div>
 
                     {/* 日付 */}
-                    <div style={{ fontSize: 12, color: r.date ? COLOR_TEXT_SECONDARY : COLOR_NEGATIVE, minWidth: 72, fontFamily: "monospace" }}>
+                    <div style={{ fontSize: 12, color: r.date ? COLOR_TEXT_SECONDARY : COLOR_NEGATIVE, minWidth: 72, fontFamily: FONT_NUM }}>
                       {r.date || "日付NG"}
                     </div>
 
@@ -586,7 +586,7 @@ export default function CsvImportModal({
                     </div>
 
                     {/* 金額 */}
-                    <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, color: r.amount > 0 ? COLOR_TEXT_PRIMARY : COLOR_NEGATIVE, flexShrink: 0 }}>
+                    <div style={{ fontFamily: FONT_NUM, fontSize: 12, fontWeight: 700, color: r.amount > 0 ? COLOR_TEXT_PRIMARY : COLOR_NEGATIVE, flexShrink: 0 }}>
                       {r.amount > 0 ? `¥${r.amount.toLocaleString()}` : "金額NG"}
                     </div>
                   </div>
@@ -606,7 +606,7 @@ export default function CsvImportModal({
               return (
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: COLOR_TEXT_SECONDARY, marginBottom: 12, padding: "8px 0", borderTop: `1px solid ${COLOR_BORDER}` }}>
                   <span>{selRows.length}件を登録</span>
-                  <span style={{ fontFamily: "monospace", fontWeight: 700, color: mode === "expense" ? COLOR_NEGATIVE : COLOR_POSITIVE }}>
+                  <span style={{ fontFamily: FONT_NUM, fontWeight: 700, color: mode === "expense" ? COLOR_NEGATIVE : COLOR_POSITIVE }}>
                     合計 ¥{total.toLocaleString()}
                   </span>
                 </div>

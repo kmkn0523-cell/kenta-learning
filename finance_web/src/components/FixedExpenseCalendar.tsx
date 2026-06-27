@@ -78,7 +78,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
         {/* 残り引落額 */}
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 2 }}>今月残り</div>
-          <div style={{ fontFamily: "monospace", fontSize: 14, fontWeight: 700, color: remaining > 0 ? COLOR_NEGATIVE : COLOR_TEXT_HINT }}>
+          <div style={{ fontFamily: FONT_NUM, fontSize: 14, fontWeight: 700, color: remaining > 0 ? COLOR_NEGATIVE : COLOR_TEXT_HINT }}>
             {formatYen(remaining)}
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
 
             {/* 金額 */}
             <div style={{
-              fontFamily: "monospace",
+              fontFamily: FONT_NUM,
               fontSize: 13,
               fontWeight: 700,
               color: isPast ? COLOR_TEXT_HINT : COLOR_NEGATIVE,
@@ -172,7 +172,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
               borderBottom: `1px solid rgba(255,255,255,0.03)`,
             }}>
               <span>{f.name}</span>
-              <span style={{ fontFamily: "monospace" }}>{formatYen(Number(f.amount || 0))}</span>
+              <span style={{ fontFamily: FONT_NUM }}>{formatYen(Number(f.amount || 0))}</span>
             </div>
           ))}
         </div>
@@ -185,7 +185,7 @@ export default function FixedExpenseCalendar({ fixedExpenses }: FixedExpenseCale
         paddingTop: 10, marginTop: 10, fontSize: 12,
       }}>
         <span style={{ color: COLOR_TEXT_HINT }}>月合計</span>
-        <span style={{ fontFamily: "monospace", fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
+        <span style={{ fontFamily: FONT_NUM, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
           {formatYen(monthTotal)}
         </span>
       </div>

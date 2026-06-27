@@ -35,7 +35,7 @@ function summarizeValue(value: unknown): string {
 
 const STYLE_LABEL: CSSProperties = { fontSize: 13, color: COLOR_TEXT_SECONDARY, marginBottom: 6 };
 const STYLE_RK_BOX: CSSProperties = {
-  fontFamily: "monospace",
+  fontFamily: FONT_NUM,
   fontSize: 16,
   letterSpacing: 1,
   background: "rgba(255,255,255,0.06)",
@@ -54,7 +54,7 @@ const STYLE_INPUT: CSSProperties = {
   color: COLOR_TEXT_PRIMARY,
   fontSize: 14,
   padding: "10px 12px",
-  fontFamily: "monospace",
+  fontFamily: FONT_NUM,
   marginBottom: 10,
 };
 

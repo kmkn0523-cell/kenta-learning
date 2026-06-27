@@ -89,7 +89,7 @@ export default function LoanView({
             🏁 借金ゼロまで
           </div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
-            <span style={{ fontFamily: "monospace", fontSize: 36, fontWeight: 700, color: COLOR_POSITIVE, letterSpacing: "-1px" }}>
+            <span style={{ fontFamily: FONT_NUM, fontSize: 36, fontWeight: 700, color: COLOR_POSITIVE, letterSpacing: "-1px" }}>
               {longestMonths}
             </span>
             <span style={{ fontSize: 14, color: COLOR_TEXT_SECONDARY }}>ヶ月</span>
@@ -104,12 +104,12 @@ export default function LoanView({
             <>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>
                 <span>元本の返済進捗</span>
-                <span style={{ fontFamily: "monospace", color: COLOR_POSITIVE, fontWeight: 700 }}>{totalProgressPct.toFixed(1)}%</span>
+                <span style={{ fontFamily: FONT_NUM, color: COLOR_POSITIVE, fontWeight: 700 }}>{totalProgressPct.toFixed(1)}%</span>
               </div>
               <div style={{ height: 8, background: "rgba(255,255,255,0.06)", borderRadius: 4, overflow: "hidden", marginBottom: 6 }}>
                 <div style={{ height: "100%", width: `${totalProgressPct}%`, background: COLOR_POSITIVE, borderRadius: 4, transition: "width 0.4s ease" }} />
               </div>
-              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: "monospace" }}>
+              <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: FONT_NUM }}>
                 {formatYen(totalPaid)} 返済済 / 元本 {formatYen(totalPrincipal)}
               </div>
             </>
@@ -125,7 +125,7 @@ export default function LoanView({
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
           <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase" }}>総残債</span>
-          <span style={{ fontFamily: "monospace", fontSize: 28, fontWeight: 700, letterSpacing: "-0.5px" }}>
+          <span style={{ fontFamily: FONT_NUM, fontSize: 28, fontWeight: 700, letterSpacing: "-0.5px" }}>
             {formatYen(totalRemaining)}
           </span>
         </div>
@@ -137,7 +137,7 @@ export default function LoanView({
         {/* 利息累計の動機づけメッセージ：完済までに払う利息額を強調表示 */}
         {totalFutureInterest > 0 && (
           <div style={STYLE_LOAN_INTEREST_ALERT}>
-            💸 このペースで返すと、完済までに <span style={{ fontWeight: 700, fontFamily: "monospace" }}>{formatYen(totalFutureInterest)}</span> を利息として支払います。繰り上げ返済で減らせます。
+            💸 このペースで返すと、完済までに <span style={{ fontWeight: 700, fontFamily: FONT_NUM }}>{formatYen(totalFutureInterest)}</span> を利息として支払います。繰り上げ返済で減らせます。
           </div>
         )}
       </div>
@@ -165,7 +165,7 @@ export default function LoanView({
               <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                 {avalanche.map((l, i) => (
                   <span key={l.id} style={{ fontSize: 12, padding: "3px 8px", borderRadius: 999, background: i === 0 ? `${COLOR_ACCENT}33` : "rgba(255,255,255,0.04)", border: `1px solid ${i === 0 ? COLOR_ACCENT : COLOR_BORDER}`, color: i === 0 ? COLOR_ACCENT : COLOR_TEXT_SECONDARY, fontWeight: i === 0 ? 700 : 400 }}>
-                    {i + 1}. {l.name} <span style={{ fontFamily: "monospace" }}>({l.rate}%)</span>
+                    {i + 1}. {l.name} <span style={{ fontFamily: FONT_NUM }}>({l.rate}%)</span>
                   </span>
                 ))}
               </div>
@@ -181,7 +181,7 @@ export default function LoanView({
               <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                 {snowball.map((l, i) => (
                   <span key={l.id} style={{ fontSize: 12, padding: "3px 8px", borderRadius: 999, background: i === 0 ? `${COLOR_POSITIVE}22` : "rgba(255,255,255,0.04)", border: `1px solid ${i === 0 ? COLOR_POSITIVE : COLOR_BORDER}`, color: i === 0 ? COLOR_POSITIVE : COLOR_TEXT_SECONDARY, fontWeight: i === 0 ? 700 : 400 }}>
-                    {i + 1}. {l.name} <span style={{ fontFamily: "monospace" }}>({formatYen(l.remaining)})</span>
+                    {i + 1}. {l.name} <span style={{ fontFamily: FONT_NUM }}>({formatYen(l.remaining)})</span>
                   </span>
                 ))}
               </div>

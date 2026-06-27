@@ -174,10 +174,10 @@ export default function SavingGoalCard({
 
           {/* 進捗バー */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
-            <span style={{ fontFamily: "monospace", fontSize: 18, fontWeight: 700 }}>
+            <span style={{ fontFamily: FONT_NUM, fontSize: 18, fontWeight: 700 }}>
               {formatYen(currentSaving)} / {formatYen(goal.targetAmount)}
             </span>
-            <span style={{ fontFamily: "monospace", fontSize: 14, fontWeight: 700, color: achieved100 ? COLOR_POSITIVE : COLOR_ACCENT }}>
+            <span style={{ fontFamily: FONT_NUM, fontSize: 14, fontWeight: 700, color: achieved100 ? COLOR_POSITIVE : COLOR_ACCENT }}>
               {progress}%
             </span>
           </div>
@@ -219,13 +219,13 @@ export default function SavingGoalCard({
             <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
               <div style={{ flex: 1, background: "rgba(148,163,184,0.05)", borderRadius: 10, padding: "10px 12px" }}>
                 <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>残り</div>
-                <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>{formatYen(remaining)}</div>
+                <div style={{ fontFamily: FONT_NUM, fontSize: 13, fontWeight: 700 }}>{formatYen(remaining)}</div>
               </div>
               <div style={{ flex: 1, background: "rgba(148,163,184,0.05)", borderRadius: 10, padding: "10px 12px" }}>
                 <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>
                   {overdue ? "期限超過" : `あと${monthsLeft}ヶ月`}
                 </div>
-                <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: overdue ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY }}>
+                <div style={{ fontFamily: FONT_NUM, fontSize: 13, fontWeight: 700, color: overdue ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY }}>
                   {overdue ? "—" : `月 ${formatYen(monthlyNeeded)}`}
                 </div>
               </div>

@@ -78,7 +78,7 @@ export default function BudgetAlertBanner({ budget, expByCat, isCurrentMonth }: 
               <span style={{ color: COLOR_TEXT_PRIMARY }}>
                 {EXPENSE_CATEGORY_ICONS[cat] || ""} {cat}
               </span>
-              <span style={{ fontFamily: "monospace", color: lineColor, fontWeight: 600 }}>
+              <span style={{ fontFamily: FONT_NUM, color: lineColor, fontWeight: 600 }}>
                 {Math.round(ratio * 100)}%
               </span>
             </div>
@@ -92,7 +92,7 @@ export default function BudgetAlertBanner({ budget, expByCat, isCurrentMonth }: 
                 transition: "width 0.4s ease",
               }}/>
             </div>
-            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: FONT_NUM }}>
               {formatYen(actual)} / {formatYen(b)}
               {ratio > 1 && (
                 <span style={{ marginLeft: 6, color: COLOR_NEGATIVE }}>

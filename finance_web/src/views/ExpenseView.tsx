@@ -231,7 +231,7 @@ export default function ExpenseView({
             ⚡ 定期支出
             {/* 登録件数バッジ */}
             {recurringExpenses.length > 0 && (
-              <span style={{marginLeft:8,fontSize:12,color:COLOR_ACCENT,fontFamily:"monospace"}}>
+              <span style={{marginLeft:8,fontSize:12,color:COLOR_ACCENT,fontFamily:FONT_NUM}}>
                 {recurringExpenses.length}件
               </span>
             )}
@@ -375,7 +375,7 @@ export default function ExpenseView({
           {tpls.map(tp=>(
             <div key={tp.id} onClick={()=>{setTxF(f=>({...f,cat:tp.cat,amt:String(tp.amount),memo:tp.note}));setShowTxForm(true);}} style={STYLE_EX_TPL_CARD}>
               <div style={{fontSize:12,fontWeight:600,color:COLOR_TEXT_SECONDARY}}>{expenseCategoryIcons[tp.cat]} {tp.cat}</div>
-              <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,marginTop:2}}>{formatYen(tp.amount)}</div>
+              <div style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700,marginTop:2}}>{formatYen(tp.amount)}</div>
               {tp.note&&<div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2,maxWidth:80,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{tp.note}</div>}
               <button type="button" onClick={e=>{e.stopPropagation();delItem(tp.id,setTpls,"テンプレートを削除しました");}} style={STYLE_EX_TPL_DEL_BTN}>✕</button>
             </div>
@@ -447,7 +447,7 @@ export default function ExpenseView({
         <div style={{flex:1}}>
           <MonthNav selectedYear={selectedYear} selectedMonth={selectedMonth} onChange={onMonthChange}/>
         </div>
-        <span style={{fontFamily:"monospace",fontSize:14,fontWeight:700,marginLeft:4}}>{formatYen(totalVariableExpense)}</span>
+        <span style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700,marginLeft:4}}>{formatYen(totalVariableExpense)}</span>
       </div>
       {/* ────────── CSV出力・インポートボタン ────────── */}
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>

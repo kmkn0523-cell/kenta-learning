@@ -196,7 +196,7 @@ export const StatLabel = ({label, value, color}: StatLabelProps) =>
     boxShadow:"0 2px 12px rgba(0,0,0,0.2)", // 影：カードに奥行きを出す
   }}>
     <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:6,letterSpacing:"1px",textTransform:"uppercase"}}>{label}</div>
-    <div style={{fontSize:14,fontWeight:700,fontFamily:"monospace",color:color||COLOR_TEXT_PRIMARY,letterSpacing:"-0.5px"}}>{value}</div>
+    <div style={{fontSize:14,fontWeight:700,fontFamily:FONT_NUM,color:color||COLOR_TEXT_PRIMARY,letterSpacing:"-0.5px"}}>{value}</div>
   </div>;
 
 // 横棒グラフ1行（カテゴリ別支出などを視覚化する）
@@ -222,7 +222,7 @@ export const ProgressBar = ({label, value, max, color, icon}: ProgressBarProps) 
         transition:"width 0.4s ease",                            // 幅が変わるとき0.4秒でアニメーション
       }}/>
     </div>
-    <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,width:82,textAlign:"right",fontFamily:"monospace",flexShrink:0}}>{formatYen(value)}</div>
+    <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY,width:82,textAlign:"right",fontFamily:FONT_NUM,flexShrink:0}}>{formatYen(value)}</div>
   </div>;
 
 // 一時的な通知バナー（保存・エラーなどのメッセージを画面上部に一瞬表示する）

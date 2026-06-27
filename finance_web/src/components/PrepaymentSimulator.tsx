@@ -50,7 +50,7 @@ const STYLE_SIM_BTN_BASE: CSSProperties = {
   padding: "6px 8px",
   borderRadius: 999,
   fontSize: 12,
-  fontFamily: "monospace",
+  fontFamily: FONT_NUM,
   cursor: "pointer",
 };
 
@@ -126,7 +126,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
         <div style={{ marginBottom: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
             <span style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY }}>月額を増やす</span>
-            <span style={{ fontFamily: "monospace", fontSize: 18, fontWeight: 700, color: COLOR_ACCENT }}>
+            <span style={{ fontFamily: FONT_NUM, fontSize: 18, fontWeight: 700, color: COLOR_ACCENT }}>
               +{formatYen(extra)}
             </span>
           </div>
@@ -154,7 +154,7 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
         <div style={{ marginBottom: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
             <span style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY }}>ボーナス一括返済</span>
-            <span style={{ fontFamily: "monospace", fontSize: 16, fontWeight: 700, color: COLOR_ACCENT }}>
+            <span style={{ fontFamily: FONT_NUM, fontSize: 16, fontWeight: 700, color: COLOR_ACCENT }}>
               {lumpSum > 0 ? formatYen(lumpSum) : "なし"}
             </span>
           </div>
@@ -193,14 +193,14 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
               <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>現状のまま</div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <span style={{ fontSize: 13 }}>
-                  完済: <span style={{ fontFamily: "monospace", fontWeight: 700 }}>
+                  完済: <span style={{ fontFamily: FONT_NUM, fontWeight: 700 }}>
                     {baseCompletion ? `${baseCompletion.y}年${baseCompletion.m}月` : "—"}
                   </span>
                   <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginLeft: 6 }}>
                     ({baseline?.months || 0}ヶ月)
                   </span>
                 </span>
-                <span style={{ fontSize: 12, color: COLOR_NEGATIVE, fontFamily: "monospace", fontWeight: 700 }}>
+                <span style={{ fontSize: 12, color: COLOR_NEGATIVE, fontFamily: FONT_NUM, fontWeight: 700 }}>
                   利息 {formatYen(baseline?.interest || 0)}
                 </span>
               </div>
@@ -211,14 +211,14 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
               <div style={{ fontSize: 12, color: COLOR_POSITIVE, fontWeight: 700, marginBottom: 4 }}>繰り上げ後</div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <span style={{ fontSize: 13 }}>
-                  完済: <span style={{ fontFamily: "monospace", fontWeight: 700, color: COLOR_POSITIVE }}>
+                  完済: <span style={{ fontFamily: FONT_NUM, fontWeight: 700, color: COLOR_POSITIVE }}>
                     {improved && improved.months === 0 ? "今月" : (newCompletion ? `${newCompletion.y}年${newCompletion.m}月` : "—")}
                   </span>
                   <span style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginLeft: 6 }}>
                     ({improved?.months || 0}ヶ月)
                   </span>
                 </span>
-                <span style={{ fontSize: 12, color: COLOR_POSITIVE, fontFamily: "monospace", fontWeight: 700 }}>
+                <span style={{ fontSize: 12, color: COLOR_POSITIVE, fontFamily: FONT_NUM, fontWeight: 700 }}>
                   利息 {formatYen(improved?.interest || 0)}
                 </span>
               </div>
@@ -238,13 +238,13 @@ export default function PrepaymentSimulator({ loan, onClose }: PrepaymentSimulat
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               <div>
                 <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>完済が早まる</div>
-                <div style={{ fontFamily: "monospace", fontSize: 18, fontWeight: 700, color: COLOR_POSITIVE }}>
+                <div style={{ fontFamily: FONT_NUM, fontSize: 18, fontWeight: 700, color: COLOR_POSITIVE }}>
                   {monthsSaved}ヶ月
                 </div>
               </div>
               <div>
                 <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 4 }}>利息を節約</div>
-                <div style={{ fontFamily: "monospace", fontSize: 18, fontWeight: 700, color: COLOR_POSITIVE }}>
+                <div style={{ fontFamily: FONT_NUM, fontSize: 18, fontWeight: 700, color: COLOR_POSITIVE }}>
                   {formatYen(interestSaved)}
                 </div>
               </div>

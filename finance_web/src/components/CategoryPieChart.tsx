@@ -54,7 +54,7 @@ function CustomTooltip({ active, payload, icons }: TooltipProps) {
       <div style={{ color: COLOR_TEXT_PRIMARY, fontWeight: 700, marginBottom: 4 }}>
         {icons?.[d.name] || ""} {d.name}
       </div>
-      <div style={{ fontFamily: "monospace", color: "#22d3ee" }}>
+      <div style={{ fontFamily: FONT_NUM, color: "#22d3ee" }}>
         {formatYen(d.value)}
         <span style={{ color: COLOR_TEXT_HINT, marginLeft: 6 }}>({d.pct}%)</span>
       </div>
@@ -161,7 +161,7 @@ export default function CategoryPieChart({ tx, selectedYear, selectedMonth, icon
             </span>
             {/* 金額 + パーセント */}
             <span>
-              <span style={{ fontFamily: "monospace", fontWeight: 700 }}>{formatYen(d.value)}</span>
+              <span style={{ fontFamily: FONT_NUM, fontWeight: 700 }}>{formatYen(d.value)}</span>
               <span style={{ color: COLOR_TEXT_HINT, fontSize: 12, marginLeft: 5 }}>({d.pct}%)</span>
             </span>
           </div>

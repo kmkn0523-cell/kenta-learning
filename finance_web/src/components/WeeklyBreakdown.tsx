@@ -120,7 +120,7 @@ export default function WeeklyBreakdown({ mTx, selectedYear, selectedMonth }: We
                 <span style={{ fontSize: 12, color: COLOR_TEXT_HINT }}>{w.rangeLabel}</span>
               </div>
               {/* 右側：金額 */}
-              <span style={{ fontFamily: "monospace", fontWeight: 700, color: isMax ? COLOR_NEGATIVE : COLOR_TEXT_SECONDARY }}>
+              <span style={{ fontFamily: FONT_NUM, fontWeight: 700, color: isMax ? COLOR_NEGATIVE : COLOR_TEXT_SECONDARY }}>
                 {w.total > 0 ? formatYen(w.total) : "−"}
               </span>
             </div>
@@ -149,7 +149,7 @@ export default function WeeklyBreakdown({ mTx, selectedYear, selectedMonth }: We
         fontSize: 12,
       }}>
         <span style={{ color: COLOR_TEXT_HINT }}>月計</span>
-        <span style={{ fontFamily: "monospace", fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
+        <span style={{ fontFamily: FONT_NUM, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
           {formatYen(grandTotal)}
         </span>
       </div>

@@ -37,7 +37,7 @@ function CustomTooltip({ active, payload, label }: TooltipProps) {
     <div style={{ background:"#0b1220", border:`1px solid ${COLOR_BORDER}`, borderRadius:10, padding:"10px 14px", fontSize:12 }}>
       <div style={{ color:COLOR_TEXT_PRIMARY, fontWeight:700, marginBottom:6 }}>{label}</div>
       {payload.map(p => (
-        <div key={p.dataKey} style={{ color:p.color, fontFamily:"monospace" }}>
+        <div key={p.dataKey} style={{ color:p.color, fontFamily:FONT_NUM }}>
           {p.name}: {formatYen(p.value)}
         </div>
       ))}
@@ -168,7 +168,7 @@ export default function MonthlyChart({ tx, inc, tFx }: MonthlyChartProps) {
             style={{ display:"flex", justifyContent:"space-between", padding:"4px 0", borderBottom:`1px solid rgba(255,255,255,0.04)`, fontSize:12 }}
           >
             <span style={{ color:COLOR_TEXT_HINT }}>{d.label}</span>
-            <span style={{ fontFamily:"monospace", fontWeight:700, color: d.net >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE }}>
+            <span style={{ fontFamily:FONT_NUM, fontWeight:700, color: d.net >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE }}>
               {d.net >= 0 ? "+" : ""}{formatYen(d.net)}
             </span>
           </div>

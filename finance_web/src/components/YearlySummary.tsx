@@ -176,21 +176,21 @@ export default function YearlySummary({
             </div>
             {/* 収入 */}
             <div style={{
-              fontFamily:"monospace", fontSize:12, textAlign:"right",
+              fontFamily:FONT_NUM, fontSize:12, textAlign:"right",
               color: row.hasData ? COLOR_POSITIVE : COLOR_TEXT_HINT,
             }}>
               {row.incTotal > 0 ? formatYen(row.incTotal) : "−"}
             </div>
             {/* 支出 */}
             <div style={{
-              fontFamily:"monospace", fontSize:12, textAlign:"right",
+              fontFamily:FONT_NUM, fontSize:12, textAlign:"right",
               color: row.hasData ? COLOR_NEGATIVE : COLOR_TEXT_HINT,
             }}>
               {row.expTotal > 0 ? formatYen(row.expTotal) : "−"}
             </div>
             {/* 手残り */}
             <div style={{
-              fontFamily:"monospace", fontSize:12, fontWeight:700, textAlign:"right",
+              fontFamily:FONT_NUM, fontSize:12, fontWeight:700, textAlign:"right",
               color: !row.hasData ? COLOR_TEXT_HINT : row.net >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE,
             }}>
               {row.hasData
@@ -211,13 +211,13 @@ export default function YearlySummary({
         marginTop:4,
       }}>
         <div style={{ fontSize:12, fontWeight:700, color:COLOR_TEXT_SECONDARY }}>年計</div>
-        <div style={{ fontFamily:"monospace", fontSize:12, fontWeight:700, textAlign:"right", color:COLOR_POSITIVE }}>
+        <div style={{ fontFamily:FONT_NUM, fontSize:12, fontWeight:700, textAlign:"right", color:COLOR_POSITIVE }}>
           {formatYen(yearTotal.incTotal)}
         </div>
-        <div style={{ fontFamily:"monospace", fontSize:12, fontWeight:700, textAlign:"right", color:COLOR_NEGATIVE }}>
+        <div style={{ fontFamily:FONT_NUM, fontSize:12, fontWeight:700, textAlign:"right", color:COLOR_NEGATIVE }}>
           {formatYen(yearTotal.expTotal)}
         </div>
-        <div style={{ fontFamily:"monospace", fontSize:12, fontWeight:700, textAlign:"right", color:yearTotal.net >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE }}>
+        <div style={{ fontFamily:FONT_NUM, fontSize:12, fontWeight:700, textAlign:"right", color:yearTotal.net >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE }}>
           {yearTotal.net >= 0 ? "+" : ""}{formatYen(yearTotal.net)}
         </div>
       </div>

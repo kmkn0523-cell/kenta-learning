@@ -73,7 +73,7 @@ function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps) {
         <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>{item.date}</div>
       </div>
       {/* 収入は「+」、支出は「-」を頭につけて金額を表示 */}
-      <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,color:col}}>{isInc?"+":"-"}{formatYen(item.amount)}</div>
+      <div style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700,color:col}}>{isInc?"+":"-"}{formatYen(item.amount)}</div>
       <button type="button" onClick={()=>{setD({cat:item.category,amt:String(item.amount),date:item.date,memo:item.memo||""});setEd(true);}} style={STYLE_BUTTON_OUTLINE}>編集</button>
       <button type="button" onClick={()=>onDelete(item)} style={STYLE_BUTTON_OUTLINE}>削除</button>
     </div>

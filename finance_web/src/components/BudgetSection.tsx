@@ -12,7 +12,7 @@ import OverspendNotifySettings from "./OverspendNotifySettings";
 
 // 前月比バッジの静的スタイル（background・color は動的にスプレッドで上書き）
 const STYLE_BS_BADGE_BASE: CSSProperties = {
-  fontSize: 12, fontWeight: 700, fontFamily: "monospace",
+  fontSize: 12, fontWeight: 700, fontFamily: FONT_NUM,
   borderRadius: 4, padding: "1px 5px", letterSpacing: "0.3px",
 };
 
@@ -129,7 +129,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [], no
           {/* 全体の使用状況 */}
           <div style={{ display:"flex", justifyContent:"space-between", fontSize:12, marginBottom:4 }}>
             <span style={{ color:COLOR_TEXT_HINT }}>変動支出合計</span>
-            <span style={{ fontFamily:"monospace", color: totalActual > totalBudget ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY }}>
+            <span style={{ fontFamily:FONT_NUM, color: totalActual > totalBudget ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY }}>
               {formatYen(totalActual)} <span style={{ color:COLOR_TEXT_HINT }}>/ {formatYen(totalBudget)}</span>
             </span>
           </div>
@@ -174,7 +174,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [], no
                         {EXPENSE_CATEGORY_ICONS[c]} {c}
                       </span>
                       {/* 残り金額 or 超過金額 */}
-                      <span style={{ fontSize: 12, fontFamily: "monospace", fontWeight: 600, color: alertColor }}>
+                      <span style={{ fontSize: 12, fontFamily: FONT_NUM, fontWeight: 600, color: alertColor }}>
                         {isOver
                           ? `${formatYen(a - b)} 超過`
                           : `残り ${formatYen(b - a)}`}
@@ -214,7 +214,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [], no
                       </span>
                     )}
                   </span>
-                  <span style={{ fontFamily:"monospace", color:col }}>
+                  <span style={{ fontFamily:FONT_NUM, color:col }}>
                     {formatYen(a)}
                     {b > 0 && <span style={{ color:COLOR_TEXT_HINT }}> / {formatYen(b)}</span>}
                     {/* 超過した時は「超過」バッジを表示 */}
@@ -239,7 +239,7 @@ export default function BudgetSection({ budget, setBudget, mTx, prevMTx = [], no
                       }}/>
                     </div>
                     {/* バーの下に「残り ¥X,XXX」or「¥X,XXX 超過」を小さく表示 */}
-                    <div style={{ fontSize: 12, color: col, textAlign: "right", marginTop: 3, fontFamily: "monospace" }}>
+                    <div style={{ fontSize: 12, color: col, textAlign: "right", marginTop: 3, fontFamily: FONT_NUM }}>
                       {a > b
                         ? `${formatYen(a - b)} 超過`
                         : `残り ${formatYen(b - a)}`}

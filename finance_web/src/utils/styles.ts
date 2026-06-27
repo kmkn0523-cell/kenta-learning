@@ -1,6 +1,9 @@
 // ────────── スタイル定数まとめ ──────────
 // アプリ全体で繰り返し使う色・スタイルをひとまとめにしたファイル
 
+// 数字・金額表示用フォント（等幅＋タブラー数字で桁が揃う）
+export const FONT_NUM = "ui-monospace, 'Courier New', monospace";
+
 // 背景色・文字色の定数
 export const COLOR_BACKGROUND = "#070b14";        // ページの背景（ダークネイビー）
 export const COLOR_TEXT_PRIMARY = "#f0f4ff";      // メインの文字色（クールホワイト）

@@ -303,7 +303,7 @@ export default function DashboardView({
       <div style={{...STYLE_CARD,background:"linear-gradient(135deg,rgba(15,23,42,0.95) 0%,rgba(34,211,238,0.07) 100%)",border:`1px solid rgba(34,211,238,0.18)`}}>
         {/* 手残りを主役に大きく表示（プラスは緑・マイナスは赤）。tabular-nums で桁を縦に揃える */}
         <div style={{fontSize:11,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"2px",marginBottom:6,fontWeight:600}}>{isCurMonth?"今月の手残り":`${selectedMonth+1}月の手残り`}</div>
-        <div style={{fontFamily:"monospace",fontSize:38,fontWeight:700,letterSpacing:"-1.5px",marginBottom:16,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE,fontVariantNumeric:"tabular-nums"}}>{net>=0?"+":""}{formatYen(net)}</div>
+        <div style={{fontFamily:FONT_NUM,fontSize:38,fontWeight:700,letterSpacing:"-1.5px",marginBottom:16,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE,fontVariantNumeric:"tabular-nums"}}>{net>=0?"+":""}{formatYen(net)}</div>
         {/* 収入・支出・貯蓄率の3枚KPIカード */}
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
           {[
@@ -313,7 +313,7 @@ export default function DashboardView({
           ].map(kpi=>(
             <div key={kpi.label} style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:"10px 12px"}}>
               <div style={{fontSize:10,color:COLOR_TEXT_HINT,letterSpacing:"1px",marginBottom:4}}>{kpi.label}</div>
-              <div style={{fontFamily:"monospace",fontSize:15,fontWeight:700,letterSpacing:"-0.5px",color:kpi.color,fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{kpi.value}</div>
+              <div style={{fontFamily:FONT_NUM,fontSize:15,fontWeight:700,letterSpacing:"-0.5px",color:kpi.color,fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{kpi.value}</div>
             </div>
           ))}
         </div>
@@ -325,16 +325,16 @@ export default function DashboardView({
         <div style={{...STYLE_CARD, borderColor: paceRed ? `${COLOR_NEGATIVE}44` : paceYellow ? "rgba(251,191,36,0.3)" : COLOR_BORDER}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
             <div style={{fontSize:12,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"1.5px"}}>📈 今月のペース</div>
-            <div style={{fontSize:12,color:COLOR_TEXT_HINT,fontFamily:"monospace"}}>{daysElapsed}日 / {daysInMonth}日 ({Math.round(paceRatio*100)}%)</div>
+            <div style={{fontSize:12,color:COLOR_TEXT_HINT,fontFamily:FONT_NUM}}>{daysElapsed}日 / {daysInMonth}日 ({Math.round(paceRatio*100)}%)</div>
           </div>
           {/* 月末予想カード本体 */}
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
             <span style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>月末の支出予想</span>
-            <span style={{fontFamily:"monospace",fontSize:18,fontWeight:700,color:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_TEXT_PRIMARY}}>{formatYen(projectedTotal)}</span>
+            <span style={{fontFamily:FONT_NUM,fontSize:18,fontWeight:700,color:paceRed?COLOR_NEGATIVE:paceYellow?"#fbbf24":COLOR_TEXT_PRIMARY}}>{formatYen(projectedTotal)}</span>
           </div>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:10}}>
             <span style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>月末の手残り予想</span>
-            <span style={{fontFamily:"monospace",fontSize:18,fontWeight:700,color:projectedNet>=0?COLOR_POSITIVE:COLOR_NEGATIVE}}>{projectedNet>=0?"+":""}{formatYen(projectedNet)}</span>
+            <span style={{fontFamily:FONT_NUM,fontSize:18,fontWeight:700,color:projectedNet>=0?COLOR_POSITIVE:COLOR_NEGATIVE}}>{projectedNet>=0?"+":""}{formatYen(projectedNet)}</span>
           </div>
           {/* 経過バー：今月どこまで進んだかを視覚化 */}
           <div style={{height:6,background:"rgba(148,163,184,0.08)",borderRadius:3,overflow:"hidden",marginBottom:8}}>
@@ -398,7 +398,7 @@ export default function DashboardView({
               {acc.updatedAt&&<div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>{acc.updatedAt} 更新</div>}
             </div>
             {/* calculateAccountBalance で入出金・振替を反映した実際の残高を表示 */}
-            <div style={{fontFamily:"monospace",fontSize:15,fontWeight:700,color:COLOR_POSITIVE}}>
+            <div style={{fontFamily:FONT_NUM,fontSize:15,fontWeight:700,color:COLOR_POSITIVE}}>
               {formatYen(calculateAccountBalance(acc, transactions, incomes, transfers))}
             </div>
             {/* 編集ボタン：フォームに既存の値（color も含む）をセットして開く */}
@@ -422,7 +422,7 @@ export default function DashboardView({
           <>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:10}}>
               <span style={{fontSize:12,color:COLOR_TEXT_HINT}}>合計残高</span>
-              <span style={{fontFamily:"monospace",fontSize:16,fontWeight:700,color:COLOR_POSITIVE}}>
+              <span style={{fontFamily:FONT_NUM,fontSize:16,fontWeight:700,color:COLOR_POSITIVE}}>
                 {formatYen(accounts.reduce((s,a)=>s+calculateAccountBalance(a,transactions,incomes,transfers),0))}
               </span>
             </div>
@@ -444,7 +444,7 @@ export default function DashboardView({
                 </div>
                 <div style={{textAlign:"right"}}>
                   <span style={{
-                    fontFamily:"monospace",
+                    fontFamily:FONT_NUM,
                     fontSize:15,
                     fontWeight:700,
                     // 0以上は青緑、マイナスは赤
@@ -613,10 +613,10 @@ export default function DashboardView({
               <div key={label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:`1px solid ${COLOR_BORDER}`}}>
                 <span style={{fontSize:13,color:COLOR_TEXT_SECONDARY}}>{label}</span>
                 <div style={{textAlign:"right"}}>
-                  <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700}}>{formatYen(cur)}</div>
+                  <div style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700}}>{formatYen(cur)}</div>
                   <div style={{fontSize:12,color:good===null?COLOR_TEXT_HINT:good?COLOR_POSITIVE:COLOR_NEGATIVE}}>
                     {arrow} {diff>=0?"+":""}{formatYen(diff)}
-                    {pct!==null&&<span style={{marginLeft:6,fontFamily:"monospace"}}>({pct>=0?"+":""}{pct}%)</span>}
+                    {pct!==null&&<span style={{marginLeft:6,fontFamily:FONT_NUM}}>({pct>=0?"+":""}{pct}%)</span>}
                   </div>
                 </div>
               </div>
@@ -643,10 +643,10 @@ export default function DashboardView({
               <div key={label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:`1px solid ${COLOR_BORDER}`}}>
                 <span style={{fontSize:13,color:COLOR_TEXT_SECONDARY}}>{label}</span>
                 <div style={{textAlign:"right"}}>
-                  <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700}}>{formatYen(cur)}</div>
+                  <div style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700}}>{formatYen(cur)}</div>
                   <div style={{fontSize:12,color:good===null?COLOR_TEXT_HINT:good?COLOR_POSITIVE:COLOR_NEGATIVE}}>
                     {diff>=0?"+":""}{formatYen(diff)}
-                    {pct !== null && <span style={{marginLeft:6,fontFamily:"monospace"}}>({pct>=0?"+":""}{pct}%)</span>}
+                    {pct !== null && <span style={{marginLeft:6,fontFamily:FONT_NUM}}>({pct>=0?"+":""}{pct}%)</span>}
                   </div>
                 </div>
               </div>
@@ -672,17 +672,17 @@ export default function DashboardView({
             <div key={l.id} style={{paddingBottom:12,marginBottom:12,borderBottom:`1px solid ${COLOR_BORDER}`}}>
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}>
                 <span style={{fontSize:13,fontWeight:600}}>{l.name}</span>
-                <span style={{fontFamily:"monospace",fontSize:14,fontWeight:700}}>{formatYen(l.remaining)}</span>
+                <span style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700}}>{formatYen(l.remaining)}</span>
               </div>
               <div style={{display:"flex",gap:12,fontSize:12,color:COLOR_TEXT_HINT,flexWrap:"wrap",marginBottom:4}}>
-                <span>月返済 <span style={{fontFamily:"monospace",color:COLOR_TEXT_SECONDARY}}>{formatYen(l.monthly)}</span></span>
-                <span>月利息 <span style={{fontFamily:"monospace",color:COLOR_NEGATIVE}}>{formatYen(mi)}</span></span>
-                <span style={{fontFamily:"monospace"}}>{l.rate}%</span>
+                <span>月返済 <span style={{fontFamily:FONT_NUM,color:COLOR_TEXT_SECONDARY}}>{formatYen(l.monthly)}</span></span>
+                <span>月利息 <span style={{fontFamily:FONT_NUM,color:COLOR_NEGATIVE}}>{formatYen(mi)}</span></span>
+                <span style={{fontFamily:FONT_NUM}}>{l.rate}%</span>
               </div>
               {comp&&(
                 <div style={{fontSize:12,color:COLOR_TEXT_HINT}}>
-                  完済予定 <span style={{fontFamily:"monospace",color:COLOR_TEXT_PRIMARY,fontWeight:700}}>{comp.y}年{comp.m}月</span>
-                  {ti&&<span style={{marginLeft:8}}>総利息 <span style={{fontFamily:"monospace",color:COLOR_NEGATIVE,fontWeight:700}}>{formatYen(ti.interest)}</span></span>}
+                  完済予定 <span style={{fontFamily:FONT_NUM,color:COLOR_TEXT_PRIMARY,fontWeight:700}}>{comp.y}年{comp.m}月</span>
+                  {ti&&<span style={{marginLeft:8}}>総利息 <span style={{fontFamily:FONT_NUM,color:COLOR_NEGATIVE,fontWeight:700}}>{formatYen(ti.interest)}</span></span>}
                 </div>
               )}
             </div>
@@ -691,7 +691,7 @@ export default function DashboardView({
         {/* 全ローンの支払総利息合計 */}
         <div style={{display:"flex",justifyContent:"space-between"}}>
           <span style={{fontSize:12,color:COLOR_TEXT_HINT}}>全ローン 支払総利息</span>
-          <span style={{fontFamily:"monospace",fontSize:14,fontWeight:700,color:COLOR_NEGATIVE}}>
+          <span style={{fontFamily:FONT_NUM,fontSize:14,fontWeight:700,color:COLOR_NEGATIVE}}>
             {formatYen(allL.reduce((s,l)=>{const r=calculateTotalInterest(l.remaining,l.rate,l.monthly);return r?s+r.interest:s;},0))}
           </span>
         </div>

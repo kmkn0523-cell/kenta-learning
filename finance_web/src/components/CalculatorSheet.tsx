@@ -80,10 +80,10 @@ export default function CalculatorSheet({ open, initialValue, onConfirm, onClose
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
           <button type="button" aria-label="閉じる" onClick={onClose} style={{ background: "none", border: "none", color: COLOR_TEXT_SECONDARY, fontSize: 20, cursor: "pointer", padding: 4 }}>✕</button>
           <div style={{ flex: 1, textAlign: "right", overflow: "hidden" }}>
-            <div style={{ fontSize: 13, color: COLOR_TEXT_SECONDARY, minHeight: 18, fontFamily: "ui-monospace, monospace", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            <div style={{ fontSize: 13, color: COLOR_TEXT_SECONDARY, minHeight: 18, fontFamily: FONT_NUM, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
               {formatExpression(state)}
             </div>
-            <div style={{ fontSize: 30, fontWeight: 700, color: state.error ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY, fontFamily: "ui-monospace, monospace", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            <div style={{ fontSize: 30, fontWeight: 700, color: state.error ? COLOR_NEGATIVE : COLOR_TEXT_PRIMARY, fontFamily: FONT_NUM, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
               {state.error ? "エラー" : formatResult(result ?? 0)}
             </div>
           </div>

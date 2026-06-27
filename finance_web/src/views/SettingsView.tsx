@@ -324,21 +324,21 @@ export default function SettingsView(props: SettingsViewProps) {
                 flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
                 padding: "8px 12px", textAlign: "center",
               }}>
-                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{txCount}</div>
+                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: FONT_NUM }}>{txCount}</div>
                 <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の支出</div>
               </div>
               <div style={{
                 flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
                 padding: "8px 12px", textAlign: "center",
               }}>
-                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{incCount}</div>
+                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: FONT_NUM }}>{incCount}</div>
                 <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件の収入</div>
               </div>
               <div style={{
                 flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: 8,
                 padding: "8px 12px", textAlign: "center",
               }}>
-                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>{txCount + incCount}</div>
+                <div style={{ fontSize: 18, fontWeight: 700, fontFamily: FONT_NUM }}>{txCount + incCount}</div>
                 <div style={{ fontSize: 12, color: COLOR_TEXT_SECONDARY, marginTop: 2 }}>件 合計</div>
               </div>
             </div>
@@ -639,7 +639,7 @@ export default function SettingsView(props: SettingsViewProps) {
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>バージョン</span>
-            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: "monospace" }}>v{__APP_VERSION__}</span>
+            <span style={{ color: COLOR_TEXT_PRIMARY, fontFamily: FONT_NUM }}>v{__APP_VERSION__}</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>制作</span>

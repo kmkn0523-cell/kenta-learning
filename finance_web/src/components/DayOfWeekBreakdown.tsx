@@ -105,7 +105,7 @@ export default function DayOfWeekBreakdown({ mTx }: DayOfWeekBreakdownProps) {
         {/* 1曜日平均を右に小さく表示 */}
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 1 }}>使った曜日の平均</div>
-          <div style={{ fontFamily: "monospace", fontSize: 12, color: COLOR_TEXT_SECONDARY }}>
+          <div style={{ fontFamily: FONT_NUM, fontSize: 12, color: COLOR_TEXT_SECONDARY }}>
             {formatYen(avgPerActiveDay)}
           </div>
         </div>
@@ -164,7 +164,7 @@ export default function DayOfWeekBreakdown({ mTx }: DayOfWeekBreakdownProps) {
                 {r.total > 0 ? (
                   <>
                     <span style={{
-                      fontFamily: "monospace", fontSize: 12, fontWeight: 700,
+                      fontFamily: FONT_NUM, fontSize: 12, fontWeight: 700,
                       color: isMax ? COLOR_NEGATIVE : COLOR_TEXT_SECONDARY,
                     }}>
                       {formatYen(r.total)}
@@ -190,7 +190,7 @@ export default function DayOfWeekBreakdown({ mTx }: DayOfWeekBreakdownProps) {
         paddingTop: 10, marginTop: 4, fontSize: 12,
       }}>
         <span style={{ color: COLOR_TEXT_HINT }}>月計</span>
-        <span style={{ fontFamily: "monospace", fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
+        <span style={{ fontFamily: FONT_NUM, fontWeight: 700, color: COLOR_TEXT_PRIMARY }}>
           {formatYen(grandTotal)}
         </span>
       </div>

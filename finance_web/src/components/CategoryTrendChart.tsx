@@ -46,7 +46,7 @@ function CustomTooltip({ active, payload, label, icons }: TooltipProps) {
         .filter(p => Number(p.value) > 0)
         .sort((a, b) => Number(b.value) - Number(a.value))
         .map(p => (
-          <div key={p.dataKey} style={{ color: p.color, fontFamily: "monospace" }}>
+          <div key={p.dataKey} style={{ color: p.color, fontFamily: FONT_NUM }}>
             {icons?.[p.name] || ""} {p.name}: {formatYen(Number(p.value))}
           </div>
         ))}

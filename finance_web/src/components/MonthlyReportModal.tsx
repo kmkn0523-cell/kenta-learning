@@ -115,21 +115,21 @@ export default function MonthlyReportModal({
           {/* 収入 */}
           <div>
             <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>収入</div>
-            <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: COLOR_POSITIVE, lineHeight: 1.3 }}>
+            <div style={{ fontFamily: FONT_NUM, fontSize: 13, fontWeight: 700, color: COLOR_POSITIVE, lineHeight: 1.3 }}>
               {formatYen(income)}
             </div>
           </div>
           {/* 支出 */}
           <div>
             <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>支出</div>
-            <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: COLOR_NEGATIVE, lineHeight: 1.3 }}>
+            <div style={{ fontFamily: FONT_NUM, fontSize: 13, fontWeight: 700, color: COLOR_NEGATIVE, lineHeight: 1.3 }}>
               {formatYen(expense)}
             </div>
           </div>
           {/* 手残り */}
           <div>
             <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, marginBottom: 6, letterSpacing: "0.5px" }}>手残り</div>
-            <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: isBlack ? COLOR_POSITIVE : COLOR_NEGATIVE, lineHeight: 1.3 }}>
+            <div style={{ fontFamily: FONT_NUM, fontSize: 13, fontWeight: 700, color: isBlack ? COLOR_POSITIVE : COLOR_NEGATIVE, lineHeight: 1.3 }}>
               {net >= 0 ? "+" : ""}{formatYen(net)}
             </div>
           </div>
@@ -167,12 +167,12 @@ export default function MonthlyReportModal({
                 }}
               >
                 <span style={{ fontSize: 13, color: COLOR_TEXT_PRIMARY }}>
-                  <span style={{ color: COLOR_TEXT_HINT, marginRight: 8, fontFamily: "monospace" }}>
+                  <span style={{ color: COLOR_TEXT_HINT, marginRight: 8, fontFamily: FONT_NUM }}>
                     {i + 1}.
                   </span>
                   {cat}
                 </span>
-                <span style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 600, color: COLOR_NEGATIVE }}>
+                <span style={{ fontFamily: FONT_NUM, fontSize: 13, fontWeight: 600, color: COLOR_NEGATIVE }}>
                   {formatYen(amt)}
                 </span>
               </div>
@@ -195,7 +195,7 @@ export default function MonthlyReportModal({
             {overBudget.map(([cat, over]) => (
               <div key={cat} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
                 <span style={{ color: COLOR_TEXT_PRIMARY }}>{cat}</span>
-                <span style={{ fontFamily: "monospace", color: COLOR_NEGATIVE, fontWeight: 600 }}>
+                <span style={{ fontFamily: FONT_NUM, color: COLOR_NEGATIVE, fontWeight: 600 }}>
                   {formatYen(over)} 超過
                 </span>
               </div>

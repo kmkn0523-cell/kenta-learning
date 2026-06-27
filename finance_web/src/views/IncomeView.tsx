@@ -173,7 +173,7 @@ export default function IncomeView({
             ⚡ 定期収入
             {/* 登録件数バッジ */}
             {recurringIncomes.length > 0 && (
-              <span style={{marginLeft:8,fontSize:12,color:COLOR_ACCENT,fontFamily:"monospace"}}>
+              <span style={{marginLeft:8,fontSize:12,color:COLOR_ACCENT,fontFamily:FONT_NUM}}>
                 {recurringIncomes.length}件
               </span>
             )}

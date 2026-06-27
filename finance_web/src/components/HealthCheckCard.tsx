@@ -202,16 +202,16 @@ export default function HealthCheckCard({
           <div style={{ fontSize: 13, color: COLOR_TEXT_SECONDARY, lineHeight: 1.5 }}>{gradeMessage}</div>
         </div>
         <div style={{ textAlign: "center", flexShrink: 0, marginLeft: 12 }}>
-          <div style={{ fontFamily: "monospace", fontSize: 48, fontWeight: 700, color: gradeColor, lineHeight: 1, letterSpacing: "-2px" }}>
+          <div style={{ fontFamily: FONT_NUM, fontSize: 48, fontWeight: 700, color: gradeColor, lineHeight: 1, letterSpacing: "-2px" }}>
             {grade}
           </div>
-          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: "monospace", marginTop: 2 }}>
+          <div style={{ fontSize: 12, color: COLOR_TEXT_HINT, fontFamily: FONT_NUM, marginTop: 2 }}>
             {Math.round(totalScore)}/100
           </div>
           {/* 前月比の貯蓄率トレンド（前月データがある場合のみ表示） */}
           {savingRateDelta !== null && (
             <div style={{
-              fontSize: 12, fontFamily: "monospace", marginTop: 4,
+              fontSize: 12, fontFamily: FONT_NUM, marginTop: 4,
               color: savingRateDelta >= 0 ? COLOR_POSITIVE : COLOR_NEGATIVE,
             }}>
               {savingRateDelta >= 0 ? "▲" : "▼"}{Math.abs(Math.round(savingRateDelta))}% 前月比
@@ -230,7 +230,7 @@ export default function HealthCheckCard({
                 <span style={{ fontSize: 12, color: COLOR_TEXT_PRIMARY, fontWeight: 600 }}>
                   {m.icon} {m.label}
                 </span>
-                <span style={{ fontFamily: "monospace", fontSize: 14, fontWeight: 700, color: c }}>
+                <span style={{ fontFamily: FONT_NUM, fontSize: 14, fontWeight: 700, color: c }}>
                   {m.value}
                 </span>
               </div>

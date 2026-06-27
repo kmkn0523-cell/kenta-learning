@@ -87,8 +87,8 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
           {paid && <div style={STYLE_LOAN_COMPLETE_BADGE}>✓ 完済</div>}
           <div style={{fontSize:15,fontWeight:700}}>{loan.name}</div>
           <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:2}}>
-            金利 <span style={{fontFamily:"monospace",color:COLOR_TEXT_PRIMARY,fontWeight:700}}>{loan.rate}%</span>
-            {hasPayDay && <span style={{marginLeft:8}}>毎月<span style={{fontFamily:"monospace",color:COLOR_TEXT_SECONDARY,fontWeight:600}}>{loan.payDay}</span>引落</span>}
+            金利 <span style={{fontFamily:FONT_NUM,color:COLOR_TEXT_PRIMARY,fontWeight:700}}>{loan.rate}%</span>
+            {hasPayDay && <span style={{marginLeft:8}}>毎月<span style={{fontFamily:FONT_NUM,color:COLOR_TEXT_SECONDARY,fontWeight:600}}>{loan.payDay}</span>引落</span>}
           </div>
         </div>
         <div style={{display:"flex",gap:8,flexShrink:0}}>
@@ -118,14 +118,14 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
       {!paid && comp && <div style={STYLE_LOAN_COMPLETION_BOX}>
         <div>
           <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginBottom:3}}>完済予定</div>
-          <span style={{fontFamily:"monospace",fontSize:20,fontWeight:700}}>{comp.y}年{comp.m}月</span>
+          <span style={{fontFamily:FONT_NUM,fontSize:20,fontWeight:700}}>{comp.y}年{comp.m}月</span>
           <span style={{fontSize:12,color:COLOR_TEXT_SECONDARY,marginLeft:8}}>あと{ti.months}ヶ月</span>
         </div>
         <span style={{fontSize:26}}>🏁</span>
       </div>}
 
       {/* 総利息 */}
-      {!paid && ti && ti.interest > 0 && <div style={{background:"rgba(248,113,113,0.06)",border:"1px solid rgba(248,113,113,0.2)",borderRadius:10,padding:"10px 14px",marginBottom:10,color:COLOR_NEGATIVE,fontSize:12}}>💸 総利息 <span style={{fontFamily:"monospace",fontSize:16,fontWeight:700}}>{formatYen(ti.interest)}</span></div>}
+      {!paid && ti && ti.interest > 0 && <div style={{background:"rgba(248,113,113,0.06)",border:"1px solid rgba(248,113,113,0.2)",borderRadius:10,padding:"10px 14px",marginBottom:10,color:COLOR_NEGATIVE,fontSize:12}}>💸 総利息 <span style={{fontFamily:FONT_NUM,fontSize:16,fontWeight:700}}>{formatYen(ti.interest)}</span></div>}
 
       {/* 残債・月返済額・今月の利息・利息割合の4つをグリッドで表示 */}
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
@@ -152,12 +152,12 @@ export default function LoanCard({loan,onEdit,onDelete,payVal,onPayChange,onPayS
         <div style={{marginTop:12}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
             <span style={{fontSize:12,color:COLOR_TEXT_HINT,letterSpacing:"1px",textTransform:"uppercase"}}>元本の返済進捗</span>
-            <span style={{fontFamily:"monospace",fontSize:13,fontWeight:700,color:COLOR_POSITIVE}}>{progressPct.toFixed(1)}%</span>
+            <span style={{fontFamily:FONT_NUM,fontSize:13,fontWeight:700,color:COLOR_POSITIVE}}>{progressPct.toFixed(1)}%</span>
           </div>
           <div style={{height:6,background:"rgba(255,255,255,0.06)",borderRadius:3,overflow:"hidden"}}>
             <div style={{height:"100%",width:`${progressPct}%`,background:COLOR_POSITIVE,borderRadius:3,transition:"width 0.4s ease"}}/>
           </div>
-          <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:4,fontFamily:"monospace"}}>
+          <div style={{fontSize:12,color:COLOR_TEXT_HINT,marginTop:4,fontFamily:FONT_NUM}}>
             {formatYen(principalNum - loan.remaining)} 返済済 / 元本 {formatYen(principalNum)}
           </div>
         </div>
