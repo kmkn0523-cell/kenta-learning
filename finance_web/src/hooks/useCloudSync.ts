@@ -94,7 +94,10 @@ export function useCloudSync({ getValues, setters, ready }: CloudSyncDeps) {
     setStatus("syncing");
     try {
       // 1) サーバ最新を取得
-      const res = await fetch(`/api/sync?accountId=${encodeURIComponent(accountId)}`);
+      // accountId は URLクエリではなくヘッダー(X-Account-Id)で送る。
+      // クエリに載せるとVercelのアクセスログ・ブラウザ履歴・Refererに残り、漏れた瞬間に
+      // 第三者がその置き場所を上書き破壊できてしまうため（同一オリジンなのでCORSプリフライトは発生しない）。
+      const res = await fetch("/api/sync", { headers: { "X-Account-Id": accountId } });
       if (res.status === 402) { setStatus("error"); return; } // 課金切れ
       if (!res.ok) { setStatus("error"); return; }
       const envelope = (await res.json()) as { version: number; data: string } | null;

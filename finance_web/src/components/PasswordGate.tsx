@@ -4,12 +4,24 @@
 // ログイン成功後は CryptoKeyContext に AES-GCM 鍵をセットして children（本体）を描画する
 
 import { useState, useRef, CSSProperties } from "react";
-import CryptoKeyContext from "../contexts/CryptoKeyContext";
+import CryptoKeyContext, { CryptoKeyRing } from "../contexts/CryptoKeyContext";
 import {
   simpleHash, makeNewHash, verifyNewHash, isLegacyHash,
   deriveEncryptionKey, getOrCreateEncSalt,
+  PBKDF2_ENC_ITERATIONS_V2, PBKDF2_ENC_ITERATIONS_LEGACY,
 } from "../utils/crypto";
 import { PasswordInput } from "./ui";
+
+// パスワードから「新鍵(31万回)」と「旧鍵(10万回)」の両方を派生してキーリングにする。
+// current は新規暗号化に、legacy は過去データの復号フォールバックに使う（段階移行）。
+async function deriveKeyRing(password: string): Promise<CryptoKeyRing> {
+  const salt = getOrCreateEncSalt();
+  const [current, legacy] = await Promise.all([
+    deriveEncryptionKey(password, salt, PBKDF2_ENC_ITERATIONS_V2),
+    deriveEncryptionKey(password, salt, PBKDF2_ENC_ITERATIONS_LEGACY),
+  ]);
+  return { current, legacy };
+}
 
 import { ReactNode } from "react";
 
@@ -54,8 +66,8 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
   const [err, setErr] = useState("");
   const [showReset, setShowReset] = useState(false); // リセット確認ダイアログの表示フラグ
   const [busy, setBusy] = useState(false); // ハッシュ計算中フラグ（ボタン連打防止）
-  // AES-GCM の暗号化鍵（CryptoKey オブジェクト）。ログイン成功時に派生してメモリだけに保持
-  const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
+  // AES-GCM の暗号化鍵束（新鍵＋旧鍵）。ログイン成功時に派生してメモリだけに保持
+  const [cryptoKey, setCryptoKey] = useState<CryptoKeyRing | null>(null);
   // ブルートフォース対策：失敗回数とロック解除時刻（エポックms）をsessionStorageで管理
   // sessionStorageなのでブラウザを閉じればリセットされる（厳しすぎないユーザー体験）
   const failCount = useRef<number>(Number(sessionStorage.getItem("ff_fail") || "0")); // JSXで使わないのでrefで管理
@@ -105,10 +117,9 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
         lockUntil.current = 0;
         sessionStorage.removeItem("ff_fail");
         sessionStorage.removeItem("ff_lock");
-        // パスワードからAES-GCM鍵を派生してメモリにだけ持つ（鍵の保存はしない）
+        // パスワードからAES-GCM鍵束を派生してメモリにだけ持つ（鍵の保存はしない）
         try {
-          const key = await deriveEncryptionKey(pw, getOrCreateEncSalt());
-          setCryptoKey(key);
+          setCryptoKey(await deriveKeyRing(pw));
         } catch (_) {
           showErr("鍵の準備に失敗しました");
           return;
@@ -146,10 +157,9 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
       const h = await makeNewHash(pw);
       try { localStorage.setItem("kk_pw_hash", h); } catch(error){ console.warn("[PasswordGate] setItem failed", error); }
       setSavedHash(h);
-      // 新規パスワード設定と同時に暗号化鍵も派生してメモリへ
+      // 新規パスワード設定と同時に暗号化鍵束も派生してメモリへ
       try {
-        const key = await deriveEncryptionKey(pw, getOrCreateEncSalt());
-        setCryptoKey(key);
+        setCryptoKey(await deriveKeyRing(pw));
       } catch (_) {
         showErr("鍵の準備に失敗しました");
         return;

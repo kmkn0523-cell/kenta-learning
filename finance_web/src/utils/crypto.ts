@@ -3,8 +3,13 @@
 
 // パスワードハッシュ用のイテレーション回数（OWASP 2026推奨: SHA-256で31万回）
 const PBKDF2_HASH_ITERATIONS = 310_000;
-// 暗号化鍵の導出用イテレーション回数（既存データとの互換性維持のため変更しない）
+// 暗号化鍵の導出用イテレーション回数（旧v1。既存データの復号互換のため値は変更しない）
 const PBKDF2_ENC_ITERATIONS  = 100_000;
+// 暗号化鍵の導出用イテレーション回数（新v2。OWASP 2026推奨の31万回）。
+// 新規の暗号化・RKラップはこちらを使い、旧10万回のデータは復号時だけ旧値で読んで段階移行する。
+export const PBKDF2_ENC_ITERATIONS_V2 = 310_000;
+// PasswordGate / usePersist から「旧鍵(10万回)」も使えるように公開する（段階移行のため）
+export const PBKDF2_ENC_ITERATIONS_LEGACY = PBKDF2_ENC_ITERATIONS;
 
 // 暗号化鍵を作るためのsaltを保存するlocalStorageキー
 export const ENC_SALT_KEY = "kk_enc_salt";
@@ -120,7 +125,12 @@ export function getOrCreateEncSalt(): Uint8Array<ArrayBuffer> {
 }
 
 // パスワードと暗号化用saltから AES-GCM 256bit の鍵（CryptoKey）を派生
-export async function deriveEncryptionKey(password: string, encSaltBytes: Uint8Array<ArrayBuffer>): Promise<CryptoKey> {
+// iterations: PBKDF2の反復回数。省略時は新v2(31万回)。旧データ復号用に10万回を明示指定もできる。
+export async function deriveEncryptionKey(
+  password: string,
+  encSaltBytes: Uint8Array<ArrayBuffer>,
+  iterations: number = PBKDF2_ENC_ITERATIONS_V2,
+): Promise<CryptoKey> {
   const enc = new TextEncoder();
   const baseKey = await crypto.subtle.importKey(
     "raw",
@@ -130,7 +140,7 @@ export async function deriveEncryptionKey(password: string, encSaltBytes: Uint8A
     ["deriveKey"]
   );
   return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: encSaltBytes, iterations: PBKDF2_ENC_ITERATIONS, hash: "SHA-256" },
+    { name: "PBKDF2", salt: encSaltBytes, iterations, hash: "SHA-256" },
     baseKey,
     { name: "AES-GCM", length: 256 },
     false,
@@ -278,8 +288,9 @@ export async function wrapRecoveryKey(rk: Uint8Array, password: string): Promise
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const enc = new TextEncoder();
   const baseKey = await crypto.subtle.importKey("raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveKey"]);
+  // 新規ラップは31万回(v2)で行う。反復数は文字列に埋め込むので、旧10万回の保存値も unwrap 側で読める。
   const wrapKey = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: PBKDF2_ENC_ITERATIONS, hash: "SHA-256" },
+    { name: "PBKDF2", salt, iterations: PBKDF2_ENC_ITERATIONS_V2, hash: "SHA-256" },
     baseKey,
     { name: "AES-GCM", length: 256 },
     false,
@@ -287,7 +298,7 @@ export async function wrapRecoveryKey(rk: Uint8Array, password: string): Promise
   );
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, wrapKey, rk as BufferSource);
-  return `rkw:v1:${PBKDF2_ENC_ITERATIONS}:${bytesToB64(salt)}:${bytesToB64(iv)}:${bytesToB64(new Uint8Array(ct))}`;
+  return `rkw:v1:${PBKDF2_ENC_ITERATIONS_V2}:${bytesToB64(salt)}:${bytesToB64(iv)}:${bytesToB64(new Uint8Array(ct))}`;
 }
 
 // 包まれたRK文字列とパスワードから元のRKバイト列を取り戻す

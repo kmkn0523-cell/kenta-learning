@@ -16,11 +16,14 @@ export function computeSavingRate(net: number, income: number): number {
 
 // CSVの1セルを安全な文字列にする（カンマ・改行・ダブルクォートを含む場合は囲む）
 // RFC4180準拠：セル内のダブルクォートは2個重ねでエスケープする
+// あわせて式インジェクション対策：先頭が = + - @ や制御文字だと表計算ソフトが数式として実行するため、
+// その場合は先頭に ' を付けて「ただの文字」に無害化する（カテゴリ名はユーザー入力なので対象にする）。
 function csvCell(value: string): string {
-  if (/[",\n]/.test(value)) {
-    return '"' + value.replace(/"/g, '""') + '"';
+  const neutralized = /^[=+\-@\t\r\n]/.test(value) ? "'" + value : value;
+  if (/[",\n]/.test(neutralized)) {
+    return '"' + neutralized.replace(/"/g, '""') + '"';
   }
-  return value;
+  return neutralized;
 }
 
 // 月次サマリーを縦持ちCSV文字列にする（純粋関数）
