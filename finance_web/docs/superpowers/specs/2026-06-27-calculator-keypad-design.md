@@ -59,7 +59,7 @@ interface CalcState {
 - `digit(n)`: 入力中の数字に1桁追加（桁あふれ=12桁超は無視）
 - `dot()`: 小数点を1つだけ追加
 - `operator(op)`: `pending` があれば先に `acc = apply(acc, pending, current)` を計算してから、新しい `pending` をセット。`current` を空に
-- `equals()`: `acc = apply(acc, pending, current)`、`pending = null`、`current` を結果に
+- `equals()`: `acc = apply(acc, pending, current)`、`pending = null`、`current` を結果に。**`=` 直後に数字を押したら新しい計算として `current` を作り直す**（結果に追記しない）
 - `backspace()`: 入力中の数字を1文字消す
 - `clear()`: 全リセット
 - `apply(a, op, b)`: 四則演算。`/` で `b === 0` なら `error = true`
@@ -75,7 +75,7 @@ interface CalcState {
 ```
 [金額欄] money付き → 右端に🧮ボタン
    ↓ タップ
-[CalculatorSheet] 開く（今の入力値 value を parseYenAmount して初期 acc にセット）
+[CalculatorSheet] 開く（今の入力値 value を parseYenAmount して初期 current にセット。acc/pending は空。0/空なら current も空）
    ↓ テンキー・演算子で操作（式と結果を上部に常時表示）
 [確定] → confirmValue(state) を整数化
        → Input が onChange({ target: { value: formatAmount(整数) } }) を呼ぶ
