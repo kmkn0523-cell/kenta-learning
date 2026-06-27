@@ -2,6 +2,7 @@
 // 消費者金融・銀行ローン・個人ローン3タブで共通して使われるローン管理セクション
 
 import { useState, useRef, CSSProperties } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { parseYenAmount, formatYen } from "../utils/format";
 import { findRate, FREE, calculateMonthlyInterest, calculateTotalInterest } from "../utils/loanCalc";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_NEGATIVE } from "../utils/styles";
@@ -47,7 +48,7 @@ interface LoanSectionProps {
   setPays: (fn: (p: Record<string, string>) => Record<string, string>) => void;
   showPrincipal: boolean;
   onDelete: (id: string, setArr: (fn: (p: LoanItem[]) => LoanItem[]) => void) => void;
-  showT: (msg: string, type?: string) => void;
+  // showT は useUI() から取得
   brands?: string[];
 }
 
@@ -58,7 +59,8 @@ interface LoanSectionProps {
 // onDelete: 削除確認ダイアログを開く関数
 // showT: トースト通知を表示する関数
 // brands: ブランドプリセット一覧（lo タブには渡さない）
-export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,onDelete,showT,brands}: LoanSectionProps) {
+export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,onDelete,brands}: LoanSectionProps) {
+  const { showT } = useUI();
   // brands が渡された時だけ「ブランドを選ぶ」UIを出す
   const brandOpts = brands ? [FREE, ...brands] : null;
   const initF = () => ({name:"",prin:"",rem:"",rate:"",mo:"",brand:brandOpts?FREE:""});

@@ -3,6 +3,7 @@
 // 検索・並び替えは内部 state で管理する（App.tsx に持ち出さない）
 
 import React, { useMemo, useState, useRef, useCallback, CSSProperties } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { Income, RecurringIncome, CategoryConfig, Account } from "../types";
 import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
 import { newId } from "../utils/crypto";
@@ -62,15 +63,9 @@ interface IncomeViewProps {
   allIncomes?: Income[];
   // 収入データ全体を更新する関数
   setIncomes: (u: Income[] | ((prev: Income[]) => Income[])) => void;
-  // トースト通知を表示する関数
-  showT: (msg: string, type?: string) => void;
-  // 確認ダイアログを表示する関数
-  ask: (title: string, msg: string, ok: () => void) => void;
   // カテゴリ設定（動的にカテゴリ名・アイコンを取得するために使う）
   categoryConfig: CategoryConfig;
-  // 削除＋Undo：即削除してToastに「元に戻す」を出す
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delItem: (id: string, setArr: (u: any) => void, label?: string) => void;
+  // showT/delItem は useUI() から取得
   // 定期収入の設定一覧（毎月自動追加する収入の登録）
   recurringIncomes: RecurringIncome[];
   // 定期収入の設定を更新する関数
@@ -89,13 +84,11 @@ export default function IncomeView({
   monthlyIncomes,
   allIncomes = [],
   setIncomes,
-  showT,
-  ask,
   categoryConfig,
-  delItem,
   recurringIncomes,
   setRecurringIncomes,
 }: IncomeViewProps) {
+  const { showT, delItem } = useUI();
   // categoryConfig.income を order 順で並べ、カテゴリ名のリストを作る（useMemo で参照を安定させ TxRow の memo を効かせる）
   const incomeCategoryNames = useMemo(
     () => categoryConfig.income.slice().sort((a, b) => a.order - b.order).map(c => c.name),

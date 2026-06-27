@@ -26,6 +26,7 @@ import { computeSavingRate } from "./utils/summaryExport";
 import { makeDefaultCategoryConfig } from "./utils/defaultCategories";
 import { CSSProperties } from "react";
 import PasswordGate from "./components/PasswordGate";
+import { UIHelpersProvider } from "./contexts/UIHelpersContext";
 
 // ── スタイル定数 ──────────────────────────────────────────
 
@@ -443,6 +444,8 @@ function AppInner(){
 
   if(!allOk) return <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:COLOR_BACKGROUND,flexDirection:"column",gap:14}}><div style={{fontSize:40,filter:"drop-shadow(0 0 12px rgba(34,211,238,0.5))"}}>💰</div><div style={{color:COLOR_TEXT_SECONDARY,fontSize:13,letterSpacing:"2px",textTransform:"uppercase"}}>Loading...</div></div>;
 
+  // UIヘルパ（showT/ask/delItem）をContextで配下へ配る（各Viewへのprop drilling削減）
+  const uiHelpers = useMemo(() => ({ showT, ask, delItem }), [showT, ask, delItem]);
   return <div style={{background:COLOR_BACKGROUND,minHeight:"100vh",color:COLOR_TEXT_PRIMARY,fontFamily:'"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif',WebkitTapHighlightColor:"transparent"}}>
     <Toast data={toast}/>
     <ConfirmDialog data={dlg} onOk={()=>{dlg?.onOk();setDlg(null);}} onCancel={()=>setDlg(null)}/>
@@ -493,6 +496,7 @@ function AppInner(){
         </div>
       )}
       {/* lazy ロードされたタブの読み込み中フォールバック（小さなインジケーター） */}
+      <UIHelpersProvider value={uiHelpers}>
       <Suspense fallback={<div style={{textAlign:"center",padding:"40px 0",color:COLOR_TEXT_HINT,fontSize:13}}>読み込み中…</div>}>
       {tab==="dash"&&<DashboardView
         selectedYear={selectedYear}
@@ -525,9 +529,6 @@ function AppInner(){
         importBackup={importBackup}
         fileInputRef={fileInputRef}
         ts={ts}
-        showT={showT}
-        ask={ask}
-        delItem={delItem}
         savingGoal={savingGoal}
         setSavingGoal={setSavingGoal}
         budget={budget}
@@ -537,7 +538,6 @@ function AppInner(){
         current={currentSummary}
         previous={previousSummary}
         categoryBreakdown={categoryBreakdown}
-        showT={showT}
       />}
       {tab==="inc"&&<IncomeView
         ts={ts}
@@ -550,10 +550,7 @@ function AppInner(){
         monthlyIncomes={monthlyIncomes}
         allIncomes={incomes}
         setIncomes={setIncomes}
-        showT={showT}
-        ask={ask}
         categoryConfig={categoryConfig}
-        delItem={delItem}
         recurringIncomes={recurringIncomes}
         setRecurringIncomes={setRecurringIncomes}
       />}
@@ -564,10 +561,7 @@ function AppInner(){
         showFx={showFx}
         setShowFx={setShowFx}
         addFx={addFx}
-        showT={showT}
-        ask={ask}
         categoryConfig={categoryConfig}
-        delItem={delItem}
       />}
       {tab==="exp"&&<ExpenseView
         tpls={tpls}
@@ -594,11 +588,8 @@ function AppInner(){
         totalVariableExpense={totalVariableExpense}
         exportMonthlyCsv={exportMonthlyCsv}
         setTransactions={setTransactions}
-        showT={showT}
-        ask={ask}
         txListRef={txListRef}
         categoryConfig={categoryConfig}
-        delItem={delItem}
         recurringExpenses={recurringExpenses}
         setRecurringExpenses={setRecurringExpenses}
       />}
@@ -615,8 +606,6 @@ function AppInner(){
         setLoans={setLoans}
         pays={pays}
         setPays={setPays}
-        delItem={delItem}
-        showT={showT}
       />}
       {tab==="search"&&<SearchView
         transactions={transactions}
@@ -658,6 +647,7 @@ function AppInner(){
         onRequestPermission={requestPermission}
       />}
       </Suspense>
+      </UIHelpersProvider>
     </div>
     {/* クイック追加FAB：どのタブからでも1タップで支出入力フォームへ。記録の起点を一定化して習慣化をあと押しする。 */}
     {/* 支出タブでは既存の「＋支出を追加」と重複するため非表示にする。 */}

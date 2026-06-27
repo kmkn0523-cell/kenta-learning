@@ -4,6 +4,7 @@
 // このファイルは「表示」専用。集計（計算）は App.tsx 側で行い、結果を props で受け取る
 
 import React, { useRef, CSSProperties } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { SummaryStats } from "../types";
 import { formatYen } from "../utils/format";
 import { exportSummaryCsv, exportSummaryImage } from "../utils/summaryExport";
@@ -22,7 +23,7 @@ interface SummaryViewProps {
   current: SummaryStats;                                       // 当月の集計値
   previous: SummaryStats | null;                              // 前月の集計値（無ければ null）
   categoryBreakdown: { category: string; amount: number }[]; // カテゴリ別の支出（金額の大きい順に並んでいる前提）
-  showT: (msg: string, type?: string) => void;               // 画面上に通知を出す関数
+  // showT は useUI()（UIHelpersContext）から取得する
 }
 
 // レポートカード（白枠の囲み）の共通スタイル
@@ -99,7 +100,8 @@ function DiffBadge({ currentValue, previousValue, unit }: {
   );
 }
 
-export default function SummaryView({ monthLabel, current, previous, categoryBreakdown, showT }: SummaryViewProps) {
+export default function SummaryView({ monthLabel, current, previous, categoryBreakdown }: SummaryViewProps) {
+  const { showT } = useUI();
   // 画像化する対象のDOM（レポート部分のまとまり）を覚えておくための入れ物
   const reportRef = useRef<HTMLDivElement>(null);
 

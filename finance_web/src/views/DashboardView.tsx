@@ -3,6 +3,7 @@
 // 表示に必要なデータはすべて props（親から渡す値）で受け取る
 
 import React, { useState, useMemo, lazy, Suspense, CSSProperties } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { Tx, Income, Loan, Account, Transfer, SavingGoal, FixedExpense } from "../types";
 import MonthNav from "../components/MonthNav";
 import { Input, StatLabel, ProgressBar, CollapsibleSection } from "../components/ui";
@@ -126,13 +127,7 @@ interface DashboardViewProps {
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   // 今日の日付文字列（YYYY-MM-DD）
   ts: string;
-  // トースト通知を表示する関数
-  showT: (msg: string, type?: string) => void;
-  // 確認ダイアログを表示する関数
-  ask: (title: string, msg: string, onOk: () => void) => void;
-  // 削除＋Undo：即削除してToastに「元に戻す」を出す
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delItem: (id: string, setArr: (u: any) => void, label?: string) => void;
+  // showT/ask/delItem は UIHelpersContext（useUI）から取得するので props からは外した
   // 貯金目標（未設定なら null）
   savingGoal: SavingGoal | null;
   // 貯金目標の更新関数
@@ -173,13 +168,12 @@ export default function DashboardView({
   importBackup,
   fileInputRef,
   ts,
-  showT,
-  ask,
-  delItem,
   savingGoal,
   setSavingGoal,
   budget,
 }: DashboardViewProps) {
+  // 共有UIヘルパ（トースト表示・削除Undo）を Context から取得
+  const { showT, delItem } = useUI();
   // 振替モーダルの表示・非表示
   const [showTransfer, setShowTransfer] = useState(false);
   // 「月次」と「年間」の表示切り替え（"monthly" or "yearly"）
@@ -570,8 +564,6 @@ export default function DashboardView({
         transactions={transactions}
         incomes={incomes}
         transfers={transfers}
-        ask={ask}
-        showT={showT}
       />
       </CollapsibleSection>
 

@@ -3,6 +3,7 @@
 // 全ローン合計・アバランチ法アドバイス・種別ごとのローン一覧を表示する
 
 import React, { CSSProperties } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { Loan } from "../types";
 import { formatYen } from "../utils/format";
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate, BRANDS_CF, BRANDS_BL } from "../utils/loanCalc";
@@ -43,8 +44,7 @@ interface LoanViewProps {
   setLoans: (u: any) => void;            // 住宅・車ローンの更新関数
   pays: any;                             // 支払済みフラグの記録（LoanSection内部型に合わせてanyを使用）
   setPays: (u: any) => void;             // 支払済みフラグの更新関数
-  delItem: (id: string, setArr: (u: any) => void) => void; // ローン削除関数
-  showT: (msg: string, type?: string) => void;             // トースト通知表示関数
+  // delItem は useUI() から取得し、LoanSection へ onDelete として渡す。showT は LoanSection 側で useUI 取得
 }
 
 // ローンタブの中身を描画するコンポーネント
@@ -61,9 +61,8 @@ export default function LoanView({
   setLoans,
   pays,
   setPays,
-  delItem,
-  showT,
 }: LoanViewProps) {
+  const { delItem } = useUI();
   // 全ローンの集計値（カードに使う）
   const totalRemaining = allL.reduce((s, l) => s + Number(l.remaining || 0), 0);
   const totalPrincipal = allL.reduce((s, l) => s + Number(l.principal || l.remaining || 0), 0);
@@ -197,7 +196,7 @@ export default function LoanView({
       {/* 消費者金融ローン一覧（元本表示なし） + アフィリエイトバナー */}
       {ltab === "cf" && (
         <>
-          <LoanSection arr={cashFlow} setArr={setCashFlow} pfx="cf" pays={pays} setPays={setPays} showPrincipal={false} onDelete={delItem} showT={showT} brands={BRANDS_CF} />
+          <LoanSection arr={cashFlow} setArr={setCashFlow} pfx="cf" pays={pays} setPays={setPays} showPrincipal={false} onDelete={delItem} brands={BRANDS_CF} />
           <AffiliateSection tab="cf" />
         </>
       )}
@@ -205,7 +204,7 @@ export default function LoanView({
       {/* 銀行・リボ払いローン一覧（元本表示なし） + アフィリエイトバナー */}
       {ltab === "bl" && (
         <>
-          <LoanSection arr={balance} setArr={setBalance} pfx="bl" pays={pays} setPays={setPays} showPrincipal={false} onDelete={delItem} showT={showT} brands={BRANDS_BL} />
+          <LoanSection arr={balance} setArr={setBalance} pfx="bl" pays={pays} setPays={setPays} showPrincipal={false} onDelete={delItem} brands={BRANDS_BL} />
           <AffiliateSection tab="bl" />
         </>
       )}
@@ -213,7 +212,7 @@ export default function LoanView({
       {/* 住宅・車ローン一覧（元本表示あり） + アフィリエイトバナー */}
       {ltab === "lo" && (
         <>
-          <LoanSection arr={loans} setArr={setLoans} pfx="lo" pays={pays} setPays={setPays} showPrincipal={true} onDelete={delItem} showT={showT} />
+          <LoanSection arr={loans} setArr={setLoans} pfx="lo" pays={pays} setPays={setPays} showPrincipal={true} onDelete={delItem} />
           <AffiliateSection tab="lo" />
         </>
       )}

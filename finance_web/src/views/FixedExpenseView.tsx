@@ -3,6 +3,7 @@
 // App.tsx から切り出して、見通しを良くしている
 
 import { useState } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { FixedExpense, CategoryConfig } from "../types";
 import { formatYen } from "../utils/format";
 import { COLOR_TEXT_HINT, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
@@ -24,15 +25,9 @@ interface FixedExpenseViewProps {
   setShowFx: (v: boolean) => void;
   // 固定費を追加する処理（フォーム内容を渡す。keepOpen=true なら追加後もフォームを開いたまま）
   addFx: (form: { name: string; cat: string; amt: string; note?: string }, keepOpen?: boolean) => boolean;
-  // トースト通知を表示する関数
-  showT: (msg: string, type?: string) => void;
-  // 確認ダイアログを表示する関数
-  ask: (title: string, msg: string, ok: () => void) => void;
   // カテゴリ設定（動的にカテゴリ名・アイコンを取得するために使う）
   categoryConfig: CategoryConfig;
-  // 削除＋Undo：即削除してToastに「元に戻す」を出す
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delItem: (id: string, setArr: (u: any) => void, label?: string) => void;
+  // showT/delItem は useUI() から取得
 }
 
 // 固定費タブ全体のビュー
@@ -43,11 +38,9 @@ export default function FixedExpenseView({
   showFx,
   setShowFx,
   addFx,
-  showT,
-  ask,
   categoryConfig,
-  delItem,
 }: FixedExpenseViewProps) {
+  const { showT, delItem } = useUI();
   // categoryConfig.fixedExpense を order 順で並べ、カテゴリ名とアイコンのマップを作る
   const fixedCategoryNames = categoryConfig.fixedExpense.slice().sort((a, b) => a.order - b.order).map(c => c.name);
   const fixedCategoryIcons: Record<string, string> = Object.fromEntries(categoryConfig.fixedExpense.map(c => [c.name, c.icon]));

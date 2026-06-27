@@ -3,6 +3,7 @@
 // App.tsx から切り出して、見通しを良くしている
 
 import React, { useMemo, useState, useRef, useCallback, CSSProperties } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { Tx, Budget, CategoryConfig, Account, RecurringExpense } from "../types";
 import { newId } from "../utils/crypto";
 import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
@@ -106,17 +107,11 @@ interface ExpenseViewProps {
   // 全支出一覧の更新関数（編集・削除に使う）
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setTransactions: (u: any) => void;
-  // トースト通知を出す関数
-  showT: (msg: string, type?: string) => void;
-  // 確認ダイアログを出す関数
-  ask: (title: string, msg: string, ok: () => void) => void;
   // 支出一覧の先頭要素へのref（スクロール用）
   txListRef: React.RefObject<HTMLDivElement | null>;
   // カテゴリ設定（動的にカテゴリ名・アイコンを取得するために使う）
   categoryConfig: CategoryConfig;
-  // 削除＋Undo：即削除してToastに「元に戻す」を出す
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delItem: (id: string, setArr: (u: any) => void, label?: string) => void;
+  // showT/delItem は useUI() から取得
   // 繰り返し支出の設定一覧（毎月自動追加するサブスク等を登録する）
   recurringExpenses: RecurringExpense[];
   // 繰り返し支出の設定を更新する関数
@@ -143,15 +138,13 @@ export default function ExpenseView({
   totalVariableExpense,
   exportMonthlyCsv,
   setTransactions,
-  showT,
-  ask,
   txListRef,
   categoryConfig,
-  delItem,
   accounts = [],
   recurringExpenses,
   setRecurringExpenses,
 }: ExpenseViewProps) {
+  const { showT, delItem } = useUI();
   // categoryConfig.expense を order 順で並べ、カテゴリ名とアイコンのマップを作る
   // （useMemo で参照を安定させ、下の TxRow の memo を効かせる）
   const expenseCategoryNames = useMemo(

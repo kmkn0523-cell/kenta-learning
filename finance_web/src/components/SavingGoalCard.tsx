@@ -4,6 +4,7 @@
 // 目標未設定なら CTA ボタンを、設定済みなら進捗カードを表示する
 
 import { useState, CSSProperties } from "react";
+import { useUI } from "../contexts/UIHelpersContext";
 import { SavingGoal, Account, Tx, Income, Transfer } from "../types";
 import { parseYenAmount, formatYen } from "../utils/format";
 import { newId } from "../utils/crypto";
@@ -40,9 +41,7 @@ interface SavingGoalCardProps {
   transactions: Tx[];
   incomes: Income[];
   transfers: Transfer[];
-  // 削除確認ダイアログ
-  ask: (title: string, msg: string, onOk: () => void) => void;
-  showT: (msg: string, type?: string) => void;
+  // ask/showT は useUI()（UIHelpersContext）から取得する
 }
 
 export default function SavingGoalCard({
@@ -52,9 +51,9 @@ export default function SavingGoalCard({
   transactions,
   incomes,
   transfers,
-  ask,
-  showT,
 }: SavingGoalCardProps) {
+  // 確認ダイアログ・トースト表示を Context から取得
+  const { ask, showT } = useUI();
   // 編集モーダル表示フラグ
   const [editing, setEditing] = useState(false);
   // 編集フォームの状態（名前・目標額・期限）
