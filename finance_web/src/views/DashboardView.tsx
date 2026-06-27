@@ -15,11 +15,14 @@ const CategoryTrendChart = lazy(() => import("../components/CategoryTrendChart")
 const NetWorthChart = lazy(() => import("../components/NetWorthChart"));
 // カテゴリ別支出割合の円グラフ（今月どこに使ったかを一目でわかるドーナツグラフ）
 const CategoryPieChart = lazy(() => import("../components/CategoryPieChart"));
+// 将来キャッシュフロー予測チャート（6か月先の収支を棒グラフで表示）
+const CashFlowForecast = lazy(() => import("../components/CashFlowForecast"));
 import SavingGoalCard from "../components/SavingGoalCard";
 import BudgetAlertBanner from "../components/BudgetAlertBanner";
 import HealthCheckCard from "../components/HealthCheckCard";
 import YearlySummary from "../components/YearlySummary";
 import { parseYenAmount, formatYen, EXPENSE_CATEGORY_ICONS } from "../utils/format";
+import { buildCashFlowForecast } from "../utils/cashFlowForecast";
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate } from "../utils/loanCalc";
 import { calculateAccountBalance } from "../utils/accountBalance";
 import { newId } from "../utils/crypto";
@@ -180,6 +183,13 @@ export default function DashboardView({
   const [viewMode, setViewMode] = useState<"monthly" | "yearly">("monthly");
   // 年間サマリーで選択中の年（月次の selectedYear と独立して管理）
   const [yearlyYear, setYearlyYear] = useState(new Date().getFullYear());
+
+  // ────────── 6か月先キャッシュフロー予測データ ──────────
+  // 過去3か月平均 + 確定固定費・ローンで算出（ts が変わらない限り再計算しない）
+  const forecast = useMemo(
+    () => buildCashFlowForecast({ transactions, incomes, fixedExpenses, loans: allL, today: ts }),
+    [transactions, incomes, fixedExpenses, allL, ts]
+  );
 
   // ────────── 今月の予算消化ペース予測 ──────────
   // 「現在のペースで使い続けると月末にいくらになるか」を可視化する
@@ -723,6 +733,13 @@ export default function DashboardView({
         {/* 累積手残り推移：貯まっているかどうかをひと目で確認できる折れ線グラフ */}
         <NetWorthChart tx={transactions} inc={incomes} tFx={totalFixedExpense}/>
       </Suspense>
+      </CollapsibleSection>
+
+      {/* ────────── 将来キャッシュフロー予測 ────────── */}
+      <CollapsibleSection title="🔮 6か月先の収支予測">
+        <Suspense fallback={<div style={{textAlign:"center",padding:"32px 0",color:"#7c8aa0",fontSize:12}}>📊 グラフを読み込み中…</div>}>
+          <CashFlowForecast forecast={forecast} />
+        </Suspense>
       </CollapsibleSection>
 
       {/* ────────── バックアップ／復元カード ────────── */}
