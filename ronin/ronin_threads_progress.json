@@ -6066,8 +6066,14 @@
       "kind": "teaching",
       "label": "Day175 evening",
       "post_id": "18107856670788282"
+    },
+    {
+      "date": "2026/06/27 19:00",
+      "kind": "engagement",
+      "label": "engagement eng030",
+      "post_id": "18112101259927888"
     }
   ],
-  "last_posted_at": "2026-06-27T17:02:04.982692+00:00",
-  "engagement_index": 61
+  "last_posted_at": "2026-06-27T19:02:05.008969+00:00",
+  "engagement_index": 62
 }
