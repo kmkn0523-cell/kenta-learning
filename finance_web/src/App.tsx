@@ -369,14 +369,20 @@ function AppInner(){
     // 口座IDを含めて支出を追加する（accountId が未選択なら undefined のまま）
     setTransactions(p=>[...p,{id:newId(),category:form.cat,amount:a,date:form.date,memo:form.memo,accountId:form.accountId}]);
     // フォームのリセットは入力state を持つ ExpenseView 側で行う
-    showT("追加しました");
-    // 予算超過チェック：追加後の月合計が予算を超えたらブラウザ通知を送る
+    // 記録直後の「気づき」：このカテゴリの当月累計（今回分を含む）を出す。予算があれば消化率(%)も添える。
+    const catTotal=monthlyTransactions.filter(t=>t.category===form.cat).reduce((s,t)=>s+Number(t.amount||0),0)+a;
     const budgetAmt = budget[form.cat as keyof typeof budget];
     if(budgetAmt){
-      const catTotal=monthlyTransactions.filter(t=>t.category===form.cat).reduce((s,t)=>s+Number(t.amount||0),0)+a;
+      // 予算消化率。80%以上は注意色(info)、100%以上は警告色(error)でトーストを出す
+      const pct=Math.round(catTotal/Number(budgetAmt)*100);
+      showT(`追加 ・今月の${form.cat} ${formatYen(catTotal)}（予算の${pct}%）`, pct>=100?"error":(pct>=80?"info":"success"));
+      // 予算超過チェック：追加後の月合計が予算を超えたらブラウザ通知も送る
       if(catTotal>Number(budgetAmt)){
         notify(`「${form.cat}」の予算を超過しました`,`今月: ${formatYen(catTotal)} / 予算: ${formatYen(Number(budgetAmt))}`);
       }
+    } else {
+      // 予算未設定のカテゴリは累計だけ添えてフィードバックする
+      showT(`追加 ・今月の${form.cat} ${formatYen(catTotal)}`);
     }
     return true;
   }

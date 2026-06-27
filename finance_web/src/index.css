@@ -15,3 +15,18 @@ button:focus:not(:focus-visible),
 textarea:focus:not(:focus-visible) {
   outline: none;
 }
+
+/* ── 動きを減らす設定（アクセシビリティ・WCAG 2.3.3） ── */
+/* OS/ブラウザで「視差効果を減らす」をオンにしている人には、アニメ・スライド・拡大の演出を最小化する。 */
+/* めまい・乗り物酔い・前庭障害のある人への配慮。 */
+/* stylesheet の !important はインラインの transition より強いので、JS で直接書いた transition も無効化できる。 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
