@@ -659,6 +659,26 @@ function AppInner(){
       />}
       </Suspense>
     </div>
+    {/* クイック追加FAB：どのタブからでも1タップで支出入力フォームへ。記録の起点を一定化して習慣化をあと押しする。 */}
+    {/* 支出タブでは既存の「＋支出を追加」と重複するため非表示にする。 */}
+    {tab!=="exp" && (
+      <button
+        type="button"
+        aria-label="支出を追加"
+        onClick={()=>{setTab("exp");setShowTxForm(true);}}
+        style={{
+          position:"fixed", right:18, bottom:"calc(78px + env(safe-area-inset-bottom))", zIndex:90,
+          width:56, height:56, borderRadius:"50%", border:"none", cursor:"pointer",
+          background:"linear-gradient(135deg,#22d3ee 0%,#6366f1 100%)", color:"#04121a",
+          fontSize:30, fontWeight:300, lineHeight:1, fontFamily:"inherit",
+          display:"flex", alignItems:"center", justifyContent:"center",
+          boxShadow:"0 6px 20px rgba(34,211,238,0.45),0 2px 8px rgba(0,0,0,0.4)",
+          WebkitTapHighlightColor:"transparent",
+        }}
+      >
+        ＋
+      </button>
+    )}
     <nav style={STYLE_BOTTOM_NAV}>
       {[["dash","📊","概要"],["sum","🧾","サマリー"],["inc","💰","収入"],["fix","📌","固定費"],["exp","💸","支出"],["loan","🏦","ローン"],["search","🔍","検索"],["set","⚙️","設定"]].map(([key,icon,label])=>(
         <button type="button" key={key} onClick={()=>setTab(key)} aria-current={tab===key?"page":undefined} style={{...STYLE_NAV_BTN_BASE,color:tab===key?COLOR_ACCENT:COLOR_TEXT_HINT}}>
