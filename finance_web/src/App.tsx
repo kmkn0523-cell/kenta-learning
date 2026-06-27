@@ -3,7 +3,7 @@
 // UI部品・ユーティリティ・フックはすべて外部ファイルから読み込む
 
 import { useState, useEffect, useMemo, useRef, useCallback, lazy, Suspense } from "react";
-import { usePersist } from "./hooks/usePersist";
+import { usePersist, DECRYPT_ERROR_FLAG } from "./hooks/usePersist";
 import { useMonthlyData } from "./hooks/useMonthlyData";
 import { useAutoPayment } from "./hooks/useAutoPayment";
 import { useAutoIncome } from "./hooks/useAutoIncome";
@@ -148,6 +148,13 @@ function AppInner(){
   // 口座フォームの入力値（name: 口座名、balance: 残高、color: カラーラベル）
   const [accF,setAccF]=useState({name:"",balance:"",color:""}),[showAccF,setShowAccF]=useState(false),[editAccId,setEditAccId]=useState<string | null>(null);
   const allOk=txReady&&fxReady&&loansReady&&cashFlowReady&&balanceReady&&incomesReady&&accountsReady&&budgetReady&&tplsReady&&transfersReady&&categoryConfigReady&&savingGoalReady&&recIncReady&&recExpReady;
+  // 復号失敗の警告バナー表示フラグ（usePersist が sessionStorage に立てたフラグを読む）。
+  // 新鍵・旧鍵のどちらでも読めなかったストアがあった場合だけ true になる。
+  const [showDecryptError, setShowDecryptError] = useState(false);
+  useEffect(() => {
+    if (!allOk) return;
+    try { if (sessionStorage.getItem(DECRYPT_ERROR_FLAG) === "1") setShowDecryptError(true); } catch (_) { /* sessionStorage不可でも続行 */ }
+  }, [allOk]);
 
   // ────────── クラウド同期の配線 ──────────
   // 同期対象14種(kk_*)の「今の値」を1つの箱にまとめて返す関数（呼ぶたび最新値を返す）
@@ -429,6 +436,12 @@ function AppInner(){
       </div>
     </div>
     <div style={{padding:"16px 16px calc(110px + env(safe-area-inset-bottom))",maxWidth:520,margin:"0 auto"}}>
+      {/* 復号失敗の警告バナー（読めなかったデータがあった時だけ表示。上書き保存は止めてある） */}
+      {showDecryptError && (
+        <div style={{...STYLE_NOTIF_BANNER, background:"rgba(244,63,94,0.08)", border:"1px solid rgba(244,63,94,0.35)"}}>
+          <span style={{color:COLOR_TEXT_SECONDARY}}>⚠ 一部のデータを復号できませんでした。パスワードが正しいか確認のうえ再ログインしてください（読めなかったデータは保護のため上書きしていません）</span>
+        </div>
+      )}
       {/* 通知許可バナー（まだ許可/拒否を選んでいない時だけ表示） */}
       {notifPermission === "default" && (
         <div style={STYLE_NOTIF_BANNER}>
