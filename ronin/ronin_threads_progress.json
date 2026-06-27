@@ -1,5 +1,5 @@
 {
-  "index": 347,
+  "index": 352,
   "history": [
     {
       "date": "2026/04/27 16:11",
@@ -6048,8 +6048,44 @@
       "kind": "engagement",
       "label": "engagement eng029",
       "post_id": "18102589382034431"
+    },
+    {
+      "date": "2026/06/27 13:00",
+      "kind": "teaching",
+      "label": "Day174 evening",
+      "post_id": "17901016653305687"
+    },
+    {
+      "date": "2026/06/27 15:00",
+      "kind": "teaching",
+      "label": "Day175 morning",
+      "post_id": "18112645487481941"
+    },
+    {
+      "date": "2026/06/27 17:00",
+      "kind": "teaching",
+      "label": "Day175 evening",
+      "post_id": "18107856670788282"
+    },
+    {
+      "date": "2026/06/27 19:00",
+      "kind": "engagement",
+      "label": "engagement eng030",
+      "post_id": "18112101259927888"
+    },
+    {
+      "date": "2026/06/27 21:00",
+      "kind": "teaching",
+      "label": "Day176 morning",
+      "post_id": "17970792273098375"
+    },
+    {
+      "date": "2026/06/27 23:00",
+      "kind": "teaching",
+      "label": "Day176 evening",
+      "post_id": "17933298582294576"
     }
   ],
-  "last_posted_at": "2026-06-27T11:02:05.308725+00:00",
-  "engagement_index": 61
+  "last_posted_at": "2026-06-27T23:02:07.715456+00:00",
+  "engagement_index": 62
 }

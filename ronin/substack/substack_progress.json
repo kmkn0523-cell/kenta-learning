@@ -1,5 +1,5 @@
 {
-  "next_day": 50,
+  "next_day": 52,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -246,6 +246,12 @@
       "day": 49,
       "post_id": 203764439,
       "title": "捨てる神あれば拾う神あり — A god who abandons you — a god who picks you up."
+    },
+    {
+      "date": "2026/06/28 08:06",
+      "day": 51,
+      "post_id": 203898063,
+      "title": "雨降って地固まる — After the rain, the ground grows harder."
     }
   ]
 }
