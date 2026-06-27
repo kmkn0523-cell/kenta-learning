@@ -77,6 +77,7 @@
 !finance_web/src/test/hooks/
 !finance_web/src/test/hooks/*.ts
 !finance_web/public/
+!finance_web/public/*.html
 !finance_web/docs/
 finance_web/node_modules/
 finance_web/dist/

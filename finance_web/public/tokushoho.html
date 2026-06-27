@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>特定商取引法に基づく表示 — BYB</title>
+  <meta name="description" content="BYB（Before You Broke）の特定商取引法に基づく表示ページ。" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* BYB と同系統のダークテーマ */
+    body {
+      background: #070b14;
+      color: #f0f4ff;
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      padding: 24px 16px 80px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ヘッダー */
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .site-header a {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: #22d3ee;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .site-header a:hover { text-decoration: underline; }
+    .header-sep { color: rgba(148,163,184,0.4); font-size: 13px; }
+    .page-title {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* ページ見出し */
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: "-0.5px";
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #7c8aa0;
+      margin-bottom: 32px;
+    }
+
+    /* テーブル */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 32px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(148,163,184,0.12);
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      width: 36%;
+      font-size: 12px;
+      color: #7c8aa0;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td {
+      font-size: 14px;
+      color: #f0f4ff;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* プレースホルダー（要記入） */
+    .ph {
+      color: #fb923c;
+      font-weight: 700;
+    }
+
+    /* セクション見出し */
+    h2 {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #22d3ee;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    /* 注意書きブロック */
+    .note-block {
+      background: rgba(34,211,238,0.06);
+      border: 1px solid rgba(34,211,238,0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .note-block strong { color: #f0f4ff; }
+
+    /* フッター */
+    .page-footer {
+      margin-top: 48px;
+      font-size: 11px;
+      color: #7c8aa0;
+      text-align: center;
+    }
+    .page-footer a { color: #22d3ee; text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダーナビ -->
+  <div class="site-header">
+    <a href="/">BYB — Before You Broke</a>
+    <span class="header-sep">›</span>
+    <span class="page-title">特定商取引法に基づく表示</span>
+  </div>
+
+  <h1>特定商取引法に基づく表示</h1>
+  <p class="subtitle">最終更新日：<span class="ph">【要記入：例 2026年7月1日】</span></p>
+
+  <!-- 販売業者情報 -->
+  <h2>販売業者情報</h2>
+  <table>
+    <tr>
+      <th>販売業者</th>
+      <td><span class="ph">【要記入：氏名または屋号】</span></td>
+    </tr>
+    <tr>
+      <th>代表者氏名</th>
+      <td><span class="ph">【要記入：氏名（個人事業主の場合は本名）】</span></td>
+    </tr>
+    <tr>
+      <th>所在地</th>
+      <td><span class="ph">【要記入：都道府県・市区町村まで可。番地以降は請求があれば開示】</span></td>
+    </tr>
+    <tr>
+      <th>電話番号</th>
+      <td>
+        <span class="ph">【要記入：記載するか、下記の請求方式にする】</span><br>
+        ※ ご請求をいただいた場合、遅滞なく電子メールにてご連絡いたします。
+      </td>
+    </tr>
+    <tr>
+      <th>メールアドレス</th>
+      <td><span class="ph">【要記入：例 support@example.com】</span></td>
+    </tr>
+    <tr>
+      <th>サービスURL</th>
+      <td><a href="https://financeweb-nine.vercel.app" style="color:#22d3ee;">https://financeweb-nine.vercel.app</a></td>
+    </tr>
+  </table>
+
+  <!-- サービス・料金 -->
+  <h2>サービス・料金</h2>
+  <table>
+    <tr>
+      <th>サービス名称</th>
+      <td>BYB クラウド同期（複数端末間データ同期）</td>
+    </tr>
+    <tr>
+      <th>役務の内容</th>
+      <td>
+        スマートフォン・PCなど複数の端末でBYBの家計データをリアルタイムに同期する機能。<br>
+        データはエンドツーエンド暗号化（E2E）によりサーバ側では内容を読むことができません。
+      </td>
+    </tr>
+    <tr>
+      <th>販売価格</th>
+      <td>月額 ¥500（税込）</td>
+    </tr>
+    <tr>
+      <th>追加費用</th>
+      <td>なし（通信費はお客様ご負担）</td>
+    </tr>
+  </table>
+
+  <!-- 支払い -->
+  <h2>支払い・サービス開始</h2>
+  <table>
+    <tr>
+      <th>支払方法</th>
+      <td>クレジットカード（Visa / Mastercard / JCB / American Express）</td>
+    </tr>
+    <tr>
+      <th>支払時期</th>
+      <td>
+        お申し込み日に初回課金。以降は毎月同日に自動更新。<br>
+        Stripe の安全な決済システムを使用します。
+      </td>
+    </tr>
+    <tr>
+      <th>役務提供時期</th>
+      <td>決済確認後、即時にクラウド同期機能をご利用いただけます。</td>
+    </tr>
+  </table>
+
+  <!-- 解約・返金 -->
+  <h2>解約・返金</h2>
+  <table>
+    <tr>
+      <th>解約方法</th>
+      <td>
+        BYBアプリ内「設定 → クラウド同期 → プランを解約」からいつでも解約できます。<br>
+        解約後は次回更新日をもってサービスが終了します。
+      </td>
+    </tr>
+    <tr>
+      <th>返金ポリシー</th>
+      <td>
+        既にお支払いいただいた期間分の返金は原則承っておりません。<br>
+        ただし、サービス障害など当社の責に帰すべき事由がある場合はご相談ください。
+      </td>
+    </tr>
+    <tr>
+      <th>無料データ保持</th>
+      <td>
+        解約後も、お客様のデバイスに保存されたローカルデータは削除されません。<br>
+        クラウド上のデータは解約から <span class="ph">【要記入：例 90日】</span> 後に削除されます。
+      </td>
+    </tr>
+  </table>
+
+  <!-- 動作環境 -->
+  <h2>動作環境</h2>
+  <table>
+    <tr>
+      <th>推奨ブラウザ</th>
+      <td>Chrome・Safari・Firefox・Edge の最新版</td>
+    </tr>
+    <tr>
+      <th>インターネット接続</th>
+      <td>クラウド同期の利用にはインターネット接続が必要です</td>
+    </tr>
+  </table>
+
+  <!-- 記載注意（開発者向けメモ） -->
+  <div class="note-block">
+    <strong>⚠ このページを公開する前に</strong>（開発者向けメモ）<br>
+    <span class="ph">【要記入】</span> と書かれた箇所をすべて実際の情報で置き換えてください。<br>
+    電話番号は「請求があれば開示」方式でも法的に認められますが、メールアドレスは必須です。<br>
+    最終更新日も忘れずに記入してください。
+  </div>
+
+  <div class="page-footer">
+    <a href="/">← BYB トップに戻る</a>
+    &nbsp;·&nbsp;
+    © <span class="ph">【要記入：氏名または屋号】</span>
+  </div>
+
+</body>
+</html>

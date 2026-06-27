@@ -244,6 +244,13 @@ export default function CloudSyncSection(props: CloudSyncSectionProps) {
               <button type="button" style={STYLE_BUTTON_OUTLINE} onClick={() => { setError(""); setMode("restore"); }}>
                 復元キーで別端末から復元
               </button>
+              {/* 特定商取引法に基づく表示へのリンク */}
+              <div style={{ textAlign: "center", marginTop: 4 }}>
+                <a href="/tokushoho.html" target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize: 11, color: "#7c8aa0", textDecoration: "underline" }}>
+                  特定商取引法に基づく表示
+                </a>
+              </div>
             </div>
           ) : (
             <div style={{ display: "flex", gap: 8 }}>
