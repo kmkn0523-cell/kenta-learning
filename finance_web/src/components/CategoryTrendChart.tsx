@@ -40,7 +40,7 @@ function CustomTooltip({ active, payload, label, icons }: TooltipProps) {
   if (!active || !payload?.length) return null;
   const total = payload.reduce((s, p) => s + (Number(p.value) || 0), 0);
   return (
-    <div style={{ background: "#18181f", border: `1px solid ${COLOR_BORDER}`, borderRadius: 10, padding: "10px 14px", fontSize: 12 }}>
+    <div style={{ background: "#0b1220", border: `1px solid ${COLOR_BORDER}`, borderRadius: 10, padding: "10px 14px", fontSize: 12 }}>
       <div style={{ color: COLOR_TEXT_PRIMARY, fontWeight: 700, marginBottom: 6 }}>{label}（計 {formatYen(total)}）</div>
       {payload
         .filter(p => Number(p.value) > 0)

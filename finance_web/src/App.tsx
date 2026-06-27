@@ -586,6 +586,7 @@ function AppInner(){
         }}
         monthlyTransactions={monthlyTransactions}
         prevMonthlyTransactions={prevMonthlyTransactions}
+        allTransactions={transactions}
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
         onMonthChange={handleMonthChange}

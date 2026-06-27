@@ -181,7 +181,7 @@ export default function LoanSection({arr,setArr,pfx,pays,setPays,showPrincipal,o
 
       {/* 金利の注意書きポップアップ：背景タップ・「わかった」で閉じる */}
       {showDisc && <div onClick={closeDisc} style={STYLE_LS_DISC_OVERLAY}>
-        <div onClick={e=>e.stopPropagation()} style={{background:"#18181f",border:`1px solid ${COLOR_BORDER}`,borderRadius:20,padding:24,width:"100%",maxWidth:340}}>
+        <div onClick={e=>e.stopPropagation()} style={{background:"#0b1220",border:`1px solid ${COLOR_BORDER}`,borderRadius:20,padding:24,width:"100%",maxWidth:340}}>
           <div style={{fontSize:28,marginBottom:8,textAlign:"center"}}>⚠️</div>
           <div style={{fontSize:15,fontWeight:700,marginBottom:10,textAlign:"center"}}>金利の自動入力について</div>
           <div style={{fontSize:13,color:COLOR_TEXT_SECONDARY,lineHeight:1.7,marginBottom:20}}>金利テーブルの値は<span style={{color:COLOR_TEXT_PRIMARY,fontWeight:700}}>各社の公表する最高金利の目安</span>です。実際の契約金利は審査結果で変わるため、契約書の金利と違う場合は<span style={{color:COLOR_TEXT_PRIMARY,fontWeight:700}}>金利欄を手で書き換えて</span>ください。</div>

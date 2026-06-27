@@ -45,7 +45,7 @@ function CustomTooltip({ active, payload, icons }: TooltipProps) {
   const d = payload[0].payload;
   return (
     <div style={{
-      background: "#18181f",
+      background: "#0b1220",
       border: `1px solid ${COLOR_BORDER}`,
       borderRadius: 10,
       padding: "10px 14px",

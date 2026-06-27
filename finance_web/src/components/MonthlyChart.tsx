@@ -34,7 +34,7 @@ interface TooltipProps {
 function CustomTooltip({ active, payload, label }: TooltipProps) {
   if (!active || !payload?.length) return null;
   return (
-    <div style={{ background:"#18181f", border:`1px solid ${COLOR_BORDER}`, borderRadius:10, padding:"10px 14px", fontSize:12 }}>
+    <div style={{ background:"#0b1220", border:`1px solid ${COLOR_BORDER}`, borderRadius:10, padding:"10px 14px", fontSize:12 }}>
       <div style={{ color:COLOR_TEXT_PRIMARY, fontWeight:700, marginBottom:6 }}>{label}</div>
       {payload.map(p => (
         <div key={p.dataKey} style={{ color:p.color, fontFamily:"monospace" }}>

@@ -262,7 +262,7 @@ export default function PasswordGate({ children }: { children: ReactNode }) {
       <button type="button" onClick={()=>setShowReset(true)} style={STYLE_PG_FORGOT_BTN}>パスワードを忘れた場合</button>
       {/* リセット確認ダイアログ */}
       {showReset&&<div onClick={()=>setShowReset(false)} style={STYLE_PG_RESET_OVERLAY}>
-        <div onClick={e=>e.stopPropagation()} style={{background:"#18181f",border:"1px solid rgba(255,255,255,0.08)",borderRadius:20,padding:24,width:"100%",maxWidth:320,textAlign:"left" as const}}>
+        <div onClick={e=>e.stopPropagation()} style={{background:"#0b1220",border:"1px solid rgba(255,255,255,0.08)",borderRadius:20,padding:24,width:"100%",maxWidth:320,textAlign:"left" as const}}>
           <div style={{fontSize:15,fontWeight:700,color:"#f5f5f7",marginBottom:8}}>パスワードをリセット</div>
           <div style={{fontSize:13,color:"#9a9aa3",marginBottom:4,lineHeight:1.7}}>パスワードをリセットして、新しく設定し直します。</div>
           <div style={{fontSize:13,color:"#f87171",marginBottom:20,lineHeight:1.7}}>⚠ 新しいパスワードでは既存の家計データを読み込めなくなります。事前にバックアップを取ってください。</div>

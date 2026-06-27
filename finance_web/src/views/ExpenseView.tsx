@@ -92,6 +92,8 @@ interface ExpenseViewProps {
   monthlyTransactions: Tx[];
   // 前月の支出一覧（カテゴリ別前月比バッジに使う）
   prevMonthlyTransactions?: Tx[];
+  // 全期間の支出一覧（メモ候補の集計に使う。同カテゴリで過去に使ったメモを提案する）
+  allTransactions?: Tx[];
   // 選択中の年月
   selectedYear: number;
   selectedMonth: number;
@@ -134,6 +136,7 @@ export default function ExpenseView({
   notifySettings,
   monthlyTransactions,
   prevMonthlyTransactions = [],
+  allTransactions = [],
   selectedYear,
   selectedMonth,
   onMonthChange,
@@ -210,6 +213,15 @@ export default function ExpenseView({
     () => expenseCategoryNames.filter(c => monthlyTransactions.some(t => t.category === c)),
     [monthlyTransactions]
   );
+
+  // メモ候補：選択中カテゴリ(txF.cat)で過去によく使ったメモを頻度順に最大4件提案する（店名などの再入力を省く）
+  const memoSuggestions = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const t of allTransactions) {
+      if (t.category === txF.cat && t.memo) counts.set(t.memo, (counts.get(t.memo) || 0) + 1);
+    }
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([memo]) => memo);
+  }, [allTransactions, txF.cat]);
 
   return (
     <div>
@@ -390,6 +402,17 @@ export default function ExpenseView({
               <Input ref={amountInputRef} money type="number" value={txF.amt} onChange={e=>setTxF(f=>({...f,amt:e.target.value}))} placeholder="金額（円）"/>
               <Input type="date" value={txF.date} onChange={e=>setTxF(f=>({...f,date:e.target.value}))}/>
               <Input value={txF.memo} onChange={e=>setTxF(f=>({...f,memo:e.target.value}))} placeholder="メモ（任意）"/>
+              {/* よく使うメモの候補（同カテゴリの過去メモをタップで入力。再入力の手間を省く） */}
+              {memoSuggestions.length > 0 && (
+                <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                  {memoSuggestions.map(m => (
+                    <button type="button" key={m} onClick={()=>setTxF(f=>({...f,memo:m}))}
+                      style={{padding:"4px 10px",borderRadius:999,border:`1px solid ${COLOR_BORDER}`,background:"transparent",color:COLOR_TEXT_SECONDARY,fontSize:13,cursor:"pointer",fontFamily:"inherit",maxWidth:"100%",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+                      {m}
+                    </button>
+                  ))}
+                </div>
+              )}
               {/* 口座が登録されている時だけ「どの口座から引き落とすか」を選べる */}
               {accounts.length > 0 && (
                 <select
