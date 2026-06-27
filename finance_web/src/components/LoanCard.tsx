@@ -4,7 +4,7 @@
 import { useState, CSSProperties } from "react";
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate } from "../utils/loanCalc";
 import { formatYen, formatAmount } from "../utils/format";
-import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE } from "../utils/styles";
+import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, FONT_NUM } from "../utils/styles";
 import { Input, StatLabel } from "./ui";
 import PrepaymentSimulator from "./PrepaymentSimulator";
 

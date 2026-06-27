@@ -14,7 +14,7 @@ import {
   COLOR_TEXT_HINT,
   COLOR_BORDER,
   STYLE_CARD,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 // このコンポーネントが受け取る props の型
 interface NetWorthChartProps {

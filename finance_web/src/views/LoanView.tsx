@@ -7,7 +7,7 @@ import { useUI } from "../contexts/UIHelpersContext";
 import { Loan } from "../types";
 import { formatYen } from "../utils/format";
 import { calculateMonthlyInterest, calculateTotalInterest, calculateCompletionDate, BRANDS_CF, BRANDS_BL } from "../utils/loanCalc";
-import { COLOR_TEXT_HINT, COLOR_TEXT_SECONDARY, COLOR_TEXT_PRIMARY, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_BORDER, STYLE_CARD } from "../utils/styles";
+import { COLOR_TEXT_HINT, COLOR_TEXT_SECONDARY, COLOR_TEXT_PRIMARY, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_BORDER, STYLE_CARD, FONT_NUM } from "../utils/styles";
 import { StatLabel } from "../components/ui";
 import LoanSection from "../components/LoanSection";
 import StatBlock from "../components/StatBlock";

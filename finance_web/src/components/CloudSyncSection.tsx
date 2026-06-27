@@ -14,7 +14,7 @@ import {
   COLOR_ACCENT,
   COLOR_POSITIVE,
   COLOR_NEGATIVE,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 import { generateRecoveryKey } from "../utils/crypto";
 import type { SyncStatus } from "../hooks/useCloudSync";
 import type { ConflictDetail } from "../utils/syncState";

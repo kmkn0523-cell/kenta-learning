@@ -22,7 +22,7 @@ import {
   STYLE_CARD,
   STYLE_BUTTON_PRIMARY,
   STYLE_BUTTON_OUTLINE,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 import { filterAndSortItems, TransactionFilter } from "../utils/filterTransactions";
 import { Input, Select } from "../components/ui";
 import TxRow from "../components/TxRow";

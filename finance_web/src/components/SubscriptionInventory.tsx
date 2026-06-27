@@ -8,7 +8,7 @@ import { formatYen } from "../utils/format";
 import {
   COLOR_TEXT_HINT, COLOR_TEXT_SECONDARY, COLOR_TEXT_PRIMARY,
   COLOR_ACCENT, COLOR_NEGATIVE, COLOR_POSITIVE, COLOR_BORDER, STYLE_CARD,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 // このカードが受け取る props
 interface SubscriptionInventoryProps {

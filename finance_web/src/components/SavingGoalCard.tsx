@@ -20,7 +20,7 @@ import {
   STYLE_CARD,
   STYLE_BUTTON_PRIMARY,
   STYLE_BUTTON_OUTLINE,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 import { Input } from "./ui";
 
 // ── スタイル定数 ──────────────────────────────────────────

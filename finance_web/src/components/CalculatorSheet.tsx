@@ -2,7 +2,7 @@
 // 金額欄の🧮ボタンから開く。テンキーと四則演算で計算し、「確定」で金額欄へ値を返す
 import { useReducer, useEffect, CSSProperties } from "react";
 import { initCalc, calcReducer, currentResult, confirmValue, formatExpression, formatResult, Operator } from "../utils/calculator";
-import { COLOR_ACCENT, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_BORDER, COLOR_NEGATIVE, STYLE_BUTTON_PRIMARY } from "../utils/styles";
+import { COLOR_ACCENT, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_BORDER, COLOR_NEGATIVE, STYLE_BUTTON_PRIMARY, FONT_NUM } from "../utils/styles";
 
 interface CalculatorSheetProps {
   open: boolean;                       // 開いているか

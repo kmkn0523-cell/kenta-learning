@@ -9,7 +9,7 @@ import {
 import { formatYen } from "../utils/format";
 import {
   COLOR_TEXT_HINT, COLOR_BORDER, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, STYLE_CARD,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 // 色パレット（8色。カテゴリが多い場合はループして再利用）
 const PALETTE = [

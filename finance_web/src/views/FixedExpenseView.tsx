@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useUI } from "../contexts/UIHelpersContext";
 import { FixedExpense, CategoryConfig } from "../types";
 import { formatYen } from "../utils/format";
-import { COLOR_TEXT_HINT, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
+import { COLOR_TEXT_HINT, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, FONT_NUM } from "../utils/styles";
 import { Input, Select } from "../components/ui";
 import FxRow from "../components/FxRow";
 import FixedExpenseCalendar from "../components/FixedExpenseCalendar";

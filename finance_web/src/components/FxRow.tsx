@@ -3,7 +3,7 @@
 
 import { useState, CSSProperties } from "react";
 import { parseYenAmount, formatYen, FIXED_EXPENSE_CATEGORIES, FIXED_EXPENSE_CATEGORY_ICONS } from "../utils/format";
-import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT } from "../utils/styles";
+import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, FONT_NUM } from "../utils/styles";
 
 // ── スタイル定数 ──────────────────────────────────────────
 

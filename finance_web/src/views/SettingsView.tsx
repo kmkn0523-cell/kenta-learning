@@ -9,7 +9,7 @@ import {
   COLOR_TEXT_PRIMARY,
   COLOR_TEXT_SECONDARY,
   COLOR_NEGATIVE,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 import { makeDefaultCategoryConfig } from "../utils/defaultCategories";
 import ShareCard from "../components/ShareCard";
 

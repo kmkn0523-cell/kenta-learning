@@ -12,7 +12,7 @@ import {
   COLOR_BORDER,
   COLOR_POSITIVE,
   COLOR_NEGATIVE,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 // 支出1件のデータ型（date と amount だけ使う）
 interface TxEntry {

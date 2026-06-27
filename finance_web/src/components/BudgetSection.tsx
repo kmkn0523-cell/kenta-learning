@@ -4,7 +4,7 @@
 
 import { useState, CSSProperties } from "react";
 import { EXPENSE_CATEGORIES, EXPENSE_CATEGORY_ICONS, formatYen } from "../utils/format";
-import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_ACCENT } from "../utils/styles";
+import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_ACCENT, FONT_NUM } from "../utils/styles";
 import { Input } from "./ui";
 import OverspendNotifySettings from "./OverspendNotifySettings";
 

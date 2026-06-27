@@ -14,7 +14,7 @@ import {
   COLOR_BORDER,
   STYLE_CARD,
   STYLE_BUTTON_OUTLINE,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 // ── スタイル定数 ──────────────────────────────────────────
 

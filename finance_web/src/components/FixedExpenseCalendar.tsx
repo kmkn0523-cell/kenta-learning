@@ -12,7 +12,7 @@ import {
   COLOR_TEXT_SECONDARY,
   COLOR_BORDER,
   COLOR_NEGATIVE,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 // ── スタイル定数 ──────────────────────────────────────────
 

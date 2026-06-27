@@ -16,7 +16,7 @@ import {
   COLOR_NEGATIVE,
   COLOR_ACCENT,
   STYLE_CARD,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 interface HealthCheckCardProps {
   // ダッシュボードから受け取る集計値

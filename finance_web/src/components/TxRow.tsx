@@ -3,7 +3,7 @@
 
 import { useState, memo, CSSProperties } from "react";
 import { parseYenAmount, formatYen } from "../utils/format";
-import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_HINT, COLOR_POSITIVE, COLOR_NEGATIVE } from "../utils/styles";
+import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_HINT, COLOR_POSITIVE, COLOR_NEGATIVE, FONT_NUM } from "../utils/styles";
 import { Input, Select } from "./ui";
 
 // ── スタイル定数 ──────────────────────────────────────────

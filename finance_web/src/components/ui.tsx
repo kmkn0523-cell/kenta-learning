@@ -3,7 +3,7 @@
 
 import { useState, useEffect, ChangeEvent, CSSProperties, KeyboardEvent, ReactNode, forwardRef } from "react";
 import { formatAmount, formatYen } from "../utils/format";
-import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
+import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, FONT_NUM } from "../utils/styles";
 import CalculatorSheet from "./CalculatorSheet";
 
 // ── スタイル定数 ──────────────────────────────────────────

@@ -8,7 +8,7 @@ import {
   CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
 import { formatYen } from "../utils/format";
-import { COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_TEXT_PRIMARY, COLOR_TEXT_HINT, COLOR_BORDER, STYLE_CARD } from "../utils/styles";
+import { COLOR_POSITIVE, COLOR_NEGATIVE, COLOR_TEXT_PRIMARY, COLOR_TEXT_HINT, COLOR_BORDER, STYLE_CARD, FONT_NUM } from "../utils/styles";
 
 // 収支1件のデータ型（date と amount だけ使う）
 interface TxEntry {

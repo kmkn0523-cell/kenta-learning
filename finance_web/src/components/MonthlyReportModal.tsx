@@ -13,7 +13,7 @@ import {
   COLOR_POSITIVE,
   COLOR_NEGATIVE,
   COLOR_BORDER,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 // ── スタイル定数 ──────────────────────────────────────────
 

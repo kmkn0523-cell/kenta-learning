@@ -12,7 +12,7 @@ import {
   COLOR_NEGATIVE,
   COLOR_ACCENT,
   COLOR_TEXT_PRIMARY,
-} from "../utils/styles";
+FONT_NUM } from "../utils/styles";
 
 interface BudgetAlertBannerProps {
   // カテゴリ別月予算（{ 食費: 30000, ... }）
