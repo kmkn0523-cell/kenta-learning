@@ -25,6 +25,7 @@ import {
   STYLE_BUTTON_OUTLINE,
 FONT_NUM } from "../utils/styles";
 import { filterAndSortTransactions, TransactionFilter } from "../utils/filterTransactions";
+import { suggestCategory } from "../utils/categoryAutoSuggest";
 import { Input, Select } from "../components/ui";
 import TxRow from "../components/TxRow";
 import BudgetSection from "../components/BudgetSection";
@@ -216,6 +217,14 @@ export default function ExpenseView({
     return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([memo]) => memo);
   }, [allTransactions, txF.cat]);
 
+  // カテゴリ自動推定：メモを入力したとき、過去の同メモ取引から最頻カテゴリを提案する
+  // 現在選択中と同じカテゴリなら表示しない（意味がないため）
+  const categorySuggestion = useMemo(() => {
+    const suggested = suggestCategory(txF.memo, allTransactions);
+    if (!suggested || suggested === txF.cat) return null;
+    return suggested;
+  }, [txF.memo, txF.cat, allTransactions]);
+
   return (
     <div>
       {/* ──────────────────────────────────────────── */}
@@ -395,6 +404,23 @@ export default function ExpenseView({
               <Input ref={amountInputRef} money type="number" value={txF.amt} onChange={e=>setTxF(f=>({...f,amt:e.target.value}))} placeholder="金額（円）"/>
               <Input type="date" value={txF.date} onChange={e=>setTxF(f=>({...f,date:e.target.value}))}/>
               <Input value={txF.memo} onChange={e=>setTxF(f=>({...f,memo:e.target.value}))} placeholder="メモ（任意）"/>
+              {/* カテゴリ自動推定：過去の同メモ取引から「このカテゴリでは？」と提案する */}
+              {categorySuggestion && (
+                <button
+                  type="button"
+                  onClick={() => setTxF(f => ({ ...f, cat: categorySuggestion }))}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 6,
+                    padding: "6px 12px", borderRadius: 999,
+                    border: `1px solid rgba(34,211,238,0.35)`,
+                    background: "rgba(34,211,238,0.08)",
+                    color: "#22d3ee", fontSize: 12, cursor: "pointer",
+                    fontFamily: "inherit", alignSelf: "flex-start",
+                  }}
+                >
+                  💡 カテゴリを「{categorySuggestion}」に変更する？
+                </button>
+              )}
               {/* よく使うメモの候補（同カテゴリの過去メモをタップで入力。再入力の手間を省く） */}
               {memoSuggestions.length > 0 && (
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
