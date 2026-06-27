@@ -2,7 +2,7 @@
 // 収入の入力フォーム・月別ナビ・検索フィルター・一覧表示をまとめたコンポーネント
 // 検索・並び替えは内部 state で管理する（App.tsx に持ち出さない）
 
-import React, { useMemo, useState, useRef, CSSProperties } from "react";
+import React, { useMemo, useState, useRef, useCallback, CSSProperties } from "react";
 import { Income, RecurringIncome, CategoryConfig, Account } from "../types";
 import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
 import { newId } from "../utils/crypto";
@@ -42,24 +42,12 @@ const STYLE_IV_ACCOUNT_SELECT: CSSProperties = {
 // このコンポーネントが受け取るデータの型定義
 // incSq/setIncSq/incFcat/setIncFcat/fInc はコンポーネント内部で管理するため削除済み
 interface IncomeViewProps {
-  // 収入入力フォームの現在の値（口座IDも含む）
-  incF: { cat: string; amt: string; date: string; memo: string; accountId?: string };
-  // 収入フォームの値を更新する関数
-  setIncF: (
-    u:
-      | { cat: string; amt: string; date: string; memo: string; accountId?: string }
-      | ((prev: {
-          cat: string;
-          amt: string;
-          date: string;
-          memo: string;
-          accountId?: string;
-        }) => { cat: string; amt: string; date: string; memo: string; accountId?: string })
-  ) => void;
+  // 今日の日付文字列（"YYYY-MM-DD"）。入力フォームの初期日付に使う
+  ts: string;
   // 口座一覧（口座が登録されていれば収入に紐づける選択肢を表示する）
   accounts?: Account[];
-  // 収入を追加するボタンを押したときの処理（成功時 true、失敗時 false を返す）
-  addInc: () => boolean;
+  // 収入を追加する処理（フォーム内容を渡す。成功時 true、失敗時 false を返す）
+  addInc: (form: { cat: string; amt: string; date: string; memo: string; accountId?: string }) => boolean;
   // 現在選択中の年
   selectedYear: number;
   // 現在選択中の月（0〜11）
@@ -89,8 +77,7 @@ interface IncomeViewProps {
 
 // 収入タブ全体のUIを返すコンポーネント
 export default function IncomeView({
-  incF,
-  setIncF,
+  ts,
   accounts = [],
   addInc,
   selectedYear,
@@ -106,8 +93,11 @@ export default function IncomeView({
   recurringIncomes,
   setRecurringIncomes,
 }: IncomeViewProps) {
-  // categoryConfig.income を order 順で並べ、カテゴリ名とアイコンのマップを作る
-  const incomeCategoryNames = categoryConfig.income.slice().sort((a, b) => a.order - b.order).map(c => c.name);
+  // categoryConfig.income を order 順で並べ、カテゴリ名のリストを作る（useMemo で参照を安定させ TxRow の memo を効かせる）
+  const incomeCategoryNames = useMemo(
+    () => categoryConfig.income.slice().sort((a, b) => a.order - b.order).map(c => c.name),
+    [categoryConfig.income]
+  );
 
   // ────── 定期収入セクションの state ──────
   // 定期収入セクションを開いているかどうか
@@ -124,7 +114,24 @@ export default function IncomeView({
 
   // 振込日の選択肢（1〜31日 + 未設定）
   const PAY_DAY_OPTIONS = ["未設定", ...Array.from({length: 31}, (_, i) => `${i + 1}日`)];
-  const incomeCategoryIcons: Record<string, string> = Object.fromEntries(categoryConfig.income.map(c => [c.name, c.icon]));
+  const incomeCategoryIcons = useMemo<Record<string, string>>(
+    () => Object.fromEntries(categoryConfig.income.map(c => [c.name, c.icon])),
+    [categoryConfig.income]
+  );
+
+  // 収入入力フォームの中身（App.tsx から降格したローカルstate）。タイピングはこの View 内で完結し、App 全体を再レンダしない。
+  const [incF, setIncF] = useState<{ cat: string; amt: string; date: string; memo: string; accountId?: string }>(
+    { cat: "給与", amt: "", date: ts, memo: "" }
+  );
+
+  // 一覧の各行に渡す保存／削除ハンドラ。useCallback で参照を固定し、TxRow の memo を効かせる。
+  const handleSaveInc = useCallback((updated: { id: string; category: string; amount: number; date: string; memo?: string }) => {
+    setIncomes(prev => prev.map(x => x.id === updated.id ? ({ ...x, ...updated } as Income) : x));
+    showT("更新しました");
+  }, [setIncomes, showT]);
+  const handleDeleteInc = useCallback((item?: { id: string }) => {
+    if (item) delItem(item.id, setIncomes, "収入を削除しました");
+  }, [delItem, setIncomes]);
   // 検索・絞り込み条件をまとめた state（デフォルトは日付の新しい順）
   const [filter, setFilter] = useState<TransactionFilter>({ sortBy: "date", sortDir: "desc" });
   // フィルターパネルの表示フラグ
@@ -357,8 +364,8 @@ export default function IncomeView({
             </select>
           )}
         </div>
-        {/* 追加ボタン（成功時は金額入力欄に再フォーカスして連続入力できるように） */}
-        <button type="button" onClick={()=>{if(addInc()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>
+        {/* 追加ボタン（成功時は金額・メモ・口座をクリアし、金額入力欄に再フォーカスして連続入力できるように） */}
+        <button type="button" onClick={()=>{if(addInc(incF)){setIncF(f=>({...f,amt:"",memo:"",accountId:undefined}));setTimeout(()=>amountInputRef.current?.focus(),50);}}} style={STYLE_BUTTON_PRIMARY}>
           追加
         </button>
       </div>
@@ -713,12 +720,8 @@ export default function IncomeView({
             cats={incomeCategoryNames}
             ico={incomeCategoryIcons}
             isInc
-            onSave={u => {
-              // 編集保存：該当IDのデータを更新
-              setIncomes(p => p.map(x => (x.id === u.id ? (u as Income) : x)));
-              showT("更新しました");
-            }}
-            onDelete={() => delItem(i.id, setIncomes, "収入を削除しました")}
+            onSave={handleSaveInc}
+            onDelete={handleDeleteInc}
           />
         ))
       )}

@@ -2,6 +2,7 @@
 // 毎月かかる固定費の一覧表示・追加フォームをまとめたコンポーネント
 // App.tsx から切り出して、見通しを良くしている
 
+import { useState } from "react";
 import { FixedExpense, CategoryConfig } from "../types";
 import { formatYen } from "../utils/format";
 import { COLOR_TEXT_HINT, STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
@@ -21,12 +22,8 @@ interface FixedExpenseViewProps {
   showFx: boolean;
   // フォームの表示・非表示を切り替える関数
   setShowFx: (v: boolean) => void;
-  // 固定費追加フォームの入力値
-  fxF: { name: string; cat: string; amt: string; note?: string };
-  // フォームの入力値を更新する関数
-  setFxF: (u: { name: string; cat: string; amt: string; note?: string } | ((prev: { name: string; cat: string; amt: string; note?: string }) => { name: string; cat: string; amt: string; note?: string })) => void;
-  // 固定費を追加する処理（keepOpen=true なら追加後もフォームを開いたまま）
-  addFx: (keepOpen?: boolean) => boolean;
+  // 固定費を追加する処理（フォーム内容を渡す。keepOpen=true なら追加後もフォームを開いたまま）
+  addFx: (form: { name: string; cat: string; amt: string; note?: string }, keepOpen?: boolean) => boolean;
   // トースト通知を表示する関数
   showT: (msg: string, type?: string) => void;
   // 確認ダイアログを表示する関数
@@ -45,8 +42,6 @@ export default function FixedExpenseView({
   setFixedExpenses,
   showFx,
   setShowFx,
-  fxF,
-  setFxF,
   addFx,
   showT,
   ask,
@@ -56,6 +51,9 @@ export default function FixedExpenseView({
   // categoryConfig.fixedExpense を order 順で並べ、カテゴリ名とアイコンのマップを作る
   const fixedCategoryNames = categoryConfig.fixedExpense.slice().sort((a, b) => a.order - b.order).map(c => c.name);
   const fixedCategoryIcons: Record<string, string> = Object.fromEntries(categoryConfig.fixedExpense.map(c => [c.name, c.icon]));
+
+  // 固定費入力フォームの中身（App.tsx から降格したローカルstate）。タイピングはこの View 内で完結し、App 全体を再レンダしない。
+  const [fxF, setFxF] = useState<{ name: string; cat: string; amt: string; note?: string }>({ name: "", cat: "家賃", amt: "", note: "" });
 
   return (
     <div>
@@ -132,8 +130,8 @@ export default function FixedExpenseView({
           </div>
           {/* 追加・連続追加・キャンセルボタン（連続追加はフォームを閉じずに次の入力ができる） */}
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <button type="button" onClick={() => addFx()} style={{ ...STYLE_BUTTON_PRIMARY, flex: "1 1 120px" }}>追加</button>
-            <button type="button" onClick={() => addFx(true)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight: 44, padding: "11px 14px", flex: "1 1 120px" }}>追加して続ける</button>
+            <button type="button" onClick={() => { if (addFx(fxF)) setFxF({ name: "", cat: "家賃", amt: "", note: "" }); }} style={{ ...STYLE_BUTTON_PRIMARY, flex: "1 1 120px" }}>追加</button>
+            <button type="button" onClick={() => { if (addFx(fxF, true)) setFxF({ name: "", cat: "家賃", amt: "", note: "" }); }} style={{ ...STYLE_BUTTON_OUTLINE, minHeight: 44, padding: "11px 14px", flex: "1 1 120px" }}>追加して続ける</button>
             <button type="button" onClick={() => setShowFx(false)} style={{ ...STYLE_BUTTON_OUTLINE, minHeight: 44, padding: "11px 14px" }}>キャンセル</button>
           </div>
         </div>

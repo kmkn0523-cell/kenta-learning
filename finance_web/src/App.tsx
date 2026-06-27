@@ -119,11 +119,8 @@ function AppInner(){
   const [recurringIncomes,setRecurringIncomes,recIncReady]=usePersist<RecurringIncome[]>("kk_rec_inc",[]);
   // 繰り返し支出の設定一覧（サブスク・ジム代など毎月自動追加する変動支出の設定）
   const [recurringExpenses,setRecurringExpenses,recExpReady]=usePersist<RecurringExpense[]>("kk_rec_exp",[]);
-  // 支出フォームの入力state は ExpenseView 内のローカルstateへ降格した（タイピングで App 全体が再レンダされるのを防ぐため）。
-  // 追加は addTx(form) にフォーム内容を渡して実行する。
-  const [fxF,setFxF]=useState({name:"",cat:"家賃",amt:"",note:""});
-  // 収入フォーム（accountId: 口座に紐づける任意フィールド）
-  const [incF,setIncF]=useState<{cat:string;amt:string;date:string;memo:string;accountId?:string}>({cat:"給与",amt:"",date:ts,memo:""});
+  // 支出・収入・固定費の入力state は各 View 内のローカルstateへ降格した（タイピング中に App 全体が再レンダされるのを防ぐため）。
+  // 追加は addTx(form) / addInc(form) / addFx(form) にフォーム内容を渡して実行する。
   const [showFx,setShowFx]=useState(false),[showTxForm,setShowTxForm]=useState(false),[ltab,setLtab]=useState("cf");
   const [pays,setPays]=useState({});
   const txListRef=useRef<HTMLDivElement | null>(null);
@@ -383,21 +380,22 @@ function AppInner(){
     }
     return true;
   }
-  function addInc(){
-    const a=parseYenAmount(incF.amt);
+  // 収入を追加する。入力フォーム(form)は IncomeView から渡される（入力state は IncomeView 側が保持）。
+  function addInc(form: {cat:string;amt:string;date:string;memo:string;accountId?:string}){
+    const a=parseYenAmount(form.amt);
     if(!a||a<=0){showT("金額を入力","error");return false;}
     // 口座IDを含めて収入を追加する（accountId が未選択なら undefined のまま）
-    setIncomes(p=>[...p,{id:newId(),category:incF.cat,amount:a,date:incF.date,memo:incF.memo,accountId:incF.accountId}]);
-    setIncF(f=>({...f,amt:"",memo:"",accountId:undefined}));
+    setIncomes(p=>[...p,{id:newId(),category:form.cat,amount:a,date:form.date,memo:form.memo,accountId:form.accountId}]);
+    // フォームのリセットは入力state を持つ IncomeView 側で行う
     showT("追加しました");
     return true;
   }
-  // 固定費追加：keepOpen=true なら追加後もフォームを開いたまま（連続入力モード）
-  function addFx(keepOpen?: boolean){
-    const a=parseYenAmount(fxF.amt);
-    if(!fxF.name||!a){showT("項目名と金額を入力","error");return false;}
-    setFixedExpenses(p=>[...p,{id:newId(),name:fxF.name,category:fxF.cat,amount:a,payDay:"未設定"}]);
-    setFxF({name:"",cat:"家賃",amt:"",note:""});
+  // 固定費追加：入力フォーム(form)は FixedExpenseView から渡される。keepOpen=true なら追加後もフォームを開いたまま（連続入力モード）
+  function addFx(form: {name:string;cat:string;amt:string;note?:string}, keepOpen?: boolean){
+    const a=parseYenAmount(form.amt);
+    if(!form.name||!a){showT("項目名と金額を入力","error");return false;}
+    setFixedExpenses(p=>[...p,{id:newId(),name:form.name,category:form.cat,amount:a,payDay:"未設定"}]);
+    // フォームのリセットは入力state を持つ FixedExpenseView 側で行う
     if(!keepOpen) setShowFx(false);
     showT("追加しました");
     return true;
@@ -505,8 +503,7 @@ function AppInner(){
         showT={showT}
       />}
       {tab==="inc"&&<IncomeView
-        incF={incF}
-        setIncF={setIncF}
+        ts={ts}
         accounts={accounts}
         addInc={addInc}
         selectedYear={selectedYear}
@@ -528,8 +525,6 @@ function AppInner(){
         setFixedExpenses={setFixedExpenses}
         showFx={showFx}
         setShowFx={setShowFx}
-        fxF={fxF}
-        setFxF={setFxF}
         addFx={addFx}
         showT={showT}
         ask={ask}
