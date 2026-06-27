@@ -99,7 +99,8 @@ export default function CalculatorSheet({ open, initialValue, onConfirm, onClose
           {["4", "5", "6"].map(digitKey)}{opKey("+")}
           {["1", "2", "3"].map(digitKey)}
           <button type="button" aria-label="イコール" onClick={() => dispatch({ type: "equals" })} style={{ ...STYLE_KEY_BASE, gridRow: "span 2", color: COLOR_ACCENT, fontWeight: 700 }}>=</button>
-          {digitKey("0")}
+          {/* 0 は横2マス（最下段の空きを埋めてiOS電卓と同じ並びにする） */}
+          <button type="button" aria-label="0" onClick={() => dispatch({ type: "digit", d: "0" })} style={{ ...STYLE_KEY_BASE, gridColumn: "span 2" }}>0</button>
           <button type="button" aria-label="小数点" onClick={() => dispatch({ type: "dot" })} style={STYLE_KEY_BASE}>.</button>
         </div>
 
