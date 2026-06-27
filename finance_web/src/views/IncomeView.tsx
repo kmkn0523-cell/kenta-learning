@@ -58,6 +58,8 @@ interface IncomeViewProps {
   exportMonthlyIncomeCsv: (label: string) => void;
   // 選択中の月の収入一覧
   monthlyIncomes: Income[];
+  // 全期間の収入一覧（メモ候補の集計に使う。同カテゴリで過去に使ったメモを提案する）
+  allIncomes?: Income[];
   // 収入データ全体を更新する関数
   setIncomes: (u: Income[] | ((prev: Income[]) => Income[])) => void;
   // トースト通知を表示する関数
@@ -85,6 +87,7 @@ export default function IncomeView({
   onMonthChange,
   exportMonthlyIncomeCsv,
   monthlyIncomes,
+  allIncomes = [],
   setIncomes,
   showT,
   ask,
@@ -152,6 +155,15 @@ export default function IncomeView({
     () => incomeCategoryNames.filter(c => monthlyIncomes.some(i => i.category === c)),
     [monthlyIncomes]
   );
+
+  // メモ候補：選択中カテゴリ(incF.cat)で過去によく使ったメモを頻度順に最大4件提案する（再入力の手間を省く）
+  const memoSuggestions = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const inc of allIncomes) {
+      if (inc.category === incF.cat && inc.memo) counts.set(inc.memo, (counts.get(inc.memo) || 0) + 1);
+    }
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([memo]) => memo);
+  }, [allIncomes, incF.cat]);
 
   return (
     <div>
@@ -350,6 +362,17 @@ export default function IncomeView({
             onChange={e => setIncF(f => ({ ...f, memo: e.target.value }))}
             placeholder="メモ（任意）"
           />
+          {/* よく使うメモの候補（同カテゴリの過去メモをタップで入力。再入力の手間を省く） */}
+          {memoSuggestions.length > 0 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {memoSuggestions.map(m => (
+                <button type="button" key={m} onClick={() => setIncF(f => ({ ...f, memo: m }))}
+                  style={{ padding: "4px 10px", borderRadius: 999, border: `1px solid ${COLOR_BORDER}`, background: "transparent", color: COLOR_TEXT_SECONDARY, fontSize: 13, cursor: "pointer", fontFamily: "inherit", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {m}
+                </button>
+              ))}
+            </div>
+          )}
           {/* 口座選択（口座が登録されているときだけ表示） */}
           {accounts.length > 0 && (
             <select
