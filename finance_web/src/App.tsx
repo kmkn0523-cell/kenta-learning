@@ -228,6 +228,30 @@ function AppInner(){
     });
     return map;
   }, [transactions]);
+  // 連続記録日数（ストリーク）。記録のある日付を今日からさかのぼって数える。習慣化のモチベーション表示に使う。
+  const recordStreak = useMemo(() => {
+    // 記録のある日付(YYYY-MM-DD)の集合を作る（支出・収入のどちらかがあれば「記録した日」とみなす）
+    const days = new Set<string>();
+    for (const t of transactions) if (typeof t.date === "string") days.add(t.date.slice(0, 10));
+    for (const i of incomes) if (typeof i.date === "string") days.add(i.date.slice(0, 10));
+    if (days.size === 0) return 0;
+    const oneDay = 86400000; // 1日のミリ秒
+    const fmt = (d: Date) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    // 今日まだ記録が無いだけならストリークは生きている扱いにして、起点を昨日にする
+    let start = base;
+    if (!days.has(fmt(base))) {
+      const yesterday = new Date(base.getTime() - oneDay);
+      if (!days.has(fmt(yesterday))) return 0; // 昨日も無ければ連続記録は途切れている
+      start = yesterday;
+    }
+    // 起点から1日ずつさかのぼり、記録が途切れるまで数える
+    let count = 0;
+    let cursor = start;
+    while (days.has(fmt(cursor))) { count++; cursor = new Date(cursor.getTime() - oneDay); }
+    return count;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions, incomes]);
   // 当月の使いすぎを監視して通知する
   useOverspendAlerts({
     enabled: overspendNotifyEnabled,
@@ -459,6 +483,13 @@ function AppInner(){
           >
             有効にする
           </button>
+        </div>
+      )}
+      {/* 連続記録ストリーク（2日以上のときだけ表示。記録の習慣化をあと押しする） */}
+      {recordStreak >= 2 && (
+        <div style={{display:"flex",alignItems:"center",gap:8,background:"rgba(251,146,60,0.08)",border:"1px solid rgba(251,146,60,0.25)",borderRadius:10,padding:"8px 14px",marginBottom:12,fontSize:13}}>
+          <span style={{fontSize:16}} aria-hidden="true">🔥</span>
+          <span style={{color:COLOR_TEXT_SECONDARY}}><strong style={{color:"#fb923c"}}>{recordStreak}日連続</strong>で記録中！この調子で続けよう</span>
         </div>
       )}
       {/* lazy ロードされたタブの読み込み中フォールバック（小さなインジケーター） */}
