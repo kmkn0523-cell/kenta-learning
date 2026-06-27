@@ -548,6 +548,7 @@ function AppInner(){
         onMonthChange={handleMonthChange}
         exportMonthlyIncomeCsv={exportMonthlyIncomeCsv}
         monthlyIncomes={monthlyIncomes}
+        allIncomes={incomes}
         setIncomes={setIncomes}
         showT={showT}
         ask={ask}
