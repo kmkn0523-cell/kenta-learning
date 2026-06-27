@@ -1,7 +1,7 @@
 // ────────── 収支1行コンポーネント ──────────
 // 変動支出・収入リストの1件分。通常表示 ↔ 編集フォームを切り替える
 
-import { useState, CSSProperties } from "react";
+import { useState, memo, CSSProperties } from "react";
 import { parseYenAmount, formatYen } from "../utils/format";
 import { STYLE_CARD, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE, COLOR_TEXT_HINT, COLOR_POSITIVE, COLOR_NEGATIVE } from "../utils/styles";
 import { Input, Select } from "./ui";
@@ -29,14 +29,17 @@ interface TxItem {
 interface TxRowProps {
   item: TxItem;
   onSave: (item: TxItem) => void;
-  onDelete: () => void;
+  // 削除コールバック。安定した参照を渡せるよう item を引数で受け取れる（呼び出し側は無視してもよい）
+  onDelete: (item?: TxItem) => void;
   cats: string[];
   ico: Record<string, string>;
   isInc?: boolean;
 }
 
 // cats: カテゴリ一覧配列, ico: カテゴリ→絵文字マップ, isInc: 収入かどうか（false=支出）
-export default function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps) {
+// memo化：props（item/cats/ico/onSave/onDelete）が変わらない限り再描画しない。
+// 一覧の他の行や入力フォームのタイピングで巻き込み再描画されるのを防ぐ。
+function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps) {
   const [ed, setEd] = useState(false); // 編集モードかどうか
   const [d, setD] = useState<{cat:string;amt:string;date:string;memo:string}>({cat:"",amt:"",date:"",memo:""});      // 編集中のフォーム値
 
@@ -72,7 +75,9 @@ export default function TxRow({item,onSave,onDelete,cats,ico,isInc}: TxRowProps)
       {/* 収入は「+」、支出は「-」を頭につけて金額を表示 */}
       <div style={{fontFamily:"monospace",fontSize:14,fontWeight:700,color:col}}>{isInc?"+":"-"}{formatYen(item.amount)}</div>
       <button type="button" onClick={()=>{setD({cat:item.category,amt:String(item.amount),date:item.date,memo:item.memo||""});setEd(true);}} style={STYLE_BUTTON_OUTLINE}>編集</button>
-      <button type="button" onClick={onDelete} style={STYLE_BUTTON_OUTLINE}>削除</button>
+      <button type="button" onClick={()=>onDelete(item)} style={STYLE_BUTTON_OUTLINE}>削除</button>
     </div>
   );
 }
+
+export default memo(TxRow);

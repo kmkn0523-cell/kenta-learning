@@ -2,7 +2,7 @@
 // 変動支出の入力フォーム・クイックテンプレート・予算管理・月別一覧をまとめたコンポーネント
 // App.tsx から切り出して、見通しを良くしている
 
-import React, { useMemo, useState, useRef, CSSProperties } from "react";
+import React, { useMemo, useState, useRef, useCallback, CSSProperties } from "react";
 import { Tx, Budget, CategoryConfig, Account, RecurringExpense } from "../types";
 import { newId } from "../utils/crypto";
 import CsvImportModal, { ImportedRow } from "../components/CsvImportModal";
@@ -69,16 +69,15 @@ interface ExpenseViewProps {
   // テンプレート一覧と更新関数
   tpls: Template[];
   setTpls: (u: Template[] | ((prev: Template[]) => Template[])) => void;
-  // 支出入力フォームの中身（カテゴリ・金額・日付・メモ・口座ID）
-  txF: { cat: string; amt: string; date: string; memo: string; accountId?: string };
-  setTxF: (u: ((prev: { cat: string; amt: string; date: string; memo: string; accountId?: string }) => { cat: string; amt: string; date: string; memo: string; accountId?: string })) => void;
+  // 今日の日付文字列（"YYYY-MM-DD"）。入力フォームの初期日付に使う
+  ts: string;
   // 口座一覧（口座が登録されていれば支出に紐づける選択肢を表示する）
   accounts?: Account[];
   // 支出追加フォームの表示フラグ
   showTxForm: boolean;
   setShowTxForm: (v: boolean) => void;
-  // 支出を追加する関数（成功時 true、失敗時 false を返す）
-  addTx: () => boolean;
+  // 支出を追加する関数（フォーム内容を渡す。成功時 true、失敗時 false を返す）
+  addTx: (form: { cat: string; amt: string; date: string; memo: string; accountId?: string }) => boolean;
   // カテゴリ別予算と更新関数
   budget: Budget;
   setBudget: (u: Budget | ((prev: Budget) => Budget)) => void;
@@ -126,8 +125,7 @@ interface ExpenseViewProps {
 export default function ExpenseView({
   tpls,
   setTpls,
-  txF,
-  setTxF,
+  ts,
   showTxForm,
   setShowTxForm,
   addTx,
@@ -152,8 +150,30 @@ export default function ExpenseView({
   setRecurringExpenses,
 }: ExpenseViewProps) {
   // categoryConfig.expense を order 順で並べ、カテゴリ名とアイコンのマップを作る
-  const expenseCategoryNames = categoryConfig.expense.slice().sort((a, b) => a.order - b.order).map(c => c.name);
-  const expenseCategoryIcons: Record<string, string> = Object.fromEntries(categoryConfig.expense.map(c => [c.name, c.icon]));
+  // （useMemo で参照を安定させ、下の TxRow の memo を効かせる）
+  const expenseCategoryNames = useMemo(
+    () => categoryConfig.expense.slice().sort((a, b) => a.order - b.order).map(c => c.name),
+    [categoryConfig.expense]
+  );
+  const expenseCategoryIcons = useMemo<Record<string, string>>(
+    () => Object.fromEntries(categoryConfig.expense.map(c => [c.name, c.icon])),
+    [categoryConfig.expense]
+  );
+
+  // 支出入力フォームの中身（App.tsx から降格したローカルstate）。タイピングはこの View 内で完結し、App 全体を再レンダしない。
+  const [txF, setTxF] = useState<{ cat: string; amt: string; date: string; memo: string; accountId?: string }>(
+    { cat: "食費", amt: "", date: ts, memo: "" }
+  );
+
+  // 一覧の各行に渡す保存／削除ハンドラ。useCallback で参照を固定し、TxRow の memo を効かせる（タイピングで全行が再描画されるのを防ぐ）。
+  const handleSaveTx = useCallback((updated: { id: string; category: string; amount: number; date: string; memo?: string }) => {
+    // 既存レコードに編集後の値を重ねる（accountId など編集対象外のフィールドは保持）
+    setTransactions((prev: Tx[]) => prev.map(x => x.id === updated.id ? { ...x, ...updated } : x));
+    showT("更新しました");
+  }, [setTransactions, showT]);
+  const handleDeleteTx = useCallback((item?: { id: string }) => {
+    if (item) delItem(item.id, setTransactions, "支出を削除しました");
+  }, [delItem, setTransactions]);
 
   // ────── ⚡定期支出セクションの state ──────
   // 定期支出セクションを開いているかどうか（アコーディオン）
@@ -396,8 +416,8 @@ export default function ExpenseView({
               setTpls(p=>[...p,{id:newId(),cat:txF.cat,amount:a,note:txF.memo||""}]);
               showT("テンプレートに保存しました");
             }} style={{...STYLE_BUTTON_OUTLINE,width:"100%",marginBottom:10,fontSize:12}}>⭐ テンプレートとして保存</button>
-            {/* 追加後は金額入力欄に再フォーカスして連続入力をスムーズにする */}
-            <button type="button" onClick={()=>{if(addTx()) setTimeout(()=>amountInputRef.current?.focus(),50);}} style={STYLE_BUTTON_PRIMARY}>追加</button>
+            {/* 追加後は金額・メモ・口座をクリアし、金額入力欄に再フォーカスして連続入力をスムーズにする */}
+            <button type="button" onClick={()=>{if(addTx(txF)){setTxF(f=>({...f,amt:"",memo:"",accountId:undefined}));setTimeout(()=>amountInputRef.current?.focus(),50);}}} style={STYLE_BUTTON_PRIMARY}>追加</button>
           </div>
       }
       {/* ────────── 予算管理：カテゴリ別の月予算を設定・追跡 ────────── */}
@@ -618,8 +638,8 @@ export default function ExpenseView({
                 item={t}
                 cats={expenseCategoryNames}
                 ico={expenseCategoryIcons}
-                onSave={u=>{setTransactions(p=>p.map(x=>x.id===u.id?u:x));showT("更新しました");}}
-                onDelete={()=>delItem(t.id,setTransactions,"支出を削除しました")}
+                onSave={handleSaveTx}
+                onDelete={handleDeleteTx}
               />
             ))
       }
