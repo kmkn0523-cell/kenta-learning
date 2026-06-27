@@ -305,18 +305,23 @@ export default function DashboardView({
       {/* ────────── 予算超過アラート（今月閲覧 & 該当カテゴリがあるときだけ表示） ────────── */}
       <BudgetAlertBanner budget={budget} expByCat={expByCat} isCurrentMonth={isCurMonth}/>
 
-      {/* ────────── 収入サマリーカード ────────── */}
+      {/* ────────── ヒーロー：今月の手残り＋収入/支出/貯蓄率のKPIカード ────────── */}
       <div style={{...STYLE_CARD,background:"linear-gradient(135deg,rgba(15,23,42,0.95) 0%,rgba(34,211,238,0.07) 100%)",border:`1px solid rgba(34,211,238,0.18)`}}>
-        <div style={{fontSize:12,color:COLOR_ACCENT,textTransform:"uppercase",letterSpacing:"2px",marginBottom:8,fontWeight:600}}>今月の収入</div>
-        <div style={{fontFamily:"monospace",fontSize:34,fontWeight:700,marginBottom:12,letterSpacing:"-1px"}}>{formatYen(totalIncome)}</div>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-          <div style={{fontSize:12,color:COLOR_TEXT_SECONDARY}}>
-            支出合計 <span style={{fontFamily:"monospace",color:COLOR_TEXT_PRIMARY}}>{formatYen(totalBurden)}</span>
-            {totalIncome>0&&<span style={{marginLeft:8,fontSize:12,color:totalBurden>totalIncome?COLOR_NEGATIVE:COLOR_TEXT_HINT}}>({Math.round(totalBurden/totalIncome*100)}%)</span>}
-          </div>
-          <div style={{fontSize:13,fontWeight:700,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE}}>
-            手残り <span style={{fontFamily:"monospace"}}>{net>=0?"+":""}{formatYen(net)}</span>
-          </div>
+        {/* 手残りを主役に大きく表示（プラスは緑・マイナスは赤）。tabular-nums で桁を縦に揃える */}
+        <div style={{fontSize:11,color:COLOR_TEXT_HINT,textTransform:"uppercase",letterSpacing:"2px",marginBottom:6,fontWeight:600}}>{isCurMonth?"今月の手残り":`${selectedMonth+1}月の手残り`}</div>
+        <div style={{fontFamily:"monospace",fontSize:38,fontWeight:700,letterSpacing:"-1.5px",marginBottom:16,color:net>=0?COLOR_POSITIVE:COLOR_NEGATIVE,fontVariantNumeric:"tabular-nums"}}>{net>=0?"+":""}{formatYen(net)}</div>
+        {/* 収入・支出・貯蓄率の3枚KPIカード */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
+          {[
+            {label:"収入",value:formatYen(totalIncome),color:COLOR_POSITIVE},
+            {label:"支出",value:formatYen(totalBurden),color:COLOR_NEGATIVE},
+            {label:"貯蓄率",value:`${totalIncome>0?Math.round(net/totalIncome*100):0}%`,color:COLOR_ACCENT},
+          ].map(kpi=>(
+            <div key={kpi.label} style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${COLOR_BORDER}`,borderRadius:12,padding:"10px 12px"}}>
+              <div style={{fontSize:10,color:COLOR_TEXT_HINT,letterSpacing:"1px",marginBottom:4}}>{kpi.label}</div>
+              <div style={{fontFamily:"monospace",fontSize:15,fontWeight:700,letterSpacing:"-0.5px",color:kpi.color,fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{kpi.value}</div>
+            </div>
+          ))}
         </div>
       </div>
 
