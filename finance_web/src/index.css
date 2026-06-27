@@ -30,3 +30,11 @@ textarea:focus:not(:focus-visible) {
     scroll-behavior: auto !important;
   }
 }
+
+/* 電卓ボトムシートのスライドイン（下から出る） */
+/* 「動きを減らす」設定の人には上の共通ルールが自動で効くので、ここでは個別対応不要 */
+@keyframes calc-sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.calc-sheet { animation: calc-sheet-up 0.22s ease-out; }
