@@ -4,6 +4,7 @@
 import { useState, useEffect, ChangeEvent, CSSProperties, KeyboardEvent, ReactNode, forwardRef } from "react";
 import { formatAmount, formatYen } from "../utils/format";
 import { COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_HINT, COLOR_BORDER, COLOR_ACCENT, COLOR_POSITIVE, COLOR_NEGATIVE, STYLE_INPUT, STYLE_BUTTON_PRIMARY, STYLE_BUTTON_OUTLINE } from "../utils/styles";
+import CalculatorSheet from "./CalculatorSheet";
 
 // ── スタイル定数 ──────────────────────────────────────────
 
@@ -134,11 +135,34 @@ interface InputProps {
   money?: boolean;
 }
 export const Input = forwardRef<HTMLInputElement, InputProps>(({value, onChange, type, placeholder, style, money}, ref) => {
+  // フックは必ず関数の先頭で（条件分岐より前で）呼ぶ ← Reactのルール
+  const [calcOpen, setCalcOpen] = useState(false);
+
   // money の時は画面に出す値をカンマ付きに整える
   const display = money ? formatAmount(value) : value;
   // money の時は入力イベントを横取りして数字だけ抜き出し→整形してから onChange へ渡す
   const handle = money ? (e: ChangeEvent<HTMLInputElement>) => onChange({target:{value:formatAmount(e.target.value)}}) : onChange;
-  return <input ref={ref} type={type==="number"||money?"text":type||"text"} value={display} onChange={handle as any} placeholder={placeholder} style={{...STYLE_INPUT,...style}} inputMode={type==="number"||money?"numeric":type==="date"?undefined:"text"}/>;
+
+  // money でないときは今まで通り素の input を返す（後方互換・🧮なし）
+  if (!money) {
+    return <input ref={ref} type={type==="number"?"text":type||"text"} value={display} onChange={handle as any} placeholder={placeholder} style={{...STYLE_INPUT,...style}} inputMode={type==="number"?"numeric":type==="date"?undefined:"text"}/>;
+  }
+
+  // money のときは input の右に🧮ボタンを重ね、押すと電卓シートを開く
+  return (
+    <div style={{position:"relative"}}>
+      <input ref={ref} type="text" value={display} onChange={handle as any} placeholder={placeholder}
+        style={{...STYLE_INPUT, paddingRight:44, ...style}} inputMode="numeric"/>
+      {/* 🧮ボタン：押すと電卓ボトムシートを開く（普段のフリック入力はそのまま使える） */}
+      <button type="button" aria-label="電卓を開く" onClick={()=>setCalcOpen(true)}
+        style={{position:"absolute", right:6, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", fontSize:20, padding:4, lineHeight:1}}>
+        🧮
+      </button>
+      <CalculatorSheet open={calcOpen} initialValue={value}
+        onConfirm={(v)=>onChange({target:{value:formatAmount(String(v))}})}
+        onClose={()=>setCalcOpen(false)}/>
+    </div>
+  );
 });
 Input.displayName = "Input";
 
