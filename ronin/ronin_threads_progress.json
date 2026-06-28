@@ -6090,8 +6090,14 @@
       "kind": "teaching",
       "label": "Day177 morning",
       "post_id": "17868552489652206"
+    },
+    {
+      "date": "2026/06/28 02:39",
+      "kind": "engagement",
+      "label": "engagement eng031",
+      "post_id": "17924103957364592"
     }
   ],
-  "last_posted_at": "2026-06-28T01:02:09.091160+00:00",
-  "engagement_index": 62
+  "last_posted_at": "2026-06-28T02:41:07.431285+00:00",
+  "engagement_index": 63
 }
