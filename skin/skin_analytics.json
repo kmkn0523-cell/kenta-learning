@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T08:42:33.210195",
+  "last_updated": "2026-06-28T09:17:51.373637",
   "posts_history": [
     {
       "day": 28,
@@ -2816,6 +2816,39 @@
       "shares": 0,
       "views": 30,
       "engagement_rate": 3.33
+    },
+    {
+      "day": 99,
+      "type": "肌荒れが治った人の共通点",
+      "post_id": "17968030050084249",
+      "posted_at": "2026-06-28T07:38:19+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 103,
+      "engagement_rate": 0.97
+    },
+    {
+      "day": 98,
+      "type": "更年期と肌荒れ",
+      "post_id": "18126201418654064",
+      "posted_at": "2026-06-28T03:01:24+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 21,
+      "engagement_rate": 4.76
+    },
+    {
+      "day": 97,
+      "type": "水の飲み方と肌",
+      "post_id": "18159182371417125",
+      "posted_at": "2026-06-27T22:01:28+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 45,
+      "engagement_rate": 2.22
     }
   ],
   "pattern_performance": {
@@ -3636,11 +3669,11 @@
     },
     "day_99": {
       "肌荒れが治った人の共通点": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 75.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 89.0,
+        "avg_engagement_rate": 0.48,
         "best_hour": 5,
         "best_hashtag_set": "A"
       }
@@ -4005,6 +4038,28 @@
         "avg_views": 27.0,
         "avg_engagement_rate": 3.7,
         "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_98": {
+      "更年期と肌荒れ": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 21.0,
+        "avg_engagement_rate": 4.76,
+        "best_hour": 3,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_97": {
+      "水の飲み方と肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 45.0,
+        "avg_engagement_rate": 2.22,
+        "best_hour": 22,
         "best_hashtag_set": "A"
       }
     }
