@@ -1,5 +1,5 @@
 {
-  "daily_index": 354,
+  "daily_index": 355,
   "launch_index": 0,
   "history": [
     {
@@ -5327,6 +5327,14 @@
       "variant": "A",
       "post_id": "18126201418654064",
       "seed_id": "18056321414512160"
+    },
+    {
+      "date": "2026/06/28 07:37",
+      "theme": "肌荒れが治った人の共通点",
+      "theme_id": 99,
+      "variant": "A",
+      "post_id": "17968030050084249",
+      "seed_id": "17956332114170170"
     }
   ],
   "ab_next": "A",
@@ -5673,7 +5681,7 @@
     "99": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "100": {
@@ -6091,7 +6099,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-28T03:02:05.411083+00:00",
+  "last_posted_at": "2026-06-28T07:38:57.759462+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
   "last_note_promo_date": "2026/06/27",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
