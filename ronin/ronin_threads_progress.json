@@ -6138,8 +6138,14 @@
       "kind": "teaching",
       "label": "Day180 morning",
       "post_id": "17981908170034303"
+    },
+    {
+      "date": "2026/06/28 19:00",
+      "kind": "engagement",
+      "label": "engagement eng001",
+      "post_id": "18378450115166979"
     }
   ],
-  "last_posted_at": "2026-06-28T17:02:12.176844+00:00",
-  "engagement_index": 64
+  "last_posted_at": "2026-06-28T19:02:06.793475+00:00",
+  "engagement_index": 65
 }
