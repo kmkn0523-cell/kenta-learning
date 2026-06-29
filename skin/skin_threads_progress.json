@@ -5375,6 +5375,13 @@
       "variant": "A",
       "post_id": "18101868086152572",
       "seed_id": "18088213574550485"
+    },
+    {
+      "date": "2026/06/29 14:40",
+      "theme": "note宣伝: 現代人の8割がビタミンD不足。それが肌荒れの隠れた原因になっ",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "17964261375067708"
     }
   ],
   "ab_next": "A",
@@ -6139,9 +6146,9 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-29T13:02:14.650967+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n668abed2d2a7",
-  "last_note_promo_date": "2026/06/27",
+  "last_posted_at": "2026-06-29T14:42:03.938211+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n59efb37557b5",
+  "last_note_promo_date": "2026/06/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/26"
 }
