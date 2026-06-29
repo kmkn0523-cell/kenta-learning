@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T09:17:51.373637",
+  "last_updated": "2026-06-29T11:09:12.789933",
   "posts_history": [
     {
       "day": 28,
@@ -2849,6 +2849,50 @@
       "shares": 0,
       "views": 45,
       "engagement_rate": 2.22
+    },
+    {
+      "day": 103,
+      "type": "AB_B_ストレスと皮脂",
+      "post_id": "18103652102112967",
+      "posted_at": "2026-06-29T08:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 90,
+      "engagement_rate": 1.11
+    },
+    {
+      "day": 102,
+      "type": "AB_B_睡眠と肌",
+      "post_id": "17997166895969139",
+      "posted_at": "2026-06-29T03:01:30+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 96,
+      "engagement_rate": 1.04
+    },
+    {
+      "day": 101,
+      "type": "AB_B_洗顔料を変えすぎ",
+      "post_id": "18322355407275923",
+      "posted_at": "2026-06-28T22:01:25+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 14,
+      "engagement_rate": 7.14
+    },
+    {
+      "day": 100,
+      "type": "続けることの力",
+      "post_id": "18102964115029617",
+      "posted_at": "2026-06-28T12:01:27+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 13,
+      "engagement_rate": 7.69
     }
   ],
   "pattern_performance": {
@@ -3658,12 +3702,12 @@
     },
     "day_100": {
       "続けることの力": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 29.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 7,
+        "avg_comments": 0.5,
+        "avg_views": 21.0,
+        "avg_engagement_rate": 3.85,
+        "best_hour": 12,
         "best_hashtag_set": "A"
       }
     },
@@ -3911,33 +3955,33 @@
     },
     "day_103": {
       "AB_B_ストレスと皮脂": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 42.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 14,
+        "avg_comments": 0.5,
+        "avg_views": 66.0,
+        "avg_engagement_rate": 0.56,
+        "best_hour": 8,
         "best_hashtag_set": "A"
       }
     },
     "day_102": {
       "AB_B_睡眠と肌": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 38.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 11,
+        "avg_comments": 0.5,
+        "avg_views": 67.0,
+        "avg_engagement_rate": 0.52,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_101": {
       "AB_B_洗顔料を変えすぎ": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 10.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 12.0,
+        "avg_engagement_rate": 3.57,
         "best_hour": 9,
         "best_hashtag_set": "A"
       }
