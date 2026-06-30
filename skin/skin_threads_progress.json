@@ -1,5 +1,5 @@
 {
-  "daily_index": 364,
+  "daily_index": 365,
   "launch_index": 0,
   "history": [
     {
@@ -5414,6 +5414,14 @@
       "variant": "A",
       "post_id": "18107055937804729",
       "seed_id": "18122789734738168"
+    },
+    {
+      "date": "2026/06/30 22:01",
+      "theme": "PMS期の肌荒れ対策",
+      "theme_id": 109,
+      "variant": "A",
+      "post_id": "18414372907144518",
+      "seed_id": "18125635966643520"
     }
   ],
   "ab_next": "A",
@@ -6176,9 +6184,15 @@
       "b_score": 0.0,
       "a_posts": 2,
       "b_posts": 1
+    },
+    "109": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
     }
   },
-  "last_posted_at": "2026-06-30T12:00:12.627973+00:00",
+  "last_posted_at": "2026-06-30T22:02:13.375221+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n59efb37557b5",
   "last_note_promo_date": "2026/06/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
