@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-29T11:09:12.789933",
+  "last_updated": "2026-06-30T09:48:42.206954",
   "posts_history": [
     {
       "day": 28,
@@ -2893,6 +2893,50 @@
       "shares": 0,
       "views": 13,
       "engagement_rate": 7.69
+    },
+    {
+      "day": 107,
+      "type": "AB_B_枕カバーの落とし穴",
+      "post_id": "18085491527447440",
+      "posted_at": "2026-06-30T07:08:42+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 49,
+      "engagement_rate": 2.04
+    },
+    {
+      "day": 106,
+      "type": "AB_B_乾燥なのにニキビ",
+      "post_id": "17972673936067655",
+      "posted_at": "2026-06-30T03:01:29+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 15,
+      "engagement_rate": 6.67
+    },
+    {
+      "day": 105,
+      "type": "AB_B_乳製品と大人ニキビ",
+      "post_id": "17895529707355186",
+      "posted_at": "2026-06-29T22:01:28+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 144,
+      "engagement_rate": 0.69
+    },
+    {
+      "day": 104,
+      "type": "AB_B_砂糖とニキビ直線ルート",
+      "post_id": "18101868086152572",
+      "posted_at": "2026-06-29T13:01:35+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 109,
+      "engagement_rate": 0.92
     }
   ],
   "pattern_performance": {
@@ -3911,44 +3955,44 @@
     },
     "day_107": {
       "AB_B_枕カバーの落とし穴": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 7.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 28.0,
+        "avg_engagement_rate": 1.02,
         "best_hour": 22,
         "best_hashtag_set": "A"
       }
     },
     "day_106": {
       "AB_B_乾燥なのにニキビ": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 22.0,
-        "avg_engagement_rate": 0.0,
-        "best_hour": 20,
+        "avg_comments": 0.5,
+        "avg_views": 18.0,
+        "avg_engagement_rate": 3.33,
+        "best_hour": 3,
         "best_hashtag_set": "A"
       }
     },
     "day_105": {
       "AB_B_乳製品と大人ニキビ": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 115.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 130.0,
+        "avg_engagement_rate": 0.34,
         "best_hour": 18,
         "best_hashtag_set": "A"
       }
     },
     "day_104": {
       "AB_B_砂糖とニキビ直線ルート": {
-        "total_posts": 1,
+        "total_posts": 2,
         "avg_likes": 0.0,
-        "avg_comments": 0.0,
-        "avg_views": 64.0,
-        "avg_engagement_rate": 0.0,
+        "avg_comments": 0.5,
+        "avg_views": 86.0,
+        "avg_engagement_rate": 0.46,
         "best_hour": 16,
         "best_hashtag_set": "A"
       }
