@@ -1,5 +1,5 @@
 {
-  "next_day": 56,
+  "next_day": 60,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -264,6 +264,12 @@
       "day": 55,
       "post_id": 204150799,
       "title": "転ばぬ先の杖 — Better to have a walking stick before you fall."
+    },
+    {
+      "date": "2026/07/01 08:37",
+      "day": 59,
+      "post_id": 204361440,
+      "title": "後悔先に立たず — Regret never arrives early."
     }
   ]
 }
