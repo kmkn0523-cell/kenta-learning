@@ -1,5 +1,5 @@
 {
-  "daily_index": 362,
+  "daily_index": 363,
   "launch_index": 0,
   "history": [
     {
@@ -5398,6 +5398,14 @@
       "variant": "A",
       "post_id": "17972673936067655",
       "seed_id": "17905878465442216"
+    },
+    {
+      "date": "2026/06/30 07:08",
+      "theme": "AB_B_枕カバーの落とし穴",
+      "theme_id": 107,
+      "variant": "A",
+      "post_id": "18085491527447440",
+      "seed_id": "18087005699544896"
     }
   ],
   "ab_next": "A",
@@ -5792,7 +5800,7 @@
     "107": {
       "a_score": 0.0,
       "b_score": 0.0,
-      "a_posts": 1,
+      "a_posts": 2,
       "b_posts": 1
     },
     "108": {
@@ -6162,7 +6170,7 @@
       "b_posts": 1
     }
   },
-  "last_posted_at": "2026-06-30T03:02:06.331357+00:00",
+  "last_posted_at": "2026-06-30T07:09:19.764677+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n59efb37557b5",
   "last_note_promo_date": "2026/06/29",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
