@@ -13,14 +13,14 @@ from pathlib import Path  # ファイルの場所を組み立てる道具
 
 import requests  # Threads API にHTTPリクエストを送る道具
 
-# テンプレ集とキーワード対応表は既存モジュールから再利用する。
+# テンプレ集とテーマ分類は既存モジュールから再利用する。
 # 直接実行でも pytest 経由でも動くよう2通り import を試す（既存スクリプトと同じ作法）。
 try:
     from ronin_comment_templates import COMMENT_TEMPLATES, GENERIC_TEMPLATES
-    from ronin_reply_hunter import KEYWORD_MAP
+    from ronin_theme_classifier import classify_category
 except ImportError:
     from ronin.ronin_comment_templates import COMMENT_TEMPLATES, GENERIC_TEMPLATES
-    from ronin.ronin_reply_hunter import KEYWORD_MAP
+    from ronin.ronin_theme_classifier import classify_category
 
 
 def contains_english(text):
@@ -34,20 +34,6 @@ def contains_english(text):
 def count_urls(text):
     """文字列に含まれるURL（http:// か https://）の本数を数える"""
     return text.count("http://") + text.count("https://")
-
-
-def classify_category(post_text):
-    """投稿本文から最も当てはまるテンプレのカテゴリキー（"1"〜"6"）を返す。
-    どのキーワードにも当たらなければ None（汎用テンプレを使う合図）。"""
-    text = post_text.lower()
-    best_key = None
-    best_hits = 0
-    for key, words in KEYWORD_MAP.items():
-        hits = sum(1 for word in words if word.lower() in text)
-        if hits > best_hits:
-            best_key = key
-            best_hits = hits
-    return best_key
 
 
 # テンプレ本文の前に付ける短い枕詞（英語）。先頭の "" は「枕詞なし」。
