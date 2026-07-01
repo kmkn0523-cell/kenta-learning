@@ -1,5 +1,5 @@
 {
-  "daily_index": 368,
+  "daily_index": 369,
   "launch_index": 0,
   "history": [
     {
@@ -5453,6 +5453,14 @@
       "theme_id": 0,
       "variant": "note_promo",
       "post_id": "18419432737179771"
+    },
+    {
+      "date": "2026/07/01 22:01",
+      "theme": "睡眠の質と肌修復",
+      "theme_id": 113,
+      "variant": "A",
+      "post_id": "18446264848189295",
+      "seed_id": "18072262619704137"
     }
   ],
   "ab_next": "A",
@@ -6239,9 +6247,15 @@
       "b_score": 0.0,
       "a_posts": 1,
       "b_posts": 0
+    },
+    "113": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
     }
   },
-  "last_posted_at": "2026-07-01T13:31:30.073095+00:00",
+  "last_posted_at": "2026-07-01T22:02:18.381723+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8d4de0dad736",
   "last_note_promo_date": "2026/07/01",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
