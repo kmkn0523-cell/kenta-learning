@@ -1,0 +1,5 @@
+{
+  "min_age_days": 21,
+  "min_views_multiplier": 1.5,
+  "max_failed_attempts": 3
+}

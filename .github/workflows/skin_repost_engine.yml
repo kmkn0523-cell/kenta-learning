@@ -1,0 +1,56 @@
+# skin_repost_engine.yml
+# skin Threads 過去バズ投稿・自動リポストエンジン
+# 1日1回だけ、平均より伸びた過去投稿をThreads公式のリポスト機能で再浮上させる
+
+name: skin Threads リポスト・エンジン
+
+on:
+  schedule:
+    - cron: '30 9 * * *'  # JST 18:30（既存の投稿枠と被らない時間）
+  workflow_dispatch:  # 手動実行（テスト用）
+
+concurrency:
+  group: skin-repost-engine  # 二重起動・push競合を防ぐ専用グループ
+  cancel-in-progress: false
+
+jobs:
+  repost-engine:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 状態ファイルのpushに必要
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ライブラリをインストール
+        run: pip install requests
+
+      - name: リポスト・エンジンを実行
+        env:
+          SKIN_REPOST_ENGINE_ENABLED: ${{ vars.SKIN_REPOST_ENGINE_ENABLED }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: cd skin && python skin_repost_engine.py
+
+      - name: 状態ファイルをGitにコミット＆プッシュ
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          if [ ! -f skin/skin_repost_history.json ]; then
+            echo "履歴ファイルが無いためコミットをスキップします。"
+            exit 0
+          fi
+          git add skin/skin_repost_history.json
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: skin リポスト・エンジン状態更新"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+          fi
