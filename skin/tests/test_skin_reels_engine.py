@@ -75,6 +75,13 @@ def test_build_caption_フックとハッシュタグを含む():
     assert "#食事と肌" in caption
     assert "#30代肌悩み" in caption
 
+
+def test_build_caption_Threadsへの相互送客文を含む():
+    theme = {"hook": "テスト", "fixed_hashtags": [], "theme_hashtags": [], "size_mix_hashtags": []}
+    caption = build_caption(theme)
+    assert "Threadsでも毎日投稿中" in caption
+    assert "@skin_reset_jp" in caption
+
 def test_build_raw_video_url_ベースとファイル名を連結():
     url = build_raw_video_url("https://example.com/reels", "latest_reel.mp4")
     assert url == "https://example.com/reels/latest_reel.mp4"

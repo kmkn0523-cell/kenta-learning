@@ -69,11 +69,16 @@ def build_ffmpeg_command(image_paths, audio_path, output_path, seconds_per_slide
     return command
 
 
+# Instagram Reelsのキャプション末尾に添える、Threadsへの相互送客の一文。
+# 同じ @skin_reset_jp で毎日投稿していることを伝え、IG視聴者をThreadsフォローにも誘導する。
+THREADS_CROSS_PROMO_LINE = "📱Threadsでも毎日投稿中→@skin_reset_jp"
+
+
 def build_caption(theme):
-    """テーマのフック文＋ハッシュタグでReelsキャプションを組み立てる。"""
+    """テーマのフック文＋ハッシュタグ＋Threads誘導文でReelsキャプションを組み立てる。"""
     tags = theme.get("fixed_hashtags", []) + theme.get("theme_hashtags", []) + theme.get("size_mix_hashtags", [])
     hashtag_line = " ".join(f"#{tag}" for tag in tags)
-    return f"{theme.get('hook', '')}\n\n{hashtag_line}"
+    return f"{theme.get('hook', '')}\n\n{THREADS_CROSS_PROMO_LINE}\n\n{hashtag_line}"
 
 
 def build_raw_video_url(raw_video_base, filename):
