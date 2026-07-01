@@ -1,5 +1,5 @@
 {
-  "next_day": 60,
+  "next_day": 61,
   "history": [
     {
       "date": "2026/05/15 01:59",
@@ -270,6 +270,13 @@
       "day": 59,
       "post_id": 204361440,
       "title": "後悔先に立たず — Regret never arrives early."
+    },
+    {
+      "date": "2026/07/02 02:04",
+      "day": 60,
+      "post_id": 204472028,
+      "title": "高慢は損気 — Arrogance invites loss.",
+      "url": null
     }
   ]
 }
