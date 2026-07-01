@@ -38,7 +38,8 @@ def count_urls(text):
 
 # テンプレ本文の前に付ける短い枕詞（英語）。先頭の "" は「枕詞なし」。
 # 本文×枕詞の組み合わせで母数を増やし、固定文の連投（スパム署名）を避ける。
-OPENERS = ["", "So true. ", "Well said. ", "Needed this. ", "This hits. "]
+OPENERS = ["", "So true. ", "Well said. ", "Needed this. ", "This hits. ",
+           "Real talk. ", "Exactly this. ", "Feeling this. "]
 
 
 def compose_reply(category_key, recent_replies, rng):
