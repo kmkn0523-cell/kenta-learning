@@ -166,8 +166,9 @@ def load_substack_articles_with_url():
 
 
 def pick_theme_substack_line(theme_key, articles):
-    """テーマに合うSubstack記事のURLでCTA行を作る。無ければ既存のプロフィールURLにフォールバック。"""
-    for article in articles:
+    """テーマに合うSubstack記事のURLでCTA行を作る。無ければ既存のプロフィールURLにフォールバック。
+    articlesは履歴の古い順に入っているため、reversed()で新しい記事を優先して探す。"""
+    for article in reversed(articles):
         if ronin_theme_classifier.classify_category(article["title"]) == theme_key:
             return f"📖 Full deep dive on this teaching → {article['url']}"
     return SUBSTACK_LINE
