@@ -197,7 +197,17 @@ format_reset() {
 make_meter() {
   local pct=$1        # 使用率（0〜100の数字）
   local width=10      # メーターの幅（文字数）
-  local filled=$(echo "$pct $width" | awk '{printf "%d", ($1/100*$2) + 0.5}')
+  # 数値として正しくない値（空・文字混じり等）が来たら0扱いにする（バー崩れ防止）
+  if ! [[ "$pct" =~ ^-?[0-9]+(\.[0-9]+)?$ ]]; then
+    pct=0
+  fi
+  # filledは0〜width の範囲に必ず収める（範囲外だとバーの文字数がマイナスになり表示が消えるため）
+  local filled=$(awk -v p="$pct" -v w="$width" 'BEGIN{
+    f = int((p/100*w) + 0.5)
+    if (f < 0) f = 0
+    if (f > w) f = w
+    print f
+  }')
   local empty=$((width - filled))
   # seqループの代わりに、塗り潰し用・空用の文字列を切り出して結合する（プロセス起動なし）
   local full_bar="██████████"   # width=10 ぶんの塗り潰し
