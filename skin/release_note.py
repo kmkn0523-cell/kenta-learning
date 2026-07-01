@@ -38,6 +38,18 @@ def save_progress(next_index):
         json.dump(existing, f, ensure_ascii=False, indent=2)
 
 
+# note記事の末尾に足す、Threadsへの相互送客の一文。
+# note読者をThreadsフォローにも誘導し、noteとThreads両方の流入を相互に増やす。
+THREADS_FOOTER = "\n\n---\n\n📱 毎日の肌ケアのヒントはThreadsでも発信しています。よければ [@skin_reset_jp](https://www.threads.net/@skin_reset_jp) もフォローしてみてください。"
+
+
+def append_threads_footer(article_content):
+    """記事本文の末尾にThreads誘導の一文を足す純関数。二重付与を防ぐため、既に含まれていれば何もしない。"""
+    if "threads.net/@skin_reset_jp" in article_content:
+        return article_content
+    return article_content + THREADS_FOOTER
+
+
 def get_article_files():
     """note_queueフォルダにある記事ファイルを番号順で取得する"""
     if not os.path.exists(QUEUE_DIR):
@@ -92,9 +104,9 @@ def main():
         print(f"❌ 記事ファイルが見つかりません: {article_path}")
         sys.exit(1)
 
-    # note_ready.md に書き出す（日付ヘッダーを付加する）
+    # note_ready.md に書き出す（日付ヘッダーとThreads誘導フッターを付加する）
     header = f"<!-- 自動生成: {today} | {article_filename} -->\n\n"
-    output_content = header + article_content
+    output_content = header + append_threads_footer(article_content)
 
     with open(READY_FILE, "w", encoding="utf-8") as f:
         f.write(output_content)
