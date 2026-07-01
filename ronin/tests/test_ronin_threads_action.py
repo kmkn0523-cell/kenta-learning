@@ -1,6 +1,7 @@
 # test_ronin_threads_action.py
 # ronin_threads_action の純粋ロジック＋post_to_threadsのreply対応テスト（APIはモック）
 # 実行: pytest ronin/tests/test_ronin_threads_action.py -v
+import json
 import sys
 from pathlib import Path
 from unittest.mock import patch, MagicMock
@@ -112,3 +113,69 @@ def test_dry_run_engagement回はengagement在庫から組み立てる(capsys, t
     out = capsys.readouterr().out
     assert "engagement engTEST" in out      # engagement在庫が選ばれている
     assert "Pick A or B?" in out            # engagementの本文が組まれている
+
+
+# ------- CTAのSubstackテーマ連動 -------
+
+def test_CTAサイクル_テーマ一致する記事があればそのURLを使う():
+    articles = [{"title": "The Discipline of Showing Up Every Day",
+                 "url": "https://roninwords.substack.com/p/discipline-1"}]
+    line = action.cta_line_for_cycle(7, theme_key="1", substack_articles=articles)
+    assert "https://roninwords.substack.com/p/discipline-1" in line
+
+
+def test_CTAサイクル_テーマ一致なしはプロフィールURLにフォールバック():
+    articles = [{"title": "The Hawk Hides Its Talons",
+                 "url": "https://roninwords.substack.com/p/hawk"}]
+    line = action.cta_line_for_cycle(7, theme_key="1", substack_articles=articles)
+    assert line == action.SUBSTACK_LINE
+
+
+def test_CTAサイクル_theme_keyがNoneならプロフィールURL():
+    line = action.cta_line_for_cycle(7, theme_key=None, substack_articles=[{"title": "x", "url": "y"}])
+    assert line == action.SUBSTACK_LINE
+
+
+def test_load_substack_articles_with_url_ファイル無しは空リスト(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    assert action.load_substack_articles_with_url() == []
+
+
+def test_load_substack_articles_with_url_urlとtitleがある記事だけ拾う(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "substack").mkdir()
+    (tmp_path / "substack" / "substack_progress.json").write_text(
+        json.dumps({"history": [
+            {"title": "A — B", "url": "https://x/p/a"},
+            {"title": "C — D"},  # urlなし→対象外
+        ]}), encoding="utf-8",
+    )
+    (tmp_path / "substack" / "deep_dive_progress.json").write_text(
+        json.dumps({"history": [{"title": "E", "url": "https://x/p/e"}]}), encoding="utf-8",
+    )
+    articles = action.load_substack_articles_with_url()
+    assert {"title": "A — B", "url": "https://x/p/a"} in articles
+    assert {"title": "E", "url": "https://x/p/e"} in articles
+    assert len(articles) == 2
+
+
+# ------- 1コメ目シードのテーマ連動（post_once統合） -------
+
+def test_dry_run_教え投稿は本文をテーマ分類してseedを組み立てる(capsys, tmp_path, monkeypatch):
+    prog = tmp_path / "prog.json"
+    prog.write_text('{"index": 0, "engagement_index": 0, "history": []}', encoding="utf-8")
+    monkeypatch.setattr(action, "PROGRESS_FILE", str(prog))
+    monkeypatch.setattr(
+        action, "flatten_posts",
+        lambda: [{"day": 1, "type": "morning", "content": "Discipline and a daily routine build consistency."}],
+    )
+
+    def fail_post(*a, **k):
+        raise AssertionError("dry-runでAPIを呼んではいけない")
+
+    monkeypatch.setattr(action, "post_to_threads", fail_post)
+    action.post_once(dry_run=True)
+
+    out = capsys.readouterr().out
+    # テーマ1（規律）に分類され、THEME_SEED_QUESTIONS["1"]の先頭が使われる
+    assert action.ronin_comment_seeder.THEME_SEED_QUESTIONS["1"][0][:30] in out

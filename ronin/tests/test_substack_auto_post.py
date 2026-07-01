@@ -9,6 +9,8 @@ from substack_auto_post import (
     posted_japanese_set,
     find_next_unposted_day,
     japanese_from_titles,
+    build_article_url,
+    PUBLICATION_URL,
 )
 
 
@@ -84,3 +86,12 @@ def test_投稿できる諺がもう無ければNoneを返す():
     }
     # 32,33は重複、34は投稿済み、それ以降はSAMPLEに無い → None
     assert find_next_unposted_day(progress, SAMPLE_PROVERBS) is None
+
+
+def test_build_article_url_slugありならURLを組み立てる():
+    assert build_article_url("ichi-go-ichi-e") == f"{PUBLICATION_URL}/p/ichi-go-ichi-e"
+
+
+def test_build_article_url_slugなしはNone():
+    assert build_article_url(None) is None
+    assert build_article_url("") is None

@@ -302,6 +302,14 @@ def upload_image_to_substack(session, image_path):
     return cdn_url
 
 
+def build_article_url(slug):
+    """Substack記事のslugから公開URLを組み立てる。slugが無ければNoneを返す
+    （CTAのテーマ連動で、この記事にリンクできるかどうかの判定に使う）。"""
+    if not slug:
+        return None
+    return f"{PUBLICATION_URL}/p/{slug}"
+
+
 def create_and_publish_post(proverb, image_path, session=None):
     """curl_cffi（Chrome TLSフィンガープリント偽装）でSubstackに記事を作成・公開する
 
@@ -347,6 +355,7 @@ def create_and_publish_post(proverb, image_path, session=None):
 
     post    = draft_resp.json()
     post_id = post["id"]
+    slug    = post.get("slug")
     print(f"  ドラフトID: {post_id}", flush=True)
 
     # =============================
@@ -364,7 +373,7 @@ def create_and_publish_post(proverb, image_path, session=None):
             f"公開失敗 [{publish_resp.status_code}]: {publish_resp.text[:500]}"
         )
 
-    return post_id
+    return post_id, slug
 
 
 # =============================
@@ -424,7 +433,7 @@ def main():
     # 記事を作成して公開する（curl_cffi経由・画像はCDNにアップロード）
     title = f"{proverb['japanese']} — {proverb['english']}"
     print(f"  記事を公開中: {title}", flush=True)
-    post_id = create_and_publish_post(proverb, image_path, session=session)
+    post_id, slug = create_and_publish_post(proverb, image_path, session=session)
     print(f"  公開完了! Post ID: {post_id}", flush=True)
 
     # 進捗を保存する（次回は day+1 から投稿する）
@@ -434,6 +443,7 @@ def main():
         "day":     day,
         "post_id": post_id,
         "title":   title,
+        "url":     build_article_url(slug),
     })
     progress["next_day"] = day + 1
     save_progress(progress)

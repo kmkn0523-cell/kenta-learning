@@ -35,3 +35,27 @@ def test_汎用シードをカウントで回す():
 
 def test_汎用シードは複数用意されている():
     assert len(GENERIC_SEED_QUESTIONS) >= 3
+
+
+from ronin_comment_seeder import pick_seed_question, THEME_SEED_QUESTIONS
+
+
+def test_テーマ連動シードはカテゴリ内でカウントを回す():
+    first = pick_seed_question(0, "1")
+    assert first == THEME_SEED_QUESTIONS["1"][0]
+    # 末尾を超えたら先頭へ
+    assert pick_seed_question(len(THEME_SEED_QUESTIONS["1"]), "1") == THEME_SEED_QUESTIONS["1"][0]
+
+
+def test_テーマ未指定なら汎用にフォールバック():
+    assert pick_seed_question(0, None) == pick_generic_seed(0)
+
+
+def test_未知のテーマキーは汎用にフォールバック():
+    assert pick_seed_question(0, "99") == pick_generic_seed(0)
+
+
+def test_全カテゴリに複数の問いかけがある():
+    assert set(THEME_SEED_QUESTIONS.keys()) == {"1", "2", "3", "4", "5", "6"}
+    for pool in THEME_SEED_QUESTIONS.values():
+        assert len(pool) >= 3
