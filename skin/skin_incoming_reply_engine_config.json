@@ -1,0 +1,10 @@
+{
+  "my_username": "skin_reset_jp",
+  "window_hours": 72,
+  "daily_cap": 10,
+  "per_run": 3,
+  "min_comment_length": 2,
+  "recent_window": 60,
+  "min_sleep_seconds": 20,
+  "max_sleep_seconds": 90
+}
