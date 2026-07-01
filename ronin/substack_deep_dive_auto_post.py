@@ -212,6 +212,17 @@ def html_to_prosemirror_nodes(body_html):
 
 
 # =============================
+# URL 組み立て
+# =============================
+def build_article_url(slug):
+    """Substack記事のslugから公開URLを組み立てる。slugが無ければNoneを返す
+    （CTAのテーマ連動で、この記事にリンクできるかどうかの判定に使う）。"""
+    if not slug:
+        return None
+    return f"{PUBLICATION_URL}/p/{slug}"
+
+
+# =============================
 # Substack への投稿
 # =============================
 def create_and_publish_post(session, article, card_day):
@@ -257,7 +268,9 @@ def create_and_publish_post(session, article, card_day):
     if draft_resp.status_code not in (200, 201):
         raise RuntimeError(f"ドラフト作成失敗 [{draft_resp.status_code}]: {draft_resp.text[:500]}")
 
-    post_id = draft_resp.json()["id"]
+    draft_json = draft_resp.json()
+    post_id    = draft_json["id"]
+    slug       = draft_json.get("slug")
     print(f"  ドラフトID: {post_id}", flush=True)
 
     print(f"  公開処理中...", flush=True)
@@ -269,7 +282,7 @@ def create_and_publish_post(session, article, card_day):
     if publish_resp.status_code not in (200, 201):
         raise RuntimeError(f"公開失敗 [{publish_resp.status_code}]: {publish_resp.text[:500]}")
 
-    return post_id
+    return post_id, slug
 
 
 # =============================
@@ -340,7 +353,7 @@ def main():
         print(f"公開記事一覧を確認できなかったため、今回は投稿を見送ります: {error}", flush=True)
         return
 
-    post_id = create_and_publish_post(session, article, card_day)
+    post_id, slug = create_and_publish_post(session, article, card_day)
     print(f"  公開完了! Post ID: {post_id}", flush=True)
 
     now = datetime.now(timezone.utc).strftime("%Y/%m/%d %H:%M")
@@ -350,6 +363,7 @@ def main():
         "japanese": japanese,
         "post_id":  post_id,
         "title":    article["title"],
+        "url":      build_article_url(slug),
     })
     save_progress(progress)
 
