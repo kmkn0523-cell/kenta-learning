@@ -52,7 +52,7 @@ IFS=$'\t' read -r model effort new_five_used new_five_reset new_week_used new_we
 
 # --- 使用量データを共有キャッシュに書き出す（値がある場合のみ上書き）---
 # rate_limits や context_window の値は上で解析済み（new_* 変数）
-if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; then
+if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ] || [ -n "$model" ] || [ -n "$effort" ]; then
   # 新しい使用量データがある場合だけキャッシュを更新する
   if [ -f "$CACHE_FILE" ]; then
     old=$(cat "$CACHE_FILE")
@@ -73,12 +73,16 @@ if [ -n "$new_five_used" ] || [ -n "$new_week_used" ] || [ -n "$new_ctx_pct" ]; 
     --arg week_used "$new_week_used" \
     --arg week_reset "$new_week_reset" \
     --arg ctx_pct "$new_ctx_pct" \
+    --arg model "$model" \
+    --arg effort "$effort" \
     '
       if $five_used != "" then .five_used = ($five_used | tonumber) else . end |
       if $five_reset != "" then .five_reset = ($five_reset | tonumber) else . end |
       if $week_used  != "" then .week_used  = ($week_used  | tonumber) else . end |
       if $week_reset != "" then .week_reset = ($week_reset | tonumber) else . end |
-      if $ctx_pct    != "" then .ctx_pct    = ($ctx_pct    | tonumber) else . end
+      if $ctx_pct    != "" then .ctx_pct    = ($ctx_pct    | tonumber) else . end |
+      if $model      != "" then .model      = $model                  else . end |
+      if $effort     != "" then .effort     = $effort                 else . end
     ')
   # キャッシュファイルに書き出す（一時ファイル経由で安全に上書き）
   echo "$new_cache" > "${CACHE_FILE}.tmp" && mv "${CACHE_FILE}.tmp" "$CACHE_FILE"
@@ -175,6 +179,9 @@ pick() {
 [ -z "$week_used" ]  && week_used=$(pick "$new_week_used"   "week_used")
 [ -z "$week_reset" ] && week_reset=$(pick "$new_week_reset" "week_reset")
 used_pct=$(pick "$new_ctx_pct" "ctx_pct")
+# モデル名・思考レベルも、今回の入力に無ければキャッシュの最新値を使う
+[ -z "$model" ]  && model=$(pick "" "model")
+[ -z "$effort" ] && effort=$(pick "" "effort")
 
 # リセットまでの残り時間を「X時間Y分後」形式に変換する関数
 format_reset() {
