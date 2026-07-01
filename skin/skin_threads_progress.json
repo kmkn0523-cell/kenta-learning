@@ -1,5 +1,5 @@
 {
-  "daily_index": 367,
+  "daily_index": 369,
   "launch_index": 0,
   "history": [
     {
@@ -5438,6 +5438,29 @@
       "variant": "A",
       "post_id": "18107285158817205",
       "seed_id": "18097644299224203"
+    },
+    {
+      "date": "2026/07/01 12:01",
+      "theme": "血糖値スパイクと肌",
+      "theme_id": 112,
+      "variant": "A",
+      "post_id": "17900717646467620",
+      "seed_id": "18059153153749712"
+    },
+    {
+      "date": "2026/07/01 13:30",
+      "theme": "note宣伝: 「腸活してるのに肌が治らない」人の正体。リーキーガットの話。",
+      "theme_id": 0,
+      "variant": "note_promo",
+      "post_id": "18419432737179771"
+    },
+    {
+      "date": "2026/07/01 22:01",
+      "theme": "睡眠の質と肌修復",
+      "theme_id": 113,
+      "variant": "A",
+      "post_id": "18446264848189295",
+      "seed_id": "18072262619704137"
     }
   ],
   "ab_next": "A",
@@ -6218,11 +6241,23 @@
       "b_score": 0.0,
       "a_posts": 1,
       "b_posts": 0
+    },
+    "112": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
+    },
+    "113": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
     }
   },
-  "last_posted_at": "2026-07-01T07:56:36.769660+00:00",
-  "last_note_promo_article": "https://note.com/neima/n/n59efb37557b5",
-  "last_note_promo_date": "2026/06/29",
+  "last_posted_at": "2026-07-01T22:02:18.381723+00:00",
+  "last_note_promo_article": "https://note.com/neima/n/n8d4de0dad736",
+  "last_note_promo_date": "2026/07/01",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
   "last_paid_note_promo_date": "2026/06/26"
 }
