@@ -40,6 +40,13 @@ jobs:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
         run: python3 skin/skin_data_collector.py
 
+      # Step 4.5: Collect account-level views & followers (アカウント全体の閲覧数・フォロワー数)
+      - name: Collect account-level metrics
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: python3 skin/skin_account_metrics_collector.py
+
       # Step 5: Analyze patterns
       - name: Analyze patterns
         run: python3 skin/skin_analyzer.py && python3 skin/skin_optimizer.py
@@ -49,7 +56,7 @@ jobs:
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add skin/skin_analytics.json skin/skin_optimization_index.json
+          git add skin/skin_analytics.json skin/skin_optimization_index.json skin/skin_account_metrics.json
           if ! git diff --staged --quiet; then
             git commit -m "自動更新: skin analytics $(date '+%Y/%m/%d %H:%M' -u)"
             for i in 1 2 3; do
