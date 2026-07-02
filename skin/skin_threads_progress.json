@@ -1,5 +1,5 @@
 {
-  "daily_index": 369,
+  "daily_index": 370,
   "launch_index": 0,
   "history": [
     {
@@ -5461,6 +5461,14 @@
       "variant": "A",
       "post_id": "18446264848189295",
       "seed_id": "18072262619704137"
+    },
+    {
+      "date": "2026/07/02 03:00",
+      "theme": "腸活とオリゴ糖",
+      "theme_id": 114,
+      "variant": "A",
+      "post_id": "18090082571528248",
+      "seed_id": "17889299997571700"
     }
   ],
   "ab_next": "A",
@@ -6253,9 +6261,15 @@
       "b_score": 0.0,
       "a_posts": 1,
       "b_posts": 0
+    },
+    "114": {
+      "a_score": 0.0,
+      "b_score": 0.0,
+      "a_posts": 1,
+      "b_posts": 0
     }
   },
-  "last_posted_at": "2026-07-01T22:02:18.381723+00:00",
+  "last_posted_at": "2026-07-02T03:02:12.252181+00:00",
   "last_note_promo_article": "https://note.com/neima/n/n8d4de0dad736",
   "last_note_promo_date": "2026/07/01",
   "last_paid_note_promo_article": "https://note.com/neima/n/nd4ef25c9fd99",
