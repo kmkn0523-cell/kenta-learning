@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T09:57:49.523871",
+  "last_updated": "2026-07-02T09:20:28.861479",
   "posts_history": [
     {
       "day": 28,
@@ -2981,6 +2981,50 @@
       "shares": 0,
       "views": 31,
       "engagement_rate": 6.45
+    },
+    {
+      "day": 115,
+      "type": "ビタミンAと肌",
+      "post_id": "17936701695274474",
+      "posted_at": "2026-07-02T08:01:38+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 56,
+      "engagement_rate": 1.79
+    },
+    {
+      "day": 114,
+      "type": "腸活とオリゴ糖",
+      "post_id": "18090082571528248",
+      "posted_at": "2026-07-02T03:01:31+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 35,
+      "engagement_rate": 2.86
+    },
+    {
+      "day": 113,
+      "type": "睡眠の質と肌修復",
+      "post_id": "18446264848189295",
+      "posted_at": "2026-07-01T22:01:37+0000",
+      "likes": 1,
+      "comments": 1,
+      "shares": 0,
+      "views": 65,
+      "engagement_rate": 3.08
+    },
+    {
+      "day": 112,
+      "type": "血糖値スパイクと肌",
+      "post_id": "17900717646467620",
+      "posted_at": "2026-07-01T12:01:33+0000",
+      "likes": 0,
+      "comments": 1,
+      "shares": 0,
+      "views": 113,
+      "engagement_rate": 0.88
     }
   ],
   "pattern_performance": {
@@ -4225,6 +4269,50 @@
         "avg_views": 147.0,
         "avg_engagement_rate": 1.36,
         "best_hour": 22,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_115": {
+      "ビタミンAと肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 56.0,
+        "avg_engagement_rate": 1.79,
+        "best_hour": 8,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_114": {
+      "腸活とオリゴ糖": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 35.0,
+        "avg_engagement_rate": 2.86,
+        "best_hour": 3,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_113": {
+      "睡眠の質と肌修復": {
+        "total_posts": 1,
+        "avg_likes": 1.0,
+        "avg_comments": 1.0,
+        "avg_views": 65.0,
+        "avg_engagement_rate": 3.08,
+        "best_hour": 22,
+        "best_hashtag_set": "A"
+      }
+    },
+    "day_112": {
+      "血糖値スパイクと肌": {
+        "total_posts": 1,
+        "avg_likes": 0.0,
+        "avg_comments": 1.0,
+        "avg_views": 113.0,
+        "avg_engagement_rate": 0.88,
+        "best_hour": 12,
         "best_hashtag_set": "A"
       }
     }
