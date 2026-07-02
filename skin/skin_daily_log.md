@@ -165,3 +165,4 @@
 - 2026-06-29 Reels自動投稿: theme_id=14
 - 2026-06-30 Reels自動投稿: theme_id=15
 - 2026-07-01 Reels自動投稿: theme_id=16
+- 2026-07-02 Reels自動投稿: theme_id=17
