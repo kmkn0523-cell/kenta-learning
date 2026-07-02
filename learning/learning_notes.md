@@ -43,6 +43,9 @@
 | 6/15 | skin_reels_engine.py | 既存カルーセル画像からffmpegで縦型Reelsを自動生成・投稿（generate→push→publishの2フェーズ） | ffmpegコマンドのlist組み立てとsubprocess実行、9:16/5〜90秒のReels要件、media_type=REELSの3ステップ公開、動画をgit pushして公開URLを生やす設計、wait_for_urlで配信待ち、既存publish関数の遅延import再利用 |
 | 6/18 | price_watch/iphone_price_watcher.py | りんごの奴隷のiPhone17ProMax512GB買取最高価格を監視し、前回から変わったらGmail通知（GitHub Actionsで1日3回） | Playwrightでログイン要のFilament/Livewire画面を操作、純粋関数parse_max_priceを抽出ロジックとして分離しTDD（円付き数値の最大＝差額や¥定価を自然除外）、smtplib+Gmailアプリパスワードで自分宛メール、状態JSONをコミットで永続化、取得失敗も黙らず通知 |
 | 7/2 | ronin/build_substack_catalog.py | Substackの公開アーカイブAPIから全記事のタイトル・URL・テーマ分類のカタログJSONを作る（Threads 1コメ目CTAのテーマ連動用） | ページングAPIの正しい終了条件（「件数が上限未満=最終ページ」と決めつけず空ページまでめくる）、キーワード分類の限界をAI意味分類の上書きファイルで補う二層設計、再生成しても人手/AIの分類が消えない分離 |
+| 7/2 | ronin/substack_related_links.py | Substack記事末尾に「関連記事リンク＋購読誘導」を自動挿入（テーマ一致→最新で補充） | ProseMirror JSONのリンクノード構造、UTMパラメータで導線別の流入計測、失敗しても投稿を止めない空リストフォールバック |
+| 7/2 | ronin/generate_ronin_wallpapers.py | Gumroad販売用スマホ壁紙(1080x1920)をカード生成のデザイン流用で30枚生成→zip化 | モジュールのレイアウト定数を上書きして描画関数を丸ごと再利用する手法、**商品ファイルはPUBLICリポジトリに置かない**（リポジトリ外の/mnt/cへ出力） |
+| 7/2 | ronin/ronin_x_action.py | @RoninWords X自動投稿（skin版の移植・シークレット未設定なら自動スキップで安全に眠る） | 「稼働前の機能」はキルスイッチ＋スキップガード＋cronコメントアウトの三重で安全に本番へ置ける |
 | 6/21 | jewelry_watch/jewelry_sns_digest.py | 「サントスネックレス」「ジュストアンクルブレスレット」のSNS言及をExa検索でX/Instagram/Threads/Web横断収集し、新規分だけHTMLメールで週1回(土曜7:30 JST)通知 | Exa Web検索APIでSNSドメイン横断（無料運用）、純粋関数（パース/重複除外/HTML生成）とAPI/メールI/Oを分離しTDD（14件）、URL単位の重複防止＋60日でstate掃除、html.escape(quote=True)＋hrefスキーム検証でXSS対策、1クエリ失敗でも他は継続、状態JSONをコミットで永続化 |
 
 ---

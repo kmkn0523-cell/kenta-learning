@@ -1,0 +1,101 @@
+# ronin_x_post.yml
+# @RoninWords用 GitHub Actionsワークフロー
+# X（旧Twitter）自動投稿（停止中・Xの有料APIクレジットをチャージしてから再開する）
+# スクリプト側にもRONIN_X_*シークレットが未設定なら自動スキップするガードが入っている（二重の安全装置）
+
+name: Ronin X 自動投稿（停止中・クレジットチャージ後に再開）
+
+on:
+  workflow_dispatch:  # 手動実行のみ（クレジットチャージ後に下のscheduleの#を外して有効化する）
+  # schedule:  # クレジットチャージ後、先頭の#を外して有効化する（1日2回・ET基準）
+  #   - cron: '0 12 * * *'  # ET 08:00 朝の通勤タイム（12:00 UTC）
+  #   - cron: '0 0 * * *'   # ET 20:00 夜のピーク（00:00 UTC）
+
+# 同時実行で重複投稿が起きるのを防ぐ設定
+# ronin X専用のグループ名にすることで、他ワークフローと干渉しない
+concurrency:
+  group: ronin-x-post
+  cancel-in-progress: false  # キャンセルせず、順番待ちにする
+
+jobs:
+  post:
+    runs-on: ubuntu-latest  # GitHubのサーバーで動かす
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Node.js 24を使う（Node.js 20廃止対応）
+
+    # リポジトリへの書き込み権限を明示的に許可する（進捗ファイルをコミットするため）
+    permissions:
+      contents: write
+
+    steps:
+      # Step 1: リポジトリのファイルをダウンロードする
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      # Step 2: Pythonをセットアップする
+      - name: Python 3.12 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step 3: 必要なライブラリをインストールする
+      - name: ライブラリをインストール
+        run: pip install tweepy
+
+      # Step 4: 進捗ファイルをキャッシュから復元する
+      # これがないと毎回同じ投稿になってしまう
+      - name: 進捗ファイルをキャッシュから復元
+        uses: actions/cache@v4
+        with:
+          path: ronin/ronin_x_progress.json
+          key: ronin-x-progress-${{ github.run_id }}
+          restore-keys: |
+            ronin-x-progress-
+
+      # Step 5: Xに自動投稿する（RONIN_X_*シークレットが無ければスクリプト側で自動スキップする）
+      - name: Xに投稿
+        env:
+          RONIN_X_API_KEY:       ${{ secrets.RONIN_X_API_KEY }}
+          RONIN_X_API_SECRET:    ${{ secrets.RONIN_X_API_SECRET }}
+          RONIN_X_ACCESS_TOKEN:  ${{ secrets.RONIN_X_ACCESS_TOKEN }}
+          RONIN_X_ACCESS_SECRET: ${{ secrets.RONIN_X_ACCESS_SECRET }}
+        run: cd ronin && python ronin_x_action.py
+
+      # Step 6: 更新した進捗ファイルをキャッシュに保存する
+      # シークレット未設定でスキップした回は進捗ファイルが生成されないため、
+      # actions/cacheは「対象パスが無い」旨の警告を出すだけでジョブは失敗しない
+      - name: 進捗ファイルをキャッシュに保存
+        uses: actions/cache@v4
+        with:
+          path: ronin/ronin_x_progress.json
+          key: ronin-x-progress-${{ github.run_id }}
+
+      # Step 6.5: 進捗ファイルをGitにコミット＆プッシュする
+      # キャッシュだけだと7日間アクセスがないと消えてしまい、同じ投稿が繰り返されるバグがある
+      # コミットしておけば、キャッシュが消えても正しい位置から再開できる
+      # ファイルが無い（＝シークレット未設定でスキップした）場合は何もせず正常終了する
+      - name: 進捗ファイルをGitにコミット＆プッシュ
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          if [ -f ronin/ronin_x_progress.json ]; then
+            git add ronin/ronin_x_progress.json
+          fi
+          if ! git diff --staged --quiet; then
+            git commit -m "自動同期: Ronin X進捗更新"
+            pushed=false
+            for i in 1 2 3; do
+              git pull --rebase origin main
+              if git push; then
+                pushed=true
+                break
+              fi
+              echo "push失敗 リトライ $i/3..."
+              sleep 5
+            done
+            if [ "$pushed" = "false" ]; then
+              echo "⚠ push全試行失敗（X投稿は成功済み・キャッシュに保存済み）"
+            fi
+          else
+            echo "進捗ファイルの変更なし（シークレット未設定でスキップした可能性）"
+          fi

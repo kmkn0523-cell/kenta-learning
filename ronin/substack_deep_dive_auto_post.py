@@ -14,6 +14,8 @@ from datetime import datetime, timezone  # 日時を扱う道具
 from dotenv import load_dotenv           # .envファイルからAPIキーを読み込む道具
 from curl_cffi import requests as cf     # ChromeのTLSフィンガープリントを模倣してCloudflare回避
 
+import substack_related_links            # 記事末尾の「関連記事リンク＋購読誘導」を組み立てる自作モジュール
+
 # .envファイルを読み込む
 load_dotenv()
 
@@ -234,6 +236,12 @@ def create_and_publish_post(session, article, card_day):
     # 書道カード画像をトップに追加する
     image_path = os.path.join(IMAGES_DIR, f"day{card_day:02d}.png")
     content_nodes = html_to_prosemirror_nodes(article["body_html"])
+
+    # 記事末尾に「関連記事リンク＋購読誘導」を足す（サイト内回遊→購読につなげる）
+    # 失敗しても空リストが返るだけで投稿は止まらない
+    content_nodes = content_nodes + substack_related_links.build_footer_nodes(
+        title, f"{title} {subtitle} {article['body_html']}"
+    )
 
     if os.path.exists(image_path):
         # 画像をSubstack CDNにアップロードしてCDN URLを取得する

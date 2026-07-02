@@ -15,6 +15,8 @@ from dotenv import load_dotenv           # .envファイルからAPIキーを読
 from curl_cffi import requests as cf     # ChromeのTLSフィンガープリントを模倣してCloudflare回避
 import base64                             # 画像データをBase64文字列に変換する道具
 
+import substack_related_links            # 記事末尾の「関連記事リンク＋購読誘導」を組み立てる自作モジュール
+
 # .envファイルを読み込む
 load_dotenv()
 
@@ -260,6 +262,12 @@ def build_post_body(proverb, image_url):
             },
         ]
     }
+    # 記事末尾に「関連記事リンク＋購読誘導」を足す（サイト内回遊→購読につなげる）
+    # 失敗しても空リストが返るだけで投稿は止まらない
+    title = f"{japanese} — {english}"
+    doc["content"].extend(
+        substack_related_links.build_footer_nodes(title, f"{english} {explanation}")
+    )
     # ProseMirror JSON は文字列として渡す
     return json.dumps(doc, ensure_ascii=False)
 
