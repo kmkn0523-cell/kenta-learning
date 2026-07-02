@@ -431,13 +431,19 @@ def post_once(dry_run=False):
 
 
 def main():
-    """メイン処理: 90分以内に投稿済みならスキップ。--dry-runで実投稿せず確認。"""
+    """メイン処理: 240分以内に投稿済みならスキップ。--dry-runで実投稿せず確認。
+
+    頻度実験（2026-07-02開始）: views減衰（5月末42→7月頭12）の原因が
+    12回/日の連投飽和かを確かめるため、ガードを90分→240分にして約6回/日に半減。
+    毎時の外部dispatchはそのままで、この1行だけで頻度が変わる。
+    2週間後（2026-07-16頃）に1投稿あたりviews/likesを before/after 比較する。
+    戻すときは skip_minutes=90 に戻すだけ。"""
     import sys
     dry_run = "--dry-run" in sys.argv
 
     print(f"=== Ronin自動投稿ヘルスチェック: {datetime.now().strftime('%Y/%m/%d %H:%M')} ===")
 
-    if not dry_run and check_should_skip(skip_minutes=90):
+    if not dry_run and check_should_skip(skip_minutes=240):
         return  # 直近に投稿済み（重複防止）
 
     post_once(dry_run=dry_run)
