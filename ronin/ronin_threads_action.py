@@ -37,10 +37,18 @@ PROGRESS_FILE = "ronin_threads_progress.json"   # 「次は何番目を投稿す
 GITHUB_RAW_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_images"
 
 # マネタイズ導線は本文ではなく「1コメ目」に載せる（本文をクリーンに保ち配信抑制を避ける）
+def add_utm_parameters(url, campaign):
+    """URLに流入計測用のUTMパラメータを付ける。
+    Substack/Gumroadの管理画面で「Threadsから何人来たか」を見分けられるようになる。
+    元URLに ? が既にあれば & でつなぐ。"""
+    joiner = "&" if "?" in url else "?"
+    return f"{url}{joiner}utm_source=threads&utm_medium=cta&utm_campaign={campaign}"
+
+
 GUMROAD_URL = "https://kmknova8.gumroad.com/l/mowuxf"
 SUBSTACK_URL = "https://substack.com/@roninwords"
-GUMROAD_LINE = f"🖌 Carry these teachings with you — calligraphy wallpapers for your phone → {GUMROAD_URL}"
-SUBSTACK_LINE = f"📖 I unpack one teaching like this in a free essay every week → {SUBSTACK_URL}"
+GUMROAD_LINE = f"🖌 Carry these teachings with you — calligraphy wallpapers for your phone → {add_utm_parameters(GUMROAD_URL, 'gumroad_pack')}"
+SUBSTACK_LINE = f"📖 I unpack one teaching like this in a free essay every week → {add_utm_parameters(SUBSTACK_URL, 'profile_cta')}"
 
 # Substack記事カタログ（build_substack_catalog.pyが生成。テーマ分類済みの全公開記事一覧）
 CATALOG_FILE = "substack_article_catalog.json"
@@ -195,7 +203,8 @@ def pick_theme_substack_line(theme_key, articles):
     for article in reversed(articles):
         theme = article.get("theme") or ronin_theme_classifier.classify_category(article["title"])
         if theme == theme_key:
-            return f"📖 The full story behind this teaching (free read) → {article['url']}"
+            tracked_url = add_utm_parameters(article["url"], "theme_cta")
+            return f"📖 The full story behind this teaching (free read) → {tracked_url}"
     return SUBSTACK_LINE
 
 
