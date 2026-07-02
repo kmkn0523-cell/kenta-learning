@@ -39,8 +39,11 @@ GITHUB_RAW_BASE = "https://kmkn0523-cell.github.io/kenta-learning/ronin/ronin_im
 # マネタイズ導線は本文ではなく「1コメ目」に載せる（本文をクリーンに保ち配信抑制を避ける）
 GUMROAD_URL = "https://kmknova8.gumroad.com/l/mowuxf"
 SUBSTACK_URL = "https://substack.com/@roninwords"
-GUMROAD_LINE = f"🖌 Get the calligraphy wallpaper pack → {GUMROAD_URL}"
-SUBSTACK_LINE = f"📖 Full deep dive on this teaching → {SUBSTACK_URL}"
+GUMROAD_LINE = f"🖌 Carry these teachings with you — calligraphy wallpapers for your phone → {GUMROAD_URL}"
+SUBSTACK_LINE = f"📖 I unpack one teaching like this in a free essay every week → {SUBSTACK_URL}"
+
+# Substack記事カタログ（build_substack_catalog.pyが生成。テーマ分類済みの全公開記事一覧）
+CATALOG_FILE = "substack_article_catalog.json"
 
 
 def get_image_url(day):
@@ -148,9 +151,28 @@ def build_full_text(content, hashtags):
 
 
 def load_substack_articles_with_url():
-    """Substackの進捗履歴（カード・deep-dive両方）から、公開URLを持つ記事の一覧を返す。
-    各要素は {"title": str, "url": str}。ファイルが無い/壊れていても空リストを返す（投稿は止めない）。"""
+    """公開URLを持つSubstack記事の一覧を返す。各要素は {"title", "url", "theme"(任意)}。
+    ① 記事カタログ（全公開記事・テーマ分類済み）を先に読み、
+    ② 投稿スクリプトの進捗履歴（カタログ未反映の新しい記事を拾う）を後ろに足す。
+    どのファイルが無い/壊れていても空リストで続行する（投稿は止めない）。"""
     articles = []
+
+    # ① 記事カタログ（build_substack_catalog.py が生成・古い順に並んでいる）
+    try:
+        with open(CATALOG_FILE, encoding="utf-8") as f:
+            catalog = json.load(f)
+        for entry in catalog.get("articles", []):
+            if entry.get("title") and entry.get("url"):
+                articles.append({
+                    "title": entry["title"],
+                    "url": entry["url"],
+                    "theme": entry.get("theme"),
+                })
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    # ② 進捗履歴（カード・deep-dive両方）。カタログに無いURLだけ追加する
+    seen_urls = {a["url"] for a in articles}
     for filename in ("substack/substack_progress.json", "substack/deep_dive_progress.json"):
         try:
             with open(filename, encoding="utf-8") as f:
@@ -160,17 +182,20 @@ def load_substack_articles_with_url():
         for entry in data.get("history", []):
             title = entry.get("title")
             url = entry.get("url")
-            if title and url:
+            if title and url and url not in seen_urls:
                 articles.append({"title": title, "url": url})
+                seen_urls.add(url)
     return articles
 
 
 def pick_theme_substack_line(theme_key, articles):
     """テーマに合うSubstack記事のURLでCTA行を作る。無ければ既存のプロフィールURLにフォールバック。
-    articlesは履歴の古い順に入っているため、reversed()で新しい記事を優先して探す。"""
+    テーマはカタログに保存済みの値を優先し、無い記事だけタイトルから分類する。
+    articlesは古い順に入っているため、reversed()で新しい記事を優先して探す。"""
     for article in reversed(articles):
-        if ronin_theme_classifier.classify_category(article["title"]) == theme_key:
-            return f"📖 Full deep dive on this teaching → {article['url']}"
+        theme = article.get("theme") or ronin_theme_classifier.classify_category(article["title"])
+        if theme == theme_key:
+            return f"📖 The full story behind this teaching (free read) → {article['url']}"
     return SUBSTACK_LINE
 
 

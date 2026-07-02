@@ -138,8 +138,9 @@ def fetch_published_japanese(session):
             break
         titles.extend(post.get("title", "") for post in batch)
         offset += len(batch)
-        if len(batch) < 50:                             # 50件未満なら最後のページ
-            break
+        # 注意: 「50件未満なら最終ページ」と判定してはいけない。
+        # アーカイブAPIは最初のページでも50件未満を返すことがある（実測23件）。
+        # ここで打ち切ると古い記事が見えず、二重投稿チェックが不完全になる。
     return japanese_from_titles(titles)
 
 
@@ -372,6 +373,13 @@ def create_and_publish_post(proverb, image_path, session=None):
         raise RuntimeError(
             f"公開失敗 [{publish_resp.status_code}]: {publish_resp.text[:500]}"
         )
+
+    # slugはドラフト作成時点ではまだ空のことが多いので、公開レスポンスの値を優先して使う
+    # （slugが取れないとurlがnullのまま記録され、CTAのテーマ連動が永久にフォールバックになる）
+    try:
+        slug = publish_resp.json().get("slug") or slug
+    except Exception:
+        pass  # slugが取れなくても公開自体は成功しているので処理は止めない
 
     return post_id, slug
 
