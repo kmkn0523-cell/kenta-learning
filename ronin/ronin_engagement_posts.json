@@ -223,6 +223,118 @@
       "theme": "avoidance",
       "text": "Tea cools whether you drink it or not.\n\nSame with the thing you keep putting off out of fear.\n\nThe call you won't make. The number you won't check. The conversation you rehearse and never have.\n\nWhat are you avoiding because you're scared of the answer? Drop it below. No one here will flinch.",
       "seed_comment": "Mine: I avoid looking too closely at how the year's actually going, because slow progress feels like failure. Fear of the number, not the work. What's the answer you're dodging?"
+    },
+    {
+      "id": "eng033",
+      "archetype": "kanji_quiz",
+      "theme": "mastery",
+      "text": "守破離 — Shu-Ha-Ri.\n\nThe three stages of mastery:\n\n守 Shu — follow the rules.\n破 Ha — break the rules.\n離 Ri — leave the rules behind.\n\nMost men try to skip straight to breaking.\n\nWhich stage is your craft honestly in? Reply 守, 破, or 離.",
+      "seed_comment": "I'm 守 in writing and I pretended to be 破 for years. Copying the masters felt beneath me — so I stayed original and mediocre. Copy first. Break later. Which stage did you claim too early?"
+    },
+    {
+      "id": "eng034",
+      "archetype": "kanji_quiz",
+      "theme": "resilience",
+      "text": "金継ぎ — Kintsugi.\n\nBroken pottery, repaired with gold. The crack becomes the most valuable line on the bowl.\n\nYour worst setback works the same way — but only if you stop hiding it.\n\n🅰 I show my repairs.\n🅱 I still hide the cracks.\n\nWhich are you, honestly?",
+      "seed_comment": "🅱 most days, if I'm honest. I'll tell the failure story once it has a happy ending — never while the glue is still wet. Real kintsugi is showing the crack before the gold dries. Anyone here truly 🅰?"
+    },
+    {
+      "id": "eng035",
+      "archetype": "either_or",
+      "theme": "discipline",
+      "text": "Day 101. You missed day 100.\n\n🅰 The streak is dead. Back to zero.\n🅱 One miss is weather. A hundred days is climate.\n\nEvery habit you'll ever keep depends on which rule you pick.\n\n🅰 or 🅱 — what's your law for the broken chain?",
+      "seed_comment": "🅱 — with one addition: never miss twice. The first miss is an accident. The second is a decision. Zero-restart thinking has killed more of my habits than laziness ever did. What's your law?"
+    },
+    {
+      "id": "eng036",
+      "archetype": "either_or",
+      "theme": "focus",
+      "text": "Deep work. Two schools.\n\n🅰 Total silence. The work deserves the whole room.\n🅱 One playlist, on repeat, until the world disappears.\n\nMonks kept 🅰. Blacksmiths had the hammer's rhythm — that's 🅱.\n\nWhich is your real setting?",
+      "seed_comment": "🅱 — one instrumental album, so worn out my brain reads it as silence. True quiet makes me listen to my own noise instead. Question for the 🅰 camp: is it actually silent, or just no lyrics?"
+    },
+    {
+      "id": "eng037",
+      "archetype": "either_or",
+      "theme": "purpose",
+      "text": "Two offers on the table.\n\n🅰 Double your pay. Work with no meaning to you.\n🅱 Half your pay. Work you'd defend with a straight face.\n\nNo third option. No 'I'd build my own thing.'\n\n🅰 or 🅱 — and be honest about what you'd actually sign.",
+      "seed_comment": "I signed 🅰 once. The money was real, and so was the emptiness — I spent half the raise buying back the meaning I'd sold. Now I'm closer to 🅱, poorer, and I sleep. Anyone actually stay happy in 🅰?"
+    },
+    {
+      "id": "eng038",
+      "archetype": "fill_blank",
+      "theme": "focus",
+      "text": "Something steals your attention every day. Quietly. On schedule. It has a name.\n\nThe biggest thief of my attention is ___.\n\nOne word. Name the thief.",
+      "seed_comment": "Mine: YouTube. Not even the videos — the hunting for the perfect one. Twenty minutes of searching, five of watching. The thief was never the content. It's the browsing. Name yours."
+    },
+    {
+      "id": "eng039",
+      "archetype": "fill_blank",
+      "theme": "purpose",
+      "text": "The Japanese call it ikigai — the reason you rise in the morning.\n\nFinish this, honestly:\n\n'Right now, I get out of bed for ___.'\n\nOne word or one name. Noble answers not required.",
+      "seed_comment": "Mine, this season: an unfinished book and one quiet hour before anyone needs me. Some seasons it was just coffee — that counted too. A small true reason beats a grand fake one. Yours?"
+    },
+    {
+      "id": "eng040",
+      "archetype": "hot_take",
+      "theme": "mastery",
+      "text": "Talent is real. There — someone finally said it.\n\n'Hard work beats talent' is what we whisper at hour ten thousand, watching a gifted man pass us at hour one hundred.\n\nBut mastery was never a race against him. It's outlasting your own excuses.\n\nAgree, or push back?",
+      "seed_comment": "I've been passed by talent more than once. It stung every time. But almost every gifted man I've known stopped at good — the reps kept going after the gift got bored. That's the only edge I own. Tell me where I'm wrong."
+    },
+    {
+      "id": "eng041",
+      "archetype": "hot_take",
+      "theme": "mindset",
+      "text": "Half of internet stoicism is fear wearing a toga.\n\n'Nothing affects me' isn't calm. It's numbness with better branding.\n\nMarcus Aurelius wept, raged — then chose his response anyway. Feeling nothing is not the goal. Feeling everything and still choosing is.\n\nAgree?",
+      "seed_comment": "I played the nothing-touches-me game for years. It wasn't strength — I was just unreachable, even to myself. The first time something truly hit me and I stayed standing, that was stoic. Where's your line between calm and numb?"
+    },
+    {
+      "id": "eng042",
+      "archetype": "name_one",
+      "theme": "resilience",
+      "text": "Success is a poor teacher. It mostly confirms what you already believed.\n\nFailure charges tuition — and the lessons stick.\n\nName one thing a failure taught you that no win ever could.\n\nOne line. You paid full price. Share it free.",
+      "seed_comment": "Mine: nobody was watching. The public failure I dreaded played to an empty theater — everyone was busy surviving their own story. That freed me more than any win. What did yours teach you?"
+    },
+    {
+      "id": "eng043",
+      "archetype": "name_one",
+      "theme": "discipline",
+      "text": "Forget the 40-step morning routine.\n\nEvery man has ONE rule he never breaks — the one still standing when everything else slips.\n\nName yours. One line.\n\nMine's in the comments. It's smaller than you'd expect.",
+      "seed_comment": "Mine: the bed gets made. Not because it matters — because it's the first vote I cast about who runs the day. On my worst days it's the only vote I win, and it keeps the account open. What's your one rule?"
+    },
+    {
+      "id": "eng044",
+      "archetype": "confession",
+      "theme": "focus",
+      "text": "Confession thread, with receipts.\n\nOpen your screen time. Post the real number of phone pickups it shows.\n\nDon't guess first — the guess is always flattering, and always a lie.\n\nThe noise wins in secret. Numbers drag it into the light. Mine's below.",
+      "seed_comment": "Mine: 87 pickups. Eighty-seven. I'd have sworn it was 30. That's 87 times I handed my attention away and called it a break. Post yours — highest number in the thread owes himself a long walk."
+    },
+    {
+      "id": "eng045",
+      "archetype": "rank_choose",
+      "theme": "mindset",
+      "text": "Three battles every man fights in his own head:\n\n— Fear, of what may come.\n— Control, gripping what he can't hold.\n— Acceptance, of what already is.\n\nNobody wins all three at once. Most men lose the same one for years.\n\nWhich one is beating you right now?",
+      "seed_comment": "Control, for me. I grip outcomes like a man squeezing water. Fear I can stare down, reality I can accept — but opening the hand is the fight I lose weekly. Which one owns you?"
+    },
+    {
+      "id": "eng046",
+      "archetype": "scale_1_10",
+      "theme": "discipline",
+      "text": "Rate your discipline this week. 1 to 10.\n\nNot your intentions — your actions. The training done, the alarms obeyed, the promises to yourself kept.\n\nPost the number. No explanation allowed.\n\nNumbers don't lie. Stories do.",
+      "seed_comment": "I'm a 6. Showed up four days of five, but the phone won two mornings and Saturday's eating had no plan at all. An honest 6 beats a fictional 9. Drop your number — no story attached."
+    },
+    {
+      "id": "eng047",
+      "archetype": "save_one",
+      "theme": "mastery",
+      "text": "A brutal trade.\n\nTonight, every skill you've ever built resets to zero — except one. You choose which survives.\n\nName the skill you keep.\n\nYour answer is your real hierarchy. Everything else was hobby.",
+      "seed_comment": "I keep writing. Lifting, languages, code — I'd grieve them, but writing rebuilds the others: it's how I think, earn, and remember who I am. The one you save says everything. Which skill survives your fire?"
+    },
+    {
+      "id": "eng048",
+      "archetype": "one_line_advice",
+      "theme": "resilience",
+      "text": "Your younger self sits across the table. One week before his worst struggle begins.\n\nYou get one sentence. No specifics — he won't believe them anyway.\n\nWhat do you tell him?\n\nMine's below.",
+      "seed_comment": "Mine: 'It's a corridor, not a cell — keep walking.' From inside, the setback felt permanent. Every wall turned out to have a far end. What one sentence would you hand him?"
     }
   ]
 }
